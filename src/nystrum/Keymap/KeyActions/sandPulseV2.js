@@ -1,4 +1,4 @@
-import * as Action from '../../actions';
+import { Say } from "../../Actions/Say";
 import * as Constant from '../../constants';
 import { movingSandWall } from '../../items';
 import { UI_Actor } from '../../entites';
@@ -16,7 +16,7 @@ const throwDirectionalKunai = (direction, engine, actor) => {
     engine.game.placeActorsOnMap();
     engine.game.draw();
     actor.setNextAction(
-      new Action.Say({
+      new Say({
         message: `I'll get you with this kunai!`,
         game: engine.game,
         actor,

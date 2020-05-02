@@ -1,4 +1,4 @@
-import { MoveMultiple } from '../../actions';
+import { MoveMultiple } from "../../Actions/MoveMultiple";
 import { ENERGY_THRESHOLD } from '../../constants';
 
 export const tackle = (direction, stepCount, engine) => {

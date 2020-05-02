@@ -1,4 +1,4 @@
-import { CloneSelf } from '../../actions';
+import { CloneSelf } from "../../Actions/CloneSelf";
 import { cloneDeep } from 'lodash';
 
 export const sandClone = (engine) => {

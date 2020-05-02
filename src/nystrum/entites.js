@@ -3,8 +3,16 @@ import pipe from 'lodash/fp/pipe';
 import * as Helper from '../helper';
 import { destroyEntity } from './Entities/helper';
 import * as Constant from './constants';
-import * as Action from './actions';
-import * as Engine from './engine';
+import * as EngineCrank from "./Actions/EngineCrank";
+import * as ThrowProjectileGas from "./Actions/ThrowProjectileGas";
+import * as ThrowProjectile from "./Actions/ThrowProjectile";
+import * as Shove from "./Actions/Shove";
+import * as ProjectileMove from "./Actions/ProjectileMove";
+import * as Move from "./Actions/Move";
+import * as PlaceActor from "./Actions/PlaceActor";
+import * as DestroySelf from "./Actions/DestroySelf";
+import * as Say from "./Actions/Say";
+import * as Engine from './Engine/engine';
 import { cloneDeep, cloneDeepWith } from 'lodash';
 import { MESSAGE_TYPE } from './message';
 import SOUNDS from './sounds';
@@ -64,7 +72,7 @@ const Parent = superclass => class extends superclass {
       this.initialize()
     }
 
-    let result = new Action.CrankEngine({
+    let result = new EngineCrank.EngineCrank({
       game,
       actor: this,
       engine: this.engine,
@@ -518,7 +526,7 @@ const Projecting = superclass => class extends superclass {
       this.createPath(game);
     }
     let targetPos = this.path.length > 0 ? this.path[0] : this.pos;
-    let result = new Action.Move({
+    let result = new Move.Move({
       targetPos, 
       game, 
       actor: this, 
@@ -553,7 +561,7 @@ const DestructiveProjecting = superclass => class extends superclass {
 
     let targetPos = this.path.length > 0 ? this.path[0] : this.pos;
     
-    let result = new Action.ThrowProjectile({
+    let result = new ThrowProjectile.ThrowProjectile({
       targetPos, 
       game, 
       actor: this, 
@@ -593,7 +601,7 @@ const DirectionalProjecting = superclass => class extends superclass {
     this.passable = false
     
     if (this.range > 0) {
-      result = new Action.ProjectileMove({
+      result = new ProjectileMove.ProjectileMove({
         targetPos: targetPos,
         game: game,
         actor: this,
@@ -607,7 +615,7 @@ const DirectionalProjecting = superclass => class extends superclass {
         }
       })
     } else {
-      result = new Action.DestroySelf({
+      result = new DestroySelf.DestroySelf({
         game: game,
         actor: this,
         energyCost: 0
@@ -635,7 +643,7 @@ const DirectionalPushing = superclass => class extends superclass {
     this.passable = false
     
     if (this.range > 0) {
-      result = new Action.Shove({
+      result = new Shove.Shove({
         targetPos: targetPos,
         direction: this.direction,
         game: game,
@@ -644,7 +652,7 @@ const DirectionalPushing = superclass => class extends superclass {
         onSuccess: () => this.range -= 1,
       })
     } else {
-      result = new Action.DestroySelf({
+      result = new DestroySelf.DestroySelf({
         game: game,
         actor: this,
         energyCost: 0
@@ -685,7 +693,7 @@ const GaseousDestructiveProjecting = superclass => class extends superclass {
     }
     let targetPos = this.path.length > 0 ? this.path[0] : this.pos;
     
-    let result = new Action.ThrowProjectileGas({
+    let result = new ThrowProjectileGas.ThrowProjectileGas({
       targetPos, 
       game, 
       actor: this, 
@@ -767,7 +775,7 @@ const Chasing = superclass => class extends superclass {
     let path = Helper.calculatePath(game, this.targetEntity.pos, this.pos);
     let targetPos = path.length > 0 ? path[0] : this.pos;
 
-    let result = new Action.Move({
+    let result = new Move.Move({
       targetPos, 
       game, 
       actor: this, 
@@ -820,7 +828,7 @@ const RangedChasing = superclass => class extends superclass {
     if (inPath) {
       // throw
       if (game.canOccupyPosition(projectile.pos, projectile)) {
-        return new Action.PlaceActor({
+        return new PlaceActor.PlaceActor({
           targetPos: { ...projectile.pos },
           entity: projectile,
           game,
@@ -828,7 +836,7 @@ const RangedChasing = superclass => class extends superclass {
           energyCost: Constant.ENERGY_THRESHOLD
         })
       }
-      return new Action.Say({
+      return new Say.Say({
         message: `I'll get you with this kunai!`,
         game,
         actor: this,
@@ -839,7 +847,7 @@ const RangedChasing = superclass => class extends superclass {
     let movePath = Helper.calculatePath(game, this.targetEntity.pos, this.pos);
     let targetPos = movePath.length > 0 ? movePath[0] : this.pos;
     
-    return new Action.Move({
+    return new Move.Move({
       targetPos,
       game,
       actor: this,
@@ -933,7 +941,7 @@ const Spreading = superclass => class extends superclass {
   getAction (game) {
     // if no more spreads, then destroy
     if (this.spreadCount <= 0) {
-      return new Action.DestroySelf({
+      return new DestroySelf.DestroySelf({
         game: game,
         actor: this,
         energyCost: Constant.ENERGY_THRESHOLD,
@@ -1006,7 +1014,7 @@ const Spreading = superclass => class extends superclass {
         this.timeToSpread = this.timeToSpreadMax
         this.spreadCount -= 1
         
-        return new Action.PlaceActor({
+        return new PlaceActor.PlaceActor({
           targetPos: adjacentPos,
           entity: fire,
           game,
@@ -1023,7 +1031,7 @@ const Spreading = superclass => class extends superclass {
 
     this.timeToSpread -= 1;
     
-    return new Action.Say({
+    return new Say.Say({
       message: 'burning',
       game,
       actor: this,
@@ -1055,14 +1063,14 @@ const Spreading = superclass => class extends superclass {
       targetPos.y - this.pos.y ,
     ]
     if (direction[0] === 0 && direction[1] === 0) {
-      return new Action.DestroySelf({
+      return new DestroySelf.DestroySelf({
         game: game,
         actor: this,
         energyCost: Constant.ENERGY_THRESHOLD,
         processDelay: 0,
       });
     }
-    let result = new Action.Shove({
+    let result = new Shove.Shove({
       targetPos,
       direction,
       game,
@@ -1180,7 +1188,7 @@ const Speaking = superclass => class extends superclass {
   getAction (game) {
     const message = this.messages.shift();
     this.messages.push(message);
-    return new Action.Say({
+    return new Say.Say({
       actor: this,
       game,
       message: message,

@@ -1,4 +1,4 @@
-import { Move } from '../../actions';
+import { Move } from "../../Actions/Move";
 import * as Constant from '../../constants';
 
 export const walk = (direction, engine) => {

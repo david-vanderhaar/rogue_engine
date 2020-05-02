@@ -1,4 +1,4 @@
-import { Tackle } from '../../actions';
+import { Tackle } from "../../Actions/Tackle";
 import { ENERGY_THRESHOLD, PARTICLE_TEMPLATES } from '../../constants';
 import { createFourDirectionMoveOptions } from '../helper';
 

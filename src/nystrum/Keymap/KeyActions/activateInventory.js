@@ -1,5 +1,5 @@
 import { UI_Actor } from '../../entites';
-import { EquipItemFromContainer } from '../../actions';
+import { EquipItemFromContainer } from "../../Actions/EquipItemFromContainer";
 import { addAlphabeticallyToKeymap, deactivateUIKeymap } from '../helper';
 
 const keymapEquipFromInventory = (engine, initiatedBy) => {

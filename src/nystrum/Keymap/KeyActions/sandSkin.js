@@ -1,5 +1,5 @@
 import * as StatusEffect from '../../statusEffects';
-import { AddStatusEffect } from '../../actions';
+import { AddStatusEffect } from "../../Actions/AddStatusEffect";
 
 export const sandSkin = (engine, defenseBuff = 1) => {
   let currentActor = engine.actors[engine.currentActor];

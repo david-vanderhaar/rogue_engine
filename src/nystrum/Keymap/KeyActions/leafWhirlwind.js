@@ -1,4 +1,4 @@
-import { MultiTargetAttack} from '../../actions';
+import { MultiTargetAttack } from "../../Actions/MultiTargetAttack";
 import { ENERGY_THRESHOLD, PARTICLE_TEMPLATES } from '../../constants';
 
 export const leafWhirlwind = (engine) => {

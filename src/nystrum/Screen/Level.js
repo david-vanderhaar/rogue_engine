@@ -1,6 +1,6 @@
 import React from 'react';
 import { SCREENS } from './constants';
-import * as Engine from '../engine';
+import * as Engine from '../Engine/engine';
 import * as Game from '../game';
 import Instructions from '../UI/Instructions';
 import Information from '../UI/Information';

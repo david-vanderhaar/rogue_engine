@@ -1,4 +1,4 @@
-import * as Action from '../../actions';
+import { PlaceActor } from "../../Actions/PlaceActor";
 import * as Constant from '../../constants';
 import * as Item from '../../items';
 import { UI_Actor } from '../../entites';
@@ -15,7 +15,7 @@ const throwDirectionalKunai = (direction, engine, actor) => {
     kunai.direction = direction;
     actor.removeFromContainer(kunai);
     actor.setNextAction(
-      new Action.PlaceActor({
+      new PlaceActor({
         targetPos: { ...kunai.pos },
         entity: kunai,
         game: engine.game,

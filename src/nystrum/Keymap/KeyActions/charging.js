@@ -1,4 +1,5 @@
-import { Charge, Release } from '../../actions';
+import { Release } from "../../Actions/Release";
+import { Charge } from "../../Actions/Charge";
 import { ENERGY_THRESHOLD } from '../../constants';
 
 export const charge = (engine, chargeAmount) => {

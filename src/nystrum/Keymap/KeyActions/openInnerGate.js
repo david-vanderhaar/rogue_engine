@@ -1,5 +1,5 @@
 import * as StatusEffect from '../../statusEffects';
-import { AddStatusEffect } from '../../actions';
+import { AddStatusEffect } from "../../Actions/AddStatusEffect";
 
 export const openInnerGate = (engine) => {
   let currentActor = engine.actors[engine.currentActor];

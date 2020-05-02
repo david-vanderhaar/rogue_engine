@@ -1,4 +1,5 @@
-import { Sign, SignRelease } from '../../actions';
+import { SignRelease } from "../../Actions/SignRelease";
+import { Sign } from "../../Actions/Sign";
 import { ENERGY_THRESHOLD, HAND_SIGNS } from '../../constants';
 
 /******************** PLAYER ********************/

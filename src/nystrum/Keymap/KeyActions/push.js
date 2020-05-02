@@ -1,4 +1,4 @@
-import { Shove } from '../../actions';
+import { Shove } from "../../Actions/Shove";
 import { ENERGY_THRESHOLD } from '../../constants';
 
 export const push = (direction, engine) => {

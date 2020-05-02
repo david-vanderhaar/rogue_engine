@@ -1,4 +1,4 @@
-import * as Action from '../../actions';
+import { SprayWater } from "../../Actions/SprayWater";
 import * as Item from '../../items';
 import * as Constant from '../../constants';
 import { UI_Actor } from '../../entites';
@@ -15,7 +15,7 @@ const trigger = (engine, actor, radius = 1) => {
     //   message: 'I\'ll crush you!',
     //   energyCost: Constant.ENERGY_THRESHOLD
     // })
-    new Action.SprayWater({
+    new SprayWater({
       targetPos: { ...cursor.pos },
       radius,
       game: engine.game,

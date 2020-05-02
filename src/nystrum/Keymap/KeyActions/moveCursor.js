@@ -1,4 +1,4 @@
-import { CursorMove } from '../../actions';
+import { CursorMove } from "../../Actions/CursorMove";
 
 export const moveCursor = (direction, engine) => {
   let actor = engine.actors[engine.currentActor];

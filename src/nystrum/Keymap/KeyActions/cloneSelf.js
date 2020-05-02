@@ -1,4 +1,4 @@
-import { CloneSelf } from '../../actions';
+import { CloneSelf } from "../../Actions/CloneSelf";
 
 export const cloneSelf = (engine, cloneOverrides = []) => {
   let actor = engine.actors[engine.currentActor];

@@ -1,4 +1,4 @@
-import { Attack }from '../../actions'
+import { Attack } from "../../Actions/Attack";
 import { getDirectionKey, DIRECTIONS, ENERGY_THRESHOLD, THEMES } from '../../constants';
 
 

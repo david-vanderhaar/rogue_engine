@@ -1,5 +1,5 @@
 import { Wall } from '../../entites';
-import { PlaceItems } from '../../actions';
+import { PlaceItems } from "../../Actions/PlaceItems";
 import { TYPE } from '../../items';
 import { getDirectionKey, DIRECTIONS, ENERGY_THRESHOLD } from '../../constants';
 

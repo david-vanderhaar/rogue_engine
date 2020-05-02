@@ -1,6 +1,7 @@
 import { DIRECTIONS, ENERGY_THRESHOLD } from '../../constants';
 import * as StatusEffect from '../../statusEffects';
-import { AddStatusEffect, Move } from '../../actions';
+import { Move } from "../../Actions/Move";
+import { AddStatusEffect } from "../../Actions/AddStatusEffect";
 import { walk } from './walk';
 import { getRandomInArray } from '../../../helper';
 

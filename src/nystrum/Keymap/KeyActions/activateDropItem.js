@@ -1,6 +1,6 @@
 import * as Constant from '../../constants';
 import { UI_Actor } from '../../entites';
-import { DropItem } from '../../actions';
+import { DropItem } from "../../Actions/DropItem";
 import { addAlphabeticallyToKeymap, deactivateUIKeymap } from '../helper';
 
 const keymapDropFromInventory = (engine, initiatedBy) => {

@@ -1,4 +1,5 @@
-import { PickupItem, EquipItemFromTile } from '../../actions';
+import { PickupItem } from "../../Actions/PickupItem";
+import { EquipItemFromTile } from "../../Actions/EquipItemFromTile";
 import { ENERGY_THRESHOLD } from '../../constants';
 import { coordsToString, getRandomInArray } from '../../../helper';
 import { MESSAGE_TYPE } from '../../message';

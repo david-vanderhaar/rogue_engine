@@ -1,4 +1,4 @@
-import { Say } from '../../actions';
+import { Say } from "../../Actions/Say";
 import * as Constant from '../../constants';
 
 export const none = (engine) => {

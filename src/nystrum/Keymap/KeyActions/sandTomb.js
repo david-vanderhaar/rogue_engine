@@ -1,4 +1,4 @@
-import * as Action from '../../actions';
+import { PlaceActor } from "../../Actions/PlaceActor";
 import * as Item from '../../items';
 import * as Constant from '../../constants';
 import { UI_Actor } from '../../entites';
@@ -24,7 +24,7 @@ const triggerSandTomb = (engine, actor) => {
       //   message: 'I\'ll crush you!',
       //   energyCost: Constant.ENERGY_THRESHOLD
       // })
-      new Action.PlaceActor({
+      new PlaceActor.PlaceActor({
         targetPos: { ...cursor.pos },
         entity: cloud,
         game: engine.game,
