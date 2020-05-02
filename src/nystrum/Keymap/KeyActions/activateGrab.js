@@ -74,7 +74,7 @@ export const activateGrab = (engine) => {
 
 export const releaseGrab = (engine) => {
   let actor = engine.actors[engine.currentActor];
-  actor.setNextAction(new ReleaseGrab.ReleaseGrab({
+  actor.setNextAction(new ReleaseGrab({
     game: engine.game,
     actor,
     energyCost: Constant.ENERGY_THRESHOLD
