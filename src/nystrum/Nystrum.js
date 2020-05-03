@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { SCREENS } from './Screen/constants';
-import Level from './Screen/Level';
-import Title from './Screen/Title';
-import Lose from './Screen/Lose';
-import Win from './Screen/Win';
+import Screens from './Screen/index';
 import Characters from './Characters/index';
 import SOUNDS from './sounds';
 
@@ -41,28 +38,28 @@ class Nystrum extends React.Component {
   }
 
   getActiveScreen () {
-    const titleScreen = <Title 
+    const titleScreen = <Screens.Title 
       key={SCREENS.TITLE} 
       setActiveScreen={this.setActiveScreen.bind(this)}
       setSelectedCharacter={this.setSelectedCharacter.bind(this)}
       selectedCharacter={this.state.selectedCharacter}
       characters={this.state.characters}
     />
-    const loseScreen = <Lose 
+    const loseScreen = <Screens.Lose 
       key={SCREENS.LOSE} 
       setActiveScreen={this.setActiveScreen.bind(this)}
       setSelectedCharacter={this.setSelectedCharacter.bind(this)}
       selectedCharacter={this.state.selectedCharacter}
       characters={this.state.characters}
     />
-    const winScreen = <Win 
+    const winScreen = <Screens.Win 
       key={SCREENS.WIN} 
       setActiveScreen={this.setActiveScreen.bind(this)}
       setSelectedCharacter={this.setSelectedCharacter.bind(this)}
       selectedCharacter={this.state.selectedCharacter}
       characters={this.state.characters}
     />
-    const levelScreen = <Level 
+    const levelScreen = <Screens.Level 
       key={SCREENS.LEVEL} 
       setActiveScreen={this.setActiveScreen.bind(this)}
       selectedCharacter={this.state.selectedCharacter}

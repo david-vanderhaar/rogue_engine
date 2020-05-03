@@ -1,37 +1,5 @@
 import React from 'react';
-import { SCREENS } from './constants';
-
-const CharacterSelect = (props) => {
-  return (
-    <div className='CharacterSelect'>
-      {
-        props.characters.map((character, index) => {
-          let color = '';
-          if (props.selectedCharacter) {
-            color = props.selectedCharacter.name === character.name ? 'red' : ''
-          }
-
-          return (
-            <button
-              key={index}
-              style={{
-                position: 'relative',
-                top: '280px'
-              }}
-              className={`CharacterSelect__button btn btn-main`}
-              onClick={() => {
-                props.setSelectedCharacter(character)
-                props.setActiveScreen(SCREENS.LEVEL)
-              }}
-            >
-              You Saved the Castle! Play Again?
-            </button>
-          )
-        })
-      }
-    </div>
-  );
-}
+import CharacterSelect from '../UI/CharacterSelect';
 
 class Win extends React.Component {
   constructor(props) {
