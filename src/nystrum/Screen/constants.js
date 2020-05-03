@@ -1,6 +1,8 @@
 export const SCREENS = {
-  TITLE: 0,
-  LEVEL: 1,
-  LOSE: 2,
-  WIN: 3,
+  TITLE: 'Title',
+  LEVEL: 'Level',
+  LOSE: 'Lose',
+  WIN: 'Win',
+  CHARACTER_SELECT: 'CharacterSelect',
+  MODE_SELECT: 'ModeSelect',
 }

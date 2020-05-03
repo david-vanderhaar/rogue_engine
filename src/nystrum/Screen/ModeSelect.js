@@ -1,6 +1,6 @@
 import React from 'react';
 import { SCREENS } from './constants';
-import CharacterSelect from '../UI/CharacterSelect';
+import ModeSelect from '../UI/ModeSelect';
 
 class Title extends React.Component {
   constructor(props) {
@@ -24,18 +24,12 @@ class Title extends React.Component {
 
           }}
         >
-          <button
-            style={{
-              position: 'relative',
-              top: '280px'
-            }}
-            className={`CharacterSelect__button btn btn-main`}
-            onClick={() => {
-              this.props.setActiveScreen(SCREENS.MODE_SELECT)
-            }}
-          >
-            Play
-          </button>
+          <ModeSelect 
+            modes={this.props.modes} 
+            selectedMode={this.props.selectedMode} 
+            setSelectedMode={this.props.setSelectedMode}
+            setActiveScreen={this.props.setActiveScreen}
+          />
         </div>
       </div>
     );

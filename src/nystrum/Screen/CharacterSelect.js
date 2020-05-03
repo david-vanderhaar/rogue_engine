@@ -24,18 +24,12 @@ class Title extends React.Component {
 
           }}
         >
-          <button
-            style={{
-              position: 'relative',
-              top: '280px'
-            }}
-            className={`CharacterSelect__button btn btn-main`}
-            onClick={() => {
-              this.props.setActiveScreen(SCREENS.MODE_SELECT)
-            }}
-          >
-            Play
-          </button>
+          <CharacterSelect 
+            characters={this.props.characters} 
+            selectedCharacter={this.props.selectedCharacter} 
+            setSelectedCharacter={this.props.setSelectedCharacter}
+            setActiveScreen={this.props.setActiveScreen}
+          />
         </div>
       </div>
     );

@@ -3,6 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { SCREENS } from './Screen/constants';
 import Screens from './Screen/index';
 import Characters from './Characters/index';
+import Modes from './Modes/index';
 import SOUNDS from './sounds';
 
 class Nystrum extends React.Component {
@@ -11,16 +12,26 @@ class Nystrum extends React.Component {
     let characterKey = Characters();
     let characters = Object.keys(characterKey).map((key, i) => {
       return {
-        // [key]: characterKey[key],
         initialize: characterKey[key],
         selected: false,
         name: key,
       }
     });
+
+    let modes = Object.keys(Modes).map((key, i) => {
+      return {
+        class: Modes[key],
+        selected: false,
+        name: key,
+      }
+    });
+
     this.state = {
       activeScreen: SCREENS.TITLE,
       characters,
+      modes,
       selectedCharacter: null,
+      selectedMode: null,
     };
   }
 
@@ -37,7 +48,25 @@ class Nystrum extends React.Component {
     this.setState({selectedCharacter: {...character}})
   }
 
+  setSelectedMode (mode) {
+    this.setState({selectedMode: mode})
+  }
+
   getActiveScreen () {
+    const characterScreen = <Screens.CharacterSelect 
+      key={SCREENS.CHARACTER_SELECT} 
+      setActiveScreen={this.setActiveScreen.bind(this)}
+      setSelectedCharacter={this.setSelectedCharacter.bind(this)}
+      selectedCharacter={this.state.selectedCharacter}
+      characters={this.state.characters}
+    />
+    const modeScreen = <Screens.ModeSelect 
+      key={SCREENS.MODE_SELECT} 
+      setActiveScreen={this.setActiveScreen.bind(this)}
+      setSelectedMode={this.setSelectedMode.bind(this)}
+      selectedMode={this.state.selectedMode}
+      modes={this.state.modes}
+    />
     const titleScreen = <Screens.Title 
       key={SCREENS.TITLE} 
       setActiveScreen={this.setActiveScreen.bind(this)}
@@ -63,9 +92,14 @@ class Nystrum extends React.Component {
       key={SCREENS.LEVEL} 
       setActiveScreen={this.setActiveScreen.bind(this)}
       selectedCharacter={this.state.selectedCharacter}
+      selectedMode={this.state.selectedMode}
     />
 
     switch (this.state.activeScreen) {
+      case SCREENS.CHARACTER_SELECT:
+        return characterScreen
+      case SCREENS.MODE_SELECT:
+        return modeScreen
       case SCREENS.TITLE:
         return titleScreen
       case SCREENS.LOSE:
