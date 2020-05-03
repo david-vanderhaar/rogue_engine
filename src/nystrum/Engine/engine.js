@@ -1,5 +1,5 @@
 import * as Helper from '../../helper';
-import { Particle } from '../entites';
+import { Particle } from '../Entities/index';
 import { PARTICLE_TEMPLATES } from '../constants';
 
 export class Engine {

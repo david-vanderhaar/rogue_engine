@@ -1,7 +1,7 @@
 import { Mode } from './default'
-import { Play } from './play'
+import { Flume } from './flume'
 
-export {
+export default {
   Mode,
-  Play,
+  Flume,
 }

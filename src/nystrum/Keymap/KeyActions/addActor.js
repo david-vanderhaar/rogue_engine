@@ -1,6 +1,6 @@
 import * as Helper from '../../../helper';
 import * as Constant from '../../constants';
-import { Bandit, RangedBandit, FireSpread } from '../../entites';
+import { Bandit, RangedBandit, FireSpread } from '../../Entities/index';
 import * as Item from '../../items';
 
 const getBanditStats = () => {

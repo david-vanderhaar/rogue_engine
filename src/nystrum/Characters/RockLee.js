@@ -1,6 +1,7 @@
 // import deps
 import * as Item from '../items';
-import * as Entity from '../entites';
+import { Player } from '../Entities/index';
+import { ContainerSlot } from '../Entities/Containing';
 import * as Constant from '../constants';
 import * as Keymap from '../Keymap';
 import { createEightDirectionMoveOptions } from '../Keymap/helper';
@@ -62,7 +63,7 @@ export default function (engine) {
     };
   }
   // instantiate class
-  let actor = new Entity.Player({
+  let actor = new Player({
     pos: { x: 23, y: 7 },
     renderer: {
       character: 'R',
@@ -80,11 +81,11 @@ export default function (engine) {
   const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
   const swords = Array(2).fill('').map(() => Item.sword(engine));
   actor.container = [
-    new Entity.ContainerSlot({
+    new ContainerSlot({
       itemType: kunais[0].name,
       items: kunais,
     }),
-    new Entity.ContainerSlot({
+    new ContainerSlot({
       itemType: swords[0].name,
       items: swords,
     }),

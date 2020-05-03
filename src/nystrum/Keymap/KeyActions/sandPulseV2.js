@@ -1,7 +1,8 @@
 import { Say } from "../../Actions/Say";
 import * as Constant from '../../constants';
 import { movingSandWall } from '../../items';
-import { UI_Actor } from '../../entites';
+import { UI_Actor } from '../../Entities/index';
+
 
 const throwDirectionalKunai = (direction, engine, actor) => {
   let cursor = engine.actors[engine.currentActor];

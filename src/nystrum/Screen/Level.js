@@ -13,8 +13,10 @@ class Level extends React.Component {
   constructor(props) {
     super(props);
     let ENGINE = new Engine.Engine({});
-    let game = new Game.Game({ engine: ENGINE, getSelectedCharacter: () => this.props.selectedCharacter.initialize(ENGINE)})
-
+    let game = new Game.Game({ 
+      engine: ENGINE, 
+      getSelectedCharacter: () => this.props.selectedCharacter.initialize(ENGINE)
+    })
     this.state = {
       game: game,
       activeTab: 0,

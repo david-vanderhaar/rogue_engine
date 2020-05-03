@@ -4,7 +4,7 @@ import * as Constant from './constants';
 import * as Helper from '../helper';
 import * as Message from './message';
 import { Display } from './Display/konvaCustom';
-import * as Mode from './Modes/index';
+import Mode from './Modes/index';
 
 // const MAP_DATA = require('./Maps/building.json');
 // const MAP_DATA = require('./Maps/building_w_floor.json');
@@ -40,22 +40,7 @@ export class Game {
     }),
     spriteMode = true,
     tileKey = Constant.TILE_KEY,
-    mode = new Mode.Play({
-      game: this,
-      data: {
-        level: 1,
-        highestLevel: null,
-        fireIntensity: 1, // increase this number to increase fire spread
-        npcCount: 1,
-        debrisCount: 4,
-        mediumDebrisCount: 3,
-        heavyDebrisCount: 4,
-        smallGasCanCount: 3,
-        mediumGasCanCount: 0,
-        largeGasCanCount: 1,
-        turnCount: 0,
-      },
-    }),
+    mode = Mode.Flume,
     messages = [],
   }) {
     this.engine = engine;
@@ -67,7 +52,7 @@ export class Game {
     this.display = display;
     this.spriteMode = spriteMode;
     this.tileKey = tileKey;
-    this.mode = mode;
+    this.mode = new mode({game: this});
     this.messages = messages;
     this.getSelectedCharacter = getSelectedCharacter;
   }

@@ -1,6 +1,6 @@
-import { UI_Actor } from '../../entites';
 import { UnequipItemToTile } from "../../Actions/UnequipItemToTile";
 import { UnequipItem } from "../../Actions/UnequipItem";
+import { UI_Actor } from '../../Entities/index';
 import { addAlphabeticallyToKeymap, deactivateUIKeymap } from '../helper';
 
 const keymapEquipment = (engine, initiatedBy) => {

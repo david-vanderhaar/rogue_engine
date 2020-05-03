@@ -1,4 +1,4 @@
-import { UI_Actor } from '../../entites';
+import { UI_Actor } from '../../Entities/index';
 import { EquipItemFromContainer } from "../../Actions/EquipItemFromContainer";
 import { addAlphabeticallyToKeymap, deactivateUIKeymap } from '../helper';
 

@@ -1,5 +1,13 @@
-import * as Entity from './entites';
 import * as Constant from './constants';
+import {
+  DestructiveCloudProjectileV2,
+  DestructiveProjectile,
+  DirectionalProjectile,
+  MovingWall,
+  DestructiveCloudProjectile,
+  Weapon,
+  Armor,
+} from './Entities/index';
 
 export const TYPE = {
   KUNAI: 'Kunai',
@@ -36,7 +44,7 @@ const createProjectileCloud = ({
     return createProjectile(engine, position, targetPosition);
   })
 
-  return new Entity.DestructiveCloudProjectileV2({
+  return new DestructiveCloudProjectileV2({
     game: engine.game,
     passable: true,
     speed,
@@ -69,7 +77,7 @@ const createProjectileSingularity = ({
 
   })
 
-  return new Entity.DestructiveCloudProjectileV2({
+  return new DestructiveCloudProjectileV2({
     game: engine.game,
     passable: true,
     speed,
@@ -102,7 +110,7 @@ const createProjectileBurst = ({
 
   })
 
-  return new Entity.DestructiveCloudProjectileV2({
+  return new DestructiveCloudProjectileV2({
     game: engine.game,
     passable: true,
     speed,
@@ -181,7 +189,7 @@ export const fireballCloud = ({
   createProjectile: fireball,
 })
 
-export const kunai = (engine, pos, targetPos) => new Entity.DestructiveProjectile({
+export const kunai = (engine, pos, targetPos) => new DestructiveProjectile({
   game: engine.game,
   targetPos,
   passable: true,
@@ -204,7 +212,7 @@ export const kunai = (engine, pos, targetPos) => new Entity.DestructiveProjectil
   range: 30,
 })
 
-export const directionalKunai = (engine, pos, direction, range) => new Entity.DirectionalProjectile({
+export const directionalKunai = (engine, pos, direction, range) => new DirectionalProjectile({
   game: engine.game,
   direction,
   passable: true,
@@ -227,7 +235,7 @@ export const directionalKunai = (engine, pos, direction, range) => new Entity.Di
   range,
 })
 
-export const movingSandWall = (engine, pos, targetPos, range) => new Entity.MovingWall({
+export const movingSandWall = (engine, pos, targetPos, range) => new MovingWall({
   game: engine.game,
   passable: false,
   pos: { x: pos.x, y: pos.y },
@@ -245,7 +253,7 @@ export const movingSandWall = (engine, pos, targetPos, range) => new Entity.Movi
   speed: 300,
 })
 
-export const sandShuriken = (engine, pos, direction, range) => new Entity.DirectionalProjectile({
+export const sandShuriken = (engine, pos, direction, range) => new DirectionalProjectile({
   game: engine.game,
   direction,
   passable: true,
@@ -262,7 +270,7 @@ export const sandShuriken = (engine, pos, direction, range) => new Entity.Direct
   range,
 })
 
-export const sandTombPart = (engine, pos, targetPos) => new Entity.DestructiveProjectile({
+export const sandTombPart = (engine, pos, targetPos) => new DestructiveProjectile({
   game: engine.game,
   targetPos,
   passable: true,
@@ -279,7 +287,7 @@ export const sandTombPart = (engine, pos, targetPos) => new Entity.DestructivePr
   range: 30,
 })
 
-export const fireball = (engine, pos, targetPos) => new Entity.DestructiveProjectile({
+export const fireball = (engine, pos, targetPos) => new DestructiveProjectile({
   game: engine.game,
   targetPos,
   passable: true,
@@ -297,7 +305,7 @@ export const fireball = (engine, pos, targetPos) => new Entity.DestructiveProjec
 })
 
 export const fireballGas = (engine, actor, targetPos) => {
-  return new Entity.DestructiveCloudProjectile({
+  return new DestructiveCloudProjectile({
     game: engine.game,
     owner_id: actor ? actor.id : null,
     targetPos,
@@ -317,7 +325,7 @@ export const fireballGas = (engine, actor, targetPos) => {
   })
 }
 
-export const waterball = (engine, actor, targetPos) => new Entity.DestructiveCloudProjectile({
+export const waterball = (engine, actor, targetPos) => new DestructiveCloudProjectile({
   game: engine.game,
   owner_id: actor ? actor.id : null,
   targetPos,
@@ -336,7 +344,7 @@ export const waterball = (engine, actor, targetPos) => new Entity.DestructiveClo
   // clonePattern: Constant.CLONE_PATTERNS.square,
 })
 
-export const sword = (engine) => new Entity.Weapon({
+export const sword = (engine) => new Weapon({
   game: engine.game,
   name: TYPE.SWORD,
   passable: true,
@@ -350,7 +358,7 @@ export const sword = (engine) => new Entity.Weapon({
   },
 })
 
-export const axe = (engine) => new Entity.Weapon({
+export const axe = (engine) => new Weapon({
   game: engine.game,
   name: TYPE.AXE,
   passable: true,
@@ -364,7 +372,7 @@ export const axe = (engine) => new Entity.Weapon({
   },
 })
 
-export const waterGun = (engine) => new Entity.Weapon({
+export const waterGun = (engine) => new Weapon({
   game: engine.game,
   name: TYPE.WATER_GUN,
   passable: true,
@@ -378,7 +386,7 @@ export const waterGun = (engine) => new Entity.Weapon({
   },
 })
 
-export const fireJacket = (engine) => new Entity.Armor({
+export const fireJacket = (engine) => new Armor({
   game: engine.game,
   name: 'Fire Jacket',
   passable: true,
@@ -392,7 +400,7 @@ export const fireJacket = (engine) => new Entity.Armor({
   },
 })
 
-export const test = (engine, pos) => new Entity.Weapon({
+export const test = (engine, pos) => new Weapon({
   game: engine.game,
   name: TYPE.SWORD,
   passable: true,

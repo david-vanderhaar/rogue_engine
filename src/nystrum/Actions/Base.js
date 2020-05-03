@@ -1,4 +1,4 @@
-import { Particle } from '../entites';
+import { Particle } from '../Entities/index';
 import * as Constant from '../constants';
 
 export class Base {

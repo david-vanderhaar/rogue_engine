@@ -3,14 +3,27 @@ import * as Helper from '../../helper';
 import * as Item from '../items';
 import * as MapHelper from '../Maps/helper';
 import { generate as generateBuilding } from '../Maps/generator';
-import { FireSpread, Speaker, Debris } from '../entites';
+import { FireSpread, Speaker, Debris } from '../Entities/index';
 import { MESSAGE_TYPE } from '../message';
 import { Mode } from './default';
 import SOUNDS from '../sounds';
 
-export class Play extends Mode {
+export class Flume extends Mode {
   constructor({ ...args }) {
     super({ ...args });
+    this.data = {
+      level: 1,
+      highestLevel: null,
+      fireIntensity: 1, // increase this number to increase fire spread
+      npcCount: 1,
+      debrisCount: 4,
+      mediumDebrisCount: 3,
+      heavyDebrisCount: 4,
+      smallGasCanCount: 3,
+      mediumGasCanCount: 0,
+      largeGasCanCount: 1,
+      turnCount: 0,
+    };
   }
 
   initialize () {

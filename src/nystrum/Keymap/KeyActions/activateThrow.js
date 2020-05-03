@@ -1,7 +1,6 @@
 import { PlaceActor } from "../../Actions/PlaceActor";
 import * as Constant from '../../constants';
 import * as Item from '../../items';
-import { UI_Actor } from '../../entites';
 import { createEightDirectionMoveOptions } from '../helper';
 
 const throwDirectionalKunai = (direction, engine, actor) => {

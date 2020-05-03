@@ -1,7 +1,8 @@
 import { PlaceActor } from "../../Actions/PlaceActor";
 import * as Item from '../../items';
 import * as Constant from '../../constants';
-import { UI_Actor } from '../../entites';
+import { UI_Actor } from '../../Entities/index';
+
 import { moveCursor } from './moveCursor';
 import { createEightDirectionMoveOptions } from '../helper';
 

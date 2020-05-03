@@ -1,6 +1,5 @@
 // import deps
-import * as Item from '../items';
-import * as Entity from '../entites';
+import { Player } from '../Entities/index'
 import * as Constant from '../constants';
 import * as Keymap from '../Keymap';
 import { createFourDirectionMoveOptions } from '../Keymap/helper';
@@ -37,7 +36,7 @@ export default function (engine) {
     };
   }
   // instantiate class
-  let actor = new Entity.Player({
+  let actor = new Player({
     pos: { x: 19, y: 22 },
     renderer: {
       character: 'F',

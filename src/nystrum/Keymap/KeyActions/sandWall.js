@@ -1,4 +1,4 @@
-import { Wall } from '../../entites';
+import { Wall } from '../../Entities/index';
 import { PlaceItems } from "../../Actions/PlaceItems";
 import { TYPE } from '../../items';
 import { getDirectionKey, DIRECTIONS, ENERGY_THRESHOLD } from '../../constants';
