@@ -6,9 +6,7 @@ import * as Message from './message';
 import { Display } from './Display/konvaCustom';
 import Mode from './Modes/index';
 
-// const MAP_DATA = require('./Maps/building.json');
-// const MAP_DATA = require('./Maps/building_w_floor.json');
-// const MAP_DATA = require('./Maps/building_w_ambo.json');
+// const MAP_DATA = require('./Maps/castle.json');
 // const SOLANGE = require('./Data/solange.json');
 
 const MAP_WIDTH = 50;
@@ -35,7 +33,7 @@ export class Game {
       tileWidth: TILE_WIDTH,
       tileHeight: TILE_HEIGHT,
       tileOffset: TILE_OFFSET,
-      cameraFollow: false,
+      cameraFollow: true,
       game: this,
     }),
     spriteMode = true,
@@ -176,7 +174,7 @@ export class Game {
   createCustomLevel (data) {
     Object.keys(data.tiles).forEach((key, i) => {
       const tile = data.tiles[key];
-      let type = JSON.parse(tile.data);
+      let type = tile.data.type;
       let currentFrame = 0;
       if (!type) {
         type = 'GROUND';
@@ -194,7 +192,7 @@ export class Game {
       };
     })
 
-    this.placeInitialEntities();
+    // this.placeInitialEntities();
   }
 
   canOccupyPosition (pos, entity = {passable: false}) {
@@ -244,14 +242,14 @@ export class Game {
       if (tile.entities.length > 0) {
         let entity = tile.entities[tile.entities.length - 1]
         nextFrame = this.animateEntity(entity);
-        
+
         character = nextFrame.character
         foreground = nextFrame.foreground
         if (nextFrame.background) {
           background = nextFrame.background
         }
       }
-      callback(key, x, y, character, foreground, background);
+      callback(key, x, y, character, foreground, background);          
     }
   }
 
@@ -267,6 +265,13 @@ export class Game {
 
   getPlayers () {
     return this.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
+  }
+
+  getPlayerPosition () {
+    let playerPos = null;
+    const players = this.getPlayers();
+    if (players.length) { playerPos = players[0].pos }
+    return playerPos;
   }
   
   draw () {
@@ -360,14 +365,9 @@ export class Game {
       actor.game = this;
     });
     this.createEmptyLevel();
-    // this.createLevel();
-    // this.createCustomLevel(MAP_DATA);
     this.initializeMap();
     this.draw();
-    // this.randomlyPlaceAllActorsOnMap()
-    // this.placeActorsOnMap()
-    // this.initializeMode();
-    this.mode.initialize();
+    this.initializeMode();
   }
 
   initialize (presserRef, document) {
