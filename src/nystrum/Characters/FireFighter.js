@@ -48,7 +48,7 @@ export default function (engine) {
     equipment: Constant.EQUIPMENT_LAYOUTS.limited(),
     actions: [],
     speed: 100,
-    durability: 4,
+    durability: 4000,
     keymap: keymap(engine),
   })
 

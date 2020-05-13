@@ -7,6 +7,8 @@ import { FireSpread, Speaker, Debris, Bandit, RangedBandit } from '../Entities/i
 import { MESSAGE_TYPE } from '../message';
 import { Mode } from './default';
 import SOUNDS from '../sounds';
+import Konva from 'konva';
+
 const MAP_DATA = require('../Maps/castle.json');
 
 export class Castle extends Mode {
@@ -24,7 +26,12 @@ export class Castle extends Mode {
 
   initialize () {
     super.initialize();
+    this.game.createEmptyLevel();
+    // this.game.initializeMapTiles();
+    // const children = this.game.display.layer.getChildren();
+    // console.log(children.length);
     // this.game.createCustomLevel(MAP_DATA);
+    
     this.setWaveData(this.data.level);
     const offsetX = Math.floor(this.game.mapWidth / 2)
     const offsetY = Math.floor(this.game.mapHeight / 2)
@@ -81,9 +88,9 @@ export class Castle extends Mode {
       this.game.mapHeight,
       this.game.mapWidth,
     );
+
     this.placeInitialItems();
     this.placePlayersInSafeZone();
-
     let floorTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'FLOOR')
     for (let index = 0; index < this.data.npcCount; index++) {
       let pos = Helper.getRandomInArray(floorTiles);
@@ -96,6 +103,25 @@ export class Castle extends Mode {
       let posXY = pos.split(',').map((coord) => parseInt(coord));
       this.addEnemy({ x: posXY[0], y: posXY[1] });
     }
+
+    this.game.initializeMapTiles();
+    const children = this.game.display.layer.getChildren();
+    console.log(children.length);
+    // this.game.getRenderMap(this.game.map, this.game.getPlayerPosition(), this.game.mapWidth, this.game.mapHeight)
+
+    // this.game.initializeMapTiles();
+    // const callb = (img) => {
+    //   console.log(img);
+    //   this.game.display.tileLayer.removeChildren();
+    //   this.game.display.tileLayer.add(new Konva.Image({image: img}));
+    // } 
+    // setTimeout(() => {
+    //   this.game.display.draw(this.game.getPlayerPosition(), 'tileLayer');
+    //   this.game.display.tileLayer.toImage({
+    //     callback(img) {callb(img)} 
+    //   });
+    // }, 2000);
+
   }
 
   update () {
@@ -132,7 +158,7 @@ export class Castle extends Mode {
   setWaveData (level) {
     switch (level) {
       case 1:
-        this.data.creatureCount = 1;
+        this.data.creatureCount = 0;
         this.data.npcCount = 1;
         break;
       case 2:
@@ -228,7 +254,7 @@ export class Castle extends Mode {
     })
 
     this.game.placeActorOnMap(box)
-    this.game.draw();
+    // this.game.draw();
   }
 
   addNPC (pos) {
@@ -253,7 +279,7 @@ export class Castle extends Mode {
       const tile = this.game.map[Helper.coordsToString(entity.pos)];
       tile.type = 'SAFE_FLOOR';
       this.game.engine.addActor(entity);
-      this.game.draw();
+      // this.game.draw();
     };
   }
 
@@ -278,7 +304,7 @@ export class Castle extends Mode {
 
     if (this.game.placeActorOnMap(fire)) {
       this.game.engine.addActor(fire);
-      this.game.draw();
+      // this.game.draw();
     };
   }
 
@@ -392,7 +418,7 @@ export class Castle extends Mode {
     })
     if (this.game.placeActorOnMap(entity)) {
       this.game.engine.addActor(entity);
-      this.game.draw();
+      // this.game.draw();
     };
   }
 

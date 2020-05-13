@@ -126,6 +126,7 @@ export class Display {
     this.stage = null;
     this.layer = null;
     this.animationLayer = null;
+    this.tileLayer = null;
     this.animations = [];
     this.animationLoop = null;
     this.game = game;
@@ -149,6 +150,9 @@ export class Display {
     this.stage.add(this.layer);
     
     // setting up animation layer
+    this.tileLayer = new Konva.Layer({hitGraphEnabled: false});
+    this.stage.add(this.tileLayer);
+
     this.animationLayer = new Konva.Layer({});
     this.stage.add(this.animationLayer);
     let animationLoop = new Konva.Animation((frame) => {
@@ -207,7 +211,7 @@ export class Display {
     tile.children[1].text(character);
   }
 
-  createTile(x, y, character, foreground, background) {
+  createTile(x, y, character, foreground, background, layer = 'layer') {
     let node = new Konva.Group({
       id: `${x},${y}`,
       x: (this.tileWidth * x) + (this.tileOffset + this.tileGutter),
@@ -252,7 +256,9 @@ export class Display {
 
     node.add(rect);
     node.add(text);
-    this.layer.add(node);
+    this[layer].add(node);
+    // this.layer.add(node);
+    // this.tileLayer.add(node);
     return node;
   }
 
@@ -272,7 +278,7 @@ export class Display {
     return Math.floor((height - tileOffset) / tileHeight)
   }
 
-  draw (playerPos) {
+  draw (playerPos, layer = 'layer') {
     if (this.cameraFollow && playerPos) {
       const tilesWide = this.tilesWide;
       const tilesHigh = this.tilesHigh;
@@ -291,8 +297,12 @@ export class Display {
       }
       this.layer.x(this.getAbsoultueX(newX))
       this.layer.y(this.getAbsoultueY(newY))
+      // this.tileLayer.x(this.getAbsoultueX(newX))
+      // this.tileLayer.y(this.getAbsoultueY(newY))
     }
-    this.layer.batchDraw();
+    this[layer].batchDraw();
+    // this.tileLayer.batchDraw();
+    // this.layer.batchDraw();
     // this.animationLayer.batchDraw();
     // this.layer.draw();
   }

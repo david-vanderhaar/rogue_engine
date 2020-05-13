@@ -9,18 +9,24 @@ import Mode from './Modes/index';
 // const MAP_DATA = require('./Maps/castle.json');
 // const SOLANGE = require('./Data/solange.json');
 
-const MAP_WIDTH = 50;
-const MAP_HEIGHT = 25;
+// const MAP_WIDTH = 50;
+// const MAP_HEIGHT = 25;
+const MAP_WIDTH = 100;
+const MAP_HEIGHT = 100;
 const TILE_WIDTH = 30;
 const TILE_HEIGHT = 30;
 const TILE_OFFSET = 5;
-const canvasWidth = (MAP_WIDTH * TILE_WIDTH) + TILE_OFFSET;
-const canvasHeight = (MAP_HEIGHT * TILE_HEIGHT) + TILE_OFFSET;
+const canvasWidth = (50 * TILE_WIDTH) + TILE_OFFSET;
+const canvasHeight = (25 * TILE_HEIGHT) + TILE_OFFSET;
+// const canvasWidth = (MAP_WIDTH * TILE_WIDTH) + TILE_OFFSET;
+// const canvasHeight = (MAP_HEIGHT * TILE_HEIGHT) + TILE_OFFSET;
 
 export class Game {
   constructor({
     engine = null,
     map = {},
+    entityMap = {},
+    entityDictionary = {},
     mapInitialized = false,
     tileMap = {},
     mapWidth = MAP_WIDTH,
@@ -33,7 +39,7 @@ export class Game {
       tileWidth: TILE_WIDTH,
       tileHeight: TILE_HEIGHT,
       tileOffset: TILE_OFFSET,
-      cameraFollow: true,
+      cameraFollow: false,
       game: this,
     }),
     spriteMode = true,
@@ -43,6 +49,8 @@ export class Game {
   }) {
     this.engine = engine;
     this.map = map;
+    this.entityMap = entityMap;
+    this.entityDictionary = entityDictionary;
     this.mapInitialized = mapInitialized;
     this.tileMap = tileMap;
     this.mapWidth = mapWidth;
@@ -225,12 +233,53 @@ export class Game {
     this.display.initialize(document)
   }
 
-  processTileMap (callback) {
-    for (let key in this.map) {
+  getRenderMap (fullMap, referencePosition, renderWidth, renderHeight) { 
+    // create an object with only tile keys that should be rendered (around player)
+    // renderWidth/Height measured in tiles
+    // reference positon usually based on player pos
+    // position from fullMap key should be translated to 0,0 based on referencePos
+    
+    const offsetX = referencePosition.x - Math.floor((renderWidth / 2))
+    const offsetY = referencePosition.y - Math.floor((renderHeight / 2))
+    
+    let result = {}
+    for (let key in fullMap) {
       let parts = key.split(",");
       let x = parseInt(parts[0]);
       let y = parseInt(parts[1]);
-      let tile = this.map[key];
+      let finalX = x - offsetX;
+      let finalY = y - offsetY;
+      
+      if (finalX >= 0 && finalX <= renderWidth) {
+        if (finalY >= 0 && finalY <= renderHeight) {
+          result[`${finalX},${finalY}`] = fullMap[key]
+        }
+      }
+    }
+    // console.log(referencePosition);
+    // console.log('renderWidth: ', renderWidth);
+    // console.log('renderHeight: ', renderHeight);
+    // console.log('offsetX ', offsetX);
+    // console.log('offsetY ', offsetY);
+    // console.log(Object.keys(fullMap));
+    // console.log(Object.keys(fullMap).length);
+    // console.log(Object.keys(this.tileMap));
+    // console.log(Object.keys(this.tileMap).length);
+    // console.log(Object.keys(result));
+    // console.log(Object.keys(result).length);
+    return result
+  }
+
+  processTileMap (callback) {
+    // const map = this.map;
+    // const map = this.getRenderMap(this.map, this.getPlayerPosition(), this.mapWidth, this.mapHeight);
+    const map = this.getRenderMap(this.map, this.getPlayerPosition(), 50, 25);
+    // const map = this.getRenderMap(this.map, this.getPlayerPosition(), 10, 5);
+    for (let key in map) {
+      let parts = key.split(",");
+      let x = parseInt(parts[0]);
+      let y = parseInt(parts[1]);
+      let tile = map[key];
       // let { foreground, background } = this.tileKey[tile.type]
       // Proto code to handle tile animations
       let tileRenderer = this.tileKey[tile.type]
@@ -238,7 +287,7 @@ export class Game {
       let character = nextFrame.character;
       let foreground = nextFrame.foreground;
       let background = nextFrame.background;
-
+      
       if (tile.entities.length > 0) {
         let entity = tile.entities[tile.entities.length - 1]
         nextFrame = this.animateEntity(entity);
@@ -253,14 +302,62 @@ export class Game {
     }
   }
 
-  initializeMap () {
+  processTiles (callback) {
+    for (let key in this.map) {
+      let parts = key.split(",");
+      let x = parseInt(parts[0]);
+      let y = parseInt(parts[1]);
+      let tile = this.map[key];
+      // let { foreground, background } = this.tileKey[tile.type]
+      // Proto code to handle tile animations
+      let tileRenderer = this.tileKey[tile.type]
+      let nextFrame = this.animateTile(tile, tileRenderer);
+      let character = nextFrame.character;
+      let foreground = nextFrame.foreground;
+      let background = nextFrame.background;
+
+      callback(key, x, y, character, foreground, background);          
+    }
+  }
+
+  processEntities (callback) {
+    for (let key in this.entityDictionary) {
+      const entity = this.entityMap[key];
+      const nextFrame = this.animateEntity(entity);
+      const character = nextFrame.character
+      const foreground = nextFrame.foreground
+      const background = nextFrame.background ? nextFrame.background : '';
+      const x = entity.pos.x;
+      const y = entity.pos.y;
+      callback(key, x, y, character, foreground, background);          
+    }
+  }
+  // if(tile.entities.length > 0) {
+  //   this.entities = this.entities.concat(tile.entities);
+  // }
+
+  initializeMapTiles () { //NEEDED ??
     if (this.mapInitialized) return false;
     this.mapInitialized = true;
-    this.processTileMap((tileKey, x, y, character, foreground, background) => {
+    this.processTileMap((key, x, y, character, foreground, background) => {
       let node = this.display.createTile(x, y, character, foreground, background);
-      this.tileMap[tileKey] = node;
+      this.tileMap[key] = node;
     });
-    this.display.draw();
+  }
+  // initializeMapTiles () { //NEEDED ??
+  //   if (this.mapInitialized) return false;
+  //   this.mapInitialized = true;
+  //   this.processTiles((key, x, y, character, foreground, background) => {
+  //     let node = this.display.createTile(x, y, character, foreground, background, 'tileLayer');
+  //     this.tileMap[key] = node;
+  //   });
+  // }
+
+  initializeEntityTiles () {
+    this.processEntities((key, x, y, character, foreground, background) => {
+      let node = this.display.createTile(x, y, character, foreground, background, 'layer');
+      this.entityMap[key] = node;
+    });
   }
 
   getPlayers () {
@@ -275,16 +372,28 @@ export class Game {
   }
   
   draw () {
-    this.processTileMap((tileKey, x, y, character, foreground, background) => {
-      this.display.updateTile(this.tileMap[tileKey], character, foreground, background);
+    this.processTileMap((key, x, y, character, foreground, background) => {
+      this.display.updateTile(this.tileMap[key], character, foreground, background);
     });
-
-    let playerPos = null;
-    const players = this.getPlayers();
-    if (players.length) { playerPos = players[0].pos }
-
+    const playerPos = this.getPlayerPosition();
     this.display.draw(playerPos);
   }
+
+  // draw () {
+  //   // this.processTileMap((key, x, y, character, foreground, background) => {
+  //   //   this.display.updateTile(this.tileMap[key], character, foreground, background);
+  //   // });
+  //   // this.processTiles((key, x, y, character, foreground, background) => {
+  //   //   this.display.updateTile(this.tileMap[key], character, foreground, background);
+  //   // });
+  //   this.processEntities((key, x, y, character, foreground, background) => {
+  //     this.display.updateTile(this.entityMap[key], character, foreground, background);
+  //   });
+
+  //   const playerPos = this.getPlayerPosition();
+  //   // this.display.draw(playerPos);
+  //   this.display.draw(playerPos, 'layer');
+  // }
 
   getEntityRenderer (renderer) {
     // if sprite mode is on and the renderer has a sprite defined, use that
@@ -364,10 +473,10 @@ export class Game {
     this.engine.actors.forEach((actor) => {
       actor.game = this;
     });
-    this.createEmptyLevel();
-    this.initializeMap();
-    this.draw();
+    // this.createEmptyLevel();
+    // this.initializeMapTiles();
     this.initializeMode();
+    this.draw();
   }
 
   initialize (presserRef, document) {
