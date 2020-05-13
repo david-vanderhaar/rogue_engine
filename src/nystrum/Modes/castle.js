@@ -58,16 +58,16 @@ export class Castle extends Mode {
       this.game.mapHeight,
       this.game.mapWidth,
     );
-    padding = 5;
-    MapHelper.addTileZone(
-      { x: padding, y: padding },
-      this.game.mapHeight - (padding * 2),
-      this.game.mapWidth - (padding * 2),
-      'WALL',
-      this.game.map,
-      this.game.mapHeight,
-      this.game.mapWidth,
-    );
+    // padding = 5;
+    // MapHelper.addTileZone(
+    //   { x: padding, y: padding },
+    //   this.game.mapHeight - (padding * 2),
+    //   this.game.mapWidth - (padding * 2),
+    //   'WALL',
+    //   this.game.map,
+    //   this.game.mapHeight,
+    //   this.game.mapWidth,
+    // );
     padding = 6
     MapHelper.addTileZone(
       { x: padding, y: padding },
@@ -88,6 +88,8 @@ export class Castle extends Mode {
       this.game.mapHeight,
       this.game.mapWidth,
     );
+    generateBuilding(this.game.map, 10, 10, 2, 4);
+
 
     this.placeInitialItems();
     this.placePlayersInSafeZone();
