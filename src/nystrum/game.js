@@ -15,7 +15,7 @@ const MAP_HEIGHT = 25;
 // const MAP_HEIGHT = 100;
 const TILE_WIDTH = 30;
 const TILE_HEIGHT = 30;
-const TILE_OFFSET = 5;
+const TILE_OFFSET = 0;
 const canvasWidth = (50 * TILE_WIDTH) + TILE_OFFSET;
 const canvasHeight = (25 * TILE_HEIGHT) + TILE_OFFSET;
 // const canvasWidth = (MAP_WIDTH * TILE_WIDTH) + TILE_OFFSET;
@@ -31,17 +31,10 @@ export class Game {
     tileMap = {},
     mapWidth = MAP_WIDTH,
     mapHeight = MAP_HEIGHT,
+    tileWidth = TILE_WIDTH,
+    tileHeight = TILE_HEIGHT,
+    tileOffset = TILE_OFFSET,
     getSelectedCharacter = () => false,
-    display = new Display({
-      containerId: 'display',
-      width: canvasWidth,
-      height: canvasHeight,
-      tileWidth: TILE_WIDTH,
-      tileHeight: TILE_HEIGHT,
-      tileOffset: TILE_OFFSET,
-      cameraFollow: false,
-      game: this,
-    }),
     spriteMode = true,
     tileKey = Constant.TILE_KEY,
     mode = Mode.Flume,
@@ -55,7 +48,18 @@ export class Game {
     this.tileMap = tileMap;
     this.mapWidth = mapWidth;
     this.mapHeight = mapHeight;
-    this.display = display;
+    this.tileWidth = tileWidth;
+    this.tileHeight = tileHeight;
+    this.tileOffset = tileOffset;
+    this.display = new Display({
+      containerId: 'display',
+      width: canvasWidth,
+      height: canvasHeight,
+      tileWidth: tileWidth,
+      tileHeight: tileHeight,
+      tileOffset: tileOffset,
+      game: this,
+    });
     this.spriteMode = spriteMode;
     this.tileKey = tileKey;
     this.mode = new mode({game: this});
@@ -276,8 +280,8 @@ export class Game {
   processTileMap (callback) {
     // const map = this.map;
     // const map = this.getRenderMap(this.map, this.getPlayerPosition(), this.mapWidth, this.mapHeight);
-    const map = this.getRenderMap(this.map, this.getPlayerPosition(), 50, 25, this.mapWidth, this.mapHeight);
-    // const map = this.getRenderMap(this.map, this.getPlayerPosition(), 10, 5, this.mapWidth, this.mapHeight);
+    // const map = this.getRenderMap(this.map, this.getPlayerPosition(), 50, 25, this.mapWidth, this.mapHeight);
+    const map = this.getRenderMap(this.map, this.getPlayerPosition(), 10, 5, this.mapWidth, this.mapHeight);
     for (let key in map) {
       let parts = key.split(",");
       let x = parseInt(parts[0]);
@@ -329,8 +333,7 @@ export class Game {
     this.processTileMap((key, x, y, character, foreground, background) => {
       this.display.updateTile(this.tileMap[key], character, foreground, background);
     });
-    const playerPos = this.getPlayerPosition();
-    this.display.draw(playerPos);
+    this.display.draw();
   }
 
   getEntityRenderer (renderer) {

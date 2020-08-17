@@ -29,6 +29,7 @@ export class Flume extends Mode {
   initialize () {
     super.initialize();
     this.game.createEmptyLevel();
+    this.game.initializeMapTiles();
     const offsetX = Math.floor(this.game.mapWidth / 2)
     const offsetY = Math.floor(this.game.mapHeight / 2)
     generateBuilding(this.game.map, offsetX, offsetY);

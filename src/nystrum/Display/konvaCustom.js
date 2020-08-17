@@ -110,7 +110,6 @@ export class Display {
     tileHeight = 10,
     tileGutter = 0,
     tileOffset = 10,
-    cameraFollow = false,
     game = null,
   }) {
     this.containerId = containerId;
@@ -122,11 +121,9 @@ export class Display {
     this.tileHeight = tileHeight;
     this.tileGutter = tileGutter;
     this.tileOffset = tileOffset;
-    this.cameraFollow = cameraFollow;
     this.stage = null;
     this.layer = null;
     this.animationLayer = null;
-    this.tileLayer = null;
     this.animations = [];
     this.animationLoop = null;
     this.game = game;
@@ -150,9 +147,6 @@ export class Display {
     this.stage.add(this.layer);
     
     // setting up animation layer
-    this.tileLayer = new Konva.Layer({hitGraphEnabled: false});
-    this.stage.add(this.tileLayer);
-
     this.animationLayer = new Konva.Layer({});
     this.stage.add(this.animationLayer);
     let animationLoop = new Konva.Animation((frame) => {
@@ -206,9 +200,11 @@ export class Display {
   updateTile(tile, character, foreground, background) {
     // child[0] is the rectangle
     // child[1] is the text
-    tile.children[0].fill(background);
-    tile.children[1].fill(foreground);
-    tile.children[1].text(character);
+    if (tile) {
+      tile.children[0].fill(background);
+      tile.children[1].fill(foreground);
+      tile.children[1].text(character);
+    }
   }
 
   createTile(x, y, character, foreground, background, layer = 'layer') {
@@ -256,9 +252,7 @@ export class Display {
 
     node.add(rect);
     node.add(text);
-    this[layer].add(node);
-    // this.layer.add(node);
-    // this.tileLayer.add(node);
+    this.layer.add(node);
     return node;
   }
 
@@ -278,32 +272,10 @@ export class Display {
     return Math.floor((height - tileOffset) / tileHeight)
   }
 
-  draw (playerPos, layer = 'layer') {
-    if (this.cameraFollow && playerPos) {
-      const tilesWide = this.tilesWide;
-      const tilesHigh = this.tilesHigh;
-      const tilesAcrossOnScreen = Math.floor(this.width / this.tileWidth)
-      const tilesDownOnScreen = Math.floor(this.height / this.tileHeight)
-      
-      const bufferX = Math.ceil(tilesWide - (tilesAcrossOnScreen / 2));
-      const bufferY = Math.ceil(tilesHigh - (tilesDownOnScreen / 2));
-      let newX = 0;
-      let newY = 0;
-      if (playerPos.x > tilesWide - bufferX) {
-        newX = tilesWide - bufferX - playerPos.x
-      }
-      if (playerPos.y > tilesHigh - bufferY) {
-        newY = tilesHigh - bufferY - playerPos.y;
-      }
-      this.layer.x(this.getAbsoultueX(newX))
-      this.layer.y(this.getAbsoultueY(newY))
-      // this.tileLayer.x(this.getAbsoultueX(newX))
-      // this.tileLayer.y(this.getAbsoultueY(newY))
-    }
-    this[layer].batchDraw();
-    // this.tileLayer.batchDraw();
-    // this.layer.batchDraw();
-    // this.animationLayer.batchDraw();
-    // this.layer.draw();
+  getTilesAcrossOnScreen () { return Math.floor(this.width / this.tileWidth)}
+  getTilesDownOnScreen () { return Math.floor(this.height / this.tileHeight)}
+
+  draw () {
+    this.layer.batchDraw();
   }
 }

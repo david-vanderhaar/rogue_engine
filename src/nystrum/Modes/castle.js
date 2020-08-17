@@ -27,9 +27,7 @@ export class Castle extends Mode {
   initialize () {
     super.initialize();
     this.game.createEmptyLevel();
-    // this.game.initializeMapTiles();
-    // const children = this.game.display.layer.getChildren();
-    // console.log(children.length);
+    this.game.initializeMapTiles();
     // this.game.createCustomLevel(MAP_DATA);
     
     this.setWaveData(this.data.level);
@@ -58,16 +56,16 @@ export class Castle extends Mode {
       this.game.mapHeight,
       this.game.mapWidth,
     );
-    // padding = 5;
-    // MapHelper.addTileZone(
-    //   { x: padding, y: padding },
-    //   this.game.mapHeight - (padding * 2),
-    //   this.game.mapWidth - (padding * 2),
-    //   'WALL',
-    //   this.game.map,
-    //   this.game.mapHeight,
-    //   this.game.mapWidth,
-    // );
+    padding = 5;
+    MapHelper.addTileZone(
+      { x: padding, y: padding },
+      this.game.mapHeight - (padding * 2),
+      this.game.mapWidth - (padding * 2),
+      'WALL',
+      this.game.map,
+      this.game.mapHeight,
+      this.game.mapWidth,
+    );
     padding = 6
     MapHelper.addTileZone(
       { x: padding, y: padding },
@@ -105,25 +103,6 @@ export class Castle extends Mode {
       let posXY = pos.split(',').map((coord) => parseInt(coord));
       this.addEnemy({ x: posXY[0], y: posXY[1] });
     }
-
-    this.game.initializeMapTiles();
-    const children = this.game.display.layer.getChildren();
-    console.log(children.length);
-    // this.game.getRenderMap(this.game.map, this.game.getPlayerPosition(), this.game.mapWidth, this.game.mapHeight)
-
-    // this.game.initializeMapTiles();
-    // const callb = (img) => {
-    //   console.log(img);
-    //   this.game.display.tileLayer.removeChildren();
-    //   this.game.display.tileLayer.add(new Konva.Image({image: img}));
-    // } 
-    // setTimeout(() => {
-    //   this.game.display.draw(this.game.getPlayerPosition(), 'tileLayer');
-    //   this.game.display.tileLayer.toImage({
-    //     callback(img) {callb(img)} 
-    //   });
-    // }, 2000);
-
   }
 
   update () {
