@@ -1,5 +1,5 @@
 {
-  "name": "fire-fight-rl",
+  "name": "rogue_engine",
   "version": "0.0.1",
   "private": true,
   "homepage": "./",
@@ -11,7 +11,7 @@
   },
   "build": {
     "appId": "io.github.david-vanderhaar",
-    "productName": "Flume",
+    "productName": "Rogue Engine",
     "copyright": "Copyright © 2020 ${author}",
     "mac": {
       "category": "public.app-category.utilities"
