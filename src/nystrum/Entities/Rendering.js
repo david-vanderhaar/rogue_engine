@@ -8,6 +8,11 @@ export const Rendering = superclass => class extends superclass {
     this.renderer = { ...renderer };
     this.currentFrame = 0;
   }
+
+  getRenderer() {
+    return this.renderer
+  }
+
   getPosition() {
     return this.pos;
   }

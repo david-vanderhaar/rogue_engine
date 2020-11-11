@@ -31,6 +31,8 @@ export class Game {
     tileMap = {},
     mapWidth = MAP_WIDTH,
     mapHeight = MAP_HEIGHT,
+    cameraWidth = MAP_WIDTH,
+    cameraHeight = MAP_HEIGHT,
     tileWidth = TILE_WIDTH,
     tileHeight = TILE_HEIGHT,
     tileOffset = TILE_OFFSET,
@@ -48,6 +50,8 @@ export class Game {
     this.tileMap = tileMap;
     this.mapWidth = mapWidth;
     this.mapHeight = mapHeight;
+    this.cameraWidth = cameraWidth;
+    this.cameraHeight = cameraHeight;
     this.tileWidth = tileWidth;
     this.tileHeight = tileHeight;
     this.tileOffset = tileOffset;
@@ -245,8 +249,12 @@ export class Game {
     
     const renderPaddingX = Math.floor((renderWidth / 2));
     const renderPaddingY = Math.floor((renderHeight / 2));
-    let offsetX = referencePosition.x - renderPaddingX;
-    let offsetY = referencePosition.y - renderPaddingY;
+    let offsetX = 0;
+    let offsetY = 0;
+    if (referencePosition) {
+      offsetX = referencePosition.x - renderPaddingX;
+      offsetY = referencePosition.y - renderPaddingY;
+    }
     offsetX = Helper.clamp(offsetX, 0, fullWidth - renderWidth);
     offsetY = Helper.clamp(offsetY, 0, fullHeight - renderHeight);
     
@@ -263,17 +271,6 @@ export class Game {
         }
       }
     }
-    // console.log(referencePosition);
-    // console.log('renderWidth: ', renderWidth);
-    // console.log('renderHeight: ', renderHeight);
-    // console.log('offsetX ', offsetX);
-    // console.log('offsetY ', offsetY);
-    // console.log(Object.keys(fullMap));
-    // console.log(Object.keys(fullMap).length);
-    // console.log(Object.keys(this.tileMap));
-    // console.log(Object.keys(this.tileMap).length);
-    // console.log(Object.keys(result));
-    // console.log(Object.keys(result).length);
     return result
   }
 
@@ -281,7 +278,7 @@ export class Game {
     // const map = this.map;
     // const map = this.getRenderMap(this.map, this.getPlayerPosition(), this.mapWidth, this.mapHeight);
     // const map = this.getRenderMap(this.map, this.getPlayerPosition(), 50, 25, this.mapWidth, this.mapHeight);
-    const map = this.getRenderMap(this.map, this.getPlayerPosition(), 10, 5, this.mapWidth, this.mapHeight);
+    const map = this.getRenderMap(this.map, this.getPlayerPosition(), this.cameraWidth, this.cameraHeight, this.mapWidth, this.mapHeight);
     for (let key in map) {
       let parts = key.split(",");
       let x = parseInt(parts[0]);
@@ -295,8 +292,9 @@ export class Game {
       let foreground = nextFrame.foreground;
       let background = nextFrame.background;
       
-      if (tile.entities.length > 0) {
-        let entity = tile.entities[tile.entities.length - 1]
+      const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
+      if (renderedEntities.length > 0) {
+        let entity = renderedEntities[renderedEntities.length - 1]
         nextFrame = this.animateEntity(entity);
 
         character = nextFrame.character
@@ -323,10 +321,9 @@ export class Game {
   }
 
   getPlayerPosition () {
-    let playerPos = null;
     const players = this.getPlayers();
-    if (players.length) { playerPos = players[0].pos }
-    return playerPos;
+    if (players.length) return players[0].pos
+    return null
   }
   
   draw () {
@@ -356,7 +353,7 @@ export class Game {
   }
   
   animateEntity (entity) {
-    let renderer = entity.renderer;
+    let renderer = entity.getRenderer();
     let { character, foreground, background } = this.getEntityRenderer(renderer)
     if (renderer.animation) {
       let frame = this.getEntityRenderer(renderer.animation[entity.currentFrame]);

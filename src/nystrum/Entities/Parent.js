@@ -41,7 +41,7 @@ export const Parent = superclass => class extends superclass {
     if (!this.isInitialized) {
       this.initialize();
     }
-    let result = new EngineCrank.EngineCrank({
+    let result = new EngineCrank({
       game,
       actor: this,
       engine: this.engine,

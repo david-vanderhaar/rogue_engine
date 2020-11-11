@@ -10,7 +10,8 @@ class Instructions extends React.Component {
           <div className='Instructions__block'>{`Wave ${this.props.game.mode.data.level}`}</div>
           <div className='Instructions__block'>
             {
-              `${this.props.game.mode.countNpcSafe()} of  ${this.props.game.mode.getSaveCountRequirement()} are safe!`
+              (this.props.game.mode.hasOwnProperty('countNpcSafe') && this.props.game.mode.hasOwnProperty('getSaveCountRequirement')) &&
+                `${this.props.game.mode.countNpcSafe()} of  ${this.props.game.mode.getSaveCountRequirement()} are safe!`
             }
           </div>
         </span>
