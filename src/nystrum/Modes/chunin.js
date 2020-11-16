@@ -99,11 +99,6 @@ export class Chunin extends Mode {
   }
 
   hasWon () {
-    console.table({
-      level: this.data.level,
-      dataByLevel: this.dataByLevel,
-    });
-    
     return this.data.level > this.dataByLevel.length;
   }
 

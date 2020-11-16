@@ -1,18 +1,34 @@
-import { Move } from "../../Actions/Move";
+import { MoveSubstitution } from "../../Actions/MoveSubstitution";
 import * as Constant from '../../constants';
-import { UI_Actor } from '../../Entities/index';
+import { UI_Actor, Wall } from '../../Entities/index';
 import { moveCursor } from './moveCursor';
 import { createFourDirectionMoveOptions } from '../helper';
+import { TYPE } from '../../items';
+
+const createSandWall = (engine, pos) => new Wall({
+  game: engine.game,
+  passable: false,
+  pos: { x: pos.x, y: pos.y },
+  renderer: {
+    // character: '>',
+    character: '✦️',
+    color: '#A89078',
+    background: '#D8C0A8',
+  },
+  name: TYPE.BARRIER,
+  durability: 3,
+})
 
 const trigger = (engine, actor) => {
   let cursor = engine.actors[engine.currentActor];
 
   actor.setNextAction(
-    new Move({
+    new MoveSubstitution({
       targetPos: { ...cursor.pos },
+      spawnedEntity: createSandWall(engine, { ...actor.pos }),
       game: engine.game,
       actor,
-      energyCost: Constant.ENERGY_THRESHOLD
+      energyCost: Constant.ENERGY_THRESHOLD,
     })
   )
 }
@@ -29,7 +45,7 @@ const keymap = (engine, initiatedBy, previousKeymap) => {
       label: 'Close',
     },
     ...createFourDirectionMoveOptions(moveCursor, engine),
-    t: {
+    r: {
       activate: () => {
         // make sure actor is burnable once targeting is complete or canceled
         trigger(engine, initiatedBy);
