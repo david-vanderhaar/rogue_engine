@@ -90,6 +90,7 @@ export const Bandit = pipe(
   Chasing,
   Destructable,
   Attacking,
+  Pushable,
 )(Entity);
 
 export const RangedBandit = pipe(
@@ -98,6 +99,7 @@ export const RangedBandit = pipe(
   RangedChasing,
   Destructable,
   Attacking,
+  Pushable,
 )(Entity);
 
 export const Player = pipe(
@@ -141,7 +143,7 @@ export const DirectionalProjectile = pipe(
   Rendering,
   Attacking,
   DirectionalProjecting,
-  Destructable
+  Destructable,
 )(Entity);
 
 export const DestructiveCloudProjectile = pipe(

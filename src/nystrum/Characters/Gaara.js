@@ -11,10 +11,10 @@ export default function (engine) {
   const keymap = (engine) => {
     return {
       ...createEightDirectionMoveOptions(Keymap.walk, engine),
-      s: {
-        activate: () => Keymap.none(engine),
-        label: 'stay',
-      },
+      // s: {
+      //   activate: () => Keymap.none(engine),
+      //   label: 'stay',
+      // },
       l: {
         activate: () => Keymap.sandWall(engine),
         label: 'sandWall',
@@ -54,6 +54,10 @@ export default function (engine) {
       t: {
         activate: () => Keymap.activateThrow(engine),
         label: 'Throw',
+      },
+      s: {
+        activate: () => Keymap.teleport(engine, 5),
+        label: 'substitution',
       },
       // DEV KEYS
       y: {

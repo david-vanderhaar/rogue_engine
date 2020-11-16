@@ -3,11 +3,11 @@ import * as Helper from '../../helper';
 import * as Item from '../items';
 import * as MapHelper from '../Maps/helper';
 import { generate as generateBuilding } from '../Maps/generator';
-import { FireSpread, Speaker, Debris, Bandit, RangedBandit } from '../Entities/index';
+import { Debris, Bandit, RangedBandit } from '../Entities/index';
 import { MESSAGE_TYPE } from '../message';
 import { Mode } from './default';
 import SOUNDS from '../sounds';
-import Konva from 'konva';
+import * as _ from 'lodash';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
@@ -16,15 +16,21 @@ export class Chunin extends Mode {
       level: 1,
       highestLevel: null,
       turnCount: 0,
-      creatureCount: 1,
     };
+    this.dataByLevel = [
+      {
+        enemies: Array(1).fill('Bandit'),
+      },
+      // {
+      //   enemies: Array(10).fill('Bandit'),
+      // },
+    ]
   }
 
   initialize () {
     super.initialize();
     this.game.createEmptyLevel();
     this.game.initializeMapTiles();
-    // this.game.createCustomLevel(MAP_DATA);
     
     this.setWaveData();
     MapHelper.addTileZone(
@@ -42,20 +48,25 @@ export class Chunin extends Mode {
     this.placeInitialItems();
     this.placePlayersInSafeZone();
     let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
-    for (let index = 0; index < this.data.creatureCount; index++) {
+    this.data.enemies.forEach((enemyName) => {
       let pos = Helper.getRandomInArray(groundTiles);
       let posXY = pos.split(',').map((coord) => parseInt(coord));
-      this.addEnemy({ x: posXY[0], y: posXY[1] });
-    }
+      this[`add${enemyName}`]({ x: posXY[0], y: posXY[1] });
+    })
   }
 
   update () {
     super.update();
+    if (this.hasWon()) {
+      this.game.toWin()
+    }
     if (this.hasLost()) {
+      SOUNDS.lose.play();
+      this.game.toLose();
       this.reset();
       this.game.initializeGameData();
     }
-    if (this.hasWon()) {
+    if (this.levelComplete()) {
       this.nextLevel();
       this.setWaveData();
       this.game.initializeGameData();
@@ -78,38 +89,29 @@ export class Chunin extends Mode {
   }
 
   setWaveData () {
-    const level = this.data.level
-    switch (level) {
-      case 1:
-        this.data.creatureCount = 0;
-        this.data.npcCount = 1;
-        break;
-      case 2:
-        this.data.creatureCount = 5;
-        this.data.npcCount = 1;
-        break;
-      case 3:
-        this.data.creatureCount = 10;
-        this.data.npcCount = 1;
-        break;
-      default:
-        this.data.creatureCount = 20;
-        this.data.npcCount = 1;
-        break;
-    }
+    const level = this.data.level - 1
+    const nextLevelData = _.get(this.dataByLevel, level, {});
+    this.data = {...this.data, ...nextLevelData}
+  }
+
+  levelComplete () {
+    return this.game.engine.actors.length === 1; 
   }
 
   hasWon () {
-    return this.game.engine.actors.length === 1; 
-    // return false
+    console.table({
+      level: this.data.level,
+      dataByLevel: this.dataByLevel,
+    });
+    
+    return this.data.level > this.dataByLevel.length;
   }
 
   hasLost () {
     let players = this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
-    if (players.length) {
+    if (!players.length) return true;
+    else if (players.length) {
       if (players[0].durability <= 0) {
-        SOUNDS.lose.play();
-        this.game.toLose();
         return true;
       }
     }
@@ -253,7 +255,7 @@ export class Chunin extends Mode {
     return Helper.getRandomInArray(banditLevels);
   }
 
-  addEnemy (pos) {
+  addBandit (pos) {
     let players = this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
     let targetEntity = players[0]
     const banditStats = this.getBanditStats();

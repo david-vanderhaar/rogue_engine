@@ -1,4 +1,4 @@
-import { PlaceActor, Say } from '../../actions';
+import { Say } from "../../Actions/Say";
 import { sandWallPulse } from '../../items';
 import { DIRECTIONS, ENERGY_THRESHOLD } from '../../constants';
 

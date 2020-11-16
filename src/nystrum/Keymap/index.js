@@ -14,6 +14,7 @@ import { sign } from './KeyActions/signing'
 import { signRelease } from './KeyActions/signing'
 import { push } from './KeyActions/push';
 import { tackle } from './KeyActions/tackle';
+import { teleport } from './KeyActions/teleport';
 import { activateFlyingLotus } from './KeyActions/activateFlyingLotus';
 import { drunkenFist } from './KeyActions/drunkenFist';
 import { openInnerGate } from './KeyActions/openInnerGate';
@@ -48,6 +49,7 @@ export {
   signRelease,
   push,
   tackle,
+  teleport,
   die,
   none,
   activateGrab,
