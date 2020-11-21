@@ -5,7 +5,6 @@ class Information extends React.Component {
   render() {
     return (
       <div className="Information UI">
-        <div className='flow-text'>Information</div>
         {
           this.props.data && (
             this.props.data.map((item, index) => {

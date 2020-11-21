@@ -32,5 +32,13 @@ export const sandSkin = (engine, defenseBuff = 1) => {
         background: '#D8C0A8',
       }
     },
+    // requiredResources: [
+    //   AddStatusEffect.createActionResource({
+    //     name: 'charge',
+    //     getResourceCost: () => 1,
+    //     actorResourcePath: 'charge',
+    //     actorResourceSetter: 'decreaseCharge',
+    //   })
+    // ]
   }));
 }

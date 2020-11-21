@@ -144,6 +144,7 @@ export class Display {
     this.layer = new Konva.Layer({
       hitGraphEnabled: false,
     });
+
     this.stage.add(this.layer);
     
     // setting up animation layer

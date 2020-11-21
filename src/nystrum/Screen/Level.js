@@ -48,29 +48,29 @@ class Level extends React.Component {
   }
 
   render() {
-    let currentActor = this.state.game.engine.actors[this.state.game.engine.currentActor];
-    let data = [
-      {
-        label: 'Wave',
-        value: `Current: ${this.state.game.mode.data.level}, Highest: ${this.state.game.mode.data.highestLevel}`,
-      },
-    ];
+    // let currentActor = this.state.game.engine.actors[this.state.game.engine.currentActor];
+    // let data = [
+    //   {
+    //     label: 'Wave',
+    //     value: `Current: ${this.state.game.mode.data.level}, Highest: ${this.state.game.mode.data.highestLevel}`,
+    //   },
+    // ];
 
-    data = data.concat(
-      [
-        ...this.state.game.engine.actors.map((actor, index) => {
-          let result = {
-            label: actor.name,
-            value: index,
-            value: `HP: ${actor.durability}, En/Sp: ${actor.energy}/${actor.speed}`,
-          };
-          if (index === this.state.game.engine.currentActor) {
-            result['color'] = 'red';
-          }
-          return result;
-        })
-      ]
-    )
+    // data = data.concat(
+    //   [
+    //     ...this.state.game.engine.actors.map((actor, index) => {
+    //       let result = {
+    //         label: actor.name,
+    //         // value: index,
+    //         value: `HP: ${actor.durability}, En/Sp: ${actor.energy}/${actor.speed}`,
+    //       };
+    //       if (index === this.state.game.engine.currentActor) {
+    //         result['color'] = 'red';
+    //       }
+    //       return result;
+    //     })
+    //   ]
+    // )
 
     return (
       <div className="Level">
@@ -78,8 +78,8 @@ class Level extends React.Component {
           <div className='col s10'>
             <div className='game_display_container'>
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
-              {/* <Information data={data} /> */}
             </div>
+            {/* <Information data={data} /> */}
             <Instructions game={this.state.game} spriteMode={this.state.game.spriteMode} setActiveScreen={this.props.setActiveScreen} toggleSpriteMode={this.toggleSpriteMode.bind(this)} />
           </div>
           <div className='col s2'>

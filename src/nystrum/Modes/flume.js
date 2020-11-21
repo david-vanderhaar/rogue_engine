@@ -11,6 +11,7 @@ import SOUNDS from '../sounds';
 export class Flume extends Mode {
   constructor({ ...args }) {
     super({ ...args });
+    this.infoHeader = 'Save all of the citizens from the burning keep and get them to the safe zone!'
     this.data = {
       level: 1,
       highestLevel: null,
@@ -86,6 +87,10 @@ export class Flume extends Mode {
       let posXY = pos.split(',').map((coord) => parseInt(coord));
       this.addNPC({ x: posXY[0], y: posXY[1] });
     }
+
+    // ui
+    this.updateUI()
+
     // sounds
     if (!SOUNDS.fire_1.playing()) SOUNDS.fire_1.play();    
   }
@@ -108,6 +113,7 @@ export class Flume extends Mode {
     this.propogateFire();
     this.burnEntities();
     this.checkRemoveSafeFloors();
+    this.updateUI()
     if (this.hasLost()) {
       this.reset();
       this.game.initializeGameData();
@@ -118,6 +124,10 @@ export class Flume extends Mode {
       this.increaseIntensity()
       this.game.initializeGameData();
     }
+  }
+
+  updateUI () {
+    this.updateInfoBlock('levelProgress', { text: `${this.countNpcSafe()} of  ${this.getSaveCountRequirement()} are safe!` })
   }
   
   //Extras

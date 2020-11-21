@@ -1,40 +1,29 @@
 import React from 'react';
 import { SCREENS } from '../Screen/constants';
+import * as _ from 'lodash';
 
 class Instructions extends React.Component {
   render() {
-    let modeDetails = null;
-    try {
-      modeDetails = (
-        <span>
-          <div className='Instructions__block'>{`Wave ${this.props.game.mode.data.level}`}</div>
-          <div className='Instructions__block'>
-            {
-              (this.props.game.mode.hasOwnProperty('countNpcSafe') && this.props.game.mode.hasOwnProperty('getSaveCountRequirement')) &&
-                `${this.props.game.mode.countNpcSafe()} of  ${this.props.game.mode.getSaveCountRequirement()} are safe!`
-            }
-          </div>
-        </span>
-      );
-    } catch { return }
+    const infoHeader = _.get(this.props.game, 'mode.infoHeader', null);
+    const infoBlocks = _.get(this.props.game, 'mode.infoBlocks', {});
 
     return (
       <div className="Instructions UI">
-        <p className='flow-text'>
-          Save all of the citizens from the burning keep and get them to the safe zone!
-        </p>
+        {infoHeader && (<p className='flow-text'>{infoHeader}</p>)}
         <div className='flow-text'>
-          { modeDetails }
+          {
+            _.map(infoBlocks, (value, key) => {
+              return (
+                <div key={key} className='Instructions__block'>
+                  {value.text}
+                </div>
+              )
+            })
+          }
           <div 
             className='Instructions__block'
             onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}
           >
-            {/* <button className='btn btn-main' onClick={() => window.location.reload()}>
-              Restart
-            </button> */}
-            {/* <button className='btn btn-main' onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}>
-              Restart
-            </button> */}
             <button className='btn btn-main'>
               Restart
             </button>
