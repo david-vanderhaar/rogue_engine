@@ -10,7 +10,7 @@ export default function (engine) {
   // define keymap
   const keymap = (engine) => {
     return {
-      ...createEightDirectionMoveOptions(Keymap.walk, engine),
+      ...createEightDirectionMoveOptions(Keymap.walk, engine, 'move', true),
       s: {
         activate: () => Keymap.none(engine),
         label: 'stay',

@@ -13,6 +13,7 @@ export class MoveSubstitution extends Base {
     let move_success = this.actor.move(this.targetPos);
     if (move_success) {
       success = true;
+      this.actor.energy -= this.energyCost;
       this.game.placeActorOnMap(this.spawnedEntity)
       this.game.draw();
     }

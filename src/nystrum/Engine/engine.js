@@ -44,20 +44,27 @@ export class Engine {
       // if (!actor.active) return false;
       if (!actor.active) break;
       let timePassed = 0;
+      
       if (actor.hasEnoughEnergy()) {
         // if (!actor.active) break;
         let action = actor.getAction(this.game);
         if (!action) { return false; } // if no action given, kick out to UI input
         timePassed += action.energyCost;
         while (true) {
-          action.onBefore();
-          let result = await action.perform();
-          if (result.success) {
-            action.onSuccess();
-          } else {
-            action.onFailure();
+          let result = {
+            success: false,
+            alternative: null,
+          };
+          if (actor.energy >= action.energyCost) { // replace with checking for all required resources
+            action.onBefore();
+            result = await action.perform();
+            if (result.success) {
+              action.onSuccess();
+            } else {
+              action.onFailure();
+            }
+            action.onAfter();
           }
-          action.onAfter();
           if (!await this.processActionFX(action, result.success)) {
             if (this.shouldAutoRun()) {
               await Helper.delay(25);

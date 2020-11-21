@@ -127,7 +127,7 @@ export class Flume extends Mode {
   }
 
   updateUI () {
-    this.updateInfoBlock('levelProgress', { text: `${this.countNpcSafe()} of  ${this.getSaveCountRequirement()} are safe!` })
+    this.createOrUpdateInfoBlock('levelProgress', { text: `${this.countNpcSafe()} of  ${this.getSaveCountRequirement()} are safe!` })
   }
   
   //Extras

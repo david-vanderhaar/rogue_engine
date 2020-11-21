@@ -11,14 +11,14 @@ export class Mode {
     this.game = game;
     this.data = data;
     this.infoBlocks = {}
+    this.progressBars = {}
   }
 
   initialize() {}
 
   update() {}
 
-  updateInfoBlock(id, value) {
+  createOrUpdateInfoBlock(id, value) {
     merge(this.infoBlocks, {[id]: value})
   }
-
 }

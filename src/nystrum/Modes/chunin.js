@@ -55,8 +55,26 @@ export class Chunin extends Mode {
     })
   }
 
+  getPlayers () {
+    return this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
+  }
+
+  updateUI() {
+    _.each(this.getPlayers(), (player, index) => {
+      const currentBlips = Math.floor(player.energy / 100);
+      const maxBlips = Math.floor(player.speed / 100);
+      const arr = [
+        ...Array(currentBlips).fill('0'),
+        ...Array(maxBlips - currentBlips).fill('_'),
+      ];
+      this.createOrUpdateInfoBlock(`playerSpeed${player.id}`, { text: `${player.name} | AP: ${arr.join(' ')}` })
+      // this.createOrUpdateInfoBlock(`playerSpeed`, { text: `AP: ${player.energy}/${player.speed}` })
+    })
+  }
+
   update () {
     super.update();
+    this.updateUI();
     if (this.hasWon()) {
       this.game.toWin()
     }
@@ -103,7 +121,7 @@ export class Chunin extends Mode {
   }
 
   hasLost () {
-    let players = this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
+    let players = this.getPlayers()
     if (!players.length) return true;
     else if (players.length) {
       if (players[0].durability <= 0) {
@@ -251,7 +269,7 @@ export class Chunin extends Mode {
   }
 
   addBandit (pos) {
-    let players = this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
+    let players = this.getPlayers()
     let targetEntity = players[0]
     const banditStats = this.getBanditStats();
     let entity = new banditStats.entityClass({
@@ -300,7 +318,7 @@ export class Chunin extends Mode {
   }
 
   placePlayersInSafeZone () {
-    let players = this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
+    let players = this.getPlayers()
     const keys = Object.keys(this.game.map).filter((key) => this.game.map[key].type == 'SAFE');
     players.forEach((player) => {
       const key = keys.shift();

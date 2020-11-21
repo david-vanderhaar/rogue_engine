@@ -17,7 +17,7 @@ const triggerSandTomb = (engine, actor) => {
   });
 
   if (cloud) {
-    engine.addActorAsNext(cloud);
+    // engine.addActorAsNext(cloud);
     actor.setNextAction(
       // new Action.Say({
       //   game: engine.game,
@@ -30,8 +30,9 @@ const triggerSandTomb = (engine, actor) => {
         entity: cloud,
         game: engine.game,
         actor,
+        energyCost: Constant.ENERGY_THRESHOLD * 4
         // energyCost: actor.energy
-        energyCost: Constant.ENERGY_THRESHOLD
+        // energyCost: Constant.ENERGY_THRESHOLD
       })
     )
   }

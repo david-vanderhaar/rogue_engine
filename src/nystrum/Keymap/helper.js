@@ -38,39 +38,47 @@ export const createFourDirectionMoveOptions = (moveFunction, engine, label = 'mo
   }
 }
 
-export const createEightDirectionMoveOptions = (moveFunction, engine, label = 'move') => {
+export const createEightDirectionMoveOptions = (moveFunction, engine, label = 'move', hidden = false) => {
   return {
     w: {
       activate: () => moveFunction(DIRECTIONS.N, engine),
       label: `${label} N`,
+      hidden,
     },
     e: {
       activate: () => moveFunction(DIRECTIONS.NE, engine),
       label: `${label} NE`,
+      hidden,
     },
     d: {
       activate: () => moveFunction(DIRECTIONS.E, engine),
       label: `${label} E`,
+      hidden,
     },
     c: {
       activate: () => moveFunction(DIRECTIONS.SE, engine),
       label: `${label} SE`,
+      hidden,
     },
     x: {
       activate: () => moveFunction(DIRECTIONS.S, engine),
       label: `${label} S`,
+      hidden,
     },
     z: {
       activate: () => moveFunction(DIRECTIONS.SW, engine),
       label: `${label} SW`,
+      hidden,
     },
     a: {
       activate: () => moveFunction(DIRECTIONS.W, engine),
       label: `${label} W`,
+      hidden,
     },
     q: {
       activate: () => moveFunction(DIRECTIONS.NW, engine),
       label: `${label} NW`,
+      hidden,
     },
   }
 }
