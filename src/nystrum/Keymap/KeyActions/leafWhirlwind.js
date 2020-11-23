@@ -42,7 +42,7 @@ export const leafWhirlwind = (engine) => {
     targetPositions,
     game: engine.game,
     actor,
-    energyCost: (ENERGY_THRESHOLD * 8),
+    energyCost: (ENERGY_THRESHOLD * 2),
     particleTemplate: PARTICLE_TEMPLATES.leaf,
   }))
 }

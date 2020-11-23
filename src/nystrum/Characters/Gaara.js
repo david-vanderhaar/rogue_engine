@@ -79,6 +79,7 @@ export default function (engine) {
     speed: 400,
     durability: 20,
     keymap: keymap(engine),
+    presentingUI: true,
   })
 
   // add default items to container

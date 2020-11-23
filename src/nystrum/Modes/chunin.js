@@ -43,9 +43,8 @@ export class Chunin extends Mode {
       this.game.mapWidth,
     );
     generateBuilding(this.game.map, 10, 10, 2, 4);
+    generateBuilding(this.game.map, 20, 5, 6, 4);
 
-
-    this.placeInitialItems();
     this.placePlayersInSafeZone();
     let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
     this.data.enemies.forEach((enemyName) => {
@@ -64,7 +63,7 @@ export class Chunin extends Mode {
       const currentBlips = Math.floor(player.energy / 100);
       const maxBlips = Math.floor(player.speed / 100);
       const arr = [
-        ...Array(currentBlips).fill('0'),
+        ...Array(currentBlips).fill(''),
         ...Array(maxBlips - currentBlips).fill('_'),
       ];
       this.createOrUpdateInfoBlock(`playerSpeed${player.id}`, { text: `${player.name} | AP: ${arr.join(' ')}` })
@@ -74,7 +73,7 @@ export class Chunin extends Mode {
 
   update () {
     super.update();
-    this.updateUI();
+    // this.updateUI();
     if (this.hasWon()) {
       this.game.toWin()
     }
@@ -290,31 +289,6 @@ export class Chunin extends Mode {
       this.game.engine.addActor(entity);
       // this.game.draw();
     };
-  }
-
-  placeInitialItems () {
-    let objects = [
-      Item.axe(this.game.engine),
-      Item.waterGun(this.game.engine),
-      Item.fireJacket(this.game.engine),
-    ];
-
-    const keys = Object.keys(this.game.map).filter((key) => this.game.map[key].type == 'SAFE');
-
-    objects.forEach((item) => {
-      const key = keys.pop();
-      if (key) {
-        const position = {
-          x: parseInt(key.split(',')[0]),
-          y: parseInt(key.split(',')[1]),
-        }
-        item.pos = position;
-        let tile = this.game.map[key];
-        if (tile) {
-          tile.entities.push(item);
-        }
-      }
-    })
   }
 
   placePlayersInSafeZone () {

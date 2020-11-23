@@ -68,12 +68,13 @@ export default function (engine) {
     renderer: {
       character: 'R',
       color: Constant.THEMES.SOLARIZED.base3,
-      background: Constant.THEMES.SOLARIZED.yellow,
+      background: Constant.THEMES.NARUTO.rock_lee,
     },
     name: 'Rock Lee',
     actions: [],
     speed: 400,
     durability: 20,
+    presentingUI: true,
     keymap: keymap(engine),
   })
 

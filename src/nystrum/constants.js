@@ -19,6 +19,7 @@ export const COLORS = {
 export const THEMES = {
   NARUTO: {
     gaara: '#603030',
+    rock_lee: '#155859',
   },
   SOLARIZED: {
     base03: '#002b36',

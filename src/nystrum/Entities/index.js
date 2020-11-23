@@ -1,6 +1,7 @@
 import pipe from 'lodash/fp/pipe';
 import { Entity } from './Entity';
 import { Parent } from './Parent';
+import { PresentingUI } from './PresentingUI';
 import { HasInnerGates } from './HasInnerGates';
 import { UI } from './UI';
 import { Attacking } from './Attacking';
@@ -105,6 +106,7 @@ export const RangedBandit = pipe(
 export const Player = pipe(
   Acting,
   Rendering,
+  PresentingUI,
   Dragging,
   Charging,
   Signing,
