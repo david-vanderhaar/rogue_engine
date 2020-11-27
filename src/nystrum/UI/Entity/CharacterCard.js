@@ -1,5 +1,6 @@
 import React from 'react';
 import * as _ from 'lodash';
+import Tooltip from '../Tooltip';
 
 function Portrait ({actor}) {
   return (
@@ -9,6 +10,38 @@ function Portrait ({actor}) {
       borderColor: actor.renderer.color,
     }}>
       {actor.renderer.character}
+    </div>
+  )
+}
+
+function StatusEffect ({effect}) {
+  return (
+    <div className="StatusEffects__effect" style={{
+      backgroundColor: effect.renderer.background, 
+      color: effect.renderer.color,
+      borderColor: effect.renderer.color,
+    }}>
+      {effect.renderer.character}
+    </div>
+  )
+}
+
+function StatusEffects ({actor}) {
+  return (
+    <div className="StatusEffects">
+      {
+        actor.game.engine.getStatusEffectsByActorId(actor.id).map((effect, i) => {
+          return (
+            <Tooltip 
+              key={i}
+              title={effect.name}
+              text={effect.name}
+            >
+              <StatusEffect effect={effect} />
+            </Tooltip>
+          )
+        })
+      }
     </div>
   )
 }
@@ -32,7 +65,6 @@ function ProgressBar ({
 }) {
   const valueMax = _.get(actor, attributePathMax, 0) / unit;
   const valueCurrent = _.get(actor, attributePath, 0) / unit;
-  console.table({valueCurrent, valueMax})
   return (
     <div className="ProgressBar">
       <div>
@@ -44,6 +76,7 @@ function ProgressBar ({
             Array(valueMax).fill(true).map((blip, index) => {
               return (
                 <span 
+                  key={index}
                   className='ProgressBar__blips__blip' 
                   style={{backgroundColor: valueCurrent > index ? colorFilled : colorEmpty }}
                 />
@@ -69,6 +102,7 @@ function CharacterCard ({actor}) {
           unit={100}
           actor={actor} 
         />
+        <StatusEffects actor={actor} />
       </div>
     </div>
   )

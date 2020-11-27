@@ -202,6 +202,10 @@ export class Engine {
     });
   }
 
+  getStatusEffectsByActorId(actorId) {
+    return this.statusEffects.filter((effect) => effect.actor.id === actorId);
+  }
+
   processStatusEffects (timePassed) {
     this.statusEffects.forEach((effect) => {
       effect.timeSinceLastStep += timePassed;

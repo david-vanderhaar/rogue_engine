@@ -10,6 +10,11 @@ export const sandSkin = (engine, defenseBuff = 1) => {
     lifespan: 1000,
     stepInterval: 100,
     allowDuplicates: false,
+    renderer: {
+      character: '✦️',
+      color: '#A89078',
+      background: '#D8C0A8',
+    },
     onStart: () => {
       currentActor.defense += defenseBuff;
       console.log(`${currentActor.name} was enveloped in hardened sand.`);

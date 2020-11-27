@@ -1,5 +1,6 @@
 import * as StatusEffect from '../../statusEffects';
 import { AddStatusEffect } from "../../Actions/AddStatusEffect";
+import {THEMES} from '../../constants';
 
 export const openInnerGate = (engine) => {
   let currentActor = engine.actors[engine.currentActor];
@@ -12,6 +13,11 @@ export const openInnerGate = (engine) => {
       lifespan: -1,
       stepInterval: 100,
       allowDuplicates: false,
+      renderer: {
+        background: THEMES.NARUTO.rock_lee,
+        color: '#24fe88',
+        character: nextGate.character,
+      },
       onStart: () => {
         currentActor.speed += nextGate.speedBuff;
         currentActor.energy += nextGate.speedBuff;
@@ -23,7 +29,7 @@ export const openInnerGate = (engine) => {
         console.log(`${currentActor.name} suffers ${nextGate.durabilityDebuff} damage from physical stress.`)
         let nextGateToLabel = currentActor.getNextGate();
         if (nextGateToLabel) {
-          currentActor.keymap.o.label = nextGateToLabel.name;
+          currentActor.keymap.g.label = nextGateToLabel.name;
         } else {
           delete currentActor.keymap.g;
         }

@@ -68,15 +68,70 @@
   display: block;
 }
 
+.Tooltip {
+    display:inline-block;
+    position:relative;
+    border-bottom:1px dotted #666;
+    text-align:left;
+}
+
+.Tooltip .top {
+    min-width:200px; 
+    top:-20px;
+    left:50%;
+    transform:translate(-50%, -100%);
+    padding:10px 20px;
+    color:#444444;
+    background-color:#EEEEEE;
+    font-weight:normal;
+    font-size:13px;
+    border-radius:8px;
+    position:absolute;
+    z-index:99999999;
+    box-sizing:border-box;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+    display:none;
+}
+
+.Tooltip:hover .top {
+    display:block;
+}
+
+.Tooltip .top i {
+    position:absolute;
+    top:100%;
+    left:50%;
+    margin-left:-12px;
+    width:24px;
+    height:12px;
+    overflow:hidden;
+}
+
+.Tooltip .top i::after {
+    content:'';
+    position:absolute;
+    width:12px;
+    height:12px;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(45deg);
+    background-color:#EEEEEE;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+}
+
 .CharacterCard_Container {
   display: flex;
   justify-content: flex-start;
 }
 
 .CharacterCard {
+  border: 2px solid #222;
+  box-shadow: 6px 6px 6px #222;
+  border-radius: 6px;
   display: flex;
   justify-content: space-around;
   margin-right: 20px;
+  margin-bottom: 20px;
+  border-collapse: collapse;
 }
 
 .CharacterCard .Portrait {
@@ -89,6 +144,30 @@
   margin-right: 10px;
   min-width: 100px;
   min-height: 100px;
+  padding: 10px;
+}
+
+.CharacterCard .StatusEffects {
+  /* background-color: #666; */
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 0 12px 0 0;
+  text-align: center;
+}
+
+.StatusEffects__effect {
+  border: 3px solid;
+  border-radius: 6px;
+  box-shadow: 3px 3px #424242;
+  display: flex;
+  font-size: 16;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
   padding: 10px;
 }
 
@@ -106,7 +185,6 @@
   background-color: #666;
   display: flex;
   justify-content: space-around;
-  width: 200px;
   border-radius: 6px;
   padding: 8px;
   margin: 0 12px 0 0;

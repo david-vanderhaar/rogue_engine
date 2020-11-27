@@ -9,6 +9,7 @@ export class Base {
     onStart = () => null,
     onStep = () => null,
     onStop = () => null,
+    renderer = {background: 'green', color: 'white', character: '*'}
   }) {
     this.game = game
     this.actor = actor
@@ -21,5 +22,6 @@ export class Base {
     this.onStart = onStart
     this.onStep = onStep
     this.onStop = onStop
+    this.renderer = renderer
   }
 }

@@ -11,6 +11,11 @@ export const removeWeights = (engine, speedBoost = 600, damageDebuff = 1) => {
     lifespan: 1000,
     stepInterval: 100,
     allowDuplicates: false,
+    renderer: {
+      color: '#424242',
+      background: '#e6e6e6',
+      character: '〣'
+    },
     onStart: () => {
       currentActor.speed += speedBoost;
       currentActor.attackDamage = Math.max(0, currentActor.attackDamage - damageDebuff);

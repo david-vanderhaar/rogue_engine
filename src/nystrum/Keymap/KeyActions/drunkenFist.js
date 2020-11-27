@@ -39,6 +39,11 @@ export const drunkenFist = (engine, damageBuff = 1) => {
     lifespan: 1000,
     stepInterval: 100,
     allowDuplicates: false,
+    renderer: {
+      color: '#c45ffd',
+      background: '#424242',
+      character: '?'
+    },
     onStart: () => {
       currentActor.attackDamage += damageBuff;
       currentActor.renderer.character = '?';
