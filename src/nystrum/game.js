@@ -5,6 +5,7 @@ import * as Helper from '../helper';
 import * as Message from './message';
 import { Display } from './Display/konvaCustom';
 import Mode from './Modes/index';
+import * as _ from 'lodash';
 
 // const MAP_DATA = require('./Maps/castle.json');
 // const SOLANGE = require('./Data/solange.json');
@@ -446,7 +447,8 @@ export const handleKeyPress = (event, engine) => {
     let keymap = actor.keymap;
     let code = event.key;
     if (!(code in keymap)) { return; }
-    keymap[code]['activate']();
+    const action = _.get(keymap[code], 'action', null);
+    keymap[code]['activate']({action});
     engine.start()
   }
   return;
