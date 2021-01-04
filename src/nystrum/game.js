@@ -444,12 +444,20 @@ export class Game {
 export const handleKeyPress = (event, engine) => {
   if (!engine.isRunning) {
     let actor = engine.actors[engine.currentActor];
-    let keymap = actor.keymap;
-    let code = event.key;
-    if (!(code in keymap)) { return; }
-    const action = _.get(keymap[code], 'action', null);
-    keymap[code]['activate']({action});
-    engine.start()
+    let keymap = null;
+    try {
+      keymap = actor.getKeymap();
+    } catch (e) {
+      console.log('keypress error');
+      console.log(e);
+    }
+    if (keymap) {
+      let code = event.key;
+      if (!(code in keymap)) { return; }
+      const action = keymap[code];
+      action.setAsNextAction();
+      engine.start()
+    }
   }
   return;
 }

@@ -49,17 +49,24 @@ export class Engine {
         // if (!actor.active) break;
         let action = actor.getAction(this.game);
         if (!action) { return false; } // if no action given, kick out to UI input
-        timePassed += action.energyCost;
+        timePassed += action.getEnergyCost();
+        console.log('timePassed');
+        console.log(timePassed);
+        
+        // timePassed += action.energyCost;
         while (true) {
           let result = {
             success: false,
             alternative: null,
           };
-          if (actor.energy >= action.energyCost) { // replace with checking for all required resources
+          // if (actor.energy >= action.energyCost) { // replace with checking for all required resources
+          if (action.canPayRequiredResources()) { // replace with checking for all required resources
+            
             action.onBefore();
             result = await action.perform();
             if (result.success) {
               action.onSuccess();
+              action.payRequiredResources();
             } else {
               action.onFailure();
             }
@@ -138,16 +145,24 @@ export class Engine {
       // this.game.backToTitle();
       return false;
     }
+
+    this.setVisibleKeymap(actor);
     
-    if (actor.keymap) {
-      this.game.visibleKeymap = actor.keymap;
-    }
     this.game.updateMode();
     await this.game.updateReact(this.game);
   }
   
   stop() {
     this.isRunning = false;
+  }
+
+  setVisibleKeymap (actor) {
+    if (actor.entityTypes.includes('HAS_KEYMAP')) {
+      const keymap = actor.getKeymap()
+      if (keymap) {
+        this.game.visibleKeymap = keymap;
+      }
+    }
   }
 
   sortActorsByEnergy () {
@@ -339,9 +354,7 @@ export class CrankEngine extends Engine {
       this.isRunning = await this.process();
     }
     let actor = this.actors[this.currentActor]
-    if (actor.keymap) {
-      this.game.visibleKeymap = actor.keymap;
-    }
+    this.setVisibleKeymap(actor);
     // this.game.updateMode();
     this.game.mode.update();
     await this.game.updateReact(this.game);

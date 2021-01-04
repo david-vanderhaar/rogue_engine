@@ -1,12 +1,15 @@
+import * as _ from 'lodash';
 import { Particle } from '../Entities/index';
 import * as Constant from '../constants';
-import * as _ from 'lodash';
+import {EnergyResource} from './ActionResources/EnergyResource';
 
 export class Base {
   constructor({ 
-    game, 
-    actor, 
-    energyCost = 100, 
+    game,
+    actor,
+    label = 'action label',
+    hidden = false,
+    energyCost = Constant.ENERGY_THRESHOLD, 
     processDelay = 50, 
     particles = [], 
     particleTemplate = Constant.PARTICLE_TEMPLATES.default, 
@@ -19,6 +22,8 @@ export class Base {
   }) {
     this.actor = actor;
     this.game = game;
+    this.label = label;
+    this.hidden = hidden;
     this.energyCost = energyCost;
     this.processDelay = processDelay;
     this.particles = particles;
@@ -28,7 +33,7 @@ export class Base {
     this.onSuccess = onSuccess;
     this.onFailure = onFailure;
     this.interrupt = interrupt;
-    this.requiredResources = requiredResources;
+    this.requiredResources = [new EnergyResource({ getResourceCost: () => this.energyCost }), ...requiredResources];
   }
 
   addParticle(
@@ -58,6 +63,14 @@ export class Base {
     this.particles = this.particles.filter((particle) => particle.life > 0);
   }
 
+  setAsNextAction() {
+    this.actor.setNextAction(this);
+  }
+
+  getEnergyCost() {
+    return _.find(this.requiredResources, {name: 'Energy'}).getResourceCost();
+  }
+
   getRequiredResourceName() {
     return _.map(this.requiredResources, 'name');
   }
@@ -71,13 +84,13 @@ export class Base {
 
       const actorVariable = _.get(this.actor, actorResourcePath, null);
       
-      let canPay = null;
+      let canPay = false;
       // if the actor has provided a setter for this variable, use that 
       if (_.get(this.actor, actorResourceGetter)) {
-        canPay = this.actor[actorResourceGetter] >= getResourceCost();
+        canPay = this.actor[actorResourceGetter]() >= getResourceCost();
       } else if (actorVariable) {
         // else if the actor has a path to the appropriate variable, get that value and set it manually
-        canPay = _.get(this.actor, actorResourcePath) >= getResourceCost();
+        canPay = actorVariable >= getResourceCost();
       }
 
       return {
@@ -93,21 +106,32 @@ export class Base {
 
   payRequiredResources() {
     _.each(this.requiredResources, (resource) => {
+      console.log('resource');
+      console.log(resource);
+      
       const getResourceCost = resource.getResourceCost;
       const actorResourcePath = resource.actorResourcePath;
       const actorResourceSetter = resource.actorResourceSetter;
       
       const actorVariable = _.get(this.actor, actorResourcePath, null);
-      
+      const resourceCost = getResourceCost();
       // if the actor has provided a setter for this variable, use that 
-      if (_.get(this.actor, actorResourceSetter)) {
-        return this.actor[actorResourceSetter](actorVariable - getResourceCost())
+      if (_.get(this.actor, actorResourceSetter, null)) {
+        this.actor[actorResourceSetter](actorVariable - resourceCost)
+        return true;
       }
 
       // else if the actor has a path to the appropriate variable, get that value and set it manually
       if (actorVariable) {
-        return _.set(this.actor, actorResourcePath, actorVariable - getResourceCost());
+        console.log('actorVariable');
+        console.log(actorVariable);
+        console.log('resource Cost');
+        console.log(resourceCost);
+        this.actor[actorResourcePath] -= resourceCost;
+        return true;
+        // return _.set(this.actor, actorResourcePath, actorVariable - getResourceCost());
       }
+      return false;
     })
   }
   

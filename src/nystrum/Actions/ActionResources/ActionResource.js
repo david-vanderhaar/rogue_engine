@@ -3,8 +3,8 @@ export class ActionResource {
     name = 'Resource',
     getResourceCost = () => null,
     actorResourcePath = null,
-    actorResourceGetter = () => null,
-    actorResourceSetter = () => null,
+    actorResourceGetter = null,
+    actorResourceSetter = null,
   }) {
     this.name = name;
     this.getResourceCost = getResourceCost;

@@ -38,9 +38,6 @@ export class PlaceActor extends Base {
       // this.game.engine.start(); // BUGGED - should this be used outside of engine?
       success = true;
     }
-    if (success) {
-      this.actor.energy -= this.energyCost;
-    }
     return {
       success,
       alternative,

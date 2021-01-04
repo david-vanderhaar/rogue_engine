@@ -25,7 +25,6 @@ import { sandSkin } from './KeyActions/sandSkin';
 import { sandTomb } from './KeyActions/sandTomb';
 // import { sandPulse } from './KeyActions/sandPulse';
 import { sandPulse } from './KeyActions/sandPulseV2';
-import { sandWall } from './KeyActions/sandWall';
 import { chop } from './KeyActions/chop';
 import { die } from './KeyActions/die';
 import { none } from './KeyActions/none';
@@ -61,7 +60,6 @@ export {
   removeWeights,
   openInnerGate,
   // Gaara
-  sandWall,
   sandPulse,
   sandTomb,
   chop,

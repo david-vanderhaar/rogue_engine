@@ -13,7 +13,7 @@ export class Move extends Base {
     let alternative = null;
     let moveSuccess = this.actor.move(this.targetPos);
     if (moveSuccess) {
-      this.actor.energy -= this.energyCost;
+      // this.actor.energy -= this.energyCost;
       success = true;
     }
     else {

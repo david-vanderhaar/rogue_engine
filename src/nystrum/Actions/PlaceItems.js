@@ -20,8 +20,6 @@ export class PlaceItems extends PlaceItem {
           success = true;
       }
     });
-    if (success)
-      this.actor.energy -= this.energyCost;
     return {
       success,
       alternative,

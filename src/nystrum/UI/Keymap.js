@@ -10,11 +10,9 @@ class Keymap extends React.Component {
         {
           
           this.props.keymap && (
-            Object.entries(this.props.keymap).map(([key, value], index) => {
-              const hidden = value.hasOwnProperty('hidden') ? value.hidden : false;
+            Object.entries(this.props.keymap).map(([key, action], index) => {
+              const hidden = _.get(action, 'hidden', false);
               const color = key === 'Escape' ? 'amber darken-3' : 'grey darken-1';
-              const action = _.get(value, 'action', null);
-              // const reqs = action.getRequiredResources();
               const reqs = action.listPayableResources();
 
               if (!hidden) {
@@ -22,14 +20,14 @@ class Keymap extends React.Component {
                   <Button 
                     key={index}
                     onClick={() => {
-                        value.activate({action});
+                        action.setAsNextAction();
                         if (!this.props.game.engine.isRunning) this.props.game.engine.start();
                         this.props.refocus();
                       } 
                     }
                     color={color}
                   >
-                    {key} {value.label} {reqs.map((req) => `${req.canPay} ${req.name}`)}
+                    {key} {action.label} {reqs.map((req) => `${req.canPay} ${req.name}`)}
                   </Button>
                 )
               }

@@ -31,11 +31,13 @@ import { Speaking } from './Speaking';
 import { Burnable } from './Burnable';
 import { Exploding } from './Exploding';
 import { Helpless } from './Helpless';
+import { HasKeymap } from './HasKeymap';
 
 export const UI_Actor = pipe(
   Acting,
   Rendering,
   Playing,
+  HasKeymap,
   UI
 )(Entity);
 
@@ -107,6 +109,7 @@ export const Player = pipe(
   Acting,
   Rendering,
   PresentingUI,
+  HasKeymap,
   Dragging,
   Charging,
   Signing,

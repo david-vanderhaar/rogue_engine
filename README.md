@@ -19,6 +19,9 @@ Composable classes used to represent entites within the game via data and functi
 ## Actions
 Composable classes representing any Entity action or Entity state change
 
+## KeyActions (Abilities)
+An abstraction layer above **Actions** that consist of an **Action** instance, a name / label, a **Renderer** or image, and an activation function which is responsible for triggering the action and handling any other UI triggers.  
+
 ## Constants
 A place to keep universal values that never change
 
@@ -41,5 +44,5 @@ A place to keep universal values that never change
 ## Modes
 
 ## UI
-### Keymap
-### Messages
+## Keymap
+## Messages

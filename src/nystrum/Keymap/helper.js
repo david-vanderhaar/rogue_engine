@@ -1,5 +1,17 @@
 import { ALPHABET, DIRECTIONS } from '../constants';
 
+export const createKeyAction = ({
+  label = 'KeyAction',
+  activate = () => null,
+  action = null,
+}) => {
+  return {
+    label,
+    activate,
+    action,
+  }
+}
+
 export const addAlphabeticallyToKeymap = (keymap, obj) => {
   let alphabetAllowed = ALPHABET.filter((letter) => {
     return !Object.keys(keymap).includes(letter);
