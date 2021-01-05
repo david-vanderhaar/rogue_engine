@@ -10,7 +10,8 @@ class Keymap extends React.Component {
         {
           
           this.props.keymap && (
-            Object.entries(this.props.keymap).map(([key, action], index) => {
+            Object.entries(this.props.keymap).map(([key, getAction], index) => {
+              const action = getAction();
               const hidden = _.get(action, 'hidden', false);
               const color = key === 'Escape' ? 'amber darken-3' : 'grey darken-1';
               const reqs = action.listPayableResources();

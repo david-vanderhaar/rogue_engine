@@ -1,5 +1,5 @@
 export const Charging = superclass => class extends superclass {
-  constructor({ charge = 10, ...args }) {
+  constructor({ charge = 2, ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('CHARGING');
     this.charge = charge;

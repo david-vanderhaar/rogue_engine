@@ -4,6 +4,7 @@ import { Player } from '../Entities/index';
 import { ContainerSlot } from '../Entities/Containing';
 import * as Constant from '../constants';
 import {Say} from '../Actions/Say';
+import {Move} from '../Actions/Move';
 import {PrepareSandWall} from '../Actions/SandWall';
 import {PrepareSandPulse, SandPulse} from '../Actions/SandPulse';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
@@ -14,7 +15,18 @@ export default function (engine) {
   const keymap = (engine, actor) => {
     return {
       // ...createEightDirectionMoveOptions(Keymap.walk, engine, 'move', true),
-      s: new Say({
+      w: () => {
+        const direction = Constant.DIRECTIONS.N;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
+      },
+      s: () => new Say({
         label: 'Stay',
         message: 'standing still...',
         game: engine.game,
@@ -24,7 +36,7 @@ export default function (engine) {
           new ChakraResource({ getResourceCost: () => 1 }),
         ],
       }),
-      p: new Say({
+      p: () => new Say({
         label: 'Pass',
         message: 'pass turn...',
         game: engine.game,
@@ -32,18 +44,13 @@ export default function (engine) {
         interrupt: true,
         energyCost: 0,
       }),
-      l: new PrepareSandWall({
-        label: 'Sand Wall',
-        game: engine.game,
-        actor,
-        sandWallRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
-      }),
-      // k: new PrepareSandPulse({
-      //   label: 'Sand Pulse',
+      // l: new PrepareSandWall({
+      //   label: 'Sand Wall',
       //   game: engine.game,
       //   actor,
+      //   sandWallRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
       // }),
-      k: new SandPulse({
+      k: () => new SandPulse({
         label: 'Sand Pulse',
         game: engine.game,
         actor,
