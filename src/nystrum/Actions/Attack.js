@@ -29,7 +29,7 @@ export class Attack extends Base {
       const sound = Helper.getRandomInArray([SOUNDS.chop_0, SOUNDS.chop_1]);
       sound.play();
       this.addParticle(1, { ...this.targetPos }, { x: 0, y: 0 });
-      this.actor.energy -= this.energyCost;
+      // this.actor.energy -= this.energyCost;
     }
     return {
       success,

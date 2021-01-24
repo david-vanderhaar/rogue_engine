@@ -97,9 +97,18 @@ function CharacterCard ({actor}) {
         <NamePlate actor={actor}/>
         <ProgressBar 
           label='Action Points'
-          attributePath={'energy'}
-          attributePathMax={'speed'}
+          attributePath='energy'
+          attributePathMax='speed'
+          colorFilled='#ff9926'
           unit={100}
+          actor={actor} 
+        />
+        <ProgressBar 
+          label='Chakara Points'
+          attributePath='charge'
+          attributePathMax='chargeMax'
+          colorFilled='#13b8d7'
+          unit={1}
           actor={actor} 
         />
         <StatusEffects actor={actor} />

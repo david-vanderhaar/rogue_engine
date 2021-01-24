@@ -11,7 +11,6 @@ const createSandWall = (engine, pos) => new Wall({
   passable: false,
   pos: { x: pos.x, y: pos.y },
   renderer: {
-    // character: '>',
     character: '✦️',
     color: '#A89078',
     background: '#D8C0A8',
@@ -127,8 +126,8 @@ export class PrepareSandWall extends Base {
       game: this.game,
     })
     let keymap = {
-      Escape: goToPreviousKeymap,
-      w: new SandWall({
+      Escape: () => goToPreviousKeymap,
+      w: () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.N, this.actor),
         actor: this.actor,
         game: this.game,
@@ -136,7 +135,7 @@ export class PrepareSandWall extends Base {
         requiredResources: this.sandWallRequiredResources,
         label: 'activate N',
       }),
-      d: new SandWall({
+      d: () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.E, this.actor),
         actor: this.actor,
         game: this.game,
@@ -144,7 +143,7 @@ export class PrepareSandWall extends Base {
         requiredResources: this.sandWallRequiredResources,
         label: 'activate E',
       }),
-      s: new SandWall({
+      s: () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.S, this.actor),
         actor: this.actor,
         game: this.game,
@@ -152,7 +151,7 @@ export class PrepareSandWall extends Base {
         requiredResources: this.sandWallRequiredResources,
         label: 'activate S',
       }),
-      a: new SandWall({
+      a: () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.W, this.actor),
         actor: this.actor,
         game: this.game,

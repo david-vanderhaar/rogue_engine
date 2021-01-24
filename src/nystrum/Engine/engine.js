@@ -81,7 +81,7 @@ export class Engine {
             this.game.draw();
           }
           if (!actor.active) break;
-          if (!result.success) return false;
+          // if (!result.success) return false;
           if (result.alternative === null) break;
           action = result.alternative;
         }

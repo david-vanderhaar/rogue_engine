@@ -2,6 +2,19 @@ import React from 'react';
 import Button from './Button';
 import * as _ from 'lodash';
 
+function ResourceBlock({ resource }) {
+  return (
+    <div className="StatusEffects__effect" style={{
+      backgroundColor: resource.renderer.background,
+      color: resource.renderer.color,
+      borderColor: resource.renderer.color,
+      fontFamily: 'scroll-o-script',
+    }}>
+      {resource.renderer.character}
+    </div>
+  )
+}
+
 class Keymap extends React.Component {
   render() {
     return (  
@@ -14,12 +27,11 @@ class Keymap extends React.Component {
               const action = getAction();
               const hidden = _.get(action, 'hidden', false);
               const color = key === 'Escape' ? 'amber darken-3' : 'grey darken-1';
-              const reqs = action.listPayableResources();
 
               if (!hidden) {
                 return (
                   <Button 
-                    key={index}
+                    key={`${index}-label`}
                     onClick={() => {
                         action.setAsNextAction();
                         if (!this.props.game.engine.isRunning) this.props.game.engine.start();
@@ -28,7 +40,7 @@ class Keymap extends React.Component {
                     }
                     color={color}
                   >
-                    {key} {action.label} {reqs.map((req) => `${req.canPay} ${req.name}`)}
+                    {key} {action.label}
                   </Button>
                 )
               }

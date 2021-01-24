@@ -7,7 +7,8 @@ import Information from '../UI/Information';
 import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Equipment from '../UI/Equipment';
 import Inventory from '../UI/Inventory';
-import KeymapUI from '../UI/Keymap';
+// import KeymapUI from '../UI/Keymap';
+import KeymapUI from '../UI/KeymapWithResources';
 import Messages from '../UI/Messages';
 
 class Level extends React.Component {

@@ -6,15 +6,13 @@ import * as Constant from '../constants';
 import {Say} from '../Actions/Say';
 import {Move} from '../Actions/Move';
 import {PrepareSandWall} from '../Actions/SandWall';
-import {PrepareSandPulse, SandPulse} from '../Actions/SandPulse';
+import {SandPulse} from '../Actions/SandPulse';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
-import { createEightDirectionMoveOptions } from '../Keymap/helper';
 
 export default function (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      // ...createEightDirectionMoveOptions(Keymap.walk, engine, 'move', true),
       w: () => {
         const direction = Constant.DIRECTIONS.N;
         let newX = actor.pos.x + direction[0];
@@ -26,17 +24,50 @@ export default function (engine) {
           energyCost: Constant.ENERGY_THRESHOLD
         });
       },
-      s: () => new Say({
+      s: () => {
+        const direction = Constant.DIRECTIONS.S;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
+      },
+      a: () => {
+        const direction = Constant.DIRECTIONS.W;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
+      },
+      d: () => {
+        const direction = Constant.DIRECTIONS.E;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
+      },
+      p: () => new Say({
         label: 'Stay',
         message: 'standing still...',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
         requiredResources: [
-          new ChakraResource({ getResourceCost: () => 1 }),
+          new ChakraResource({ getResourceCost: () => 4 }),
         ],
       }),
-      p: () => new Say({
+      Escape: () => new Say({
         label: 'Pass',
         message: 'pass turn...',
         game: engine.game,
@@ -44,12 +75,12 @@ export default function (engine) {
         interrupt: true,
         energyCost: 0,
       }),
-      // l: new PrepareSandWall({
-      //   label: 'Sand Wall',
-      //   game: engine.game,
-      //   actor,
-      //   sandWallRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
-      // }),
+      l: () => new PrepareSandWall({
+        label: 'Sand Wall',
+        game: engine.game,
+        actor,
+        sandWallRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
+      }),
       k: () => new SandPulse({
         label: 'Sand Pulse',
         game: engine.game,

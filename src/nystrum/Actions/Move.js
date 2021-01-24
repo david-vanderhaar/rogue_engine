@@ -1,6 +1,5 @@
 import { Base } from './Base';
 import { Attack } from "./Attack";
-import * as Constant from '../constants';
 
 export class Move extends Base {
   constructor({ targetPos, processDelay = 25, ...args }) {
@@ -13,7 +12,6 @@ export class Move extends Base {
     let alternative = null;
     let moveSuccess = this.actor.move(this.targetPos);
     if (moveSuccess) {
-      // this.actor.energy -= this.energyCost;
       success = true;
     }
     else {
@@ -22,7 +20,7 @@ export class Move extends Base {
         targetPos: this.targetPos,
         game: this.game,
         actor: this.actor,
-        energyCost: Constant.ENERGY_THRESHOLD
+        energyCost: 0
       });
     }
     return {

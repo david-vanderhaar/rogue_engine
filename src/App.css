@@ -71,7 +71,6 @@
 .Tooltip {
     display:inline-block;
     position:relative;
-    border-bottom:1px dotted #666;
     text-align:left;
 }
 
@@ -157,6 +156,19 @@
   text-align: center;
 }
 
+.ResourceBlock {
+  border: 3px solid;
+  border-radius: 6px;
+  box-shadow: 3px 3px #424242;
+  display: flex;
+  font-size: 16;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+}
+
 .StatusEffects__effect {
   border: 3px solid;
   border-radius: 6px;
@@ -207,6 +219,47 @@
 .Keymap .Button {
   width: 100%;
 }
+
+.CharacterActions {
+  border: #222 solid 2px;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.CharacterActions__item {
+}
+
+.CharacterActions__item__label {
+  background-color: #222;
+  border: #222 1px solid;
+  border-radius: 6px;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  width: 90px;
+  top: 10px;
+}
+
+.CharacterActions__item__content {
+  align-items: center;
+  border: #222 solid 2px;
+  border-radius: 6px;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  margin: auto;
+  padding: 10px;
+  width: 100px;
+}
+
+.CharacterActions__item__resources {
+  bottom: 15px;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
 
 .Inventory {
   /* left: 200px; */

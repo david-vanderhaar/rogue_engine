@@ -77,7 +77,6 @@ export class Base {
 
   listPayableResources() {
     return _.map(this.requiredResources, (resource) => {
-      const name = resource.name; 
       const getResourceCost = resource.getResourceCost; 
       const actorResourcePath = resource.actorResourcePath; 
       const actorResourceGetter = resource.actorResourceGetter;
@@ -94,8 +93,8 @@ export class Base {
       }
 
       return {
-        name,
         canPay,
+        ...resource
       }
     })
   }
@@ -106,9 +105,6 @@ export class Base {
 
   payRequiredResources() {
     _.each(this.requiredResources, (resource) => {
-      console.log('resource');
-      console.log(resource);
-      
       const getResourceCost = resource.getResourceCost;
       const actorResourcePath = resource.actorResourcePath;
       const actorResourceSetter = resource.actorResourceSetter;
@@ -123,10 +119,6 @@ export class Base {
 
       // else if the actor has a path to the appropriate variable, get that value and set it manually
       if (actorVariable) {
-        console.log('actorVariable');
-        console.log(actorVariable);
-        console.log('resource Cost');
-        console.log(resourceCost);
         this.actor[actorResourcePath] -= resourceCost;
         return true;
         // return _.set(this.actor, actorResourcePath, actorVariable - getResourceCost());
@@ -136,7 +128,6 @@ export class Base {
   }
   
   perform() {
-    console.log(`${this.actor.name} performs`);
     this.actor.energy -= this.energyCost;
     return {
       success: true,

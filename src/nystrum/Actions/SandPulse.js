@@ -1,13 +1,7 @@
 import { Base } from './Base';
-import { Say } from './Say';
-import { PlaceItems } from './PlaceItems';
-import { PlaceActor } from './PlaceActor';
-import { SwitchActor } from './SwitchActor';
-import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { MovingWall } from '../Entities/index';
-import { TYPE, movingSandWall } from '../items';
-import { getDirectionKey, DIRECTIONS, ENERGY_THRESHOLD } from '../constants';
-import { UI_Actor } from '../Entities/index';
+import { TYPE } from '../items';
+import { DIRECTIONS } from '../constants';
 import * as Helper from '../../helper';
 
 
