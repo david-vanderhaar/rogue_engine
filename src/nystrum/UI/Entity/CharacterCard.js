@@ -1,6 +1,7 @@
 import React from 'react';
 import * as _ from 'lodash';
 import Tooltip from '../Tooltip';
+import ActionBar from '../ActionBar';
 
 function Portrait ({actor}) {
   return (
@@ -89,7 +90,7 @@ function ProgressBar ({
   )
 }
 
-function CharacterCard ({actor}) {
+function CharacterCard ({actor, game}) {
   return (
     <div className='CharacterCard'>
       <Portrait actor={actor}/>
@@ -112,6 +113,9 @@ function CharacterCard ({actor}) {
           actor={actor} 
         />
         <StatusEffects actor={actor} />
+      </div>
+      <div>
+        <ActionBar keymap={game.visibleKeymap} game={game} />
       </div>
     </div>
   )

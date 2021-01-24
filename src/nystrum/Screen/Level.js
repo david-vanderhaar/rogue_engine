@@ -8,7 +8,7 @@ import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Equipment from '../UI/Equipment';
 import Inventory from '../UI/Inventory';
 // import KeymapUI from '../UI/Keymap';
-import KeymapUI from '../UI/KeymapWithResources';
+import KeymapUI from '../UI/ActionBar';
 import Messages from '../UI/Messages';
 
 class Level extends React.Component {
@@ -33,6 +33,7 @@ class Level extends React.Component {
     this.state.game['backToTitle'] = () => this.props.setActiveScreen(SCREENS.TITLE);
     this.state.game['toLose'] = () => this.props.setActiveScreen(SCREENS.LOSE);
     this.state.game['toWin'] = () => this.props.setActiveScreen(SCREENS.WIN);
+    this.state.game['refocus'] = () => this.refocus;
     this.state.game.updateReact = (newGameState) => { this.setState({game: newGameState}) }
     this.state.game.engine.start()
   }
@@ -44,7 +45,6 @@ class Level extends React.Component {
   toggleSpriteMode () {
     this.state.game.spriteMode = !this.state.game.spriteMode;
     this.state.game.draw();
-    // this.presserRef.current.focus();
     this.refocus();
     this.setState({ spriteMode: this.state.game.spriteMode})
   }
@@ -53,7 +53,7 @@ class Level extends React.Component {
     return (
       <div className="Level">
         <div className='row'>
-          <div className='col s10'>
+          <div className='col s12'>
             <div className='game_display_container'>
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
             </div>
@@ -61,10 +61,9 @@ class Level extends React.Component {
             <Information game={this.state.game} />
             <Instructions game={this.state.game} spriteMode={this.state.game.spriteMode} setActiveScreen={this.props.setActiveScreen} toggleSpriteMode={this.toggleSpriteMode.bind(this)} />
           </div>
-          <div className='col s2'>
-            <KeymapUI keymap={this.state.game.visibleKeymap} game={this.state.game} refocus={this.refocus.bind(this)}/>
+          {/* <div className='col s2'> */}
             {/* <Messages messages={this.state.game.messages.slice(-5).reverse()} /> */}
-          </div>
+          {/* </div> */}
           {/* <button className='btn' onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}>Quit</button> */}
         </div>
       </div>

@@ -8,7 +8,7 @@ const PlayerInformation = ({game}) => {
     <div className="PlayerInformation Information UI">
       <div className='CharacterCard_Container'>
         {
-          actors.map((actor, index) => <CharacterCard key={index} actor={actor} />)
+          actors.map((actor, index) => <CharacterCard key={index} actor={actor} game={game} />)
         }
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import * as _ from 'lodash';
-import Button from './Button';
 import Tooltip from './Tooltip';
 
 function ResourceBlock({ resource, superScript }) {
@@ -17,11 +16,10 @@ function ResourceBlock({ resource, superScript }) {
   )
 }
 
-class Keymap extends React.Component {
+class ActionBar extends React.Component {
   render() {
     return (  
-      <div className="Keymap UI">
-        <div className='flow-text center'>Keymap</div>
+      <div className="ActionBar">
         <div className="CharacterActions">
           {
             
@@ -44,7 +42,7 @@ class Keymap extends React.Component {
                         onClick={() => {
                           action.setAsNextAction();
                           if (!this.props.game.engine.isRunning) this.props.game.engine.start();
-                          this.props.refocus();
+                          this.props.game.refocus();
                         }}
                       >
                         <div className="CharacterActions__item__label">
@@ -80,4 +78,4 @@ class Keymap extends React.Component {
   }
 }
 
-export default Keymap;
+export default ActionBar;

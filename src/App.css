@@ -221,7 +221,6 @@
 }
 
 .CharacterActions {
-  border: #222 solid 2px;
   cursor: pointer;
   display: flex;
   flex-wrap: wrap;
