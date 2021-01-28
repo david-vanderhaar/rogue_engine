@@ -5,6 +5,6 @@ export class ChakraResource extends ActionResource {
     super({ ...args });
     this.name = 'Chakra';
     this.actorResourcePath = 'charge';
-    this.renderer = { background: '#224c92', color: '#13b8d7', character: '' }
+    this.renderer = { color: '#224c92', background: '#13b8d7', character: '' }
   }
 }

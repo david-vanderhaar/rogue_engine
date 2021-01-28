@@ -13,9 +13,6 @@ export class PlaceItem extends Base {
       this.entity.pos = this.targetPos;
       success = this.game.placeActorOnMap(this.entity);
     }
-    if (success) {
-      this.actor.energy -= this.energyCost;
-    }
     return {
       success,
       alternative,

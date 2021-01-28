@@ -2,12 +2,12 @@ import React from 'react';
 import * as _ from 'lodash';
 import Tooltip from './Tooltip';
 
-function ResourceBlock({ resource, superScript }) {
+function ResourceBlock({ resource, superScript, canPay }) {
   return (
     <div className="ResourceBlock" style={{
-      backgroundColor: resource.renderer.background,
-      color: resource.renderer.color,
-      borderColor: resource.renderer.color,
+      backgroundColor: canPay ? resource.renderer.background : '#616161',
+      color: canPay ? resource.renderer.color : '#bdbdbd',
+      borderColor: canPay ? resource.renderer.color : '#bdbdbd',
       fontFamily: 'scroll-o-script',
       width: superScript ? 'auto' : 20,
     }}>
@@ -27,7 +27,7 @@ class ActionBar extends React.Component {
               Object.entries(this.props.keymap).map(([key, getAction], index) => {
                 const action = getAction();
                 const hidden = _.get(action, 'hidden', false);
-                const color = key === 'Escape' ? 'amber darken-3' : 'grey darken-1';
+                const renderer = _.get(action, 'renderer', null);
                 const reqs = action.listPayableResources();
 
                 if (!hidden) {
@@ -48,7 +48,11 @@ class ActionBar extends React.Component {
                         <div className="CharacterActions__item__label">
                           {action.label}
                         </div>
-                        <div className="CharacterActions__item__content">
+                        <div className="CharacterActions__item__content" style={renderer && {
+                          backgroundColor: renderer.background,
+                          color: renderer.color,
+                          borderColor: renderer.color,
+                        }}>
                           {key}
                         </div>
                         <div className="CharacterActions__item__resources">
@@ -60,6 +64,7 @@ class ActionBar extends React.Component {
                                   key={`${i}-${req.name}-resource-block`}
                                   superScript={numBlocks}
                                   resource={req}
+                                  canPay={req.canPay}
                                 />
                               )
                             })

@@ -12,6 +12,7 @@ export class Base {
     energyCost = Constant.ENERGY_THRESHOLD, 
     processDelay = 50, 
     particles = [], 
+    renderer = null, 
     particleTemplate = Constant.PARTICLE_TEMPLATES.default, 
     onBefore = () => null, 
     onAfter = () => null, 
@@ -27,6 +28,7 @@ export class Base {
     this.energyCost = energyCost;
     this.processDelay = processDelay;
     this.particles = particles;
+    this.renderer = renderer;
     this.particleTemplate = particleTemplate;
     this.onBefore = onBefore;
     this.onAfter = onAfter;

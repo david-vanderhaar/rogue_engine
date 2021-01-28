@@ -16,8 +16,6 @@ export class AddStatusEffect extends Base {
         y: Math.sign(pos.y - this.actor.pos.y)
       });
     });
-    if (success)
-      this.actor.energy -= this.energyCost;
     return {
       success,
       alternative: null,

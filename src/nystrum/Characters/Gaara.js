@@ -7,6 +7,7 @@ import {Say} from '../Actions/Say';
 import {Move} from '../Actions/Move';
 import {PrepareSandWall} from '../Actions/SandWall';
 import {SandPulse} from '../Actions/SandPulse';
+import {AddSandSkinStatusEffect} from '../Actions/AddSandSkinStatusEffect';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 
 export default function (engine) {
@@ -63,9 +64,6 @@ export default function (engine) {
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
-        requiredResources: [
-          new ChakraResource({ getResourceCost: () => 4 }),
-        ],
       }),
       Escape: () => new Say({
         label: 'Pass',
@@ -85,15 +83,15 @@ export default function (engine) {
         label: 'Sand Pulse',
         game: engine.game,
         actor,
-      })
-      // j: {
-      //   activate: () => Keymap.sandTomb(engine),
-      //   label: 'sandTomb',
-      // },
-      // h: {
-      //   activate: () => Keymap.sandSkin(engine),
-      //   label: 'sandSkin',
-      // },
+      }),
+      h: () => new AddSandSkinStatusEffect({
+        label: 'Sand Skin',
+        game: engine.game,
+        actor,
+        requiredResources: [
+          new ChakraResource({ getResourceCost: () => 4 }),
+        ],
+      }),
       // g: {
       //   activate: () => Keymap.sandClone(engine),
       //   label: 'sandClone',

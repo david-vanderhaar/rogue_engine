@@ -9,7 +9,6 @@ export class Say extends Base {
   }
   perform() {
     this.game.addMessage(`${this.actor.name} says "${this.message}"`, this.messageType);
-    // this.actor.energy -= this.energyCost;
     return {
       success: true,
       alternative: null,

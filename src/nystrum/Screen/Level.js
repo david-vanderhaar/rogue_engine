@@ -33,7 +33,7 @@ class Level extends React.Component {
     this.state.game['backToTitle'] = () => this.props.setActiveScreen(SCREENS.TITLE);
     this.state.game['toLose'] = () => this.props.setActiveScreen(SCREENS.LOSE);
     this.state.game['toWin'] = () => this.props.setActiveScreen(SCREENS.WIN);
-    this.state.game['refocus'] = () => this.refocus;
+    this.state.game['refocus'] = () => this.refocus();
     this.state.game.updateReact = (newGameState) => { this.setState({game: newGameState}) }
     this.state.game.engine.start()
   }
@@ -60,9 +60,9 @@ class Level extends React.Component {
             <PlayerInformation game={this.state.game} />
             <Information game={this.state.game} />
             <Instructions game={this.state.game} spriteMode={this.state.game.spriteMode} setActiveScreen={this.props.setActiveScreen} toggleSpriteMode={this.toggleSpriteMode.bind(this)} />
+            <Messages messages={this.state.game.messages.slice(-5).reverse()} />
           </div>
           {/* <div className='col s2'> */}
-            {/* <Messages messages={this.state.game.messages.slice(-5).reverse()} /> */}
           {/* </div> */}
           {/* <button className='btn' onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}>Quit</button> */}
         </div>
