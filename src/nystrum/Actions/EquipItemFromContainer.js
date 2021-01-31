@@ -20,7 +20,6 @@ export class EquipItemFromContainer extends Base {
       this.game.addMessage(`${this.actor.name} equips ${this.item.name}.`, MESSAGE_TYPE.ACTION);
       success = true;
     }
-    this.actor.energy -= this.energyCost;
     return {
       success,
       alternative,

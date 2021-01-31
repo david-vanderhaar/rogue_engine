@@ -11,7 +11,6 @@ export class DropItem extends Base {
     this.game.addMessage(`${this.actor.name} drops ${this.item.name}.`, MESSAGE_TYPE.ACTION);
     this.actor.removeFromContainer(this.item);
     this.game.map[Helper.coordsToString(this.actor.pos)].entities.push(this.item);
-    this.actor.energy -= this.energyCost;
     return {
       success: true,
       alternative: null,

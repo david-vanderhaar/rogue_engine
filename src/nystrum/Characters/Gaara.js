@@ -1,14 +1,19 @@
 // import deps
 import * as Item from '../items';
+import * as Constant from '../constants';
 import { Player } from '../Entities/index';
 import { ContainerSlot } from '../Entities/Containing';
-import * as Constant from '../constants';
+import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
 import {Move} from '../Actions/Move';
 import {PrepareSandWall} from '../Actions/SandWall';
 import {SandPulse} from '../Actions/SandPulse';
 import {AddSandSkinStatusEffect} from '../Actions/AddSandSkinStatusEffect';
-import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
+import {OpenInventory} from '../Actions/OpenInventory';
+import {OpenEquipment} from '../Actions/OpenEquipment';
+import {OpenDropInventory} from '../Actions/OpenDropInventory';
+import {CloneSelf} from '../Actions/CloneSelf';
+import {PickupRandomItem} from '../Actions/PickupRandomItem';
 
 export default function (engine) {
   // define keymap
@@ -89,29 +94,47 @@ export default function (engine) {
         game: engine.game,
         actor,
         requiredResources: [
+          new ChakraResource({ getResourceCost: () => 2 }),
+        ],
+      }),
+      c: () => new CloneSelf({
+        label: 'Sand Clone',
+        game: engine.game,
+        actor,
+        cloneArgs: [
+          {
+            attribute: 'renderer',
+            value: { ...actor.renderer, background: '#A89078' }
+          },
+          {
+            attribute: 'ignoredKeys',
+            value: ['g'],
+          },
+        ],
+        requiredResources: [
           new ChakraResource({ getResourceCost: () => 4 }),
         ],
       }),
-      // g: {
-      //   activate: () => Keymap.sandClone(engine),
-      //   label: 'sandClone',
-      // },
-      // i: {
-      //   activate: () => Keymap.activateInventory(engine),
-      //   label: 'Open Inventory',
-      // },
-      // o: {
-      //   activate: () => Keymap.activateEquipment(engine),
-      //   label: 'Open Equipment',
-      // },
-      // u: {
-      //   activate: () => Keymap.activateDropItem(engine),
-      //   label: 'Drop Item',
-      // },
-      // p: {
-      //   activate: () => Keymap.pickupRandom(engine),
-      //   label: 'Pickup',
-      // },
+      i: () => new OpenInventory({
+        label: 'Open Inventory',
+        game: engine.game,
+        actor,
+      }),
+      o: () => new OpenEquipment({
+        label: 'Open Equipment',
+        game: engine.game,
+        actor,
+      }),
+      u: () => new OpenDropInventory({
+        label: 'Drop Items',
+        game: engine.game,
+        actor,
+      }),
+      g: () => new PickupRandomItem({
+        label: 'Pickup',
+        game: engine.game,
+        actor,
+      }),
       // t: {
       //   activate: () => Keymap.activateThrow(engine),
       //   label: 'Throw',
@@ -140,11 +163,13 @@ export default function (engine) {
     speed: 400,
     durability: 20,
     charge: 10,
+    game: engine.game,
     presentingUI: true,
+    initializeKeymap: keymap,
   })
 
-  const newKeymap = keymap(engine, actor);
-  actor.setKeymap(newKeymap);
+  // const newKeymap = keymap(engine, actor);
+  // actor.setKeymap(newKeymap);
 
   // add default items to container
   const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));

@@ -1,6 +1,6 @@
 import uuid from 'uuid/v1';
 import { destroyEntity } from './helper';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, find } from 'lodash';
 
 export const Cloning = superclass => class extends superclass {
   constructor({ cloneLimit = 1, ...args }) {
@@ -36,6 +36,10 @@ export const Cloning = superclass => class extends superclass {
       clone.name = `Clone`;
       clone.game = this.game;
       clone.id = uuid();
+      if (clone.entityTypes.includes('HAS_KEYMAP')) {
+        const ignoredKeys = find(cloneArgs, { 'attribute': 'ignoredKeys' });
+        clone.reinitializeKeymap(ignoredKeys? ignoredKeys.value : []);
+      }
       delete clone.clones;
       clone['super__destroy'] = clone.destroy;
       clone.destroy = () => { this.destroyClone(clone.id); };

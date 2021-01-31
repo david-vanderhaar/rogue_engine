@@ -35,7 +35,7 @@ class ActionBar extends React.Component {
                     <Tooltip
                       key={`${index}-label`}
                       title={action.label}
-                      text={action.label}
+                      text={action.label + ` ${action.actor.name}`}
                     >
                       <div 
                         className="CharacterActions__item"

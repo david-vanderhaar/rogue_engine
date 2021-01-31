@@ -11,7 +11,6 @@ export class UnequipItemToTile extends Base {
     this.game.addMessage(`${this.actor.name} drops ${this.item.name}.`, MESSAGE_TYPE.ACTION);
     this.actor.unequip(this.item);
     this.game.map[Helper.coordsToString(this.actor.pos)].entities.splice(0, 0, this.item);
-    this.actor.energy -= this.energyCost;
     return {
       success: true,
       alternative: null,

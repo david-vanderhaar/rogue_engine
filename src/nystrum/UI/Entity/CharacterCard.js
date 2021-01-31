@@ -115,7 +115,8 @@ function CharacterCard ({actor, game}) {
         <StatusEffects actor={actor} />
       </div>
       <div>
-        <ActionBar keymap={game.visibleKeymap} game={game} />
+        {/* <ActionBar keymap={game.visibleKeymap} game={game} /> */}
+        <ActionBar keymap={actor.getKeymap()} game={game} />
       </div>
     </div>
   )

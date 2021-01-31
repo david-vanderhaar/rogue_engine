@@ -60,7 +60,7 @@ class Level extends React.Component {
             <PlayerInformation game={this.state.game} />
             <Information game={this.state.game} />
             <Instructions game={this.state.game} spriteMode={this.state.game.spriteMode} setActiveScreen={this.props.setActiveScreen} toggleSpriteMode={this.toggleSpriteMode.bind(this)} />
-            <Messages messages={this.state.game.messages.slice(-5).reverse()} />
+            {/* <Messages messages={this.state.game.messages.slice(-5).reverse()} /> */}
           </div>
           {/* <div className='col s2'> */}
           {/* </div> */}

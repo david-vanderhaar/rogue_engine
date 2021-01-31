@@ -9,7 +9,7 @@ export class CloneSelf extends Base {
     let success = false;
     if (this.actor.createClone(this.cloneArgs)) {
       success = true;
-      this.actor.energy -= this.energyCost;
+      // this.actor.energy -= this.energyCost;
       this.game.addMessage(`${this.actor.name} is cloning itself`, MESSAGE_TYPE.ACTION);
     }
     // let clone = cloneDeep(this.actor);
