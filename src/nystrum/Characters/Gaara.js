@@ -7,6 +7,7 @@ import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
 import {Move} from '../Actions/Move';
 import {PrepareSandWall} from '../Actions/SandWall';
+import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
 import {SandPulse} from '../Actions/SandPulse';
 import {AddSandSkinStatusEffect} from '../Actions/AddSandSkinStatusEffect';
 import {OpenInventory} from '../Actions/OpenInventory';
@@ -116,12 +117,12 @@ export default function (engine) {
         ],
       }),
       i: () => new OpenInventory({
-        label: 'Open Inventory',
+        label: 'Inventory',
         game: engine.game,
         actor,
       }),
       o: () => new OpenEquipment({
-        label: 'Open Equipment',
+        label: 'Equipment',
         game: engine.game,
         actor,
       }),
@@ -135,10 +136,12 @@ export default function (engine) {
         game: engine.game,
         actor,
       }),
-      // t: {
-      //   activate: () => Keymap.activateThrow(engine),
-      //   label: 'Throw',
-      // },
+      t: () => new PrepareDirectionalThrow({
+        label: 'Throw',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      })
       // r: {
       //   activate: () => Keymap.teleport(engine, 5),
       //   label: 'substitution',
@@ -167,9 +170,6 @@ export default function (engine) {
     presentingUI: true,
     initializeKeymap: keymap,
   })
-
-  // const newKeymap = keymap(engine, actor);
-  // actor.setKeymap(newKeymap);
 
   // add default items to container
   const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
