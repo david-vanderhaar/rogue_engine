@@ -168,16 +168,13 @@ export class Display {
   addAnimation (type, args) {
     let animation;
     switch (type) {
-      case ANIMATION_TYPES.DEFAULT:
-        animation = new Animation({display: this, ...args})
-        break;
       case ANIMATION_TYPES.SOLID_TILE:
         animation = new ExampleAnimation({display: this, ...args})
         break;
       case ANIMATION_TYPES.BLINK_TILE:
         animation = new BlinkTile({display: this, ...args})
         break;
-      
+      case ANIMATION_TYPES.DEFAULT:
       default:
         animation = new Animation({ display: this, ...args})
         break;

@@ -49,6 +49,10 @@ export const calculatePath = (game, targetPos, currentPos, topology = 4) => {
   return path.slice(1);
 }
 
+export const getPositionInDirection = (pos, direction) => {
+  return {x: pos.x + direction[0], y: pos.y + direction[1]}
+}
+
 export const calculatePathWithRange = (game, targetPos, currentPos, topology, range) => {
   let path = calculatePath(game, targetPos, currentPos, topology);
   return path.slice(0, range + 1);

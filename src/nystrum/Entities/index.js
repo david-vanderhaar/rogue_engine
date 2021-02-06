@@ -4,6 +4,7 @@ import { Parent } from './Parent';
 import { PresentingUI } from './PresentingUI';
 import { HasInnerGates } from './HasInnerGates';
 import { UI } from './UI';
+import {HasTargetingCursor} from './HasTargetingCursor';
 import { Attacking } from './Attacking';
 import { Equipable } from './Equipable';
 import { Acting } from './Acting';
@@ -109,6 +110,7 @@ export const Player = pipe(
   Acting,
   Rendering,
   PresentingUI,
+  HasTargetingCursor,
   HasKeymap,
   Dragging,
   Charging,

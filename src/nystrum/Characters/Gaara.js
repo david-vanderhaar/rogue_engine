@@ -7,7 +7,8 @@ import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
 import {Move} from '../Actions/Move';
 import {PrepareSandWall} from '../Actions/SandWall';
-import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
+import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
+import {PrepareSubstitution} from '../Actions/PrepareSubstitution';
 import {SandPulse} from '../Actions/SandPulse';
 import {AddSandSkinStatusEffect} from '../Actions/AddSandSkinStatusEffect';
 import {OpenInventory} from '../Actions/OpenInventory';
@@ -25,6 +26,7 @@ export default function (engine) {
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
         return new Move({
+          hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
@@ -36,6 +38,7 @@ export default function (engine) {
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
         return new Move({
+          hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
@@ -47,6 +50,7 @@ export default function (engine) {
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
         return new Move({
+          hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
@@ -58,6 +62,7 @@ export default function (engine) {
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
         return new Move({
+          hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
@@ -84,6 +89,13 @@ export default function (engine) {
         game: engine.game,
         actor,
         sandWallRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
+      }),
+      r: () => new PrepareSubstitution({
+        label: 'Substitution',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
       }),
       k: () => new SandPulse({
         label: 'Sand Pulse',

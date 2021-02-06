@@ -453,6 +453,7 @@ export const handleKeyPress = (event, engine) => {
     }
     if (keymap) {
       let code = event.key;
+      console.log(code);
       if (!(code in keymap)) { return; }
       const getAction = keymap[code];
       const action = getAction();

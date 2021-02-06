@@ -130,7 +130,6 @@ export class Base {
   }
   
   perform() {
-    this.actor.energy -= this.energyCost;
     return {
       success: true,
       alternative: null,
