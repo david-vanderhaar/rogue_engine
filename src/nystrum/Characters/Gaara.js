@@ -154,15 +154,6 @@ export default function (engine) {
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
       })
-      // r: {
-      //   activate: () => Keymap.teleport(engine, 5),
-      //   label: 'substitution',
-      // },
-      // // DEV KEYS
-      // y: {
-      //   activate: () => Keymap.addActor(engine.game),
-      //   label: 'Add NPC',
-      // },
     };
   }
   // instantiate class

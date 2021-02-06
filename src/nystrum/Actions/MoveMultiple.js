@@ -17,7 +17,6 @@ export class MoveMultiple extends Base {
     let targetPos = { x: newX, y: newY };
     if (this.stepCount > 0 && this.actor.move(targetPos)) {
       this.stepCount -= 1;
-      this.actor.energy -= this.energyCost;
       this.actor.setNextAction(this);
       success = true;
     }

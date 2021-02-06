@@ -5,9 +5,10 @@ import * as Helper from '../../helper';
 import * as Constant from '../constants';
 
 export class Attack extends Base {
-  constructor({ targetPos, processDelay = 100, ...args }) {
+  constructor({ targetPos, additionalDamage = 0, processDelay = 100, ...args }) {
     super({ ...args });
     this.targetPos = targetPos;
+    this.additionalDamage = additionalDamage;
     this.processDelay = processDelay;
     this.particleTemplate = Constant.PARTICLE_TEMPLATES.damage;
   }
@@ -24,12 +25,11 @@ export class Attack extends Base {
         }),
       };
     }
-    success = this.actor.attack(this.targetPos);
+    success = this.actor.attack(this.targetPos, this.additionalDamage);
     if (success) {
       const sound = Helper.getRandomInArray([SOUNDS.chop_0, SOUNDS.chop_1]);
       sound.play();
       this.addParticle(1, { ...this.targetPos }, { x: 0, y: 0 });
-      // this.actor.energy -= this.energyCost;
     }
     return {
       success,

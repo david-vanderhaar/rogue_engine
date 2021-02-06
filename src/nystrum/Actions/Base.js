@@ -87,9 +87,9 @@ export class Base {
       
       let canPay = false;
       // if the actor has provided a setter for this variable, use that 
-      if (_.get(this.actor, actorResourceGetter)) {
+      if (_.get(this.actor, actorResourceGetter, null) !== null) {
         canPay = this.actor[actorResourceGetter]() >= getResourceCost();
-      } else if (actorVariable) {
+      } else if (actorVariable !== null) {
         // else if the actor has a path to the appropriate variable, get that value and set it manually
         canPay = actorVariable >= getResourceCost();
       }

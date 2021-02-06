@@ -50,8 +50,7 @@ export class Engine {
         let action = actor.getAction(this.game);
         if (!action) { return false; } // if no action given, kick out to UI input
         timePassed += action.getEnergyCost();
-        console.log('timePassed');
-        console.log(timePassed);
+        // console.log('timePassed ', timePassed);
         
         // timePassed += action.energyCost;
         while (true) {

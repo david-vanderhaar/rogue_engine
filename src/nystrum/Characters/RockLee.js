@@ -1,65 +1,137 @@
 // import deps
 import * as Item from '../items';
+import * as Constant from '../constants';
 import { Player } from '../Entities/index';
 import { ContainerSlot } from '../Entities/Containing';
-import * as Constant from '../constants';
-import * as Keymap from '../Keymap';
-import { createEightDirectionMoveOptions } from '../Keymap/helper';
+import { ChakraResource } from '../Actions/ActionResources/ChakraResource';
+import { Say } from '../Actions/Say';
+import { Move } from '../Actions/Move';
+import { OpenInventory } from '../Actions/OpenInventory';
+import { OpenEquipment } from '../Actions/OpenEquipment';
+import { OpenDropInventory } from '../Actions/OpenDropInventory';
+import { PickupRandomItem } from '../Actions/PickupRandomItem';
+import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
+import { PrepareTackle } from '../Actions/PrepareTackle';
+
+
 
 export default function (engine) {
   // define keymap
-  const keymap = (engine) => {
+  const keymap = (engine, actor) => {
     return {
-      ...createEightDirectionMoveOptions(Keymap.walk, engine),
-      s: {
-        activate: () => Keymap.none(engine),
-        label: 'stay',
+      w: () => {
+        const direction = Constant.DIRECTIONS.N;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          hidden: true,
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
       },
-      l: {
-        activate: () => Keymap.activateFlyingLotus(engine),
-        label: 'Flying Lotus',
+      s: () => {
+        const direction = Constant.DIRECTIONS.S;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          hidden: true,
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
       },
-      k: {
-        activate: () => Keymap.removeWeights(engine, 200),
-        label: 'Remove wraps',
+      a: () => {
+        const direction = Constant.DIRECTIONS.W;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          hidden: true,
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
       },
-      j: {
-        activate: () => Keymap.drunkenFist(engine),
-        label: 'Sip Sake',
+      d: () => {
+        const direction = Constant.DIRECTIONS.E;
+        let newX = actor.pos.x + direction[0];
+        let newY = actor.pos.y + direction[1];
+        return new Move({
+          hidden: true,
+          targetPos: { x: newX, y: newY },
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD
+        });
       },
-      h: {
-        activate: () => Keymap.leafWhirlwind(engine),
-        label: 'Leaf Whirlwind',
-      },
-      g: {
-        activate: () => Keymap.openInnerGate(engine),
-        label: 'Gate of Opening',
-      },
-      i: {
-        activate: () => Keymap.activateInventory(engine),
-        label: 'Open Inventory',
-      },
-      o: {
-        activate: () => Keymap.activateEquipment(engine),
-        label: 'Open Equipment',
-      },
-      u: {
-        activate: () => Keymap.activateDropItem(engine),
-        label: 'Drop Item',
-      },
-      p: {
-        activate: () => Keymap.pickupRandom(engine),
+      p: () => new Say({
+        label: 'Stay',
+        message: 'standing still...',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+      }),
+      Escape: () => new Say({
+        label: 'Pass',
+        message: 'pass turn...',
+        game: engine.game,
+        actor,
+        interrupt: true,
+        energyCost: 0,
+      }),
+      i: () => new OpenInventory({
+        label: 'Inventory',
+        game: engine.game,
+        actor,
+      }),
+      o: () => new OpenEquipment({
+        label: 'Equipment',
+        game: engine.game,
+        actor,
+      }),
+      u: () => new OpenDropInventory({
+        label: 'Drop Items',
+        game: engine.game,
+        actor,
+      }),
+      g: () => new PickupRandomItem({
         label: 'Pickup',
-      },
-      t: {
-        activate: () => Keymap.activateThrow(engine),
+        game: engine.game,
+        actor,
+      }),
+      t: () => new PrepareDirectionalThrow({
         label: 'Throw',
-      },
-      // DEV KEYS
-      y: {
-        activate: () => Keymap.addActor(engine.game),
-        label: 'Add NPC',
-      },
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      }),
+      l: () => new PrepareTackle({
+        label: 'Flying Lotus',
+        game: engine.game,
+        actor,
+        tackleDistance: 5,
+        additionalAttackDamage: 5,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      }),
+      // k: {
+      //   activate: () => Keymap.removeWeights(engine, 200),
+      //   label: 'Remove wraps',
+      // },
+      // j: {
+      //   activate: () => Keymap.drunkenFist(engine),
+      //   label: 'Sip Sake',
+      // },
+      // h: {
+      //   activate: () => Keymap.leafWhirlwind(engine),
+      //   label: 'Leaf Whirlwind',
+      // },
+      // g: {
+      //   activate: () => Keymap.openInnerGate(engine),
+      //   label: 'Gate of Opening',
+      // },
     };
   }
   // instantiate class
@@ -72,10 +144,11 @@ export default function (engine) {
     },
     name: 'Rock Lee',
     actions: [],
-    speed: 400,
+    speed: 600,
     durability: 20,
+    game: engine.game,
     presentingUI: true,
-    keymap: keymap(engine),
+    initializeKeymap: keymap,
   })
 
   // add default items to container

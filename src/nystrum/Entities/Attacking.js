@@ -8,6 +8,7 @@ export const Attacking = superclass => class extends superclass {
     this.attackDamage = attackDamage;
   }
   getAttackDamage(additional = 0) {
+
     return this.attackDamage + additional;
   }
   canAttack(entity) {
@@ -22,6 +23,7 @@ export const Attacking = superclass => class extends superclass {
     let targets = Helper.getDestructableEntities(tile.entities);
     if (targets.length > 0) {
       let target = targets[0];
+      console.log(target);
       if (this.canAttack(target)) {
         let damage = this.getAttackDamage(additional);
         if (this.entityTypes.includes('EQUIPING')) {
@@ -34,6 +36,9 @@ export const Attacking = superclass => class extends superclass {
           });
         }
         this.game.addMessage(`${this.name} does ${damage} to ${target.name}`, MESSAGE_TYPE.DANGER);
+        console.log('attackDamage ', this.attackDamage);
+        console.log('additionalDamage ', additional);
+        console.log('damage ', damage);
         target.decreaseDurability(damage);
         success = true;
       }

@@ -13,8 +13,7 @@ export class Move extends Base {
     let moveSuccess = this.actor.move(this.targetPos);
     if (moveSuccess) {
       success = true;
-    }
-    else {
+    } else {
       success = true;
       alternative = new Attack({
         targetPos: this.targetPos,
