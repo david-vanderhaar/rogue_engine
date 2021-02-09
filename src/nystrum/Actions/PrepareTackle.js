@@ -7,8 +7,6 @@ export class PrepareTackle extends Base {
   constructor({ 
     passThroughEnergyCost = ENERGY_THRESHOLD, 
     passThroughRequiredResources = [], 
-    tackleDistance = 5,
-    additionalAttackDamage = 5,
     ...args 
   }) {
     super({ ...args });
@@ -16,8 +14,6 @@ export class PrepareTackle extends Base {
     this.passThroughRequiredResources = passThroughRequiredResources;
     this.processDelay = 0;
     this.energyCost = 0;
-    this.tackleDistance = tackleDistance;
-    this.additionalAttackDamage = additionalAttackDamage;
   }
   perform() {
 
@@ -37,8 +33,6 @@ export class PrepareTackle extends Base {
           requiredResources: this.passThroughRequiredResources,
           label: 'tackle N',
           direction: DIRECTIONS.N,
-          stepCount: this.tackleDistance,
-          additionalAttackDamage: this.additionalAttackDamage,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
             this.actor.setNextAction(goToPreviousKeymap);
@@ -53,8 +47,6 @@ export class PrepareTackle extends Base {
           requiredResources: this.passThroughRequiredResources,
           label: 'tackle E',
           direction: DIRECTIONS.E,
-          stepCount: this.tackleDistance,
-          additionalAttackDamage: this.additionalAttackDamage,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
             this.actor.setNextAction(goToPreviousKeymap);
@@ -69,8 +61,6 @@ export class PrepareTackle extends Base {
           requiredResources: this.passThroughRequiredResources,
           label: 'tackle S',
           direction: DIRECTIONS.S,
-          stepCount: this.tackleDistance,
-          additionalAttackDamage: this.additionalAttackDamage,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
             this.actor.setNextAction(goToPreviousKeymap);
@@ -85,8 +75,6 @@ export class PrepareTackle extends Base {
           requiredResources: this.passThroughRequiredResources,
           label: 'tackle W',
           direction: DIRECTIONS.W,
-          stepCount: this.tackleDistance,
-          additionalAttackDamage: this.additionalAttackDamage,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
             this.actor.setNextAction(goToPreviousKeymap);

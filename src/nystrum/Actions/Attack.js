@@ -22,6 +22,7 @@ export class Attack extends Base {
           message: `Ooh I don\'t know how to attack`,
           game: this.game,
           actor: this.actor,
+          energyCost: 0,
         }),
       };
     }

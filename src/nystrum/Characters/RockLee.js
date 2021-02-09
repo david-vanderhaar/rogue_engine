@@ -112,8 +112,6 @@ export default function (engine) {
         label: 'Flying Lotus',
         game: engine.game,
         actor,
-        tackleDistance: 5,
-        additionalAttackDamage: 5,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
       }),
       // k: {
