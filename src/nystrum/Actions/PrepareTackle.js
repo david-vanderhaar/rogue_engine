@@ -2,6 +2,7 @@ import { Base } from './Base';
 import { Tackle } from './Tackle';
 import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { DIRECTIONS, ENERGY_THRESHOLD, PARTICLE_TEMPLATES } from '../constants';
+import { getPositionInDirection } from '../../helper';
 
 export class PrepareTackle extends Base {
   constructor({ 
@@ -17,9 +18,29 @@ export class PrepareTackle extends Base {
   }
   perform() {
 
+    const pos = this.actor.getPosition();
+    // tackle in 4 directions a sfar as the actor has energy
+    const cursor_positions = [];
+    [
+      DIRECTIONS.N,
+      DIRECTIONS.S,
+      DIRECTIONS.E,
+      DIRECTIONS.W,
+    ].forEach((direction, i) => {
+      Array(this.actor.energy / ENERGY_THRESHOLD).fill('').forEach((none, distance) => {
+        if (distance > 0) {
+          cursor_positions.push(
+            getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
+          )
+        }
+      })
+    });
+    this.actor.activateCursor(cursor_positions)
+
     const goToPreviousKeymap = new GoToPreviousKeymap({
       actor: this.actor,
       game: this.game,
+      onAfter: () => this.actor.deactivateCursor(),
     })
 
     let keymap = {
@@ -35,6 +56,7 @@ export class PrepareTackle extends Base {
           direction: DIRECTIONS.N,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
+            this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
           },
         })
@@ -49,6 +71,7 @@ export class PrepareTackle extends Base {
           direction: DIRECTIONS.E,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
+            this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
           },
         })
@@ -63,6 +86,7 @@ export class PrepareTackle extends Base {
           direction: DIRECTIONS.S,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
+            this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
           },
         })
@@ -77,6 +101,7 @@ export class PrepareTackle extends Base {
           direction: DIRECTIONS.W,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
           onSuccess: () => {
+            this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
           },
         })

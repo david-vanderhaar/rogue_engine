@@ -115,8 +115,6 @@ export class Display {
     this.containerId = containerId;
     this.width = width;
     this.height = height;
-    this.tilesWide = this.getTilesWide(width, tileOffset, tileWidth);
-    this.tilesHigh = this.getTilesHigh(height, tileOffset, tileHeight);
     this.tileWidth = tileWidth;
     this.tileHeight = tileHeight;
     this.tileGutter = tileGutter;
@@ -134,17 +132,20 @@ export class Display {
     let displayContainer = document.createElement('div');
     d.appendChild(displayContainer);
 
+    this.adjustContentToScreen(d);
+    
     this.stage = new Konva.Stage({
       container: 'display',   // id of container <div>
       width: this.width,
       height: this.height
     });
 
+    
     // setting up main tile map layer
     this.layer = new Konva.Layer({
       hitGraphEnabled: false,
     });
-
+    
     this.stage.add(this.layer);
     
     // setting up animation layer
@@ -163,6 +164,15 @@ export class Display {
     }, this.animationLayer);
     this.animationLoop = animationLoop;
     animationLoop.start();
+  }
+
+  adjustContentToScreen (display_element) {
+    const DEVICE_WIDTH = display_element.offsetWidth;
+    const value = (DEVICE_WIDTH - this.tileOffset) / this.game.mapWidth;
+    this.tileWidth = Math.ceil(value);
+    this.tileHeight = this.tileWidth;
+    this.width = ((this.game.mapWidth - 1) * this.tileWidth) + this.tileOffset;
+    this.height = (this.game.mapHeight * this.tileHeight) + this.tileOffset;
   }
 
   addAnimation (type, args) {
@@ -206,6 +216,8 @@ export class Display {
   }
 
   createTile(x, y, character, foreground, background, layer = 'layer') {
+    const actual_x = (this.tileWidth * x) + (this.tileOffset + this.tileGutter);
+    const actual_y = (this.tileHeight * y) + (this.tileOffset + this.tileGutter);
     let node = new Konva.Group({
       id: `${x},${y}`,
       x: (this.tileWidth * x) + (this.tileOffset + this.tileGutter),
@@ -236,7 +248,7 @@ export class Display {
       text: character,
       width: this.tileWidth,
       height: this.tileHeight,
-      fontSize: 24,
+      fontSize: this.tileWidth - 4,
       fontFamily: 'scroll-o-script',
       fill: foreground,
       align: 'center',
@@ -247,6 +259,36 @@ export class Display {
       listening: false,
       shadowForStrokeEnabled: false,
     });
+
+    const dis_layer = this.layer;
+    if (x === 1 && y === 1) {
+      Konva.Image.fromURL('/tile241.png', function (darthNode) {
+        darthNode.setAttrs({
+          x: actual_x,
+          y: actual_y,
+          scaleX: 1,
+          scaleY: 1,
+          fill: 'pink',
+          opacity: 0.5
+        });
+        dis_layer.add(darthNode);
+      });
+      // var imageObj = new Image();
+      // imageObj.onload = function () {
+      //   var yoda = new Konva.Image({
+      //     x: 50,
+      //     y: 50,
+      //     image: imageObj,
+      //     width: 106,
+      //     height: 118,
+      //   });
+
+      //   // add the shape to the layer
+      //   this.layer.add(yoda);
+      //   // layer.batchDraw();
+      // };
+      // imageObj.src = '/tile241.png';
+    }
 
     node.add(rect);
     node.add(text);

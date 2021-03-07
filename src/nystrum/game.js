@@ -12,13 +12,12 @@ import * as _ from 'lodash';
 
 const MAP_WIDTH = 60;
 const MAP_HEIGHT = 25;
-// const MAP_WIDTH = 100;
-// const MAP_HEIGHT = 100;
-const TILE_WIDTH = 30;
-const TILE_HEIGHT = 30;
+
 const TILE_OFFSET = 0;
-// const canvasWidth = (50 * TILE_WIDTH) + TILE_OFFSET;
-// const canvasHeight = (25 * TILE_HEIGHT) + TILE_OFFSET;
+
+const TILE_WIDTH = 30;
+const TILE_HEIGHT = TILE_WIDTH;
+
 const canvasWidth = (MAP_WIDTH * TILE_WIDTH) + TILE_OFFSET;
 const canvasHeight = (MAP_HEIGHT * TILE_HEIGHT) + TILE_OFFSET;
 
