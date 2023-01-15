@@ -2,6 +2,7 @@ import React from 'react';
 import * as _ from 'lodash';
 import Tooltip from '../Tooltip';
 import ActionBar from '../ActionBar';
+import ActionMenu from '../Jacinto/ActionMenu'
 
 function Portrait ({actor}) {
   return (
@@ -10,7 +11,7 @@ function Portrait ({actor}) {
       color: actor.renderer.color,
       borderColor: actor.renderer.color,
     }}>
-      {actor.renderer.character}
+      {actor.renderer.sprite ? actor.renderer.sprite : actor.renderer.character}
     </div>
   )
 }
@@ -22,7 +23,7 @@ function StatusEffect ({effect}) {
       color: effect.renderer.color,
       borderColor: effect.renderer.color,
     }}>
-      {effect.renderer.character}
+      {effect.renderer.sprite ? effect.renderer.sprite : effect.renderer.character}
     </div>
   )
 }
@@ -93,9 +94,9 @@ function ProgressBar ({
 function CharacterCard ({actor, game}) {
   return (
     <div className='CharacterCard'>
-      <Portrait actor={actor}/>
       <div>
         <NamePlate actor={actor}/>
+        <Portrait actor={actor}/>
         <ProgressBar 
           label='Action Points'
           attributePath='energy'
@@ -105,10 +106,18 @@ function CharacterCard ({actor, game}) {
           actor={actor} 
         />
         <ProgressBar 
-          label='Chakara Points'
-          attributePath='charge'
-          attributePathMax='chargeMax'
-          colorFilled='#13b8d7'
+          label='Health Points'
+          attributePath='durability'
+          attributePathMax='durabilityMax'
+          colorFilled='#dc322f'
+          unit={1}
+          actor={actor} 
+        />
+        <ProgressBar 
+          label='Upgrade Points'
+          attributePath='upgrade_points'
+          attributePathMax='upgrade_points'
+          colorFilled='#3e7dc9'
           unit={1}
           actor={actor} 
         />
@@ -116,7 +125,8 @@ function CharacterCard ({actor, game}) {
       </div>
       <div>
         {/* <ActionBar keymap={game.visibleKeymap} game={game} /> */}
-        <ActionBar keymap={actor.getKeymap()} game={game} />
+        {/* <ActionBar keymap={actor.getKeymap()} game={game} /> */}
+        <ActionMenu keymap={actor.getKeymap()} game={game} />
       </div>
     </div>
   )

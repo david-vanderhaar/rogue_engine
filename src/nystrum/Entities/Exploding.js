@@ -2,6 +2,7 @@ import SOUNDS from '../sounds';
 import { FireSpread } from './index';
 import * as Constant from '../constants';
 import * as Helper from '../../helper';
+import {MESSAGE_TYPE} from '../message';
 
 export const Exploding = superclass => class extends superclass {
   constructor({ flammability = 1, explosivity = 1, ...args }) {
@@ -37,12 +38,11 @@ export const Exploding = superclass => class extends superclass {
     });
   }
   explode() {
+    const positions = Helper.getPointsWithinRadius({ x: 0, y: 0 }, this.explosivity)
     let structure = {
       x_offset: 0,
       y_offset: 0,
-      positions: Array(this.explosivity).fill('').reduce((acc, curr, i) => {
-        return acc.concat(...Helper.getPointsOnCircumference(0, 0, i + 1));
-      }, [])
+      positions
     };
     structure.positions.forEach((slot) => {
       let position = {
@@ -50,16 +50,28 @@ export const Exploding = superclass => class extends superclass {
         y: this.pos.y + slot.y + structure.y_offset
       };
       const tile = this.game.map[Helper.coordsToString(position)];
-      if (tile)
+      if (tile) {
         tile.type = 'BURNT';
+        let targets = Helper.getDestructableEntities(tile.entities.filter(
+          (entity) => entity.id !== this.id
+        ));
+        if (targets.length > 0) {
+          // let target = targets[0];
+          targets.forEach((target) => {
+            let damage = this['attackDamage'] ? this.attackDamage : this.explosivity;
+            this.game.addMessage(`${this.name} does ${damage} to ${target.name}`, MESSAGE_TYPE.DANGER);
+            target.decreaseDurability(damage);
+          })
+        }
+      }
     });
     if (this.explosivity > 0)
       SOUNDS.explosion_0.play();
     // this.game.draw(); //may not need draw here
   }
   destroy() {
-    this.enflame();
-    this.explode();
     super.destroy();
+    this.explode();
+    this.enflame();
   }
 };

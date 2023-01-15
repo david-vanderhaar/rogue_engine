@@ -1,14 +1,16 @@
 .App {
   text-align: center;
   outline: none;
-  background-color: #424242;
+  /* background-color: #424242; */
+  background-color: #07111D;
   color: #eee;
   min-height: 100%;
   height: 100vh;
 }
 
 .Nystrum {
-  background-color: #424242;
+  /* background-color: #424242; */
+  background-color: #07111D;
 }
 
 .App-logo {
@@ -34,15 +36,30 @@
 
 #display {
   /* overflow: scroll; */
+  /* height: 100vh; */
+  height: 100%;
+  /* min-height: 300px; */
 }
 
 #display:focus {
-  /* outline: none; */
+  outline: none;
 }
 
 .game_display_container {
-  overflow-x: scroll;
-  border: solid 4px #eee;
+  /* overflow-x: scroll; */
+  /* border: solid 4px #eee; */
+  /* height: 100%; */
+  height: calc(100vh - 200px);
+  margin: 10px;
+}
+
+.Instructions {
+  height: 200px;
+}
+
+.Level {
+  /* height: 100vh; */
+  /* max-height: 100vh; */
 }
 
 .Level > .row {
@@ -50,14 +67,14 @@
 }
 
 .CharacterSelect {
-  margin: auto;
+  /* margin: auto; */
   width: 300px;
 }
 
 .CharacterSelect__button {
   display: block;
-  margin: auto;
-  width: 300px;
+  margin: 20px 0;
+  width: 350px;
 }
 
 .UI {
@@ -120,30 +137,33 @@
 .CharacterCard_Container {
   display: flex;
   justify-content: flex-start;
+  padding: 16px 0 0 16px;
 }
 
 .CharacterCard {
-  border: 2px solid #222;
-  box-shadow: 6px 6px 6px #222;
+  /* border: 2px solid #222;
+  box-shadow: 6px 6px 6px #222; */
   border-radius: 6px;
   display: flex;
   justify-content: space-around;
-  margin-right: 20px;
+  /* margin-right: 20px; */
   margin-bottom: 20px;
   border-collapse: collapse;
+  flex-direction: column;
 }
 
 .CharacterCard .Portrait {
   border: 3px solid;
   border-radius: 6px;
   display: flex;
-  font-size: 45px;
+  font-size: 26px;
   justify-content: center;
   align-items: center;
   margin-right: 10px;
-  min-width: 100px;
-  min-height: 100px;
-  padding: 10px;
+  margin-bottom: 16px;
+  /* min-width: 100px;
+  min-height: 100px; */
+  /* padding: 10px; */
 }
 
 .CharacterCard .StatusEffects {
@@ -183,20 +203,33 @@
   padding: 10px;
 }
 
+.ItemPortrait {
+  border: 3px solid;
+  border-radius: 6px;
+  box-shadow: 3px 3px #424242;
+  display: flex;
+  font-size: 16;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  width: 80px;
+  height: 80px;
+  padding: 10px;
+}
+
 .CharacterCard .NamePlate {
   font-size: 26px;
 }
 
 .ProgressBar {
-
+  margin-bottom: 16px;
 }
-.ProgressBar__label {
 
-}
 .ProgressBar__blips {
   background-color: #666;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   border-radius: 6px;
   padding: 8px;
   margin: 0 12px 0 0;
@@ -210,6 +243,38 @@
   box-shadow: 3px 3px #424242;
   border-radius: 5px;
 }
+
+
+.Jacinto_Help {
+  width: 50%;
+}
+
+.modal > .Jacinto_Help {
+  width: auto;
+}
+
+.modal-content, 
+.modal-footer {
+  background-color: #07111Dff !important;
+  color: #E19D3Fff;
+}
+
+
+.modal-footer .modal-close {
+  color: #E19D3Fff;
+}
+
+.Jacinto_Help .Jacinto_Help__section_header {
+  border: #E19D3Fff 1px solid;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.Jacinto_Help .Jacinto_Help__section_body {
+  text-align: left;
+  margin: 15px 0;
+}
+
 
 .Keymap {
   /* left: 0px; */
@@ -245,12 +310,14 @@
   border: #222 solid 2px;
   border-radius: 6px;
   display: flex;
-  font-family: 'Roboto', 'scroll-o-script';
-  height: 100px;
+  font-size: 10px;
+  /* font-family: 'Roboto', 'scroll-o-script'; */
+  height: 40px;
+  width: 100px;
   justify-content: center;
+  align-items: center;
   margin: auto;
   padding: 10px;
-  width: 100px;
 }
 
 .CharacterActions__item__resources {
@@ -258,6 +325,103 @@
   display: flex;
   justify-content: space-around;
   position: relative;
+}
+
+.EquipmentCard {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.EquipmentCard--selected {
+  border: 5px solid #eee8d5;
+  border-radius: 5px;
+}
+.EquipmentCard--equipable:hover {
+  border: 5px solid #eee8d5;
+  border-radius: 5px;
+}
+
+.EquipmentCard__reload_overlay {
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  border: none;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.EquipmentCard__reload_overlay__text {
+  font-size: 24px;
+}
+
+.EquipmentCard__item {
+  margin-right: 10px;
+}
+
+.EquipmentCard__item__label {
+  background-color: #222;
+  border: #222 1px solid;
+  border-radius: 6px;
+  margin: auto;
+  text-align: center;
+  /* position: relative; */
+  width: 90px;
+  /* top: 10px; */
+}
+
+.SimpleEquipmentCard {
+  margin-bottom: 0;
+  padding: 0 0 10px 10px;
+}
+
+.EquipmentCard__item__label--simple {
+  border-radius: 6px;
+  margin: auto;
+}
+
+.EquipmentCard__item__label__amount {
+  color: #E19D3Fff
+}
+
+.EquipmentCard__item__content {
+  align-items: center;
+  border: #222 solid 2px;
+  border-radius: 6px;
+  display: flex;
+  /* font-family: 'Roboto', 'scroll-o-script'; */
+  height: 100px;
+  justify-content: center;
+  margin: auto;
+  padding: 10px;
+  width: 100px;
+  font-size: 40px;
+}
+
+.EquipmentCard__item__stats {
+  flex-direction: column;
+  display: flex;
+}
+
+.StatBlock {
+  border: 3px solid;
+  border-radius: 6px;
+  box-shadow: 3px 3px #424242;
+  display: flex;
+  font-size: 16;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
 }
 
 
@@ -284,6 +448,11 @@
   text-align: center;
 }
 
+.Instructions__block--Jacinto {
+  background-color: #07111Dff !important;
+  color: #E19D3Fff;
+}
+
 .Instructions__block .btn-main {
   width: 100%;
 }
@@ -293,8 +462,11 @@
   /* left: 600px; */
   /* overflow-y: scroll;
   height: 800px;  */
-  height: 50vh;
+  /* height: 50vh; */
+  min-height: 200px;
+  max-height: 400px;
   overflow-y: hidden;
+  margin-bottom: 16px;
 }
 
 .Messages .Message {
@@ -305,8 +477,9 @@
   height: unset;
   transition: background-color .2s ease-out;
   border-radius: 2px;
-  line-height: 36px;
-  padding: 0 16px;
+  /* line-height: 36px; */
+  padding: 8px 16px;
+  font-size: 12px;
   text-transform: uppercase;
   vertical-align: middle;
 }
@@ -353,14 +526,72 @@
 
 }
 
+.Title__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* color: #E19D3Fff; */
+}
+
+.Title__header {
+  color: #E19D3Fff;
+}
+
 .btn-main {
-  background-color: #fdf6e3;
-  color: rgb(4, 49, 61);
+  background-color: #E19D3Fff;
+  color: #02252e;
   font-size: 20px;
   font-weight: bold;
 }
 
 .btn-main:hover, .btn-main:focus {
-  background-color: rgb(4, 49, 61);
-  color: #fdf6e3;
+  background-color: #02252e;
+  color: #E19D3Fff;
 }
+
+.Jacinto__ActionMenu__Actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.Jacinto__ActionMenu__Actions__item {
+  display: flex;
+  flex-direction: row;
+  padding: 0 2px 16px 0;
+  flex-wrap: wrap;
+}
+
+.Jacinto__ActionMenu__Actions__item:hover {
+  border: 2px solid #E19D3Fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Jacinto__ActionMenu__Actions__item__label {
+  color: #E19D3Fff;
+  margin-right: 10px;
+}
+
+.Jacinto__ActionMenu__Actions__item__content {
+  margin-right: 10px;
+}
+
+.Jacinto__ActionMenu__Actions__item__resources {
+  display: flex;
+}
+
+.range-field {
+  background-color: #07111D;
+}
+
+.range-field > label {
+  color: #E19D3Fff;
+}
+
+.range-field > input {
+  width: 50%;
+  margin: auto;
+  display: block;
+}
+

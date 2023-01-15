@@ -11,18 +11,10 @@ class Instructions extends React.Component {
       <div className="Instructions UI">
         {infoHeader && (<p className='flow-text'>{infoHeader}</p>)}
         <div className='flow-text'>
-          {
-            _.map(infoBlocks, (value, key) => {
-              return (
-                <div key={key} className='Instructions__block'>
-                  {value.text}
-                </div>
-              )
-            })
-          }
           <div 
             className='Instructions__block'
-            onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}
+            // onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}
+            onClick={() => window.location.reload()}
           >
             <button className='btn btn-main'>
               Restart
@@ -40,6 +32,13 @@ class Instructions extends React.Component {
                   'Sprite mode'
                 )
               }
+            </button>
+          </div>
+          <div
+            className='Instructions__block'
+          >
+            <button data-target="jacinto_help" className='btn btn-main modal-trigger'>
+              Help
             </button>
           </div>
         </div>

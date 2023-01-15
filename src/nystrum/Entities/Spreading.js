@@ -1,6 +1,7 @@
 import { FireSpread } from './index';
 import * as Constant from '../constants';
 import * as Helper from '../../helper'; 
+import * as MapHelper from '../Maps/helper'; 
 import { Say } from '../Actions/Say';
 import { DestroySelf } from '../Actions/DestroySelf';
 import { PlaceActor } from '../Actions/PlaceActor';
@@ -32,6 +33,10 @@ export const Spreading = superclass => class extends superclass {
       // find adjacent spot to spread to
       let adjacentPositions = [
         {
+          x: this.pos.x + 0,
+          y: this.pos.y + 0,
+        },
+        {
           x: this.pos.x + 1,
           y: this.pos.y + 0,
         },
@@ -52,13 +57,13 @@ export const Spreading = superclass => class extends superclass {
       let kill = 100;
       while (kill > 0) {
         let newPos = Helper.getRandomInArray(adjacentPositions);
-        let newTile = this.game.map[Helper.coordsToString(newPos)];
+        let newTile = MapHelper.getTileFromMap({map: this.game.map, position: newPos});
         let tileExists = Boolean(newTile);
         let notBurnt = true;
         let canBurn = false;
         if (newTile) {
           notBurnt = newTile.type !== 'BURNT';
-          canBurn = ['WALL', 'FLOOR', 'DOOR'].includes(newTile.type);
+          canBurn = MapHelper.tileHasTag({tile: newTile, tag: 'BURNABLE'});
         }
         if (tileExists && notBurnt && canBurn) {
           adjacentPos = newPos;
@@ -72,12 +77,7 @@ export const Spreading = superclass => class extends superclass {
           name: 'Pyro',
           pos: { x: 0, y: 0 },
           game,
-          renderer: {
-            character: '*',
-            sprite: '',
-            color: Constant.THEMES.SOLARIZED.base3,
-            background: Constant.THEMES.SOLARIZED.red,
-          },
+          renderer: {...this.renderer},
           timeToSpread: this.timeToSpreadMax,
           spreadCount: this.spreadCountMax,
           durability: this.durability,

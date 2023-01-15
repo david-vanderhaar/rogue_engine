@@ -1,21 +1,25 @@
 import React from 'react';
 import * as ROT from 'rot-js';
+import * as _ from 'lodash';
 import * as Constant from './constants';
 import * as Helper from '../helper';
 import * as Message from './message';
 import { Display } from './Display/konvaCustom';
 import Mode from './Modes/index';
-import * as _ from 'lodash';
+import * as MapHelper from './Maps/helper';
 
+export let GAME = null
 // const MAP_DATA = require('./Maps/castle.json');
 // const SOLANGE = require('./Data/solange.json');
 
-const MAP_WIDTH = 60;
-const MAP_HEIGHT = 25;
+// const MAP_WIDTH = 50;
+// const MAP_HEIGHT = 25;
+const MAP_WIDTH = 28;
+const MAP_HEIGHT = 14;
 
 const TILE_OFFSET = 0;
 
-const TILE_WIDTH = 30;
+const TILE_WIDTH = 26;
 const TILE_HEIGHT = TILE_WIDTH;
 
 const canvasWidth = (MAP_WIDTH * TILE_WIDTH) + TILE_OFFSET;
@@ -38,6 +42,7 @@ export class Game {
     tileOffset = TILE_OFFSET,
     getSelectedCharacter = () => false,
     spriteMode = true,
+    fovActive = false,
     tileKey = Constant.TILE_KEY,
     mode = Mode.Flume,
     messages = [],
@@ -63,12 +68,15 @@ export class Game {
       tileHeight: tileHeight,
       tileOffset: tileOffset,
       game: this,
+      mouseEnabled: false
     });
     this.spriteMode = spriteMode;
+    this.fovActive = fovActive;
     this.tileKey = tileKey;
     this.mode = new mode({game: this});
     this.messages = messages;
     this.getSelectedCharacter = getSelectedCharacter;
+    GAME = this
   }
 
   initializeMode () {
@@ -121,7 +129,7 @@ export class Game {
       tile.entities.push(actor);
       return true
     } else {
-      console.log(`could not place ${actor.id}: ${actor.name} on map`);
+      // console.log(`could not place ${actor.id}: ${actor.name} on map`);
       return false
     }
   }
@@ -146,43 +154,23 @@ export class Game {
     let digCallback = function (x, y, value) {      
       let key = x + "," + y;
       let type = 'GROUND';
-      let currentFrame = 0;
       if (value) { 
         type = 'WALL';
         // type = 'WATER';
       }
-
-      if (Constant.TILE_KEY[type].animation) {
-        currentFrame = Helper.getRandomInt(0, Constant.TILE_KEY[type].animation.length)
-      }
-
-      this.map[key] = {
-        type,
-        currentFrame,
-        entities: [],
-      };
+      MapHelper.addTileToMap({map: this.map, key, tileKey: this.tileKey, tileType: type})
       freeCells.push(key);
     }
     digger.create(digCallback.bind(this));
-    this.randomlyPlaceAllActorsOnMap()
   }
 
   createEmptyLevel () {
     for (let i = 0; i < this.mapHeight; i ++) {
       for (let j = 0; j < this.mapWidth; j ++) {
         const key = `${j},${i}`
-        let type = 'GROUND';
-        let currentFrame = 0;
-
-        if (Constant.TILE_KEY[type].animation) {
-          currentFrame = Helper.getRandomInt(0, Constant.TILE_KEY[type].animation.length)
-        }
-
-        this.map[key] = {
-          type,
-          currentFrame,
-          entities: [],
-        };
+        // let type = 'GROUND';
+        let type = Helper.getRandomInArray(['GROUND', 'GROUND_ALT', 'GROUND_ALT', 'GROUND_ALT']);
+        MapHelper.addTileToMap({map: this.map, key, tileKey: this.tileKey, tileType: type})
       }
     }
   }
@@ -190,25 +178,12 @@ export class Game {
   createCustomLevel (data) {
     Object.keys(data.tiles).forEach((key, i) => {
       const tile = data.tiles[key];
-      let type = tile.data.type;
-      let currentFrame = 0;
+      let type = tile.data?.type;
       if (!type) {
-        type = 'GROUND';
+        type = Helper.getRandomInArray(['GROUND', 'GROUND_ALT', 'GROUND_ALT', 'GROUND_ALT']);
       }
-
-      if (Constant.TILE_KEY[type].animation) {
-        currentFrame = Helper.getRandomInt(0, Constant.TILE_KEY[type].animation.length)
-      }
-
-    
-      this.map[key] = {
-        type,
-        currentFrame,
-        entities: [],
-      };
+      MapHelper.addTileToMap({map: this.map, key, tileKey: this.tileKey, tileType: type})
     })
-
-    // this.placeInitialEntities();
   }
 
   canOccupyPosition (pos, entity = {passable: false}) {
@@ -221,6 +196,33 @@ export class Game {
         if (this.tileKey[tile.type].passable) {
           result = true;
         }
+      }
+    }
+    return result;
+  }
+
+  canPassPositionWhenThrown (pos, entity = {passable: false}) {
+    let result = false;
+    let targetTile = this.map[Helper.coordsToString(pos)];
+    if (targetTile) {
+      let hasImpassableEntity = targetTile.entities.filter((entity) => !entity.passable).length > 0;
+      if (!hasImpassableEntity) {
+        let tile = this.map[Helper.coordsToString(pos)];
+        if (this.tileKey[tile.type].passable) {
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
+
+  rangedCursorCanOccupyPosition (pos, entity = {passable: false}) {
+    let result = false;
+    let targetTile = this.map[Helper.coordsToString(pos)];
+    if (targetTile) {
+      let tile = this.map[Helper.coordsToString(pos)];
+      if (this.tileKey[tile.type].passable) {
+        result = true;
       }
     }
 
@@ -241,32 +243,48 @@ export class Game {
     this.display.initialize(document)
   }
 
-  getRenderMap(fullMap, referencePosition, renderWidth, renderHeight, fullWidth, fullHeight) { 
+  getRenderWidth () { return this.cameraWidth }
+  getRenderHeight () { return this.cameraHeight }
+  setRenderWidth (value) { return this.cameraWidth = value }
+  setRenderHeight (value) { return this.cameraHeight = value }
+
+  getRenderOffsetX () {
+    const renderPaddingX = Math.floor((this.getRenderWidth() / 2));
+    const referencePosition = this.getReferencePosition();
+    let offsetX = 0
+    if (referencePosition) {
+      offsetX = referencePosition.x - renderPaddingX;
+    }
+    return  -1 * Helper.clamp(offsetX, 0, this.mapWidth - this.getRenderWidth());
+  }
+
+  getRenderOffsetY () {
+    const renderPaddingY = Math.floor((this.getRenderHeight() / 2));
+    const referencePosition = this.getReferencePosition();
+    let offsetY = 0
+    if (referencePosition) {
+      offsetY = referencePosition.y - renderPaddingY;
+    }
+    return  -1 * Helper.clamp(offsetY, 0, this.mapHeight - this.getRenderHeight());
+  }
+
+  getReferencePosition () { return this.getPlayerPosition() }
+
+  getRenderMap(fullMap) { 
     // create an object with only tile keys that should be rendered (around player)
     // renderWidth/Height measured in tiles
     // reference positon usually based on player pos
     // position from fullMap key should be translated to 0,0 based on referencePos
-    
-    const renderPaddingX = Math.floor((renderWidth / 2));
-    const renderPaddingY = Math.floor((renderHeight / 2));
-    let offsetX = 0;
-    let offsetY = 0;
-    if (referencePosition) {
-      offsetX = referencePosition.x - renderPaddingX;
-      offsetY = referencePosition.y - renderPaddingY;
-    }
-    offsetX = Helper.clamp(offsetX, 0, fullWidth - renderWidth);
-    offsetY = Helper.clamp(offsetY, 0, fullHeight - renderHeight);
     
     let result = {}
     for (let key in fullMap) {
       let parts = key.split(",");
       let x = parseInt(parts[0]);
       let y = parseInt(parts[1]);
-      let finalX = x - offsetX;
-      let finalY = y - offsetY;
-      if (finalX >= 0 && finalX <= renderWidth) {
-        if (finalY >= 0 && finalY <= renderHeight) {
+      let finalX = x + this.getRenderOffsetX();
+      let finalY = y + this.getRenderOffsetY();
+      if (finalX >= 0 && finalX <= this.getRenderWidth()) {
+        if (finalY >= 0 && finalY <= this.getRenderHeight()) {
           result[`${finalX},${finalY}`] = fullMap[key]
         }
       }
@@ -275,15 +293,27 @@ export class Game {
   }
 
   processTileMap (callback) {
-    // const map = this.map;
-    // const map = this.getRenderMap(this.map, this.getPlayerPosition(), this.mapWidth, this.mapHeight);
-    // const map = this.getRenderMap(this.map, this.getPlayerPosition(), 50, 25, this.mapWidth, this.mapHeight);
-    const map = this.getRenderMap(this.map, this.getPlayerPosition(), this.cameraWidth, this.cameraHeight, this.mapWidth, this.mapHeight);
+    const map = this.getRenderMap(this.map);
+    let playerPosition = null
+    if (this.fovActive) {
+      playerPosition = this.getPlayerPosition()
+    }
+    const lightRange = 5
+
     for (let key in map) {
       let parts = key.split(",");
       let x = parseInt(parts[0]);
       let y = parseInt(parts[1]);
       let tile = map[key];
+
+      if (this.fovActive) {
+        const renderedX = x - this.getRenderOffsetX()
+        const renderedY = y - this.getRenderOffsetY()
+        if (Helper.diagonal_distance(playerPosition, {x: renderedX, y: renderedY}) > lightRange) {
+          callback(key, x, y, '', '#000', 'rgba(0,0,0,0.2)');
+          continue;
+        }
+      }
       // let { foreground, background } = this.tileKey[tile.type]
       // Proto code to handle tile animations
       let tileRenderer = this.tileKey[tile.type]
@@ -305,7 +335,18 @@ export class Game {
       }
       callback(key, x, y, character, foreground, background);          
     }
+
+    // fov.compute(playerPosition.x, playerPosition.y, lightRange, (xFov, yFov, rFov, visibility) => {
+    //   console.log(rFov, visibility, xFov, yFov);
+    //   const key = Helper.coordsToString({x: xFov, y: yFov})
+    //   console.log(key);
+    //   if (!visibility) callback(key, xFov, yFov, '', '#000', '#000');
+    // });
   }
+
+  // fovLightPasses(x, y, game) {
+  //   return game.canOccupyPosition({x, y})
+  // }
 
   initializeMapTiles () {
     if (this.mapInitialized) return false;
@@ -320,9 +361,15 @@ export class Game {
     return this.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
   }
 
-  getPlayerPosition () {
+  getFirstPlayer () {
     const players = this.getPlayers();
-    if (players.length) return players[0].pos
+    if (players.length) return players[0]
+    return null
+  }
+
+  getPlayerPosition () {
+    const player = this.getFirstPlayer();
+    if (player) return player.getPosition();
     return null
   }
   
@@ -354,13 +401,13 @@ export class Game {
   
   animateEntity (entity) {
     let renderer = entity.getRenderer();
-    let { character, foreground, background } = this.getEntityRenderer(renderer)
-    if (renderer.animation) {
-      let frame = this.getEntityRenderer(renderer.animation[entity.currentFrame]);
+    let { character, foreground, background, animation } = this.getEntityRenderer(renderer)
+    if (animation) {
+      let frame = this.getEntityRenderer(animation[entity.currentFrame]);
       character = frame.character;
       foreground = frame.foreground;
       background = frame.background;
-      entity.currentFrame = (entity.currentFrame + 1) % renderer.animation.length;
+      entity.currentFrame = (entity.currentFrame + 1) % animation.length;
     }
     return {character, foreground, background}
   }
@@ -421,14 +468,16 @@ export class Game {
     this.initializeUI(presserRef, document);
     this.initializeGameData();
     // hack to register sprite mode
-    setTimeout(() => {
-      this.spriteMode = false;
-      this.draw()
-    }, 100)
-    setTimeout(() => {
-      this.spriteMode = true;
-      this.draw()
-    }, 100)
+    if (this.spriteMode) {
+      setTimeout(() => {
+        this.spriteMode = false;
+        this.draw()
+      }, 500)
+      setTimeout(() => {
+        this.spriteMode = true;
+        this.draw()
+      }, 500)
+    }
     // end hack
   }
 
@@ -452,13 +501,12 @@ export const handleKeyPress = (event, engine) => {
     }
     if (keymap) {
       let code = event.key;
-      console.log(code);
       if (!(code in keymap)) { return; }
       const getAction = keymap[code];
       const action = getAction();
       // const action = keymap[code];
       action.setAsNextAction();
-      engine.start()
+      engine.start();
     }
   }
   return;

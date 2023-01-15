@@ -1,8 +1,9 @@
 import {Base} from './Base';
 import {MESSAGE_TYPE} from '../message';
+import * as Helper from '../../helper';
 
 export class SandSkin extends Base {
-  constructor({defenseBuff = 1, ...args}) {
+  constructor({buffValue = 1, ...args}) {
     super({ ...args });
     this.name = 'Sand Skin';
     this.allowDuplicates = false
@@ -13,14 +14,19 @@ export class SandSkin extends Base {
       background: '#D8C0A8',
     }
     this.onStart = () => {
-      this.actor.defense += defenseBuff;
+      this.actor.defense += buffValue;
       this.game.addMessage(`${this.actor.name} was enveloped in hardened sand.`, MESSAGE_TYPE.INFORMATION);
       this.actor.renderer.background = '#A89078'
     }
     this.onStop = () => {
-      this.actor.defense = Math.max(0, this.actor.defense - defenseBuff);
+      this.actor.defense = Math.max(0, this.actor.defense - buffValue);
       this.game.addMessage(`${this.actor.name}'s hardened sand skin fell away.`, MESSAGE_TYPE.INFORMATION);
       this.actor.renderer.background = this['actor_background'];
     }
+  }
+  
+  static displayName = 'Sand Skin'
+  static getValidTargetsOnTile(tile, actor) {
+    return Helper.getDestructableEntities(tile.entities).filter((entity) => actor.id !== entity.id && actor.isAlly(entity));
   }
 }

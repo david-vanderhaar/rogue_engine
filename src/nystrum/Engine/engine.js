@@ -38,6 +38,7 @@ export class Engine {
 
   async processV2() { // a turn-based system using speed and Action Points
     let actor = this.actors[this.currentActor]
+    if (this.game.getFirstPlayer() === null) return false
     let acting = true;
     while (acting) {
       if (!actor) return false;
@@ -63,6 +64,7 @@ export class Engine {
             
             action.onBefore();
             result = await action.perform();
+            actor.lastActionResult = result
             if (result.success) {
               action.onSuccess();
               action.payRequiredResources();

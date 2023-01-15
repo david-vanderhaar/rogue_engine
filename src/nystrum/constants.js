@@ -39,6 +39,27 @@ export const THEMES = {
     cyan: '#2aa198',
     green: '#859900',
   },
+  JACINTO: {
+    // base1: '#07111Dff',
+    base1: '#0B0B0Bff',
+    base2: '#5A7178ff',
+    base3: '#B6ACA3ff',
+    base4: '#EDF6F1ff',
+    cog1: '#2d5fc9',
+    cog2: '#18c0f8',
+    cog3: '#86C8E4ff',
+    // locust2: '#E19D3Fff',
+    locust1: '#96641Dff',
+    locust2: '#F89339ff',
+    locust3: '#E7C898ff',
+    flesh1: '#833139ff',
+    flesh2: '#CC7468ff',
+    flesh3: '#DDA78Fff',
+    gray: '#6D7886ff',
+    red: '#C7141Cff',
+    yellow: '#b58900',
+    green: '#859900',
+  },
 }
 
 export const NPC_NAME = 'Helpless Citizen';
@@ -237,10 +258,44 @@ export const EQUIPMENT_LAYOUTS = {
       {type: EQUIPMENT_TYPES.GENERIC, name: 'slot_1', item: null},
       {type: EQUIPMENT_TYPES.GENERIC, name: 'slot_2', item: null},
     ]
+  },
+  gear: () => {
+    return [
+      { type: EQUIPMENT_TYPES.HAND, name: 'weapon', item: null },
+      // { type: EQUIPMENT_TYPES.TORSO, name: 'ammo', item: null },
+    ]
   }
 }
 
 export const CLONE_PATTERNS = {
+  point: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+    ]
+  },
+  triple_point: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 0, taken: false, },
+    ]
+  },
+  spread: {
+    x_offset: 1,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 1, y: 2, taken: false, },
+      { x: 1, y: -2, taken: false, },
+    ]
+  },
   verticalLine: {
     x_offset: 1,
     y_offset: 1,
@@ -251,8 +306,8 @@ export const CLONE_PATTERNS = {
     ]
   },
   smallSquare: {
-    x_offset: 1,
-    y_offset: 1,
+    x_offset: 0,
+    y_offset: 0,
     positions: [
       { x: 0, y: 0, taken: false, },
       { x: 0, y: 1, taken: false, },
@@ -261,8 +316,8 @@ export const CLONE_PATTERNS = {
     ]
   },
   square: {
-    x_offset: 2,
-    y_offset: 2,
+    x_offset: 0,
+    y_offset: 0,
     positions: [
       { x: 0, y: 0, taken: false, },
       { x: 0, y: 1, taken: false, },
@@ -275,9 +330,30 @@ export const CLONE_PATTERNS = {
       { x: -1, y: 1, taken: false, },
     ]
   },
+  clover: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+    ]
+  },
+  filledClover: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+    ]
+  },
   bigSquare: {
-    x_offset: 2,
-    y_offset: 2,
+    x_offset: 0,
+    y_offset: 0,
     positions: [
       { x: 0, y: 0, taken: false, },
       { x: 0, y: 1, taken: false, },
@@ -288,7 +364,7 @@ export const CLONE_PATTERNS = {
       { x: -1, y: -1, taken: false, },
       { x: -1, y: 0, taken: false, },
       { x: -1, y: 1, taken: false, },
-      { x: 0, y: 1, taken: false, },
+      { x: 0, y: 2, taken: false, },
       { x: 2, y: 2, taken: false, },
       { x: 2, y: 0, taken: false, },
       { x: 2, y: -2, taken: false, },
@@ -298,12 +374,30 @@ export const CLONE_PATTERNS = {
       { x: -2, y: 2, taken: false, },
     ],
   },
-  circle: {
+  donut: {
     x_offset: 0,
     y_offset: 0,
     positions: [
       ...Helper.getPointsOnCircumference(0, 0, 2),
-      ...Helper.getPointsOnCircumference(0, 0, 3)
+      ...Helper.getPointsOnCircumference(0, 0, 3),
+    ]
+  },
+  big_circle: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      // { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 1, y: -1, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+      { x: -1, y: 1, taken: false, },
+      ...Helper.getPointsOnCircumference(0, 0, 2),
+      ...Helper.getPointsOnCircumference(0, 0, 3),
+      ...Helper.getPointsOnCircumference(0, 0, 4)
     ]
   },
 }
