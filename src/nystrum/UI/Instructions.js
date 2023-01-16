@@ -1,6 +1,7 @@
 import React from 'react';
 import { SCREENS } from '../Screen/constants';
 import * as _ from 'lodash';
+import { CARTRIDGE } from '../Nystrum';
 
 class Instructions extends React.Component {
   render() {
@@ -13,10 +14,16 @@ class Instructions extends React.Component {
         <div className='flow-text'>
           <div 
             className='Instructions__block'
-            // onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}
-            onClick={() => window.location.reload()}
+            onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}
+            // onClick={() => window.location.reload()}
           >
-            <button className='btn btn-main'>
+            <button 
+              style={{
+                backgroundColor: CARTRIDGE.theme.accent,
+                color: CARTRIDGE.theme.main,
+              }}
+              className='btn btn-main'
+            >
               Restart
             </button>
           </div>
@@ -24,7 +31,13 @@ class Instructions extends React.Component {
             className='Instructions__block'
             onClick={() => this.props.toggleSpriteMode()}
           >
-            <button className='btn btn-main'>
+            <button
+              style={{
+                backgroundColor: CARTRIDGE.theme.accent,
+                color: CARTRIDGE.theme.main,
+              }}
+              className='btn btn-main'
+            >
               {
                 this.props.spriteMode ? (
                   'ASCII mode'
@@ -34,10 +47,15 @@ class Instructions extends React.Component {
               }
             </button>
           </div>
-          <div
-            className='Instructions__block'
-          >
-            <button data-target="jacinto_help" className='btn btn-main modal-trigger'>
+          <div className='Instructions__block'>
+            <button
+              style={{
+                backgroundColor: CARTRIDGE.theme.accent,
+                color: CARTRIDGE.theme.main,
+              }}
+              data-target="jacinto_help"
+              className='btn btn-main modal-trigger'
+            >
               Help
             </button>
           </div>

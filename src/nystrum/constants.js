@@ -22,6 +22,9 @@ export const THEMES = {
     rock_lee: '#155859',
   },
   SOLARIZED: {
+    main: '#002b36',
+    text: '#eee8d5',
+    accent: '#6c71c4',
     base03: '#002b36',
     base02: '#073642',
     base01: '#586e75',

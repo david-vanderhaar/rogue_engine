@@ -531,7 +531,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* color: #E19D3Fff; */
 }
 
 .Title__header {
@@ -539,15 +538,8 @@
 }
 
 .btn-main {
-  background-color: #E19D3Fff;
-  color: #02252e;
   font-size: 20px;
   font-weight: bold;
-}
-
-.btn-main:hover, .btn-main:focus {
-  background-color: #02252e;
-  color: #E19D3Fff;
 }
 
 .Jacinto__ActionMenu__Actions {

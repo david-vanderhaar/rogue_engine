@@ -2,27 +2,29 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { SCREENS } from './Screen/constants';
 import Screens from './Screen/index';
-import Characters from './Characters/index';
-import Modes from './Modes/index';
 import SOUNDS from './sounds';
+import Cartridges from './Cartridge/index'
+
+export const CARTRIDGE = Cartridges.defaultCart()
+// export const CARTRIDGE = Cartridges.jacintoCart()
+
 
 class Nystrum extends React.Component {
   constructor() {
     super();
-    let characterKey = Characters();
-    let characters = Object.keys(characterKey).map((key, i) => {
+    let characters = Object.entries(CARTRIDGE.characters).map(([key, value]) => {
       return {
-        initialize: characterKey[key],
+        initialize: value,
         selected: false,
-        name: key,
+        name: key.split('_').join(' '),
       }
     });
 
-    let modes = Object.keys(Modes).map((key, i) => {
+    let modes = Object.entries(CARTRIDGE.modes).map(([key, value]) => {
       return {
-        class: Modes[key],
+        class: value,
         selected: false,
-        name: key,
+        name: key.split('_').join(' '),
       }
     });
 
@@ -70,9 +72,6 @@ class Nystrum extends React.Component {
     const titleScreen = <Screens.Title 
       key={SCREENS.TITLE} 
       setActiveScreen={this.setActiveScreen.bind(this)}
-      setSelectedCharacter={this.setSelectedCharacter.bind(this)}
-      selectedCharacter={this.state.selectedCharacter}
-      characters={this.state.characters}
     />
     const loseScreen = <Screens.Lose 
       key={SCREENS.LOSE} 

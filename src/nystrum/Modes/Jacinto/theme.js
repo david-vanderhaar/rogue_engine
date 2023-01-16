@@ -1,4 +1,7 @@
 export const COLORS = {
+  main: '#07111D',
+  accent: '#E19D3F',
+  text: '#eee',
   base04: '#07111D',
   base03: '#02252e',
   // base03: '#002b36',

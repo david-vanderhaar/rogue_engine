@@ -1,4 +1,5 @@
 import React from 'react';
+import { CARTRIDGE } from '../Nystrum';
 import { SCREENS } from '../Screen/constants';
 
 const CharacterSelect = (props) => {
@@ -14,6 +15,10 @@ const CharacterSelect = (props) => {
           return (
             <button
               key={index}
+              style={{
+                backgroundColor: CARTRIDGE.theme.accent,
+                color: CARTRIDGE.theme.main,
+              }}
               className={`CharacterSelect__button btn btn-main`}
               onClick={() => {
                 props.setSelectedCharacter(character)

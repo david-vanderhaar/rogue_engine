@@ -1,9 +1,25 @@
 import React from 'react';
+import { CARTRIDGE } from '../Nystrum';
 import { SCREENS } from '../Screen/constants';
+
 
 const ModeSelect = (props) => {
   return (
-    <div className='CharacterSelect'>
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: CARTRIDGE.theme.main,
+        backgroundImage: `url("${CARTRIDGE.coverImage}")`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundPositionY: '10px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
+    >
       {
         props.modes.map((mode, index) => {
           let color = '';
@@ -15,13 +31,11 @@ const ModeSelect = (props) => {
             <button
               key={index}
               style={{
-                position: 'relative',
-                top: '280px'
+                backgroundColor: CARTRIDGE.theme.accent,
+                color: CARTRIDGE.theme.main,
               }}
               className={`CharacterSelect__button btn btn-main`}
               onClick={() => {
-                console.log(mode);
-                
                 props.setSelectedMode(mode)
                 props.setActiveScreen(SCREENS.CHARACTER_SELECT)
               }}

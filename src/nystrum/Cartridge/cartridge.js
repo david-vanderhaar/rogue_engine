@@ -1,10 +1,13 @@
+import { THEMES } from "../constants"
+
 export const createCartridge = (data = {}) => {
   return {
     name: data?.name || 'ゲーム (Gemu)', //also serves ast meta tag title
-    coverImage: data?.coverImage || `${window.PUBLIC_URL}/fire_man_blue.jpg'`,
+    coverImage: data?.coverImage || '',
     icon: data?.icon || `${window.PUBLIC_URL}/favicon.ico`,
     modes: data?.modes || [], // mode should define available characters?
-    theme: data?.theme || null, // theme should define bg/text/accent color etc,
+    characters: data?.characters || [], // mode should define available characters?
+    theme: data?.theme || THEMES.SOLARIZED, // theme should define bg/text/accent color etc,
     screens: data?.screens || {
       title: {
         component: null,
