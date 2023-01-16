@@ -7,6 +7,9 @@ import Cartridges from './Cartridge/index'
 
 export const CARTRIDGE = Cartridges.defaultCart()
 // export const CARTRIDGE = Cartridges.jacintoCart()
+// export const CARTRIDGE = Cartridges.toTheWallsCart()
+// export const CARTRIDGE = Cartridges.flumeCart()
+// export const CARTRIDGE = Cartridges.hiddenLeafCart()
 
 
 class Nystrum extends React.Component {
