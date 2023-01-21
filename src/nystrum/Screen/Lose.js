@@ -1,6 +1,6 @@
 import React from 'react';
+import { CARTRIDGE } from '../Nystrum';
 import CharacterSelect from '../UI/CharacterSelect';
-
 
 class Lose extends React.Component {
   constructor(props) {
@@ -13,16 +13,16 @@ class Lose extends React.Component {
       <div className="Title">
         <div
           style={{
-
             width: '100vw',
             height: '100vh',
-            backgroundColor: '#222',
-            // backgroundColor: 'rgb(4, 49, 61)',
-            backgroundImage: `url("${window.PUBLIC_URL}/fire_man_blue.jpg")`,
+            backgroundColor: CARTRIDGE.theme.main,
+            backgroundImage: `url("${CARTRIDGE.coverImage}")`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            backgroundPositionY: '10px'
-
+            backgroundPositionY: '10px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <CharacterSelect 

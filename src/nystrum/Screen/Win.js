@@ -1,4 +1,5 @@
 import React from 'react';
+import { CARTRIDGE } from '../Nystrum';
 import CharacterSelect from '../UI/CharacterSelect';
 
 class Win extends React.Component {
@@ -12,16 +13,16 @@ class Win extends React.Component {
       <div className="Title">
         <div
           style={{
-
             width: '100vw',
             height: '100vh',
-            // backgroundColor: '#eee',
-            backgroundColor: 'rgb(54,160,190)',
-            backgroundImage: `url("${window.PUBLIC_URL}/fire_man_blue.jpg")`,
+            backgroundColor: CARTRIDGE.theme.main,
+            backgroundImage: `url("${CARTRIDGE.coverImage}")`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            backgroundPositionY: '10px'
-
+            backgroundPositionY: '10px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <CharacterSelect 
