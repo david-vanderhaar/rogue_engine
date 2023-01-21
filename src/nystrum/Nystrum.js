@@ -2,11 +2,10 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { SCREENS } from './Screen/constants';
 import Screens from './Screen/index';
-import SOUNDS from './sounds';
 import Cartridges from './Cartridge/index'
 
-export const CARTRIDGE = Cartridges.defaultCart()
-// export const CARTRIDGE = Cartridges.jacintoCart()
+// export const CARTRIDGE = Cartridges.defaultCart()
+export const CARTRIDGE = Cartridges.jacintoCart()
 // export const CARTRIDGE = Cartridges.toTheWallsCart()
 // export const CARTRIDGE = Cartridges.flumeCart()
 // export const CARTRIDGE = Cartridges.hiddenLeafCart()
@@ -32,7 +31,7 @@ class Nystrum extends React.Component {
     });
 
     this.state = {
-      activeScreen: SCREENS.TITLE,
+      activeScreen: Object.keys(CARTRIDGE.screens)[0],
       characters,
       modes,
       selectedCharacter: null,
@@ -41,11 +40,6 @@ class Nystrum extends React.Component {
   }
 
   setActiveScreen (activeScreen) {
-    if (activeScreen === SCREENS.TITLE) {
-      Object.keys(SOUNDS).forEach(key => {
-        SOUNDS[key].stop();
-      });
-    }
     this.setState({activeScreen})
   }
 
@@ -58,6 +52,25 @@ class Nystrum extends React.Component {
   }
 
   getActiveScreen () {
+    const ScreenComponent = CARTRIDGE.screens[this.state.activeScreen].component
+    return (
+      <div key={this.state.activeScreen}>
+        {
+          <ScreenComponent
+            setActiveScreen={this.setActiveScreen.bind(this)}
+            setSelectedCharacter={this.setSelectedCharacter.bind(this)}
+            setSelectedMode={this.setSelectedMode.bind(this)}
+            selectedCharacter={this.state.selectedCharacter}
+            selectedMode={this.state.selectedMode}
+            characters={this.state.characters}
+            modes={this.state.modes}
+          />
+        }
+      </div>
+    )
+  }
+
+  getActiveScreen_v1 () {
     const characterScreen = <Screens.CharacterSelect 
       key={SCREENS.CHARACTER_SELECT} 
       setActiveScreen={this.setActiveScreen.bind(this)}
@@ -116,7 +129,6 @@ class Nystrum extends React.Component {
   }
 
   render() {
-    const activeScreen = this.getActiveScreen();
     return (
       <div className="Nystrum">
         <ReactCSSTransitionGroup
@@ -128,7 +140,7 @@ class Nystrum extends React.Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}
         >
-          { activeScreen }
+          { this.getActiveScreen() }
         </ReactCSSTransitionGroup>
       </div>
     );

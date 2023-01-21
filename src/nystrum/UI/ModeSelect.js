@@ -2,7 +2,6 @@ import React from 'react';
 import { CARTRIDGE } from '../Nystrum';
 import { SCREENS } from '../Screen/constants';
 
-
 const ModeSelect = (props) => {
   return (
     <div

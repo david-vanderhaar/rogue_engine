@@ -1,4 +1,11 @@
 import { THEMES } from "../constants"
+import CharacterSelect from "../Screen/CharacterSelect"
+import { SCREENS } from "../Screen/constants"
+import Level from "../Screen/Level"
+import Lose from "../Screen/Lose"
+import ModeSelect from "../Screen/ModeSelect"
+import Title from "../Screen/Title"
+import Win from "../Screen/Win"
 
 export const createCartridge = (data = {}) => {
   return {
@@ -8,31 +15,30 @@ export const createCartridge = (data = {}) => {
     modes: data?.modes || [], // mode should define available characters?
     characters: data?.characters || [], // mode should define available characters?
     theme: data?.theme || THEMES.SOLARIZED, // theme should define bg/text/accent color etc,
-    screens: data?.screens || {
-      title: {
-        component: null,
-        position: 0,
-      },
-      modeSelect: {
-        component: null,
-        position: 1,
-      },
-      chracterSelect: {
-        component: null,
-        position: 2,
-      },
-      game: {
-        component: null, // level
-        position: 3,
-      },
-      win: {
-        component: null,
-        position: 4,
-      },
-      lose: {
-        component: null,
-        position: 4,
-      },
-    },
+    screens: getScreens(data?.screens)
   }
+}
+
+// const getScreens = (screensFromData = {}) => ({...defaultScreens, ...screensFromData})
+const getScreens = (screensFromData) => screensFromData || defaultScreens
+
+const defaultScreens = {
+  [SCREENS.TITLE]: {
+    component: Title,
+  },
+  [SCREENS.MODE_SELECT]: {
+    component: ModeSelect,
+  },
+  [SCREENS.CHARACTER_SELECT]: {
+    component: CharacterSelect,
+  },
+  [SCREENS.LEVEL]: {
+    component: Level, // level
+  },
+  [SCREENS.WIN]: {
+    component: Win,
+  },
+  [SCREENS.LOSE]: {
+    component: Lose,
+  },
 }
