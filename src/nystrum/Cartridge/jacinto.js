@@ -17,7 +17,7 @@ export const jacintoCart = () => {
         The_Commander: Characters.The_Commander,
         The_Scout: Characters.The_Scout,
         The_Stranded: Characters.The_Stranded,
-        The_Veteran: Characters.The_Veteran
+        The_Veteran: Characters.The_Veteran,
       },
       theme: COLORS,
       screens: {

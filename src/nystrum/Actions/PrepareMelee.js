@@ -37,7 +37,7 @@ export class PrepareMelee extends Base {
     let keymap = {
       Escape: () => goToPreviousKeymap,
       
-      w: () => { 
+      'w,ArrowUp': () => { 
         return new Attack({
           actor: this.actor,
           game: this.game,
@@ -51,7 +51,7 @@ export class PrepareMelee extends Base {
           },
         })
       },
-      d: () => { 
+      'd,ArrowRight': () => { 
         return new Attack({
           actor: this.actor,
           game: this.game,
@@ -65,7 +65,7 @@ export class PrepareMelee extends Base {
           },
         })
       },
-      s: () => { 
+      's,ArrowDown': () => { 
         return new Attack({
           actor: this.actor,
           game: this.game,
@@ -79,7 +79,7 @@ export class PrepareMelee extends Base {
           },
         })
       },
-      a: () => { 
+      'a,ArrowLeft': () => { 
         return new Attack({
           actor: this.actor,
           game: this.game,

@@ -29,41 +29,41 @@ export class PrepareDirectionalThrow extends Base {
 
     let keymap = {
       Escape: () => goToPreviousKeymap,
-      w: () => new PrepareDirectionalThrowInDirection({
+      'w,ArrowUp': () => new PrepareDirectionalThrowInDirection({
         label: `throw N?`,
         projectileType: this.projectileType,
         directionToPrepareThrow: 'N',
-        activateKey: 'w',
+        activateKey: 'w,ArrowUp',
         game: this.game,
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,
         passThroughRequiredResources: this.passThroughRequiredResources,
       }),
-      d: () => new PrepareDirectionalThrowInDirection({
+      'd,ArrowRight': () => new PrepareDirectionalThrowInDirection({
         label: `throw E?`,
         projectileType: this.projectileType,
         directionToPrepareThrow: 'E',
-        activateKey: 'd',
+        activateKey: 'd,ArrowRight',
         game: this.game,
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,
         passThroughRequiredResources: this.passThroughRequiredResources,
       }),
-      s: () => new PrepareDirectionalThrowInDirection({
+      's,ArrowDown': () => new PrepareDirectionalThrowInDirection({
         label: `throw S?`,
         projectileType: this.projectileType,
         directionToPrepareThrow: 'S',
-        activateKey: 's',
+        activateKey: 's,ArrowDown',
         game: this.game,
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,
         passThroughRequiredResources: this.passThroughRequiredResources,
       }),
-      a: () => new PrepareDirectionalThrowInDirection({
+      'a,ArrowLeft': () => new PrepareDirectionalThrowInDirection({
         label: `throw W?`,
         projectileType: this.projectileType,
         directionToPrepareThrow: 'W',
-        activateKey: 'a',
+        activateKey: 'a,ArrowLeft',
         game: this.game,
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,

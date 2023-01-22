@@ -509,6 +509,7 @@ export class Game {
 
 /************************** UI ********************************/
 export const handleKeyPress = (event, engine) => {
+  event.preventDefault()
   if (!engine.isRunning) {
     let actor = engine.actors[engine.currentActor];
     let keymap = null;
@@ -520,8 +521,8 @@ export const handleKeyPress = (event, engine) => {
     }
     if (keymap) {
       let code = event.key;
-      if (!(code in keymap)) { return; }
-      const getAction = keymap[code];
+      const getAction = getKeymapHandlerByCode(code, keymap)
+      if (getAction === null) { return; }
       const action = getAction();
       // const action = keymap[code];
       action.setAsNextAction();
@@ -529,6 +530,14 @@ export const handleKeyPress = (event, engine) => {
     }
   }
   return;
+}
+
+const getKeymapHandlerByCode = (code, keymap) => {
+  for (let key in keymap) {
+    if (key.split(',').includes(code)) return keymap[key]
+  }
+
+  return null
 }
 
 export const DisplayElement = (presserRef, handleKeyPress, engine) => {

@@ -14,10 +14,10 @@ const directionKeys = [
 const directions = directionKeys.map((key) => DIRECTIONS[key])
 
 const directionKeyMap = {
-  N: 'w',
-  S: 's',
-  E: 'd',
-  W: 'a',
+  N: 'w,ArrowUp',
+  E: 'd,ArrowRight',
+  S: 's,ArrowDown',
+  W: 'a,ArrowLeft',
 }
 
 export class PrepareDropItemInDirection extends Base {

@@ -127,7 +127,7 @@ export class PrepareSandWall extends Base {
     })
     let keymap = {
       Escape: () => goToPreviousKeymap,
-      w: () => new SandWall({
+      'w,ArrowUp': () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.N, this.actor),
         actor: this.actor,
         game: this.game,
@@ -135,7 +135,7 @@ export class PrepareSandWall extends Base {
         requiredResources: this.sandWallRequiredResources,
         label: 'activate N',
       }),
-      d: () => new SandWall({
+      'd,ArrowRight': () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.E, this.actor),
         actor: this.actor,
         game: this.game,
@@ -143,7 +143,7 @@ export class PrepareSandWall extends Base {
         requiredResources: this.sandWallRequiredResources,
         label: 'activate E',
       }),
-      s: () => new SandWall({
+      's,ArrowDown': () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.S, this.actor),
         actor: this.actor,
         game: this.game,
@@ -151,7 +151,7 @@ export class PrepareSandWall extends Base {
         requiredResources: this.sandWallRequiredResources,
         label: 'activate S',
       }),
-      a: () => new SandWall({
+      'a,ArrowLeft': () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.W, this.actor),
         actor: this.actor,
         game: this.game,

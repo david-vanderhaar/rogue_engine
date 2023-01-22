@@ -30,7 +30,7 @@ export default function (engine) {
         interrupt: true,
         energyCost: 0,
       }),
-      w: () => {
+      'w,ArrowUp': () => {
         const direction = Constant.DIRECTIONS.N;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
@@ -42,7 +42,7 @@ export default function (engine) {
           energyCost: Constant.ENERGY_THRESHOLD
         });
       },
-      s: () => {
+      's,ArrowDown': () => {
         const direction = Constant.DIRECTIONS.S;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
@@ -54,7 +54,7 @@ export default function (engine) {
           energyCost: Constant.ENERGY_THRESHOLD
         });
       },
-      a: () => {
+      'a,ArrowLeft': () => {
         const direction = Constant.DIRECTIONS.W;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
@@ -66,7 +66,7 @@ export default function (engine) {
           energyCost: Constant.ENERGY_THRESHOLD
         });
       },
-      d: () => {
+      'd,ArrowRight': () => {
         const direction = Constant.DIRECTIONS.E;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];

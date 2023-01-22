@@ -47,7 +47,7 @@ export class PrepareSubstitution extends Base {
     let keymap = {
       Escape: () => goToPreviousKeymap,
       
-      w: () => { 
+      'w,ArrowUp': () => { 
         return new MoveTargetingCursor({
           actor: this.actor,
           game: this.game,
@@ -56,7 +56,7 @@ export class PrepareSubstitution extends Base {
           range: 4,
         })
       },
-      a: () => { 
+      'a,ArrowLeft': () => { 
         return new MoveTargetingCursor({
           actor: this.actor,
           game: this.game,
@@ -65,7 +65,7 @@ export class PrepareSubstitution extends Base {
           range: 4,
         })
       },
-      s: () => { 
+      's,ArrowDown': () => { 
         return new MoveTargetingCursor({
           actor: this.actor,
           game: this.game,
@@ -74,7 +74,7 @@ export class PrepareSubstitution extends Base {
           range: 4,
         })
       },
-      d: () => { 
+      'd,ArrowRight': () => { 
         return new MoveTargetingCursor({
           actor: this.actor,
           game: this.game,

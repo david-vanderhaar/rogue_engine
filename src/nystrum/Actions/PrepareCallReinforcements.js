@@ -40,7 +40,7 @@ export class PrepareCallReinforcements extends Base {
     let keymap = {
       Escape: () => goToPreviousKeymap,
       
-      w: () => { 
+      'w,ArrowUp': () => { 
         return new PlaceActor({
           actor: this.actor,
           game: this.game,
@@ -56,7 +56,7 @@ export class PrepareCallReinforcements extends Base {
           },
         })
       },
-      d: () => { 
+      'd,ArrowRight': () => { 
         return new PlaceActor({
           actor: this.actor,
           game: this.game,
@@ -72,7 +72,7 @@ export class PrepareCallReinforcements extends Base {
           },
         })
       },
-      s: () => { 
+      's,ArrowDown': () => { 
         return new PlaceActor({
           actor: this.actor,
           game: this.game,
@@ -88,7 +88,7 @@ export class PrepareCallReinforcements extends Base {
           },
         })
       },
-      a: () => { 
+      'a,ArrowLeft': () => { 
         return new PlaceActor({
           actor: this.actor,
           game: this.game,

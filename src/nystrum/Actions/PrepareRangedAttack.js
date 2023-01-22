@@ -179,7 +179,7 @@ export class PrepareRangedAttack extends Base {
           }
         })
       },
-      w: () => { 
+      'w,ArrowUp': () => { 
         return new MoveRangedAttackCursor({
           actor: this.actor,
           game: this.game,
@@ -192,7 +192,7 @@ export class PrepareRangedAttack extends Base {
           }
         })
       },
-      a: () => { 
+      'a,ArrowLeft': () => { 
         return new MoveRangedAttackCursor({
           actor: this.actor,
           game: this.game,
@@ -205,7 +205,7 @@ export class PrepareRangedAttack extends Base {
           }
         })
       },
-      s: () => { 
+      's,ArrowDown': () => { 
         return new MoveRangedAttackCursor({
           actor: this.actor,
           game: this.game,
@@ -218,7 +218,7 @@ export class PrepareRangedAttack extends Base {
           }
         })
       },
-      d: () => { 
+      'd,ArrowRight': () => { 
         return new MoveRangedAttackCursor({
           actor: this.actor,
           game: this.game,
