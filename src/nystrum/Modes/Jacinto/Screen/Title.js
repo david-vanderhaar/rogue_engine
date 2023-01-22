@@ -1,6 +1,7 @@
 import React from 'react';
 import { SCREENS } from '../../../Screen/constants'
 import { CARTRIDGE } from '../../../Nystrum';
+import HelpContent from '../../../UI/Jacinto/HelpContent';
 
 class Title extends React.Component {
   constructor(props) {
@@ -21,10 +22,12 @@ class Title extends React.Component {
             backgroundPosition: 'center',
             backgroundPositionY: '10px',
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center'
           }}
         >
+          <HelpContent />
           <button
             style={{
               backgroundColor: CARTRIDGE.theme.accent,
@@ -32,7 +35,7 @@ class Title extends React.Component {
             }}
             className={`CharacterSelect__button btn btn-main`}
             onClick={() => {
-              this.props.setActiveScreen(SCREENS.MODE_SELECT)
+              this.props.setActiveScreen(SCREENS.CHARACTER_SELECT)
             }}
           >
             Save The City

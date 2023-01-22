@@ -4,7 +4,6 @@ import Modes from '../Modes/index';
 import { COLORS } from '../Modes/Jacinto/theme';
 import { SCREENS } from '../Screen/constants';
 import Title from '../Modes/Jacinto/Screen/Title';
-import ModeSelect from '../Screen/ModeSelect';
 import CharacterSelect from '../Screen/CharacterSelect';
 import Level from '../Screen/Level';
 import Win from '../Screen/Win';
@@ -24,9 +23,6 @@ export const jacintoCart = () => {
       screens: {
         [SCREENS.TITLE]: {
           component: Title,
-        },
-        [SCREENS.MODE_SELECT]: {
-          component: ModeSelect,
         },
         [SCREENS.CHARACTER_SELECT]: {
           component: CharacterSelect,

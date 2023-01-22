@@ -35,7 +35,7 @@ class Nystrum extends React.Component {
       characters,
       modes,
       selectedCharacter: null,
-      selectedMode: null,
+      selectedMode: modes.length === 1 ? modes[0] : null,
     };
   }
 
