@@ -39,6 +39,7 @@ export const Exploding = superclass => class extends superclass {
   }
   explode() {
     const positions = Helper.getPointsWithinRadius({ x: 0, y: 0 }, this.explosivity)
+    const tileAnimationLength = this.game.tileKey['BURNT'].animation.length
     let structure = {
       x_offset: 0,
       y_offset: 0,
@@ -52,6 +53,7 @@ export const Exploding = superclass => class extends superclass {
       const tile = this.game.map[Helper.coordsToString(position)];
       if (tile) {
         tile.type = 'BURNT';
+        tile.currentFrame = Helper.getRandomInt(0, tileAnimationLength)
         let targets = Helper.getDestructableEntities(tile.entities.filter(
           (entity) => entity.id !== this.id
         ));

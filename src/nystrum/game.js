@@ -76,6 +76,7 @@ export class Game {
     this.mode = new mode({game: this});
     this.messages = messages;
     this.getSelectedCharacter = getSelectedCharacter;
+    this.tileAninmationInterval = null
     GAME = this
   }
 
@@ -292,7 +293,7 @@ export class Game {
     return result
   }
 
-  processTileMap (callback) {
+  processTileMap (callback, shouldAnimate = false) {
     const map = this.getRenderMap(this.map);
     let playerPosition = null
     if (this.fovActive) {
@@ -316,8 +317,8 @@ export class Game {
       }
       // let { foreground, background } = this.tileKey[tile.type]
       // Proto code to handle tile animations
-      let tileRenderer = this.tileKey[tile.type]
-      let nextFrame = this.animateTile(tile, tileRenderer);
+      let tileRenderer = {...this.tileKey[tile.type]}
+      let nextFrame = this.animateTile(tile, tileRenderer, shouldAnimate);
       let character = nextFrame.character;
       let foreground = nextFrame.foreground;
       let background = nextFrame.background;
@@ -412,14 +413,17 @@ export class Game {
     return {character, foreground, background}
   }
 
-  animateTile (tile, renderer) {
+  animateTile (tile, renderer, shouldAnimate) {
     let {character, foreground, background} = this.getTileRenderer(renderer)
     if (renderer.animation) {
       let frame = this.getTileRenderer(renderer.animation[tile.currentFrame]);
       character = frame.character
       foreground = frame.foreground;
       background = frame.background;
-      tile.currentFrame = (tile.currentFrame + 1) % renderer.animation.length;
+
+      if (shouldAnimate) {
+        tile.currentFrame = (tile.currentFrame + 1) % renderer.animation.length;
+      }
     }
     return {character, foreground, background}
   }
@@ -479,7 +483,22 @@ export class Game {
       }, 500)
     }
     // end hack
+
+    this.startTileAnimator()
   }
+
+  startTileAnimator() {
+    this.tileAninmationInterval && clearInterval(this.tileAninmationInterval)
+
+    const processor = (key, x, y, character, foreground, background) => {
+      this.display.updateTile(this.tileMap[key], character, foreground, background);
+    }
+
+    this.tileAninmationInterval = setInterval(() => {
+      this.processTileMap(processor, true);
+      this.display.draw();
+    }, 250)
+  } 
 
   addMessage (text, type) {
     const message = new Message.Message({text, type})
