@@ -69,6 +69,7 @@ export class Game {
       tileOffset: tileOffset,
       game: this,
       mouseEnabled: false
+      // mouseEnabled: true
     });
     this.spriteMode = spriteMode;
     this.fovActive = fovActive;

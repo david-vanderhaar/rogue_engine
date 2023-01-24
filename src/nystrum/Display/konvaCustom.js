@@ -477,7 +477,7 @@ export class Display {
   }
 
   addMouseListenersToNode(tileNode, worldPosition) {
-    let animations = []
+    this['mouseOverAnimations'] = []
     const display = this
     let color = '#3e7dc9'
     let path = []
@@ -486,6 +486,7 @@ export class Display {
     let keymapKey = null
 
     tileNode.on('mouseover', () => {
+      display['lastMouseOverNode'] = tileNode
       const position = display.getRelativeTilePosition(worldPosition)
       const entities = Helper.getEntitiesByPositionByType({
         game: display.game,
@@ -512,7 +513,7 @@ export class Display {
         const playerPos = player.getPosition()
         path = Helper.calculatePathAroundObstacles(display.game, position, playerPos)
         if (path.length) actionType = Move
-        animations.push(...display.highlightPathTiles(path))
+        display['mouseOverAnimations'].push(...display.highlightPathTiles(path))
       }
       
       if (entities.length > 0) {
@@ -520,7 +521,7 @@ export class Display {
       }
 
       // add tile highlight
-      animations.push(display.highlightTile(position, color))
+      display['mouseOverAnimations'].push(display.highlightTile(position, color))
     });
 
     tileNode.on('click', () => {
@@ -545,11 +546,24 @@ export class Display {
     })
 
     tileNode.on('mouseout', () => {
-      // remove tile highlight
-      if (animations.length > 0) {
-        display.removeAnimations(animations.map((anim) => anim.id))
-      }
+      display.removeMouseoverAnimations()
     });
+  }
+
+  addMouseoverAnimations() {
+    this['lastMouseOverNode'] && this['lastMouseOverNode'].fire('mouseover')
+  }
+
+  removeMouseoverAnimations() {
+    if (this['mouseOverAnimations'].length > 0) {
+      this.removeAnimations(this['mouseOverAnimations'].map((anim) => anim.id))
+    }
+  }
+
+  resetMouseoverAnimations() {
+    this.removeMouseoverAnimations()
+    // this['lastMouseOverNode'] && this['lastMouseOverNode'].fire('mouseout')
+    this['lastMouseOverNode'] && this['lastMouseOverNode'].fire('mouseover')
   }
 
   preparedToFire(player) {
