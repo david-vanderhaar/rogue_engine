@@ -350,11 +350,32 @@ export class Game {
   //   return game.canOccupyPosition({x, y})
   // }
 
+  initializeMapTiles_v1 () {
+    if (this.mapInitialized) return false;
+    this.mapInitialized = true;
+
+    this.processTileMap((key, x, y, character, foreground, background) => {
+      let node = this.display.createTile(x, y, character, foreground, background);
+      this.tileMap[key] = node;
+    });
+  }
+
   initializeMapTiles () {
     if (this.mapInitialized) return false;
     this.mapInitialized = true;
+
+    const imageObj = new Image();
+    imageObj.src = `${window.PUBLIC_URL}/sprites/tileset_1bit.png`
+
+    const animations = {
+      wall: [
+        // x, y, width, height (4 frames)
+        0, 0, 16, 16,
+      ],
+    } 
+
     this.processTileMap((key, x, y, character, foreground, background) => {
-      let node = this.display.createTile(x, y, character, foreground, background);
+      let node = this.display.createSpriteTile(x, y, 'wall', animations, imageObj, background);
       this.tileMap[key] = node;
     });
   }

@@ -415,11 +415,66 @@ export class Display {
   updateTile(tile, character, foreground, background) {
     // child[0] is the rectangle
     // child[1] is the text
+    return
     if (tile) {
       tile.children[0].fill(background);
       tile.children[1].fill(foreground);
       tile.children[1].text(character);
     }
+  }
+
+  createSpriteTile(x, y, animation, animations, imageObj, background) {
+    let node = new Konva.Group({
+      id: `${x},${y}`,
+      x: (this.tileWidth * x) + (this.tileOffset + this.tileGutter),
+      y: (this.tileHeight * y) + (this.tileOffset + this.tileGutter),
+      width: this.tileWidth,
+      height: this.tileHeight,
+      transformsEnabled: 'position',
+      perfectDrawEnabled: false,
+      listening: false,
+      shadowForStrokeEnabled: false,
+    });
+
+    let rect = new Konva.Rect({
+      name: 'rect',
+      width: this.tileWidth,
+      height: this.tileHeight,
+      fill: background,
+      strokeEnabled: false,
+      // for optimization
+      transformsEnabled: 'position',
+      perfectDrawEnabled: false,
+      listening: this.mouseEnabled,
+      shadowForStrokeEnabled: false,
+    });
+
+    let sprite = new Konva.Sprite({
+      name: 'sprite',
+      width: this.tileWidth,
+      height: this.tileHeight,
+      image: imageObj,
+      animation: animation,
+      animations: animations,
+      frameRate: 0,
+      frameIndex: 0,
+      // for optimization
+      transformsEnabled: 'all',
+      perfectDrawEnabled: false,
+      listening: false,
+      shadowForStrokeEnabled: false,
+    });
+
+    node.add(rect);
+    node.add(sprite);
+    sprite.scale({
+      x: 4,
+      y: 4,
+    })
+    if (this.mouseEnabled) this.addMouseListenersToNode(rect, {x, y})
+
+    this.layer.add(node);
+    return node;
   }
 
   createTile(x, y, character, foreground, background, layer = 'layer') {
