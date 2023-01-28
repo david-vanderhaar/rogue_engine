@@ -235,21 +235,10 @@ export class Engine {
   }
 
   async processActionFX (action, actionSuccess) {
-    // EASE IN
-    // let time = .8
-    // let nextT = (t) => t *= t; 
-    // EASE OUT
     // let time = .03
-    // let nextT = (t) => t * (2 - t); 
-    // EASE IN OUT QUAD
+    // let time = .2
     // let time = .4
-    // let nextT = (t) => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t; 
-    // EASE IN CUBIC
-    // let time = .8
-    // let nextT = (t) => t * t * t; 
-    // EASE OUT CUBIC
-    // let time = .001
-    // let nextT = (t) => (--t) * t * t + 1; 
+    let time = .8
     if (!actionSuccess) { 
       // If action is not successful, instead of running action's normal particle animation
       // we'll show a red X on the entity that initiated the action
@@ -276,18 +265,19 @@ export class Engine {
           this.game.placeActorOnMap(particle);
         })
         this.game.draw();
-        // await Helper.delay(time * 100);
+        // await Helper.delay(time);
+        await Helper.delay(time * 100);
+        // await Helper.delay(time * 1000);
         // await Helper.delay(time * action.processDelay);
-        await Helper.delay(action.processDelay);
+        // await Helper.delay(action.processDelay);
         // await Helper.delay(0);
         action.particles.forEach((particle) => {
           this.game.removeActorFromMap(particle);
           particle.update(1);
-
         })
-        this.game.draw();
         action.removeDeadParticles();
-        // time = nextT(time);
+        this.game.draw();
+        time = easeIn(time);
       }
       return true;
     }
@@ -317,6 +307,12 @@ export class Engine {
 
 }
 
+const linear = (t) => t; 
+const easeIn = (t) => t *= t; 
+const easeOut = (t) => t * (2 - t); 
+const easeInOutQuad = (t) => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t; 
+const easeInCubic = (t) => t * t * t; 
+const easeOutCubic = (t) => (--t) * t * t + 1; 
 
 export class CrankEngine extends Engine {
   async process() { // a turn-based system using speed and Action Points

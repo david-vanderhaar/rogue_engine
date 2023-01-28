@@ -3,6 +3,7 @@ import { Say } from './Say';
 import { Reload } from './Reload';
 import * as Constant from '../constants';
 import { JACINTO_SOUNDS } from '../Modes/Jacinto/sounds';
+import * as Helper from '../../helper'
 
 export class MultiTargetRangedAttack extends Base {
   constructor({ targetPositions, processDelay = 25, ...args }) {
@@ -42,15 +43,14 @@ export class MultiTargetRangedAttack extends Base {
       }
     }
     let particlePath = [];
-    let particlePos = { x: this.actor.pos.x, y: this.actor.pos.y };
     let renderer = this.particleTemplate.renderer;
+    const actorPos = this.actor.getPosition()
     this.targetPositions.forEach((targetPos) => {
       let [attackSuccess, hit] = this.actor.rangedAttack(targetPos);
       particlePath.push(targetPos);
       if (attackSuccess) {
         success = true;
         if (!hit) {
-          success = true;
           this.addParticle(
             1,
             { ...targetPos },
@@ -58,13 +58,16 @@ export class MultiTargetRangedAttack extends Base {
             Constant.PARTICLE_TEMPLATES.fail.renderer,
           );
         } else {
+          const path = Helper.calculateStraightPath(actorPos, targetPos);
+          console.log('from action');
+          console.log(path);
           this.addParticle(
-            particlePath.length + 1,
-            particlePos,
+            path.length + 1,
+            {...actorPos},
             null,
             renderer,
             Constant.PARTICLE_TYPE.path,
-            particlePath
+            path
           );
         }
       }

@@ -1,7 +1,15 @@
 import * as Constant from '../constants'; 
 
 export const IsParticle = superclass => class extends superclass {
-  constructor({ pos = { x: 1, y: 1 }, direction = { x: 0, y: 0 }, life = 1, speed = 1, type = Constant.PARTICLE_TYPE.directional, path = null, ...args }) {
+  constructor({ 
+    pos = { x: 1, y: 1 },
+    direction = { x: 0, y: 0 },
+    life = 1,
+    speed = 1,
+    type = Constant.PARTICLE_TYPE.directional,
+    path = null,
+    ...args
+  }) {
     super({ ...args });
     this.pos = pos;
     this.direction = direction;
@@ -19,6 +27,8 @@ export const IsParticle = superclass => class extends superclass {
           y: this.pos.y + (this.direction.y * this.speed) * step,
         };
       case Constant.PARTICLE_TYPE.path:
+        console.log('from step');
+        console.log(this.path);
         const nextPos = this.path.shift();
         return nextPos ? { ...nextPos } : { ...this.pos };
       default:

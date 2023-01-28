@@ -9,7 +9,8 @@ export class AddStatusEffect extends Base {
   }
   perform() {
     let success = this.game.engine.addStatusEffect(this.effect);
-    let positions = Helper.getPointsOnCircumference(this.actor.pos.x, this.actor.pos.y, 4);
+    const circumference = 4
+    let positions = Helper.getPointsOnCircumference(this.actor.pos.x, this.actor.pos.y, circumference);
     positions.forEach((pos) => {
       this.addParticle(3, { ...pos }, {
         x: -1 * Math.sign(pos.x - this.actor.pos.x),
