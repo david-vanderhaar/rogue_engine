@@ -4,6 +4,8 @@ import { Reload } from './Reload';
 import * as Constant from '../constants';
 import { JACINTO_SOUNDS } from '../Modes/Jacinto/sounds';
 import * as Helper from '../../helper'
+import { createParticleRendererGradient } from '../Entities/IsParticle';
+import { COLORS } from '../Modes/Jacinto/theme';
 
 export class MultiTargetRangedAttack extends Base {
   constructor({ targetPositions, processDelay = 25, ...args }) {
@@ -42,12 +44,11 @@ export class MultiTargetRangedAttack extends Base {
         // };
       }
     }
-    let particlePath = [];
+
     let renderer = this.particleTemplate.renderer;
     const actorPos = this.actor.getPosition()
     this.targetPositions.forEach((targetPos) => {
       let [attackSuccess, hit] = this.actor.rangedAttack(targetPos);
-      particlePath.push(targetPos);
       if (attackSuccess) {
         success = true;
         if (!hit) {
@@ -59,16 +60,25 @@ export class MultiTargetRangedAttack extends Base {
           );
         } else {
           const path = Helper.calculateStraightPath(actorPos, targetPos);
-          console.log('from action');
-          console.log(path);
-          this.addParticle(
-            path.length + 1,
-            {...actorPos},
-            null,
-            renderer,
-            Constant.PARTICLE_TYPE.path,
-            path
-          );
+          path.push({...targetPos})
+          path.shift()
+
+          const firstPos = path[0]
+          path.forEach((pos, index) => {
+            const particlePath = [...Array(index).fill({...firstPos}), ...path]
+            this.addParticle({
+              life: particlePath.length + 1,
+              pos: {...firstPos},
+              renderer,
+              type: Constant.PARTICLE_TYPE.path,
+              path: particlePath,
+              particleRendererGradients: {
+                ...createParticleRendererGradient('background', [COLORS.base02, COLORS.locust2]),
+                ...createParticleRendererGradient('color', ['#ffffff', '#000000']),
+              },
+              
+            });
+          })
         }
       }
     });

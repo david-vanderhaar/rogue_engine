@@ -238,7 +238,9 @@ export class Engine {
     // let time = .03
     // let time = .2
     // let time = .4
-    let time = .8
+    // let time = .8
+    let time = .9
+    // let time = 1
     if (!actionSuccess) { 
       // If action is not successful, instead of running action's normal particle animation
       // we'll show a red X on the entity that initiated the action
@@ -265,19 +267,15 @@ export class Engine {
           this.game.placeActorOnMap(particle);
         })
         this.game.draw();
-        // await Helper.delay(time);
-        await Helper.delay(time * 100);
-        // await Helper.delay(time * 1000);
-        // await Helper.delay(time * action.processDelay);
-        // await Helper.delay(action.processDelay);
-        // await Helper.delay(0);
+        const delay = Math.max(time * 100, 25)
+        await Helper.delay(delay);
         action.particles.forEach((particle) => {
           this.game.removeActorFromMap(particle);
           particle.update(1);
         })
         action.removeDeadParticles();
         this.game.draw();
-        time = easeIn(time);
+        time = Helper.EASING.easeIn(time);
       }
       return true;
     }
@@ -306,13 +304,6 @@ export class Engine {
   }
 
 }
-
-const linear = (t) => t; 
-const easeIn = (t) => t *= t; 
-const easeOut = (t) => t * (2 - t); 
-const easeInOutQuad = (t) => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t; 
-const easeInCubic = (t) => t * t * t; 
-const easeOutCubic = (t) => (--t) * t * t + 1; 
 
 export class CrankEngine extends Engine {
   async process() { // a turn-based system using speed and Action Points

@@ -46,18 +46,32 @@ export class Base {
     type = Constant.PARTICLE_TYPE.directional, 
     path = null
   ) {
-    let particle = new Particle({
+
+    const defaultAttributes = {
+      energy: 100,
       game: this.game,
       name: 'particle',
       passable: true,
+    }
+
+    let optionalAttributes = {
       life,
       pos,
       direction,
-      energy: 100,
       renderer,
       type,
       path,
+    }
+
+    if (typeof life === 'object') {
+      optionalAttributes = {...life}
+    }
+
+    let particle = new Particle({
+      ...defaultAttributes,
+      ...optionalAttributes,
     });
+
     this.particles.push(particle);
   }
 

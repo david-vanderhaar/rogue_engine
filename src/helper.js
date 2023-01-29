@@ -201,3 +201,12 @@ export const getPositionsFromStructure = (structure, initialPosition) => {
     return position
   })
 }
+
+export const EASING = {
+  linear: (t) => t,
+  easeIn: (t) => t *= t,
+  easeOut: (t) => t * (2 - t),
+  easeInOutQuad: (t) => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+  easeInCubic: (t) => t * t * t,
+  easeOutCubic: (t) => (--t) * t * t + 1,
+}
