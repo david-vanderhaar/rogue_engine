@@ -67,6 +67,8 @@ export const calculatePath = (game, targetPos, currentPos, topology = 4, isPassa
   return path.slice(1);
 }
 
+export const calculateAstar8Path = (game, currentPos, targetPos) => calculatePath(game, targetPos, currentPos, 8, () => () => true);
+
 export const calculatePathAroundObstacles = (
   game, 
   targetPos, 

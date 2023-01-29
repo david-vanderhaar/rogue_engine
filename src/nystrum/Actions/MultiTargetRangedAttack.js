@@ -59,7 +59,7 @@ export class MultiTargetRangedAttack extends Base {
             Constant.PARTICLE_TEMPLATES.fail.renderer,
           );
         } else {
-          const path = Helper.calculateStraightPath(actorPos, targetPos);
+          const path = Helper.calculateAstar8Path(this.game, actorPos, targetPos);
           path.push({...targetPos})
           path.shift()
 
@@ -76,7 +76,7 @@ export class MultiTargetRangedAttack extends Base {
                 ...createParticleRendererGradient('background', [COLORS.base02, COLORS.locust2]),
                 ...createParticleRendererGradient('color', ['#ffffff', '#000000']),
               },
-              
+              particleAnimationTimeStep: 0.1
             });
           })
         }

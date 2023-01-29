@@ -235,12 +235,6 @@ export class Engine {
   }
 
   async processActionFX (action, actionSuccess) {
-    // let time = .03
-    // let time = .2
-    // let time = .4
-    // let time = .8
-    let time = .9
-    // let time = 1
     if (!actionSuccess) { 
       // If action is not successful, instead of running action's normal particle animation
       // we'll show a red X on the entity that initiated the action
@@ -262,12 +256,14 @@ export class Engine {
     }
 
     if (action.particles.length) {
+      let time = action.particles[0].particleAnimationTimeStep
+      const easingFunction = action.particles[0].particleEasingFunction
       while (action.particles.length > 0) {
         action.particles.forEach((particle) => {
           this.game.placeActorOnMap(particle);
         })
         this.game.draw();
-        const delay = Math.max(time * 100, 25)
+        const delay = Math.max(time * 100, 12)
         await Helper.delay(delay);
         action.particles.forEach((particle) => {
           this.game.removeActorFromMap(particle);
@@ -275,7 +271,7 @@ export class Engine {
         })
         action.removeDeadParticles();
         this.game.draw();
-        time = Helper.EASING.easeIn(time);
+        time = easingFunction(time);
       }
       return true;
     }

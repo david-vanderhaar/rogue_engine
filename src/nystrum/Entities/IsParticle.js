@@ -1,4 +1,5 @@
-import * as Constant from '../constants'; 
+import * as Constant from '../constants';
+import * as Helper from '../../helper'
 
 export const createParticleRendererGradient =
   (attributeName, [startHex, endHex]) => ({[attributeName]: [startHex, endHex]})
@@ -12,6 +13,8 @@ export const IsParticle = superclass => class extends superclass {
     type = Constant.PARTICLE_TYPE.directional,
     path = null,
     particleRendererGradients = null,
+    particleEasingFunction = Helper.EASING.linear,
+    particleAnimationTimeStep = 0.9, // 0.1 >=< 0.9
     ...args
   }) {
     super({ ...args });
@@ -23,6 +26,8 @@ export const IsParticle = superclass => class extends superclass {
     this.type = type;
     this.path = path;
     this.particleRendererGradients = particleRendererGradients
+    this.particleEasingFunction = particleEasingFunction
+    this.particleAnimationTimeStep = particleAnimationTimeStep
     this.entityTypes = this.entityTypes.concat('PARTICLE');
   }
   
