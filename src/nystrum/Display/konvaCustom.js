@@ -272,6 +272,7 @@ export class Display {
     this.tileOffset = tileOffset;
     this.stage = null;
     this.layer = null;
+    this.particleLayer = null;
     this.animationLayer = null;
     this.animations = [];
     this.animationLoop = null;
@@ -298,8 +299,15 @@ export class Display {
     this.layer = new Konva.Layer({
       hitGraphEnabled: this.mouseEnabled,
     });
-    
+
     this.stage.add(this.layer);
+
+    // setting up particle effect layer
+    this.particleLayer = new Konva.Layer({
+      hitGraphEnabled: false
+    });
+    
+    this.stage.add(this.particleLayer);
     
     // setting up animation layer
     this.animationLayer = new Konva.Layer({});
@@ -422,7 +430,7 @@ export class Display {
     }
   }
 
-  createTile(x, y, character, foreground, background, layer = 'layer') {
+  createTile(x, y, character, foreground, background, layer = null) {
     // const actual_x = (this.tileWidth * x) + (this.tileOffset + this.tileGutter);
     // const actual_y = (this.tileHeight * y) + (this.tileOffset + this.tileGutter);
     let node = new Konva.Group({
@@ -472,7 +480,8 @@ export class Display {
     node.add(text);
     if (this.mouseEnabled) this.addMouseListenersToNode(rect, {x, y})
 
-    this.layer.add(node);
+    const relevantLayer = layer || this.layer
+    relevantLayer.add(node);
     return node;
   }
 
