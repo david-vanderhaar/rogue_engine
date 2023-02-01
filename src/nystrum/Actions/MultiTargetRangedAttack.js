@@ -4,15 +4,61 @@ import { Reload } from './Reload';
 import * as Constant from '../constants';
 import { JACINTO_SOUNDS } from '../Modes/Jacinto/sounds';
 import * as Helper from '../../helper'
-import { createParticleRendererGradient } from '../Entities/IsParticle';
 import { COLORS } from '../Modes/Jacinto/theme';
+import { ParticleEmitter } from '../Engine/Particle/particleEmitter';
 
 export class MultiTargetRangedAttack extends Base {
   constructor({ targetPositions, processDelay = 25, ...args }) {
     super({ ...args });
     this.targetPositions = targetPositions;
     this.processDelay = processDelay;
+    this.multiTargetRangedAttackHits = []
+    this.multiTargetRangedAttackMisses = []
+    this.onSuccess = () => {
+      args?.onSuccess && args?.onSuccess()
+      this.handleOnAfter()
+    }
   }
+  
+  async handleOnAfter() {
+    const emitter = new ParticleEmitter({
+      game: this.game,
+      easingFunction: Helper.EASING.linear,
+      animationTimeStep: 0.2,
+    })
+
+    const actorPos = this.actor.getPosition()
+
+    this.multiTargetRangedAttackHits.forEach((targetPos) => {
+      const path = Helper.calculateAstar8Path(this.game, actorPos, targetPos);
+      path.push({...targetPos})
+      path.shift()
+
+      const firstPos = path[0]
+      path.forEach((pos, index) => {
+        const particlePath = [...Array(index).fill({...firstPos}), ...path]
+        emitter.addParticle({
+          life: particlePath.length + 1,
+          pos: {...firstPos},
+          path: particlePath,
+          rendererGradients: {
+            color: [COLORS.base02, COLORS.locust2],
+            backgroundColor: ['#ffffff', '#000000'],
+          },
+        });
+      })
+    })
+
+    this.multiTargetRangedAttackMisses.forEach((targetPos) => {
+      emitter.addParticle({
+        life: 5,
+        pos: {...targetPos},
+        direction: {x: 0, y: 0},
+      })
+    })
+    await emitter.start()
+  }
+
   perform() {
     let success = false;
     let alternative = null;
@@ -45,40 +91,14 @@ export class MultiTargetRangedAttack extends Base {
       }
     }
 
-    let renderer = this.particleTemplate.renderer;
-    const actorPos = this.actor.getPosition()
     this.targetPositions.forEach((targetPos) => {
       let [attackSuccess, hit] = this.actor.rangedAttack(targetPos);
       if (attackSuccess) {
         success = true;
         if (!hit) {
-          this.addParticle(
-            1,
-            { ...targetPos },
-            { x: 0, y: 0 },
-            Constant.PARTICLE_TEMPLATES.fail.renderer,
-          );
+          this.multiTargetRangedAttackMisses.push(targetPos) 
         } else {
-          const path = Helper.calculateAstar8Path(this.game, actorPos, targetPos);
-          path.push({...targetPos})
-          path.shift()
-
-          const firstPos = path[0]
-          path.forEach((pos, index) => {
-            const particlePath = [...Array(index).fill({...firstPos}), ...path]
-            this.addParticle({
-              life: particlePath.length + 1,
-              pos: {...firstPos},
-              renderer,
-              type: Constant.PARTICLE_TYPE.path,
-              path: particlePath,
-              particleRendererGradients: {
-                ...createParticleRendererGradient('background', [COLORS.base02, COLORS.locust2]),
-                ...createParticleRendererGradient('color', ['#ffffff', '#000000']),
-              },
-              particleAnimationTimeStep: 0.1
-            });
-          })
+          this.multiTargetRangedAttackHits.push(targetPos) 
         }
       }
     });

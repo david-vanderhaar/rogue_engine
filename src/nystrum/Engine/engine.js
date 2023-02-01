@@ -62,16 +62,16 @@ export class Engine {
           // if (actor.energy >= action.energyCost) { // replace with checking for all required resources
           if (action.canPayRequiredResources()) { // replace with checking for all required resources
             
-            action.onBefore();
+            await action.onBefore();
             result = await action.perform();
             actor.lastActionResult = result
             if (result.success) {
-              action.onSuccess();
+              await action.onSuccess();
               action.payRequiredResources();
             } else {
-              action.onFailure();
+              await action.onFailure();
             }
-            action.onAfter();
+            await action.onAfter();
           }
           if (!await this.processActionFX(action, result.success)) {
             if (this.shouldAutoRun()) {
