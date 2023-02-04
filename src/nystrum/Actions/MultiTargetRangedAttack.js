@@ -1,11 +1,9 @@
 import { Base } from './Base';
 import { Say } from './Say';
 import { Reload } from './Reload';
-import * as Constant from '../constants';
 import { JACINTO_SOUNDS } from '../Modes/Jacinto/sounds';
-import * as Helper from '../../helper'
 import { COLORS } from '../Modes/Jacinto/theme';
-import { ParticleEmitter } from '../Engine/Particle/particleEmitter';
+import GradientPathEmitter from '../Engine/Particle/Emitters/gradientPathEmitter';
 
 export class MultiTargetRangedAttack extends Base {
   constructor({ targetPositions, processDelay = 25, ...args }) {
@@ -15,38 +13,18 @@ export class MultiTargetRangedAttack extends Base {
     this.multiTargetRangedAttackHits = []
     this.multiTargetRangedAttackMisses = []
     this.onSuccess = () => {
-      args?.onSuccess && args?.onSuccess()
+      args?.onSuccess && args.onSuccess()
       this.handleOnAfter()
     }
   }
   
   async handleOnAfter() {
-    const emitter = new ParticleEmitter({
+    const emitter = GradientPathEmitter({
       game: this.game,
-      easingFunction: Helper.EASING.linear,
-      animationTimeStep: 0.2,
-    })
-
-    const actorPos = this.actor.getPosition()
-
-    this.multiTargetRangedAttackHits.forEach((targetPos) => {
-      const path = Helper.calculateAstar8Path(this.game, actorPos, targetPos);
-      path.push({...targetPos})
-      path.shift()
-
-      const firstPos = path[0]
-      path.forEach((pos, index) => {
-        const particlePath = [...Array(index).fill({...firstPos}), ...path]
-        emitter.addParticle({
-          life: particlePath.length + 1,
-          pos: {...firstPos},
-          path: particlePath,
-          rendererGradients: {
-            color: [COLORS.base02, COLORS.locust2],
-            backgroundColor: ['#ffffff', '#000000'],
-          },
-        });
-      })
+      fromPosition: this.actor.getPosition(),
+      targetPositions: this.multiTargetRangedAttackHits,
+      backgroundColorGradient: ['#ffffff', '#000000'],
+      colorGradient: [COLORS.base02, COLORS.locust2],
     })
 
     this.multiTargetRangedAttackMisses.forEach((targetPos) => {
@@ -85,7 +63,6 @@ export class MultiTargetRangedAttack extends Base {
         //   alternative: new Reload({
         //     game: this.game,
         //     actor: this.actor,
-        //     energyCost: Constant.ENERGY_THRESHOLD,
         //   }),
         // };
       }
