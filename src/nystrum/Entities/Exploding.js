@@ -3,6 +3,7 @@ import { FireSpread } from './index';
 import * as Constant from '../constants';
 import * as Helper from '../../helper';
 import {MESSAGE_TYPE} from '../message';
+import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 
 export const Exploding = superclass => class extends superclass {
   constructor({ flammability = 1, explosivity = 1, ...args }) {
@@ -71,9 +72,17 @@ export const Exploding = superclass => class extends superclass {
       SOUNDS.explosion_0.play();
     // this.game.draw(); //may not need draw here
   }
+  animateExplosion () {
+    GradientRadialEmitter({
+      game: this.game,
+      fromPosition: this.getPosition(),
+      radius: this.explosivity,
+    }).start()
+  }
   destroy() {
     super.destroy();
     this.explode();
     this.enflame();
+    this.animateExplosion()
   }
 };

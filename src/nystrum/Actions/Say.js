@@ -14,5 +14,4 @@ export class Say extends Base {
       alternative: null,
     };
   }
-}
-;
+};

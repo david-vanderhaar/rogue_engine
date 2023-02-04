@@ -19,7 +19,6 @@ export default ({
   targetPositions.forEach((targetPos) => {
     const path = Helper.calculateAstar8Path(game, fromPosition, targetPos);
     path.push({ ...targetPos })
-    path.shift()
 
     const firstPos = path[0]
     path.forEach((pos, index) => {
