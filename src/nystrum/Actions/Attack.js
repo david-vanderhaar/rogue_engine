@@ -3,6 +3,7 @@ import { Base } from './Base';
 import { Say } from './Say';
 import * as Helper from '../../helper';
 import * as Constant from '../constants';
+import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 
 export class Attack extends Base {
   constructor({ targetPos, additionalDamage = 0, processDelay = 100, ...args }) {
@@ -31,6 +32,10 @@ export class Attack extends Base {
       const sound = Helper.getRandomInArray([SOUNDS.chop_0, SOUNDS.chop_1]);
       sound.play();
       this.addParticle(1, { ...this.targetPos }, { x: 0, y: 0 });
+      SpatterEmitter({
+        game: this.game,
+        fromPosition: this.targetPos,
+      }).start()
     }
     return {
       success,
