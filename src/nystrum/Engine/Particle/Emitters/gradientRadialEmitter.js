@@ -9,6 +9,7 @@ export default ({
   backgroundColorGradient = ['#673ab7', '#ff551a'],
   easingFunction = Helper.EASING.linear,
   animationTimeStep = 0.2,
+  reverse = false,
 }) => {
   const targetPositions = Helper.getPointsOnCircumference(fromPosition.x, fromPosition.y, radius)
   const emitter = GradientPathEmitter({
@@ -19,6 +20,7 @@ export default ({
     backgroundColorGradient,
     easingFunction,
     animationTimeStep,
+    reverse,
   })
 
   return emitter

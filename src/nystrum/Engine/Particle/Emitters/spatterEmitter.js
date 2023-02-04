@@ -9,6 +9,7 @@ export default ({
   spatterDirection = {x: 0, y: 0},
   spatterColors = ['#ff551a', '#673ab7', '#aa2123'],
   animationTimeStep = 0.2,
+  reverse = false
 }) => {
   const emitter = new ParticleEmitter({
     game,
@@ -24,10 +25,11 @@ export default ({
     .filter(() => Math.random() < spatterAmount)
     
   pointsInRange.forEach((targetPos) => {
-    const path = Helper.calculateAstar8Path(game, fromPosition, targetPos);
+    let path = Helper.calculateAstar8Path(game, fromPosition, targetPos);
+    path.push({ ...targetPos })
+    if (reverse) path = path.reverse()
     const colorGradient = [Helper.getRandomInArray(spatterColors), Helper.getRandomInArray(spatterColors)]
     const backgroundColorGradient = [...colorGradient].reverse()
-    path.push({ ...targetPos })
     emitter.addParticle({
       life: path.length + 1,
       pos: { ...path[0] },
