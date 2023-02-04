@@ -20,8 +20,7 @@ export default ({
   // filter out points not in direction of spatterDirection
   // pick random number of these points based on spatterAmount 
   const pointsInRange = Helper
-    .getPointsWithinRadius(fromPosition, spatterRadius)
-    .filter((point) => Math.sign(spatterDirection.x - point.x) < 0 && Math.sign(spatterDirection.y - point.y) < 0)
+    .getPointsWithinRadiusInDirections(fromPosition, spatterRadius, spatterDirection)
     .filter(() => Math.random() < spatterAmount)
     
   pointsInRange.forEach((targetPos) => {

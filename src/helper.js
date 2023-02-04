@@ -116,6 +116,13 @@ export const getPositionInDirection = (pos, direction) => {
   return {x: pos.x + direction[0], y: pos.y + direction[1]}
 }
 
+export const getDirectionFromOrigin = (origin, target) => {
+  return {
+    x: Math.sign(target.x - origin.x),
+    y: Math.sign(target.y - origin.y),
+  }
+}
+
 export const calculatePathWithRange = (game, targetPos, currentPos, topology, range) => {
   let path = calculatePath(game, targetPos, currentPos, topology);
   return path.slice(0, range + 1);
@@ -188,6 +195,22 @@ export const getPointsWithinRadius = (position, radius) => {
   for (let x = position.x - radius; x < position.x + radius; x++) {
     let yspan = Math.floor(radius * Math.sin(Math.acos((position.x - x) / radius)));
     for (let y = position.y - yspan + 1; y < position.y + yspan; y++) {
+      positions.push({x, y})
+    }
+  }
+  return positions;
+}
+
+export const getPointsWithinRadiusInDirections = (position, radius, direction) => {
+  let positions = [];
+  const xLeft = direction.x <= 0
+  const xRight = direction.x >= 0
+  const yDown = direction.y <= 0
+  const yUp = direction.y >= 0
+
+  for (let x = position.x - (radius * xLeft); x < position.x + (radius * xRight); x++) {
+    let yspan = Math.floor(radius * Math.sin(Math.acos((position.x - x) / radius)));
+    for (let y = position.y - (yspan * yDown); y < position.y + (yspan * yUp); y++) {
       positions.push({x, y})
     }
   }
