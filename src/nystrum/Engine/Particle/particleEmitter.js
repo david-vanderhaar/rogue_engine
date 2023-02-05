@@ -46,8 +46,12 @@ export class Particle {
 
   updatePosition() {
     this.pos = this.getNextPos();
-    const x = this.pos.x * this.displayNode.width()
-    const y = this.pos.y * this.displayNode.height()
+    const renderOffsetX = this.game.getRenderOffsetX()
+    const renderOffsetY = this.game.getRenderOffsetY()
+
+    const x = (this.pos.x + renderOffsetX) * this.displayNode.width()
+    const y = (this.pos.y + renderOffsetY) * this.displayNode.height()
+
     this.displayNode.x(x)
     this.displayNode.y(y)
   }
