@@ -9,7 +9,9 @@ export default ({
   spatterDirection = {x: 0, y: 0},
   spatterColors = ['#ff551a', '#673ab7', '#aa2123'],
   animationTimeStep = 0.2,
-  reverse = false
+  reverse = false,
+  transfersBackground = false,
+  transfersBackgroundOnDestroy = false,
 }) => {
   const emitter = new ParticleEmitter({
     game,
@@ -34,6 +36,8 @@ export default ({
       life: path.length + 1,
       pos: { ...path[0] },
       path,
+      transfersBackground,
+      transfersBackgroundOnDestroy,
       rendererGradients: {
         color: colorGradient,
         backgroundColor: backgroundColorGradient,

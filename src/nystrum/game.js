@@ -322,7 +322,7 @@ export class Game {
       let nextFrame = this.animateTile(tile, tileRenderer, shouldAnimate);
       let character = nextFrame.character;
       let foreground = nextFrame.foreground;
-      let background = nextFrame.background;
+      let background = tile?.overriddenBackground || nextFrame.background;
       
       const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
       if (renderedEntities.length > 0) {

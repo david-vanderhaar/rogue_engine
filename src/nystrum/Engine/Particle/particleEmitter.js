@@ -12,6 +12,8 @@ export class Particle {
     direction = null,
     path = null,
     rendererGradients = null,
+    transfersBackground = false,
+    transfersBackgroundOnDestroy = false,
   }) {
     this.game = game
     this.pos = pos;
@@ -24,6 +26,8 @@ export class Particle {
     this.direction = direction;
     this.path = path;
     this.rendererGradients = rendererGradients;
+    this.transfersBackground = transfersBackground;
+    this.transfersBackgroundOnDestroy = transfersBackgroundOnDestroy;
 
     const layer = this.game.display.particleLayer
     this.displayNode = this.game.display.createTile(
@@ -41,6 +45,9 @@ export class Particle {
     if (this.life > 0) {
       this.updateColors()
       this.updatePosition()
+      if (this.transfersBackground) this.transferBackground()
+    } else {
+      this.destroy()
     }
   }
 
@@ -85,6 +92,19 @@ export class Particle {
     })
 
     this.game.display.updateTile(this.displayNode, this.character, this.color, this.backgroundColor)
+  }
+
+  destroy() {
+    if (this.transfersBackgroundOnDestroy) this.transferBackground()
+  }
+
+  transferBackground() {
+    const tile = Helper.getTileAtPosition(this.game, this.pos)
+    if (!!!tile) return
+    tile['overriddenBackground'] = this.backgroundColor
+    tile.entities.forEach((entity) => {
+      if (entity?.renderer) entity.renderer.background = this.backgroundColor
+    })
   }
 }
 
