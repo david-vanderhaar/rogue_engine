@@ -76,7 +76,7 @@ export class Base {
   }
 
   removeDeadParticles() {
-    this.particles = this.particles.filter((particle) => particle.life > 0);
+    this.particles = this.particles.filter((particle) => particle.life > 0)
   }
 
   setAsNextAction() {

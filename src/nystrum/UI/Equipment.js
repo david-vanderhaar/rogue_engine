@@ -8,7 +8,7 @@ class Equipment extends React.Component {
         {
           this.props.equipment && (
             <div>
-              <div className='flow-text'>Equipment</div>
+              <div>Equipment</div>
               <div>
                 {
                   this.props.equipment.map((slot, index) => {

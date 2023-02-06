@@ -10,5 +10,7 @@ export class Entity {
     this.game = game || GAME;
     this.passable = passable;
     this.active = true;
+
+    this.game.entityLog.add(this)
   }
 }

@@ -7,6 +7,7 @@ import * as Message from './message';
 import { Display } from './Display/konvaCustom';
 import Mode from './Modes/index';
 import * as MapHelper from './Maps/helper';
+import EntityLog from './Engine/entityLog';
 
 export let GAME = null
 // const MAP_DATA = require('./Maps/castle.json');
@@ -78,6 +79,7 @@ export class Game {
     this.messages = messages;
     this.getSelectedCharacter = getSelectedCharacter;
     this.tileAninmationInterval = null
+    this.entityLog = EntityLog();
     GAME = this
   }
 
@@ -88,6 +90,7 @@ export class Game {
   updateMode () { // this is run every game turn
     this.mode.update();
   }
+  
 
   randomlyPlaceActorOnMap(actor) {
     let kill = 0;

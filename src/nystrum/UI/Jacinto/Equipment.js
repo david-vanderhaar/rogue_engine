@@ -251,7 +251,7 @@ class Equipment extends React.Component {
       <div className="Equipment UI">
         {
           <div>
-            <div className='flow-text'>Equipment</div>
+            <div>Equipment</div>
             <div>
               {
                 items.map((item, index) => {

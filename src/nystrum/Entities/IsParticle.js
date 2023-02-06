@@ -36,6 +36,8 @@ export const IsParticle = superclass => class extends superclass {
     if (this.life > 0) {
       this.updateRenderer()
       this.updatePosition(step)
+    } else {
+      this.destroy()
     }
   }
 
@@ -67,6 +69,10 @@ export const IsParticle = superclass => class extends superclass {
       const color = interpolateHexColor(start, end, percentage)
       this.renderer[key] = color
     })
+  }
+
+  destroy() {
+    this.game.entityLog.remove(this)
   }
 };
 

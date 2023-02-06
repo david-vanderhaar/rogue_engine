@@ -12,4 +12,6 @@ export const destroyEntity = (entity) => {
   entity.game.engine.removeStatusEffectByActorId(entity.id);
   entity.game.draw()
   entity.active = false;
+
+  entity.game.entityLog.remove(entity)
 }
