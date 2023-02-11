@@ -2,10 +2,10 @@ import React from "react"
 
 export default ({game}) => {
   return (
-    <div className="UI">
+    <div className="UI" style={{marginBottom: 20}}>
       <div>Visible Entities</div>
       {
-        game.entityLog.getAllEntities().map((entity, index) => <Card key={index} entity={entity} />)
+        game.entityLog.getAllUniqueEntities().map((entity, index) => <Card key={index} entity={entity} />)
       }
     </div>
   )
@@ -14,7 +14,19 @@ export default ({game}) => {
 const Card = ({entity}) => {
   return (
     <div>
-      <div>{entity.name}</div>
+      <div style={{
+        color: entity.renderer.color
+      }}>
+        <span style={{
+          backgroundColor: entity.renderer.background,
+          borderRadius: 2,
+          padding: 2,
+          marginRight: 5,
+        }}>
+          {entity.renderer.sprite || entity.renderer.character}
+        </span>
+        {entity.name}
+      </div>
     </div>
   )
 }
