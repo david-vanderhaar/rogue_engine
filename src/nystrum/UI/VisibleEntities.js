@@ -3,9 +3,10 @@ import React from "react"
 export default ({game}) => {
   return (
     <div className="UI" style={{marginBottom: 20}}>
-      <div>Visible Entities</div>
       {
-        game.entityLog.getAllUniqueEntities().map((entity, index) => <Card key={index} entity={entity} />)
+        game.entityLog.getAllUniqueEntities().map(
+          (entity, index) => <Card key={index} entity={entity} />
+        )
       }
     </div>
   )
@@ -26,6 +27,9 @@ const Card = ({entity}) => {
           {entity.renderer.sprite || entity.renderer.character}
         </span>
         {entity.name}
+      </div>
+      <div>
+        {entity.getFullDescription()}
       </div>
     </div>
   )

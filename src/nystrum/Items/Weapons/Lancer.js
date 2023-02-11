@@ -6,6 +6,8 @@ import {JACINTO_SOUNDS} from '../../Modes/Jacinto/sounds'
 export const Lancer = (engine, pos) => new RangedWeapon({
   game: engine.game,
   name: 'Lancer',
+  baseDescription: 'A gun with a chainsaw',
+  baseDescriptors: ['rumbling with gasoline and a bloodthirst'],
   passable: true,
   attackRange: 8,
   magazineSize: 4,

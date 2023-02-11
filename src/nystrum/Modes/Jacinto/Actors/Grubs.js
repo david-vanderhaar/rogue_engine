@@ -47,6 +47,8 @@ const GRUB_STATS = {
       },
       durability: 2,
       attackDamage: 1,
+      baseDescription: 'A wrinkled, pale-fleshed abomination.',
+      baseDescriptors: ['gutteral chirps and a bloodthirst keep you at bay.'],
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
         new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),

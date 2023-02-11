@@ -1,7 +1,10 @@
+import { pipe } from 'lodash/fp';
 import uuid from 'uuid/v1';
 import {GAME} from '../game';
+import { Describable } from './Describable';
 
-export class Entity {
+
+export class BaseEntity {
   constructor({ game = null, passable = false, name = 'nameless' }) {
     let id = uuid();
     this.entityTypes = ['Entity'];
@@ -14,3 +17,5 @@ export class Entity {
     this.game.entityLog.add(this)
   }
 }
+
+export const Entity = pipe(Describable)(BaseEntity)
