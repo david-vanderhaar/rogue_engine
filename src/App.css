@@ -51,6 +51,7 @@
   /* height: 100%; */
   height: calc(100vh - 200px);
   margin: 10px;
+  position: relative;
 }
 
 .Instructions {

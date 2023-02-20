@@ -1,5 +1,6 @@
 const EntityLog = () => {
   let entities = []
+  let lookedAt = []
   return {
     add: (entity) => entities.push(entity),
     remove: (entity) => entities = entities.filter((ent) => ent.id !== entity.id),
@@ -11,7 +12,9 @@ const EntityLog = () => {
       })
 
       return unique
-    }
+    },
+    setLookedAt: (targets = []) => lookedAt = targets,
+    getLookedAt: () => lookedAt,
   }
 }
 

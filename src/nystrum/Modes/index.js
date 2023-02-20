@@ -3,6 +3,7 @@ import { Chunin } from './chunin'
 import { Jacinto } from './Jacinto/jacinto'
 import { Mode } from './default'
 import { Flume } from './flume'
+import { Development } from './Development/development'
 
 
 export default {
@@ -11,4 +12,5 @@ export default {
   Flume,
   Jacinto,
   Mode,
+  Development,
 }

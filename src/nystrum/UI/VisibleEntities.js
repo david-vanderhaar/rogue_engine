@@ -1,6 +1,6 @@
 import React from "react"
 
-export default ({game}) => {
+export const VisibleEntities = ({game}) => {
   return (
     <div className="UI" style={{marginBottom: 20}}>
       {
@@ -8,6 +8,17 @@ export default ({game}) => {
           (entity, index) => <Card key={index} entity={entity} />
         )
       }
+    </div>
+  )
+}
+
+export const LookedAtEntites = ({game}) => {
+  const lookedAt = game.entityLog.getLookedAt()
+  if (lookedAt.length <= 0) return null
+
+  return (
+    <div className='Popup' style={{top: 0, position: 'absolute', textAlign: 'left', zIndex: 1, maxWidth: '60%'}}>
+      {lookedAt.map((entity, index) => <Card key={index} entity={entity} />)}
     </div>
   )
 }

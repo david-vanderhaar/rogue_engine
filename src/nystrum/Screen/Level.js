@@ -10,7 +10,7 @@ import Inventory from '../UI/Inventory';
 import KeymapUI from '../UI/ActionBar';
 import Messages from '../UI/Messages';
 import InfoBlocks from '../UI/InfoBlocks';
-import VisibleEntities from '../UI/VisibleEntities';
+import {VisibleEntities, LookedAtEntites} from '../UI/VisibleEntities';
 import Equipment from '../UI/Jacinto/Equipment';
 // import Equipment from '../UI/Equipment';
 
@@ -66,6 +66,7 @@ class Level extends React.Component {
             <PlayerInformation game={this.state.game} />
           </div>
           <div style={{flex: 5}}>
+            <LookedAtEntites game={this.state.game} />
             <div className='game_display_container'>
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
             </div>
