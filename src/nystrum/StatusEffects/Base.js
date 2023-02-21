@@ -4,7 +4,8 @@ export class Base {
   constructor({ 
     game, 
     actor, 
-    name = 'Effect', 
+    name = 'Effect',
+    description = '',
     lifespan = 100,
     stepInterval = 100,
     allowDuplicates = true,
@@ -16,6 +17,7 @@ export class Base {
     this.game = game
     this.actor = actor
     this.name = name
+    this.description = description
     this.lifespan = lifespan
     this.timeToLive = lifespan
     this.stepInterval = stepInterval

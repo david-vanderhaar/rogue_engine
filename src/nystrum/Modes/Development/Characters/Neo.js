@@ -23,9 +23,13 @@ import { Grenade } from '../../../Items/Weapons/Grenade';
 import { Ammo } from '../../../Items/Pickups/Ammo';
 import {COLORS} from '../../../Modes/Jacinto/theme';
 import { Reload } from '../../../Actions/Reload';
+import { AddSandSkinStatusEffect } from '../../../Actions/AddSandSkinStatusEffect';
 import {UpgradeResource} from '../../../Actions/ActionResources/UpgradeResource';
 import { SandSkin } from '../../../StatusEffects/SandSkin';
 import { MeleeDamageDebuff } from '../../../StatusEffects/MeleeDamageDebuff';
+import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
+import { TakeAim } from '../../../StatusEffects/TakeAim';
+import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 
 
 export default function (engine) {
@@ -160,6 +164,42 @@ export default function (engine) {
           game: engine.game,
           actor,
         }),
+      h: () => new AddSandSkinStatusEffect({
+        label: 'Sand Skin',
+        game: engine.game,
+        actor,
+      }),
+      c: () => new AddStatusEffect({
+        label: 'Rev Lancer Chainsaw',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        effect: new MeleeDamage({
+          buffValue: 12,
+          game: engine.game,
+          actor,
+          lifespan: Constant.ENERGY_THRESHOLD * 3,
+          stepInterval: Constant.ENERGY_THRESHOLD,
+        }),
+        particleTemplate: {
+          renderer: {
+            color: '#424242',
+            background: '#e6e6e6',
+            character: ''
+          },
+        },
+      }),
+      v: () => new AddStatusEffect({
+        label: 'Take Aim',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD * 2,
+        effect: new TakeAim({
+          buffValue: 10,
+          game: engine.game,
+          actor,
+        }),
+      }),
     };
   }
   // instantiate class
