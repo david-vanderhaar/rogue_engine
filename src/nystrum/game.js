@@ -69,8 +69,7 @@ export class Game {
       tileHeight: tileHeight,
       tileOffset: tileOffset,
       game: this,
-      mouseEnabled: false
-      // mouseEnabled: true
+      mouseEnabled: true,
     });
     this.spriteMode = spriteMode;
     this.fovActive = fovActive;
@@ -144,6 +143,10 @@ export class Game {
     if (!tile) return false;
     this.map[Helper.coordsToString(actor.pos)].entities = tile.entities.filter((ac) => ac.id !== actor.id);
     return true;
+  }
+
+  placePlayerRandomly() {
+    this.randomlyPlaceActorOnMap(this.getFirstPlayer())
   }
 
   createLevel () {

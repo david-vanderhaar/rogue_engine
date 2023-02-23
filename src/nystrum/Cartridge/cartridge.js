@@ -8,7 +8,7 @@ import Title from "../Screen/Title"
 import Win from "../Screen/Win"
 
 export const createCartridge = (data = {}) => {
-  return {
+  const cart = {
     name: data?.name || 'ゲーム (Gemu)', //also serves ast meta tag title
     coverImage: data?.coverImage || '',
     icon: data?.icon || `${window.PUBLIC_URL}/favicon.ico`,
@@ -17,7 +17,12 @@ export const createCartridge = (data = {}) => {
     theme: data?.theme || THEMES.SOLARIZED, // theme should define bg/text/accent color etc,
     screens: getScreens(data?.screens)
   }
+
+  updateWindowTitle(cart.name)
+  return cart
 }
+
+const updateWindowTitle = (title) => window.document.title = title
 
 // const getScreens = (screensFromData = {}) => ({...defaultScreens, ...screensFromData})
 const getScreens = (screensFromData) => screensFromData || defaultScreens

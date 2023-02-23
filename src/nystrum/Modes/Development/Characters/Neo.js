@@ -30,6 +30,7 @@ import { MeleeDamageDebuff } from '../../../StatusEffects/MeleeDamageDebuff';
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { TakeAim } from '../../../StatusEffects/TakeAim';
 import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
+import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
 
 
 export default function (engine) {
@@ -200,8 +201,18 @@ export default function (engine) {
           actor,
         }),
       }),
+      mouse: (mousePosition) => {
+        return new MoveTargetingCursor({
+          actor: actor,
+          game: engine.game,
+          label: 'Previous Target',
+          targetPos: mousePosition,
+        })
+      },
     };
   }
+
+
   // instantiate class
   const primary = Snub(engine);
   const durability = 5;

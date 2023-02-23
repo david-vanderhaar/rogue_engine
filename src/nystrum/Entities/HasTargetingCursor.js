@@ -84,6 +84,7 @@ export const HasTargetingCursor = superclass => class extends superclass {
 
   moveCursorToPosition (position) {
     const currentPositions = this.getCursorPositions()
+    if (currentPositions.length <= 0) return []
     const xDelta = position.x - currentPositions[0].x;
     const yDelta = position.y - currentPositions[0].y;
     const newPositons = currentPositions.map(

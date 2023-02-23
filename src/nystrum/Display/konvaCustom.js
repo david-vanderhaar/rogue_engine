@@ -478,11 +478,34 @@ export class Display {
 
     node.add(rect);
     node.add(text);
-    if (this.mouseEnabled) this.addMouseListenersToNode(rect, {x, y})
+    // if (this.mouseEnabled) this.addMouseListenersToNode(rect, {x, y})
+    if (this.mouseEnabled) this.addMouseListenersToNodeV2(rect, {x, y})
 
     const relevantLayer = layer || this.layer
     relevantLayer.add(node);
     return node;
+  }
+
+  addMouseListenersToNodeV2(tileNode, worldPosition) {
+    this['mouseOverAnimations'] = []
+    const display = this
+    let color = '#fff'
+    let player = display.game.getFirstPlayer()
+
+    tileNode.on('mouseover', () => {
+      display['lastMouseOverNode'] = tileNode
+      const position = display.getRelativeTilePosition(worldPosition)
+      const mouseAction = player.getKeymap()?.mouse
+
+      if (mouseAction) {
+        mouseAction(position).immediatelyExecuteAction()
+        display['mouseOverAnimations'].push(display.highlightTile(position, color))
+      }
+    });
+
+    tileNode.on('mouseout', () => {
+      display.removeMouseoverAnimations()
+    });
   }
 
   addMouseListenersToNode(tileNode, worldPosition) {

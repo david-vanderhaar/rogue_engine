@@ -71,7 +71,7 @@ export class PrepareLooking extends Base {
           targetPos: targets.length ? targets[targetIndex].getPosition() : null,
           onSuccess: () => {
             targetIndex = (targetIndex + 1) % targets.length;
-            this.updateLookedAt()
+            // this.updateLookedAt()
           },
         })
       },
@@ -88,7 +88,7 @@ export class PrepareLooking extends Base {
               targetIndex -= 1
             }
 
-            this.updateLookedAt()
+            // this.updateLookedAt()
           }
         })
       },
@@ -98,7 +98,7 @@ export class PrepareLooking extends Base {
           game: this.game,
           label: 'move N',
           direction: DIRECTIONS.N,
-          onSuccess: this.updateLookedAt
+          // onSuccess: this.updateLookedAt
         })
       },
       'a,ArrowLeft': () => { 
@@ -107,7 +107,7 @@ export class PrepareLooking extends Base {
           game: this.game,
           label: 'move W',
           direction: DIRECTIONS.W,
-          onSuccess: this.updateLookedAt
+          // onSuccess: this.updateLookedAt
         })
       },
       's,ArrowDown': () => { 
@@ -116,7 +116,7 @@ export class PrepareLooking extends Base {
           game: this.game,
           label: 'move S',
           direction: DIRECTIONS.S,
-          onSuccess: this.updateLookedAt
+          // onSuccess: this.updateLookedAt
         })
       },
       'd,ArrowRight': () => { 
@@ -125,7 +125,7 @@ export class PrepareLooking extends Base {
           game: this.game,
           label: 'move E',
           direction: DIRECTIONS.E,
-          onSuccess: this.updateLookedAt
+          // onSuccess: this.updateLookedAt
         })
       },
     };

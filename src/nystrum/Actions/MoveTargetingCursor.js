@@ -27,6 +27,17 @@ export class MoveTargetingCursor extends Base {
     return path.length <= this.range;
   }
 
+  updateLookedAt(positions) {
+    const targets = positions.reduce((acc, pos) => {
+      return [
+        ...acc,
+        ...Helper.getEntitiesByPosition({game: this.game, position: pos})
+      ]
+    }, [])
+
+    this.game.entityLog.setLookedAt(targets)
+  }
+
   perform() {
     let success = false;
     let alternative = null;
@@ -41,6 +52,7 @@ export class MoveTargetingCursor extends Base {
 
     if (this.canMoveCursor(targetPos)) {
       this.actor.moveCursorToPosition(targetPos);
+      this.updateLookedAt([targetPos])
       success = true;
     }
     return {
