@@ -31,6 +31,7 @@ import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { TakeAim } from '../../../StatusEffects/TakeAim';
 import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
+import { MoveTowards } from '../../../Actions/MoveTowards';
 
 
 export default function (engine) {
@@ -201,11 +202,19 @@ export default function (engine) {
           actor,
         }),
       }),
-      mouse: (mousePosition) => {
+      mouseOver: (mousePosition) => {
         return new MoveTargetingCursor({
+          hidden: true,
           actor: actor,
           game: engine.game,
-          label: 'Previous Target',
+          targetPos: mousePosition,
+        })
+      },
+      mouseClick: (mousePosition) => {
+        return new MoveTowards({
+          hidden: true,
+          actor,
+          game: engine.game,
           targetPos: mousePosition,
         })
       },

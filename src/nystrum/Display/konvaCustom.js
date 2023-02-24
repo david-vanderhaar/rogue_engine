@@ -495,11 +495,20 @@ export class Display {
     tileNode.on('mouseover', () => {
       display['lastMouseOverNode'] = tileNode
       const position = display.getRelativeTilePosition(worldPosition)
-      const mouseAction = player.getKeymap()?.mouse
+      const mouseOverAction = player.getKeymap()?.mouseOver
 
-      if (mouseAction) {
-        mouseAction(position).immediatelyExecuteAction()
+      if (mouseOverAction) {
+        mouseOverAction(position).immediatelyExecuteAction()
         display['mouseOverAnimations'].push(display.highlightTile(position, color))
+      }
+    });
+
+    tileNode.on('click', () => {
+      const position = display.getRelativeTilePosition(worldPosition)
+      const mouseClickAction = player.getKeymap()?.mouseClick
+
+      if (mouseClickAction) {
+        mouseClickAction(position).immediatelyExecuteAction()
       }
     });
 
