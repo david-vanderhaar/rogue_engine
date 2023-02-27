@@ -15,7 +15,7 @@ export class Development extends Mode {
     super.initialize();
     this.game.createEmptyLevel();
     this.game.initializeMapTiles();
-    // this.game.placePlayerRandomly()
+    this.game.placePlayerRandomly()
   }
 
   update() {}

@@ -199,12 +199,27 @@ class BlinkTile extends Animation {
     return this.active;
   }
 
+  updatePosition({x, y}) {
+    this.x = x
+    this.y = y
+    this.node.position(this.worldPosition({x, y}))
+  }
+
+  worldPosition(absolutePosition) {
+    const {x: absoultueX, y: absoultueY} = absolutePosition;
+    const x = (this.display.tileWidth * (absoultueX + this.display.game.getRenderOffsetX())) + (this.display.tileOffset + this.display.tileGutter)
+    const y = (this.display.tileHeight * (absoultueY + this.display.game.getRenderOffsetY())) + (this.display.tileOffset + this.display.tileGutter)
+
+    return {x, y}
+  }
+
   initialize () {
     this.active = true;
+    const worldPosition = this.worldPosition({x: this.x, y: this.y})
     const attrs = {
       name: 'rect',
-      x: (this.display.tileWidth * (this.x + this.display.game.getRenderOffsetX())) + (this.display.tileOffset + this.display.tileGutter),
-      y: (this.display.tileHeight * (this.y + this.display.game.getRenderOffsetY())) + (this.display.tileOffset + this.display.tileGutter),
+      x: worldPosition.x,
+      y: worldPosition.y,
       offsetX: this.display.tileWidth / -4,
       offsetY: this.display.tileHeight / -4,
       width: this.display.tileWidth / 2,
@@ -285,6 +300,7 @@ export class Display {
     let d = document.getElementById(this.containerId)
     let displayContainer = document.createElement('div');
     d.appendChild(displayContainer);
+    d.oncontextmenu = (event) => event.preventDefault();
 
     this.adjustContentToScreen(d);
     
@@ -294,7 +310,6 @@ export class Display {
       height: this.height,
     });
 
-    
     // setting up main tile map layer
     this.layer = new Konva.Layer({
       hitGraphEnabled: this.mouseEnabled,
@@ -366,7 +381,6 @@ export class Display {
     this.height = (newRenderHeight * this.tileHeight) + this.tileOffset;
   }
 
-  adjustGameCameraHeightToScreenHeight (height) { this.game.cameraHeight = this.getTilesDownOnScreenByHeight(height) }
   adjustGameCameraHeightToScreenHeight (height) { this.game.cameraHeight = this.getTilesDownOnScreenByHeight(height) }
 
   addAnimation (type, args) {

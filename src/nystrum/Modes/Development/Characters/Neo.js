@@ -32,6 +32,7 @@ import { TakeAim } from '../../../StatusEffects/TakeAim';
 import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../../../Actions/MoveTowards';
+import { Gnasher } from '../../../Items/Weapons/Gnasher';
 
 
 export default function (engine) {
@@ -171,7 +172,7 @@ export default function (engine) {
         game: engine.game,
         actor,
       }),
-      c: () => new AddStatusEffect({
+      x: () => new AddStatusEffect({
         label: 'Rev Lancer Chainsaw',
         game: engine.game,
         actor,
@@ -281,7 +282,12 @@ export default function (engine) {
   const grenades = Array(2).fill('').map(() => Grenade(engine, 6));
   const secondary = Boltok(engine);
   const lancer = Lancer(engine);
+  const gnasher = Gnasher(engine);
   actor.container = [
+    new ContainerSlot({
+      itemType: gnasher.name,
+      items: [gnasher],
+    }),
     new ContainerSlot({
       itemType: lancer.name,
       items: [lancer],

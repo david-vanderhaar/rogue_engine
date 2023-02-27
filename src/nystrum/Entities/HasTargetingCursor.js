@@ -25,6 +25,7 @@ export const HasTargetingCursor = superclass => class extends superclass {
   deactivateCursor () {
     this.setCursorIsActive(false);
     this.removeAnimations();
+    this.setCursorPositions([])
   }
 
   setDisplayChanceText(value) {return this.displayChanceText = value}
