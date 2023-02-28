@@ -35,7 +35,7 @@ export const HasKeymap = superclass => class extends superclass {
   }
 
   goToPreviousKeymap () {
-    this.removeKeymap();
+    if (this.keymapStack.length > 1) this.removeKeymap();
     return this.getKeymap();
   }
 };

@@ -33,6 +33,7 @@ import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../../../Actions/MoveTowards';
 import { Gnasher } from '../../../Items/Weapons/Gnasher';
+import { GoToPreviousKeymap } from '../../../Actions/GoToPreviousKeymap';
 
 
 export default function (engine) {
@@ -211,7 +212,7 @@ export default function (engine) {
           targetPos: mousePosition,
         })
       },
-      mouseClick: (mousePosition) => {
+      mouseLeftButton: (mousePosition) => {
         return new MoveTowards({
           hidden: true,
           actor,
@@ -219,9 +220,15 @@ export default function (engine) {
           targetPos: mousePosition,
         })
       },
+      mouseRightButton: (mousePosition) => {
+        return new GoToPreviousKeymap({
+          hidden: true,
+          actor,
+          game: engine.game,
+        })
+      },
     };
   }
-
 
   // instantiate class
   const primary = Snub(engine);

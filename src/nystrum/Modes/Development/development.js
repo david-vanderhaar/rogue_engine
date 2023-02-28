@@ -1,6 +1,8 @@
 import { Mode } from '../default';
 import * as CONSTANT from '../../constants';
 import * as JACINTO_CONSTANT from '../Jacinto/theme'
+import * as LocustActors from '../Jacinto/Actors/Grubs';
+import * as Helper from '../../../helper'
 
 export class Development extends Mode {
   constructor({ ...args }) {
@@ -16,6 +18,9 @@ export class Development extends Mode {
     this.game.createEmptyLevel();
     this.game.initializeMapTiles();
     this.game.placePlayerRandomly()
+    
+    Helper.range(3).forEach((index) =>
+      LocustActors.addDrone(this, Helper.getRandomPos(this.game.map).coordinates))
   }
 
   update() {}

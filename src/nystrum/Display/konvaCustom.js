@@ -512,14 +512,18 @@ export class Display {
       const mouseOverAction = player.getKeymap()?.mouseOver
 
       if (mouseOverAction) {
-        mouseOverAction(position).immediatelyExecuteAction()
-        display['mouseOverAnimations'].push(display.highlightTile(position, color))
+        if (display.game.engine.isRunning) mouseOverAction(position).setAsNextAction()
+        else mouseOverAction(position).immediatelyExecuteAction()
+        // display['mouseOverAnimations'].push(display.highlightTile(position, color))
       }
     });
 
-    tileNode.on('click', () => {
+    tileNode.on('click', (event) => {
+      let mouseClickAction = null
+      if (event.evt.which === 1) mouseClickAction = player.getKeymap()['mouseLeftButton']
+      else if (event.evt.which === 3) mouseClickAction = player.getKeymap()['mouseRightButton'] || player.getKeymap()['Escape']
+
       const position = display.getRelativeTilePosition(worldPosition)
-      const mouseClickAction = player.getKeymap()?.mouseClick
 
       if (mouseClickAction) {
         mouseClickAction(position).immediatelyExecuteAction()
@@ -527,7 +531,7 @@ export class Display {
     });
 
     tileNode.on('mouseout', () => {
-      display.removeMouseoverAnimations()
+      // display.removeMouseoverAnimations()
     });
   }
 

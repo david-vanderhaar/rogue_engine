@@ -6,6 +6,8 @@ export const delay = (timeDelayed = 100) => {
   return new Promise(resolve => setTimeout(resolve, timeDelayed));
 }
 
+export const range = (number) => [...Array(number).keys()]
+
 export const clamp = (value, min, max) => {
   return Math.min(Math.max(value, min), max);
 };

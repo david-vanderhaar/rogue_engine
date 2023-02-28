@@ -231,7 +231,7 @@ export class PrepareRangedAttack extends Base {
           }
         })
       },
-      m: (targetPos) => { 
+      mouseOver: (targetPos) => { 
         return new MoveRangedAttackCursor({
           hidden: true,
           actor: this.actor,
@@ -256,6 +256,23 @@ export class PrepareRangedAttack extends Base {
             deactivateAnimations(pathAnimations);
             deactivateAnimations(rangeAnims);
             this.actor.setNextAction(goToPreviousKeymap);
+          }
+        })
+      },
+      mouseLeftButton: () => { 
+        return new MultiTargetRangedAttack({
+          hidden: true,
+          targetPositions:  [...this.actor.getCursorPositions()],
+          game: this.game,
+          actor: this.actor,
+          energyCost: this.passThroughEnergyCost,
+          requiredResources: this.passThroughRequiredResources,
+          onSuccess: () => {
+            this.actor.deactivateCursor();
+            deactivateAnimations(pathAnimations);
+            deactivateAnimations(rangeAnims);
+            this.actor.goToPreviousKeymap()
+            // this.actor.setNextAction(goToPreviousKeymap);
           }
         })
       },
