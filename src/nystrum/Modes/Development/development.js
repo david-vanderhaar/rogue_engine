@@ -19,8 +19,8 @@ export class Development extends Mode {
     this.game.initializeMapTiles();
     this.game.placePlayerRandomly()
     
-    Helper.range(3).forEach((index) =>
-      LocustActors.addDrone(this, Helper.getRandomPos(this.game.map).coordinates))
+    Helper.range(1).forEach((index) =>
+      LocustActors.addWretch(this, Helper.getRandomPos(this.game.map).coordinates))
   }
 
   update() {}

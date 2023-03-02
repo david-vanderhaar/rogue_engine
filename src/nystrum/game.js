@@ -13,10 +13,12 @@ export let GAME = null
 // const MAP_DATA = require('./Maps/castle.json');
 // const SOLANGE = require('./Data/solange.json');
 
+// const MAP_WIDTH = 10;
+// const MAP_HEIGHT = 10;
 const MAP_WIDTH = 50;
-const MAP_HEIGHT = 25;
+const MAP_HEIGHT = 30;
 // const MAP_WIDTH = 28;
-// const MAP_HEIGHT = 14;
+// const MAP_HEIGHT = 20;
 
 const TILE_OFFSET = 0;
 
@@ -43,7 +45,7 @@ export class Game {
     tileOffset = TILE_OFFSET,
     getSelectedCharacter = () => false,
     spriteMode = true,
-    fovActive = false,
+    fovActive = true,
     tileKey = Constant.TILE_KEY,
     mode = Mode.Flume,
     messages = [],
@@ -73,6 +75,8 @@ export class Game {
     });
     this.spriteMode = spriteMode;
     this.fovActive = fovActive;
+    this.FOV = new ROT.FOV.PreciseShadowcasting((x, y) => this.fovLightPasses(x, y, this));
+    // this.FOV = new ROT.FOV.RecursiveShadowcasting((x, y) => this.fovLightPasses(x, y, this));
     this.tileKey = tileKey;
     this.mode = new mode({game: this});
     this.messages = messages;
@@ -314,14 +318,15 @@ export class Game {
       let y = parseInt(parts[1]);
       let tile = map[key];
 
-      if (this.fovActive) {
-        const renderedX = x - this.getRenderOffsetX()
-        const renderedY = y - this.getRenderOffsetY()
-        if (Helper.diagonal_distance(playerPosition, {x: renderedX, y: renderedY}) > lightRange) {
-          callback(key, x, y, '', '#000', 'rgba(0,0,0,0.2)');
-          continue;
-        }
-      }
+      // if (this.fovActive) {
+      //   const renderedX = x - this.getRenderOffsetX()
+      //   const renderedY = y - this.getRenderOffsetY()
+      //   if (Helper.diagonal_distance(playerPosition, {x: renderedX, y: renderedY}) > lightRange) {
+      //     callback(key, x, y, '', '#000', 'rgba(0,0,0,0.2)');
+      //     continue;
+      //   }
+      // }
+
       // let { foreground, background } = this.tileKey[tile.type]
       // Proto code to handle tile animations
       let tileRenderer = {...this.tileKey[tile.type]}
@@ -344,17 +349,54 @@ export class Game {
       callback(key, x, y, character, foreground, background);          
     }
 
-    // fov.compute(playerPosition.x, playerPosition.y, lightRange, (xFov, yFov, rFov, visibility) => {
-    //   console.log(rFov, visibility, xFov, yFov);
+    // this.FOV.compute(playerPosition.x, playerPosition.y, lightRange, (xFov, yFov, rFov, visibility) => {
+    //   // console.log(rFov, visibility, xFov, yFov);
     //   const key = Helper.coordsToString({x: xFov, y: yFov})
-    //   console.log(key);
-    //   if (!visibility) callback(key, xFov, yFov, '', '#000', '#000');
+    //   const tile = map[key]
+    //   const character = tile ? this.tileKey[tile.type].sprite : '.'
+    //   callback(key, xFov, yFov, character, '#000', '#fff');
     // });
   }
 
-  // fovLightPasses(x, y, game) {
-  //   return game.canOccupyPosition({x, y})
-  // }
+  processTileMapWithFov(callback, shouldAnimate = false) {
+    const map = this.getRenderMap(this.map);
+    const playerPosition = this.getPlayerPosition()
+    const lightRange = 6
+
+    this.FOV.compute(playerPosition.x, playerPosition.y, lightRange, (x, y, rFov, visibility) => {
+    // this.FOV.compute90(playerPosition.x, playerPosition.y, lightRange, 0, (x, y, rFov, visibility) => {
+      // console.log(rFov, visibility);
+      const key = Helper.coordsToString({x, y})
+      const tile = map[key]
+      if (!!!tile) return
+      let tileRenderer = {...this.tileKey[tile.type]}
+      let nextFrame = this.animateTile(tile, tileRenderer, shouldAnimate);
+      let character = nextFrame.character;
+      let foreground = nextFrame.foreground;
+      let background = tile?.overriddenBackground || nextFrame.background;
+      const interpolation = Math.min(visibility, 0.8)
+      background = Helper.interpolateHexColor(background, '#fff0ad', interpolation)
+
+      const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
+      if (renderedEntities.length > 0) {
+        let entity = renderedEntities[renderedEntities.length - 1]
+        nextFrame = this.animateEntity(entity);
+
+        character = nextFrame.character
+        foreground = nextFrame.foreground
+        if (nextFrame.background) {
+          background = nextFrame.background
+        }
+      }
+
+      callback(key, x, y, character, foreground, background);
+    });
+  }
+
+  fovLightPasses(x, y, game) {
+    if (Helper.coordsAreEqual(game.getFirstPlayer().getPosition(), {x, y})) return true
+    return game.canOccupyPosition({x, y})
+  }
 
   initializeMapTiles () {
     if (this.mapInitialized) return false;
@@ -383,6 +425,9 @@ export class Game {
   
   draw () {
     this.processTileMap((key, x, y, character, foreground, background) => {
+      this.display.updateTile(this.tileMap[key], character, foreground, background);
+    });
+    this.processTileMapWithFov((key, x, y, character, foreground, background) => {
       this.display.updateTile(this.tileMap[key], character, foreground, background);
     });
     this.display.draw();
@@ -491,7 +536,7 @@ export class Game {
     }
     // end hack
 
-    this.startTileAnimator()
+    // this.startTileAnimator()
   }
 
   startTileAnimator() {
