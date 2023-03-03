@@ -16,6 +16,11 @@ export const Rendering = superclass => class extends superclass {
   getPosition() {
     return this.pos;
   }
+
+  setPosition(pos) {
+    return this.pos = pos
+  }
+
   move(targetPos) {
     let success = false;
     if (this.game.canOccupyPosition(targetPos, this)) {

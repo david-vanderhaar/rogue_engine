@@ -188,7 +188,7 @@ export const Player = pipe(
   HasFaction,
   CanActivateStatusEffects,
   UsesCover,
-  Illuminating,
+  // Illuminating,
 )(Entity);
 
 export const Weapon = pipe(
@@ -203,6 +203,7 @@ export const RangedWeapon = pipe(
   RangedAttacking,
   Attacking,
   HasShapePattern,
+  Illuminating,
 )(Entity);
 
 export const Armor = pipe(

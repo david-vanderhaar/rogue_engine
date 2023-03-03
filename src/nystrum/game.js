@@ -360,15 +360,18 @@ export class Game {
 
   processTileMapWithFov(callback, shouldAnimate = false) {
     const map = this.getRenderMap(this.map);
-    // const playerPosition = this.getPlayerPosition()
-    // const lightRange = 6
-
     const lights = Helper.filterEntitiesByType(this.entityLog.getAllEntities(), 'ILLUMINATING')
       .filter((entity) => entity.lightRange > 0)
 
+    const renderOffsetX = this.getRenderOffsetX()
+    const renderOffsetY = this.getRenderOffsetY()
+
     lights.forEach((light) => {
       const pos = light.getPosition()
-      this.FOV.compute(pos.x, pos.y, light.lightRange, (x, y, rFov, visibility) => {
+      const renderedX = pos.x + renderOffsetX
+      const renderedY = pos.y + renderOffsetY
+
+      this.FOV.compute(renderedX, renderedY, light.lightRange, (x, y, rFov, visibility) => {
       // this.FOV.compute90(playerPosition.x, playerPosition.y, lightRange, 0, (x, y, rFov, visibility) => {
         // console.log(rFov, visibility);
         const key = Helper.coordsToString({x, y})
@@ -401,7 +404,10 @@ export class Game {
   }
 
   fovLightPasses(x, y) {
-    const tile = this.map[Helper.coordsToString({x, y})]
+    const renderX = x - this.getRenderOffsetX()
+    const renderY = y - this.getRenderOffsetY()
+
+    const tile = this.map[Helper.coordsToString({x: renderX, y: renderY})]
     if (!!!tile) return false
     if (!this.tileKey[tile.type]?.passable) return false
 

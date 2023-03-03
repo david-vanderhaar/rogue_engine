@@ -11,6 +11,19 @@ export const Containing = superclass => class extends superclass {
     this.entityTypes = this.entityTypes.concat('CONTAINING');
     this.container = container;
   }
+
+  move(targetPos) {
+    const success = super.move(targetPos)
+
+    if (success) {
+      this.container.forEach((slot) => {
+        if (slot.items.length > 0) slot.items.forEach((item) => item.setPosition(targetPos))
+      })
+    }
+
+    return success
+  }
+
   createSlot(item) {
     let slot = new ContainerSlot({
       itemType: item.name,

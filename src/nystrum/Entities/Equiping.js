@@ -7,12 +7,19 @@ export const Equiping = superclass => class extends superclass {
     this.entityTypes = this.entityTypes.concat('EQUIPING');
     this.equipment = equipment;
   }
-  // move(targetPos) {
-  //   this.equipment.forEach((slot) => {
-  //     if (slot.item) slot.item.move(targetPos)
-  //   })
-  //   return super.move(targetPos)
-  // }
+
+  move(targetPos) {
+    const success = super.move(targetPos)
+
+    if (success) {
+      this.equipment.forEach((slot) => {
+        if (slot.item) slot.item.setPosition(targetPos)
+      })
+    }
+
+    return success
+  }
+
   hasItemNameEquipped(itemName) {
     const equipment = this.equipment.filter((slot) => {
       if (slot.item) {
