@@ -46,6 +46,7 @@ import { SpawningWithStructure } from './SpawningWithStructure';
 import { Projecting } from './Projecting';
 import { TimeBombing } from './TimeBombing';
 import { HasPickupEffects } from './HasPickupEffects';
+import { Illuminating } from './Illuminating';
 
 export const UI_Actor = pipe(
   Acting,
@@ -187,6 +188,7 @@ export const Player = pipe(
   HasFaction,
   CanActivateStatusEffects,
   UsesCover,
+  Illuminating,
 )(Entity);
 
 export const Weapon = pipe(

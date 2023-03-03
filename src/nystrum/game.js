@@ -75,8 +75,8 @@ export class Game {
     });
     this.spriteMode = spriteMode;
     this.fovActive = fovActive;
-    this.FOV = new ROT.FOV.PreciseShadowcasting((x, y) => this.fovLightPasses(x, y, this));
-    // this.FOV = new ROT.FOV.RecursiveShadowcasting((x, y) => this.fovLightPasses(x, y, this));
+    this.FOV = new ROT.FOV.PreciseShadowcasting((x, y) => this.fovLightPasses(x, y));
+    // this.FOV = new ROT.FOV.RecursiveShadowcasting((x, y) => this.fovLightPasses(x, y));
     this.tileKey = tileKey;
     this.mode = new mode({game: this});
     this.messages = messages;
@@ -360,40 +360,62 @@ export class Game {
 
   processTileMapWithFov(callback, shouldAnimate = false) {
     const map = this.getRenderMap(this.map);
-    const playerPosition = this.getPlayerPosition()
-    const lightRange = 6
+    // const playerPosition = this.getPlayerPosition()
+    // const lightRange = 6
 
-    this.FOV.compute(playerPosition.x, playerPosition.y, lightRange, (x, y, rFov, visibility) => {
-    // this.FOV.compute90(playerPosition.x, playerPosition.y, lightRange, 0, (x, y, rFov, visibility) => {
-      // console.log(rFov, visibility);
-      const key = Helper.coordsToString({x, y})
-      const tile = map[key]
-      if (!!!tile) return
-      let tileRenderer = {...this.tileKey[tile.type]}
-      let nextFrame = this.animateTile(tile, tileRenderer, shouldAnimate);
-      let character = nextFrame.character;
-      let foreground = nextFrame.foreground;
-      let background = tile?.overriddenBackground || nextFrame.background;
-      const interpolation = Math.min(visibility, 0.8)
-      background = Helper.interpolateHexColor(background, '#fff0ad', interpolation)
+    const lights = Helper.filterEntitiesByType(this.entityLog.getAllEntities(), 'ILLUMINATING')
+      .filter((entity) => entity.lightRange > 0)
 
-      const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
-      if (renderedEntities.length > 0) {
-        let entity = renderedEntities[renderedEntities.length - 1]
-        nextFrame = this.animateEntity(entity);
-
-        character = nextFrame.character
-        foreground = nextFrame.foreground
-        if (nextFrame.background) {
-          background = nextFrame.background
+    lights.forEach((light) => {
+      const pos = light.getPosition()
+      this.FOV.compute(pos.x, pos.y, light.lightRange, (x, y, rFov, visibility) => {
+      // this.FOV.compute90(playerPosition.x, playerPosition.y, lightRange, 0, (x, y, rFov, visibility) => {
+        // console.log(rFov, visibility);
+        const key = Helper.coordsToString({x, y})
+        const tile = map[key]
+        if (!!!tile) return
+        let tileRenderer = {...this.tileKey[tile.type]}
+        let nextFrame = this.animateTile(tile, tileRenderer, shouldAnimate);
+        let character = nextFrame.character;
+        let foreground = nextFrame.foreground;
+        let background = tile?.overriddenBackground || nextFrame.background;
+        const interpolation = Math.min(visibility, 0.8)
+        background = Helper.interpolateHexColor(background, light.lightColor, interpolation)
+  
+        const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
+        if (renderedEntities.length > 0) {
+          let entity = renderedEntities[renderedEntities.length - 1]
+          nextFrame = this.animateEntity(entity);
+  
+          character = nextFrame.character
+          foreground = nextFrame.foreground
+          if (nextFrame.background) {
+            background = nextFrame.background
+          }
         }
-      }
+  
+        callback(key, x, y, character, foreground, background);
+      });
+    })
 
-      callback(key, x, y, character, foreground, background);
-    });
   }
 
-  fovLightPasses(x, y, game) {
+  fovLightPasses(x, y) {
+    const tile = this.map[Helper.coordsToString({x, y})]
+    if (!!!tile) return false
+    if (!this.tileKey[tile.type]?.passable) return false
+
+    const lightImpassableEntities = tile.entities.filter((entity) => {
+      if (entity.lightPassable) return false
+      return !entity.passable
+    })
+
+    if (lightImpassableEntities.length > 0) return false
+
+    return true
+  }
+  
+  fovLightPasses_v1(x, y, game) {
     if (Helper.coordsAreEqual(game.getFirstPlayer().getPosition(), {x, y})) return true
     return game.canOccupyPosition({x, y})
   }
