@@ -1,7 +1,6 @@
 import {createCartridge} from './cartridge'
-import Characters from '../Characters/index';
 import Modes from '../Modes/index';
-import { COLORS } from '../Modes/Jacinto/theme';
+import { COLORS } from '../Modes/TallGrass/theme';
 import { SCREENS } from '../Screen/constants';
 import CharacterSelect from '../Screen/CharacterSelect';
 import Level from '../Screen/Level';

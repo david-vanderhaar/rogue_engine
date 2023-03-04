@@ -1,7 +1,7 @@
 import { Mode } from '../default';
 import * as CONSTANT from '../../constants';
-import * as JACINTO_CONSTANT from '../Jacinto/theme'
-import * as LocustActors from '../Jacinto/Actors/Grubs';
+import * as TALL_GRASS_CONSTANT from '../TallGrass/theme'
+import * as MonsterActors from '../TallGrass/Actors/Monsters';
 import * as Helper from '../../../helper'
 
 export class SomethingInTheTallGrass extends Mode {
@@ -9,7 +9,7 @@ export class SomethingInTheTallGrass extends Mode {
     super({ ...args });
     this.game.tileKey = {
       ...CONSTANT.TILE_KEY,
-      ...JACINTO_CONSTANT.TILE_KEY
+      ...TALL_GRASS_CONSTANT.TILE_KEY,
     }
 
     this.game.fovActive = true
@@ -21,8 +21,8 @@ export class SomethingInTheTallGrass extends Mode {
     this.game.initializeMapTiles();
     this.game.placePlayerRandomly()
     
-    Helper.range(3).forEach((index) =>
-      LocustActors.addWretch(this, Helper.getRandomPos(this.game.map).coordinates))
+    Helper.range(1).forEach((index) =>
+      MonsterActors.addWretch(this, Helper.getRandomPos(this.game.map).coordinates))
   }
 
   update() {}

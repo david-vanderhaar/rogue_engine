@@ -16,9 +16,6 @@ import {OpenUpgrades} from '../../../Actions/OpenUpgrades';
 import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
 import {Upgrade} from '../../../Entities/Upgradable';
 import {PickupAllItems} from '../../../Actions/PickupAllItems';
-import { Boltok } from '../../../Items/Weapons/Boltok';
-import { Snub } from '../../../Items/Weapons/Snub';
-import { Lancer } from '../../../Items/Weapons/Lancer';
 import { Grenade } from '../../../Items/Weapons/Grenade';
 import { Ammo } from '../../../Items/Pickups/Ammo';
 import {COLORS} from '../../Jacinto/theme';
@@ -32,8 +29,9 @@ import { TakeAim } from '../../../StatusEffects/TakeAim';
 import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../../../Actions/MoveTowards';
-import { Gnasher } from '../../../Items/Weapons/Gnasher';
 import { GoToPreviousKeymap } from '../../../Actions/GoToPreviousKeymap';
+import { Lantern } from '../../../Items/Environment/Lantern';
+import { Revolver } from '../../../Items/Weapons/Revolver';
 
 
 export default function (engine) {
@@ -46,6 +44,26 @@ export default function (engine) {
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
+      }),
+      e: () => new Say({
+        label: 'Brighten',
+        message: 'you crank the knob right. the light burns brighter.',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        onSuccess: () => {
+          lantern.lightRange += 1
+        },
+      }),
+      q: () => new Say({
+        label: 'Dim',
+        message: 'you crank the knob left. the light dims.',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        onSuccess: () => {
+          lantern.lightRange -= 1
+        },
       }),
       'w,ArrowUp': () => {
         const direction = Constant.DIRECTIONS.N;
@@ -95,13 +113,6 @@ export default function (engine) {
           energyCost: Constant.ENERGY_THRESHOLD
         });
       },
-      p: () => new Say({
-        label: 'Stay',
-        message: 'standing still...',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-      }),
       l: () => new PrepareLooking({
         label: 'Look',
         game: engine.game,
@@ -132,13 +143,8 @@ export default function (engine) {
         game: engine.game,
         actor,
       }),
-      // o: () => new OpenEquipment({
-      //   label: 'Equipment',
-      //   game: engine.game,
-      //   actor,
-      // }),
-      u: () => new OpenUpgrades({
-        label: 'Upgrade',
+      p: () => new OpenEquipment({
+        label: 'Equipment',
         game: engine.game,
         actor,
       }),
@@ -147,54 +153,15 @@ export default function (engine) {
         game: engine.game,
         actor,
       }),
-      t: () => new PrepareDirectionalThrow({
+      t: () => new PrepareDirectionalThrow({ // add glow stick throwable?
         label: 'Grenade',
         projectileType: 'Grenade',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
       }),
-      c: () => new PrepareCallReinforcements({
-          label: 'Call Reinforcments',
-          game: engine.game,
-          actor,
-          passThroughEnergyCost: Constant.ENERGY_THRESHOLD * 3,
-          passThroughRequiredResources: [
-            new UpgradeResource({ getResourceCost: () => 1 }),
-          ],
-        }),
-      b: () => new OpenAvailableStatusEffects({
-          label: 'Buff/Debuff',
-          game: engine.game,
-          actor,
-        }),
-      h: () => new AddSandSkinStatusEffect({
-        label: 'Sand Skin',
-        game: engine.game,
-        actor,
-      }),
-      x: () => new AddStatusEffect({
-        label: 'Rev Lancer Chainsaw',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-        effect: new MeleeDamage({
-          buffValue: 12,
-          game: engine.game,
-          actor,
-          lifespan: Constant.ENERGY_THRESHOLD * 3,
-          stepInterval: Constant.ENERGY_THRESHOLD,
-        }),
-        particleTemplate: {
-          renderer: {
-            color: '#424242',
-            background: '#e6e6e6',
-            character: ''
-          },
-        },
-      }),
       v: () => new AddStatusEffect({
-        label: 'Take Aim',
+        label: 'Steady The Nerves',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD * 2,
@@ -247,19 +214,16 @@ export default function (engine) {
     baseRangedAccuracy: 0,
     baseRangedDamage: 0,
     attackDamage: 0,
-    availableStatusEffects: [SandSkin],
-    equipment: Constant.EQUIPMENT_LAYOUTS.gear(),
+    equipment: Constant.EQUIPMENT_LAYOUTS.human(),
     game: engine.game,
     presentingUI: true,
-    faction: 'COG',
-    enemyFactions: ['LOCUST'],
+    enemyFactions: ['MONSTER'],
     initializeKeymap: keymap,
   })
 
-  actor['reinforcementCount'] = 1
-
   // add default items to container
-  const primary = Snub(engine);
+  const primary = Revolver({engine, position: actor.getPosition()});
+  const lantern = Lantern({engine, lightRange: 6})
   const ammo = Array(10).fill('').map(() => Ammo(engine));
   const grenades = Array(2).fill('').map(() => Grenade(engine, 6));
   actor.container = [
@@ -274,6 +238,7 @@ export default function (engine) {
   ]
 
   actor.equip(primary.equipmentType, primary);
+  actor.equip(lantern.equipmentType, lantern);
 
   return actor;
 }

@@ -1,5 +1,5 @@
 export const Illuminating = superclass => class extends superclass {
-  constructor({ lightRange = 8, lightColor = '#f1e3b8', ...args }) {
+  constructor({ lightRange = 8, lightColor = '#f9d091', ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('ILLUMINATING');
     this.lightRange = lightRange

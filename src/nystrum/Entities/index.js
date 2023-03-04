@@ -203,7 +203,6 @@ export const RangedWeapon = pipe(
   RangedAttacking,
   Attacking,
   HasShapePattern,
-  Illuminating,
 )(Entity);
 
 export const Armor = pipe(
