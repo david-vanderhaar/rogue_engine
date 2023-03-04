@@ -5,6 +5,7 @@ import { COLORS } from '../Modes/Jacinto/theme';
 import { THEMES } from '../constants';
 import { jacintoCart } from './jacinto'
 import { developmentCart } from './development'
+import { somethingInTheTallGrassCart } from './somethingInTheTallGrass';
 
 const defaultCart = () => {
   // includes all modes with all characters
@@ -59,6 +60,7 @@ export default {
   defaultCart,
   jacintoCart,
   developmentCart,
+  somethingInTheTallGrassCart,
   toTheWallsCart,
   flumeCart,
   hiddenLeafCart,

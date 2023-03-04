@@ -4,7 +4,7 @@ import { Jacinto } from './Jacinto/jacinto'
 import { Mode } from './default'
 import { Flume } from './flume'
 import { Development } from './Development/development'
-
+import { SomethingInTheTallGrass } from './TallGrass/tall_grass'
 
 export default {
   Castle,
@@ -13,4 +13,5 @@ export default {
   Jacinto,
   Mode,
   Development,
+  SomethingInTheTallGrass,
 }

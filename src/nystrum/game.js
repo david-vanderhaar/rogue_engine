@@ -45,7 +45,7 @@ export class Game {
     tileOffset = TILE_OFFSET,
     getSelectedCharacter = () => false,
     spriteMode = true,
-    fovActive = true,
+    fovActive = false,
     tileKey = Constant.TILE_KEY,
     mode = Mode.Flume,
     messages = [],
@@ -323,13 +323,16 @@ export class Game {
       //   }
       // }
 
-      // let { foreground, background } = this.tileKey[tile.type]
       // Proto code to handle tile animations
       let tileRenderer = {...this.tileKey[tile.type]}
       let nextFrame = this.animateTile(tile, tileRenderer, shouldAnimate);
       let character = nextFrame.character;
       let foreground = nextFrame.foreground;
       let background = tile?.overriddenBackground || nextFrame.background;
+      if (this.fovActive) {
+        foreground = 'transparent'
+        background = 'transparent'
+      }
       
       if (!this.fovActive) {
         const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
