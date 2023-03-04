@@ -19,7 +19,7 @@ export class Development extends Mode {
     this.game.initializeMapTiles();
     this.game.placePlayerRandomly()
     
-    Helper.range(1).forEach((index) =>
+    Helper.range(10).forEach((index) =>
       LocustActors.addWretch(this, Helper.getRandomPos(this.game.map).coordinates))
   }
 

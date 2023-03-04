@@ -306,12 +306,6 @@ export class Game {
 
   processTileMap (callback, shouldAnimate = false) {
     const map = this.getRenderMap(this.map);
-    let playerPosition = null
-    if (this.fovActive) {
-      playerPosition = this.getPlayerPosition()
-    }
-    const lightRange = 5
-
     for (let key in map) {
       let parts = key.split(",");
       let x = parseInt(parts[0]);
@@ -319,8 +313,10 @@ export class Game {
       let tile = map[key];
 
       // if (this.fovActive) {
+      //   const playerPosition = this.getPlayerPosition()
       //   const renderedX = x - this.getRenderOffsetX()
       //   const renderedY = y - this.getRenderOffsetY()
+      //   const lightRange = 5
       //   if (Helper.diagonal_distance(playerPosition, {x: renderedX, y: renderedY}) > lightRange) {
       //     callback(key, x, y, '', '#000', 'rgba(0,0,0,0.2)');
       //     continue;
@@ -335,27 +331,21 @@ export class Game {
       let foreground = nextFrame.foreground;
       let background = tile?.overriddenBackground || nextFrame.background;
       
-      const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
-      if (renderedEntities.length > 0) {
-        let entity = renderedEntities[renderedEntities.length - 1]
-        nextFrame = this.animateEntity(entity);
-
-        character = nextFrame.character
-        foreground = nextFrame.foreground
-        if (nextFrame.background) {
-          background = nextFrame.background
+      if (!this.fovActive) {
+        const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
+        if (renderedEntities.length > 0) {
+          let entity = renderedEntities[renderedEntities.length - 1]
+          nextFrame = this.animateEntity(entity);
+  
+          character = nextFrame.character
+          foreground = nextFrame.foreground
+          if (nextFrame.background) {
+            background = nextFrame.background
+          }
         }
       }
       callback(key, x, y, character, foreground, background);          
     }
-
-    // this.FOV.compute(playerPosition.x, playerPosition.y, lightRange, (xFov, yFov, rFov, visibility) => {
-    //   // console.log(rFov, visibility, xFov, yFov);
-    //   const key = Helper.coordsToString({x: xFov, y: yFov})
-    //   const tile = map[key]
-    //   const character = tile ? this.tileKey[tile.type].sprite : '.'
-    //   callback(key, xFov, yFov, character, '#000', '#fff');
-    // });
   }
 
   processTileMapWithFov(callback, shouldAnimate = false) {
@@ -371,9 +361,9 @@ export class Game {
       const renderedX = pos.x + renderOffsetX
       const renderedY = pos.y + renderOffsetY
 
-      this.FOV.compute(renderedX, renderedY, light.lightRange, (x, y, rFov, visibility) => {
-      // this.FOV.compute90(playerPosition.x, playerPosition.y, lightRange, 0, (x, y, rFov, visibility) => {
-        // console.log(rFov, visibility);
+      this.FOV.compute(renderedX, renderedY, light.lightRange, (x, y, range, visibility) => {
+      // this.FOV.compute90(playerPosition.x, playerPosition.y, lightRange, 0, (x, y, range, visibility) => {
+        // console.log(range, visibility);
         const key = Helper.coordsToString({x, y})
         const tile = map[key]
         if (!!!tile) return
@@ -382,8 +372,12 @@ export class Game {
         let character = nextFrame.character;
         let foreground = nextFrame.foreground;
         let background = tile?.overriddenBackground || nextFrame.background;
-        const interpolation = Math.min(visibility, 0.8)
-        background = Helper.interpolateHexColor(background, light.lightColor, interpolation)
+
+        const percentageByVisibility = Math.min(visibility, 0.8)
+        const percentageByRange = (1 - (range / light.lightRange))
+        const percentage = percentageByVisibility * percentageByRange
+
+        background = Helper.interpolateHexColor(background, light.lightColor, percentage)
   
         const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
         if (renderedEntities.length > 0) {
@@ -455,9 +449,12 @@ export class Game {
     this.processTileMap((key, x, y, character, foreground, background) => {
       this.display.updateTile(this.tileMap[key], character, foreground, background);
     });
-    this.processTileMapWithFov((key, x, y, character, foreground, background) => {
-      this.display.updateTile(this.tileMap[key], character, foreground, background);
-    });
+
+    if (this.fovActive) {
+      this.processTileMapWithFov((key, x, y, character, foreground, background) => {
+        this.display.updateTile(this.tileMap[key], character, foreground, background);
+      });
+    }
     this.display.draw();
   }
 
