@@ -20,6 +20,24 @@ export const COLORS = {
 
 
 export const TILE_KEY = {
+  'TALL_GRASS': {
+    background: COLORS.sunset,
+    foreground: COLORS.sandy_brown,
+    character: '.',
+    sprite: '',
+    passable: true,
+    lightPassable: false,
+    tags: [],
+  },
+  'LAYED_GRASS': {
+    background: COLORS.brown_sugar,
+    foreground: COLORS.sandy_brown,
+    character: '.',
+    sprite: '',
+    passable: true,
+    lightPassable: true,
+    tags: [],
+  },
   'GROUND': {
     // background: COLORS.sunset,
     background: COLORS.black,

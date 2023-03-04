@@ -244,3 +244,46 @@ export const interpolateHexColor = (c0, c1, f) => {
   let ci = [0,1,2].map(i => Math.min(Math.round(c0[i]+c1[i]), 255))
   return '#' + ci.reduce((a,v) => ((a << 8) + v), 0).toString(16).padStart(6, "0")
 }
+
+export const getNeighboringPoints = (origin, eightWay = false) => {
+  let neighbors = [
+    {
+      x: origin.x,
+      y: origin.y + 1
+    },
+    {
+      x: origin.x + 1,
+      y: origin.y
+    },
+    {
+      x: origin.x,
+      y: origin.y - 1
+    },
+    {
+      x: origin.x - 1,
+      y: origin.y
+    },
+  ]
+
+  if (eightWay) {
+    neighbors = neighbors.concat([
+      {
+        x: origin.x + 1,
+        y: origin.y + 1
+      },
+      {
+        x: origin.x + 1,
+        y: origin.y - 1
+      },
+      {
+        x: origin.x - 1,
+        y: origin.y - 1
+      },
+      {
+        x: origin.x - 1,
+        y: origin.y + 1
+      },
+    ])
+  }
+  return neighbors;
+}

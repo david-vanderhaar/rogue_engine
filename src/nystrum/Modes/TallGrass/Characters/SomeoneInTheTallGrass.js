@@ -1,5 +1,6 @@
 // import deps
 import * as Constant from '../../../constants';
+import * as Helper from '../../../../helper';
 import { Player } from '../../../Entities/index';
 import { ContainerSlot } from '../../../Entities/Containing';
 import {Say} from '../../../Actions/Say';
@@ -35,8 +36,17 @@ import { Revolver } from '../../../Items/Weapons/Revolver';
 
 
 export default function (engine) {
+
   // define keymap
   const keymap = (engine, actor) => {
+
+    function stepOnGrass () {
+      const tile = engine.game.map[Helper.coordsToString(actor.getPosition())];
+      if (tile && tile.type === 'TALL_GRASS') {
+        tile.type = 'LAYED_GRASS';
+      }
+    }
+
     return {
       Escape: () => new Say({
         label: 'Stay',
@@ -74,7 +84,8 @@ export default function (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onSuccess: stepOnGrass
         });
       },
       's,ArrowDown': () => {
@@ -86,7 +97,8 @@ export default function (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onSuccess: stepOnGrass
         });
       },
       'a,ArrowLeft': () => {
@@ -98,7 +110,8 @@ export default function (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onSuccess: stepOnGrass
         });
       },
       'd,ArrowRight': () => {
@@ -110,7 +123,8 @@ export default function (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onSuccess: stepOnGrass
         });
       },
       l: () => new PrepareLooking({
@@ -209,7 +223,7 @@ export default function (engine) {
     },
     lightPassable: true,
     name: 'Someone',
-    speed: Constant.ENERGY_THRESHOLD,
+    speed: Constant.ENERGY_THRESHOLD * 5,
     durability,
     baseRangedAccuracy: 0,
     baseRangedDamage: 0,

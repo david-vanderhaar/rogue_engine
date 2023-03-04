@@ -393,7 +393,7 @@ export class Game {
             background = nextFrame.background
           }
         }
-  
+
         callback(key, x, y, character, foreground, background);
       });
     })
@@ -406,7 +406,10 @@ export class Game {
 
     const tile = this.map[Helper.coordsToString({x: renderX, y: renderY})]
     if (!!!tile) return false
-    if (!this.tileKey[tile.type]?.passable) return false
+
+    const {lightPassable, passable} = this.tileKey[tile.type]
+    if (lightPassable === undefined && !passable) return false
+    if (lightPassable !== undefined && !lightPassable) return false
 
     const lightImpassableEntities = tile.entities.filter((entity) => {
       if (entity.lightPassable) return false
