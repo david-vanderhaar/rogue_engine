@@ -41,6 +41,7 @@ export default function (engine) {
   const keymap = (engine, actor) => {
 
     function stepOnGrass () {
+      return
       const tile = engine.game.map[Helper.coordsToString(actor.getPosition())];
       if (tile && tile.type === 'TALL_GRASS') {
         tile.type = 'LAYED_GRASS';
@@ -231,6 +232,7 @@ export default function (engine) {
     equipment: Constant.EQUIPMENT_LAYOUTS.human(),
     game: engine.game,
     presentingUI: true,
+    faction: 'PEOPLE',
     enemyFactions: ['MONSTER'],
     initializeKeymap: keymap,
   })

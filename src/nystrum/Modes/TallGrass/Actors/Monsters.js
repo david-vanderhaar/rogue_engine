@@ -215,7 +215,7 @@ const createBaseGrubStats = (mode, pos) => {
     pos,
     game: mode.game,
     faction: 'MONSTER',
-    enemyFactions: ['ALL'],
+    enemyFactions: ['PEOPLE'],
     equipment: Constant.EQUIPMENT_LAYOUTS.gear(),
     // onDestroy: (actor) => {
     //   const chance = Math.random();

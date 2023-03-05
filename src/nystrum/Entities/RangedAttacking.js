@@ -185,7 +185,8 @@ export const RangedAttacking = superclass => class extends superclass {
     }
     let targets = Helper.getDestructableEntities(tile.entities);
     if (targets.length > 0) {
-      let target = targets[0];
+      let target = targets[targets.length - 1];
+      // let target = targets[0];
       if (this.canRangedAttack(target)) {
         const attackChance = this.getRangedAttackChance(targetPos);
         const hitChance = attackChance + additionalAccuracy;

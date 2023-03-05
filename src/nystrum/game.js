@@ -412,8 +412,7 @@ export class Game {
     if (lightPassable !== undefined && !lightPassable) return false
 
     const lightImpassableEntities = tile.entities.filter((entity) => {
-      if (entity.lightPassable) return false
-      return !entity.passable
+      return !entity.lightPassable
     })
 
     if (lightImpassableEntities.length > 0) return false

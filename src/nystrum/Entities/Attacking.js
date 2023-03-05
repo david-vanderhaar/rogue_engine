@@ -22,7 +22,8 @@ export const Attacking = superclass => class extends superclass {
     }
     let targets = Helper.getDestructableEntities(tile.entities);
     if (targets.length > 0) {
-      let target = targets[0];
+      // let target = targets[0];
+      let target = targets[targets.length - 1];
       if (this.canAttack(target)) {
         let damage = this.getAttackDamage(additional);
         if (this.entityTypes.includes('EQUIPING')) {

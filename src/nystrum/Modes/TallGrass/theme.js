@@ -16,6 +16,8 @@ export const COLORS = {
   flesh1: '#833139',
   flesh2: '#CC7468',
   flesh3: '#DDA78F',
+  magenta: '#d33682',
+  violet: '#6c71c4',
 }
 
 
@@ -27,7 +29,7 @@ export const TILE_KEY = {
     sprite: '',
     passable: true,
     lightPassable: false,
-    tags: [],
+    tags: ['BURNABLE'],
   },
   'LAYED_GRASS': {
     background: COLORS.brown_sugar,
@@ -36,7 +38,7 @@ export const TILE_KEY = {
     sprite: '',
     passable: true,
     lightPassable: true,
-    tags: [],
+    tags: ['BURNABLE'],
   },
   'GROUND': {
     // background: COLORS.sunset,
@@ -46,7 +48,7 @@ export const TILE_KEY = {
     sprite: '',
     // passable: false,
     passable: true,
-    tags: [],
+    tags: ['BURNABLE'],
   },
   'GROUND_ALT': {
     background: COLORS.black,
