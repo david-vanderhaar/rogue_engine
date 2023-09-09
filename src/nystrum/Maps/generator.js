@@ -38,7 +38,7 @@ export const generate = (map, offsetX, offsetY, unitCount = 12, unitSize = 4, bo
   // addDoorToOuterWalls(map)
   // addInnerWalls(map, floorPlan.length)
   addCorridors(map, floorPlan, offsetX, offsetY, unitSize)
-  return data;
+  return floorPlan;
 }
 
 const addCorridors = (map, floorPlan, offsetX, offsetY, unitSize) => {

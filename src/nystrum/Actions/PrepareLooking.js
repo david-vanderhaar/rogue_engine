@@ -37,7 +37,13 @@ export class PrepareLooking extends Base {
     let targetIndex = 0;
     positionsInRange.forEach((position) => {
       let tile = this.game.map[Helper.coordsToString(position)];
-      if (tile) { targets = [...targets, ...tile.entities.filter((ent) => this.actor.isEnemy(ent))] }
+      if (tile) {
+        targets = [
+          ...targets,
+          ...tile.entities
+            .filter((ent) => this.actor.isEnemy(ent) && ent['isInFov'])
+        ]
+      }
     })
 
     let positions = [];

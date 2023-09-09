@@ -12,43 +12,50 @@ import { ExplodingAmmo } from '../../../Items/Pickups/ExplodingAmmo';
 import { SandSkin } from '../../../StatusEffects/SandSkin';
 import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 import { JACINTO_SOUNDS } from '../../Jacinto/sounds';
+import { SpitterSac } from '../Items/Weapons/Spitter';
 
-export function addWretch (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.wretch())
+export function addAbomination (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.abomination())
 }
-export function addDrone (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.drone())
+
+export function addAdult (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.adult())
 }
-export function addDroneGrenadier (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.drone_grenadier())
+
+export function addCamoCritter (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.camoCritter())
 }
-export function addHunter (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.hunter())
+
+export function addSpitter (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.spitter())
 }
-export function addScion (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.scion())
+
+export function addHider (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.hider())
 }
-export function addSkorge (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.scion())
+
+export function addJuvenile (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.juvenile())
 }
-export function addRandomGrub (mode, pos) {
+
+export function addRandom (mode, pos) {
   addRandomBasicGrubToMap(mode, pos)
 }
 
 const GRUB_STATS = {
-  wretch: () => {
+  adolescent: () => {
     return {
-      name: 'Wretch',
+      name: 'adolescent',
       renderer: {
-        character: Helper.getRandomInArray(['w']),
+        character: 'a',
         color: COLORS.flesh1,
         background: COLORS.flesh3,
         sprite: '',
       },
       durability: 2,
       attackDamage: 1,
-      baseDescription: 'A wrinkled, pale-fleshed abomination.',
-      baseDescriptors: ['gutteral chirps and a bloodthirst keep you at bay.'],
+      baseDescription: 'a wrinkled, pale-fleshed abomination.',
+      baseDescriptors: ['gutteral chirps and bloodthirst keep you at bay.'],
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
         new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
@@ -67,114 +74,85 @@ const GRUB_STATS = {
       ],
     }
   },
-  drone: () => {
+  juvenile: () => {
     return {
-      name: 'Drone',
+      name: 'juvenile',
       renderer: {
-        character: 'd',
-        color: COLORS.flesh2,
-        background: COLORS.flesh1,
-        sprite: '',
+        character: 'j',
+        color: COLORS.ebony,
+        background: COLORS.flesh3,
+        sprite: '',
       },
-      durability: 3,
-      attackDamage: 1,
-      behaviors: [
-        new Behaviors.MoveTowardsEnemy({repeat: 5, maintainDistanceOf: 4}),
-        new Behaviors.TelegraphRangedAttack({repeat: 1}),
-        new Behaviors.ExecuteRangedAttack({repeat: 1}),
-      ],
-      loadout: {
-        equipmentCreators: [Gnasher],
-        inventoryCreators: [{amount: 100, creator: Ammo}]
+      durability: 1,
+      attackDamage: 2,
+      baseDescription: 'a hunched, ebon-fleshed abomination.',
+      baseDescriptors: ['the grass is ingrown into its skin', 'this must be an older one'],
+      onDestroy: (actor) => {
+        const position = actor.getPosition()
+        const allPositions = Helper.getPointsWithinRadius(position, 3)
+        const positions = Helper.getNumberOfItemsInArray(10, allPositions)
+        positions.forEach((pos) => {
+          actor.attack(pos)
+          actor.game.mode.placeTallGrass(pos, true)
+        })
+        actor.game.addMessage(
+          `${actor.name} withers, and then bursts sending sharp stalks of tall grass in every direction`,
+          {
+            color: COLORS.sunset,
+            backgroundColor: COLORS.ebony,
+          }
+        );
       },
-    }
-  },
-  drone_grenadier: () => {
-    return {
-      name: 'Grenadier',
-      renderer: {
-        character: 'db',
-        color: COLORS.flesh2,
-        background: COLORS.flesh1,
-        sprite: '',
-      },
-      durability: 3,
-      attackDamage: 1,
-      behaviors: [
-        new Behaviors.MoveTowardsEnemy({repeat: 1, maintainDistanceOf: 4}),
-        new Behaviors.TelegraphRangedAttackThroughCover({repeat: 1}),
-        new Behaviors.ExecuteRangedAttack({repeat: 1}),
-      ],
-      loadout: {
-        equipmentCreators: [GrenadeThrower],
-        inventoryCreators: [{amount: 10, creator: ExplodingAmmo}]
-      },
-    }
-  },
-  hunter: () => {
-    return {
-      name: 'Hunter',
-      renderer: {
-        character: 'h',
-        color: COLORS.flesh2,
-        background: COLORS.flesh1,
-        sprite: '',
-      },
-      durability: 3,
-      attackDamage: 1,
-      behaviors: [
-        new Behaviors.MoveTowardsCover({repeat: 5}),
-        new Behaviors.Wait({repeat: 1}),
-        new Behaviors.TelegraphRangedAttack({repeat: 1}),
-        new Behaviors.ExecuteRangedAttack({repeat: 1}),
-        new Behaviors.TelegraphRangedAttack({repeat: 1}),
-        new Behaviors.ExecuteRangedAttack({repeat: 1}),
-      ],
-      loadout: {
-        equipmentCreators: [HammerBurst],
-        inventoryCreators: [{amount: 100, creator: Ammo}]
-      },
-    }
-  },
-  scion: () => {
-    return {
-      name: 'Scion',
-      renderer: {
-        character: 'S',
-        color: COLORS.flesh2,
-        background: COLORS.flesh1,
-        sprite: '',
-      },
-      durability: 10,
-      attackDamage: 4,
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({
+        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.ExecuteAttack({
           repeat: 1,
-          attackPattern: Constant.CLONE_PATTERNS.big_circle,
-          color: COLORS.blue,
-        }),
-        new Behaviors.ExecuteStatusEffectOnAllies({
-          repeat: 1, 
-          effectClass: MeleeDamage,
-          effectDefaults: {
-            buffValue: 1,
-            lifespan: Constant.ENERGY_THRESHOLD * 10,
-            stepInterval: Constant.ENERGY_THRESHOLD,
-            processDelay: 200
-          },
           extraActionParams: {
             onSuccess: () => {
               Helper.getRandomInArray([
-                JACINTO_SOUNDS.locust_buff_01,
-                JACINTO_SOUNDS.locust_buff_02,
-                JACINTO_SOUNDS.locust_buff_03,
+                JACINTO_SOUNDS.wretch_melee_01,
+                JACINTO_SOUNDS.wretch_melee_02,
+                JACINTO_SOUNDS.wretch_melee_03,
               ]).play()
             }
           }
         }),
-        new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.big_circle}),
+      ],
+    }
+  },
+  adult: () => {
+    return {
+      name: 'adult',
+      renderer: {
+        character: 'A',
+        color: COLORS.flesh3,
+        background: COLORS.ebony,
+        sprite: '',
+      },
+      durability: 8,
+      attackDamage: 2,
+      baseDescription: 'a fully-grown, myth of Layoria.',
+      baseDescriptors: ['the grass is ingrown into its skin'],
+      onDestroy: (actor) => {
+        const position = actor.getPosition()
+        const allPositions = Helper.getPointsWithinRadius(position, 5)
+        const positions = Helper.getNumberOfItemsInArray(20, allPositions)
+        positions.forEach((pos) => {
+          actor.attack(pos)
+          actor.game.mode.placeTallGrass(pos, true)
+        })
+        actor.game.addMessage(
+          `${actor.name} withers, and then bursts sending sharp stalks of tall grass in every direction`,
+          {
+            color: COLORS.sunset,
+            backgroundColor: COLORS.ebony,
+          }
+        );
+      },
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({repeat: 2}),
+        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {
@@ -190,21 +168,94 @@ const GRUB_STATS = {
       ],
     }
   },
-  skorge: () => {
+  camoCritter: () => {
     return {
+      name: 'camo critter',
       renderer: {
-        sprite: '',
-        character: 'S',
-        color: COLORS.flesh1,
-        background: COLORS.base04,
+        character: 'c',
+        color: 'transparent',
+        background: 'transparent',
+        sprite: '',
       },
-      name: 'Skorge',
-      durability: 40,
-      attackDamage: 5,
+      durability: 2,
+      attackDamage: 2,
+      baseDescription: 'you\'ve never seen it, but you\'ll feel it.',
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({repeat: 1}),
+        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          extraActionParams: {
+            onSuccess: () => {
+              Helper.getRandomInArray([
+                JACINTO_SOUNDS.wretch_melee_01,
+                JACINTO_SOUNDS.wretch_melee_02,
+                JACINTO_SOUNDS.wretch_melee_03,
+              ]).play()
+            }
+          }
+        }),
+      ],
+    }
+  },
+  spitter: () => {
+    return {
+      name: 'spitter',
+      baseDescription: 'green pus drips from its maw. its belly inflates.',
+      renderer: {
+        character: 's',
+        color: COLORS.flesh1,
+        background: COLORS.green,
+        sprite: '',
+      },
+      durability: 1,
+      attackDamage: 1,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({repeat: 2, maintainDistanceOf: 4}),
+        new Behaviors.TelegraphRangedAttack({repeat: 1}),
+        new Behaviors.ExecuteRangedAttack({repeat: 1}),
+      ],
+      loadout: {
+        equipmentCreators: [SpitterSac],
+        inventoryCreators: [{amount: 1000, creator: Ammo}]
+      },
+    }
+  },
+  hider: () => {
+    return {
+      name: 'grass hopper',
+      baseDescription: 'often hidden in plain sight, clawing at passers-by.',
+      baseDescriptors: ['needless to say, the C.C.C reccomends avoiding the deep grass altogether.'],
+      renderer: {
+        character: 'h',
+        color: COLORS.flesh1,
+        background: COLORS.sunset,
+        sprite: '',
+      },
+      durability: 1,
+      attackDamage: 1,
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
         new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
-        new Behaviors.ExecuteAttack({repeat: 1}),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          extraActionParams: {
+            onSuccess: () => {
+              Helper.getRandomInArray([
+                JACINTO_SOUNDS.wretch_melee_01,
+                JACINTO_SOUNDS.wretch_melee_02,
+                JACINTO_SOUNDS.wretch_melee_03,
+              ]).play()
+            }
+          }
+        }),
+        new Behaviors.MoveTowardsEntityInRangeByAttr({
+          repeat: 3,
+          range: 5,
+          attribute: 'name',
+          attributeValue: 'tall grass',
+        }),
+        new Behaviors.Wait({repeat: 3}),
       ],
     }
   },
@@ -217,18 +268,10 @@ const createBaseGrubStats = (mode, pos) => {
     faction: 'MONSTER',
     enemyFactions: ['PEOPLE'],
     equipment: Constant.EQUIPMENT_LAYOUTS.gear(),
-    // onDestroy: (actor) => {
-    //   const chance = Math.random();
-    //   if (chance <= 0.05) {
-    //     mode.addAmmoLoot(actor.getPosition());
-    //   } else if (chance <= 0.1) {
-    //     mode.addGrenadeLoot(actor.getPosition());
-    //   }
-    // },
   }
 }
 
-export function createRandomBasicGrub(mode, pos) {
+export function createRandomBasic(mode, pos) {
   const createStats = Helper.getRandomInArray(
     Object
     .keys(GRUB_STATS)
@@ -277,7 +320,7 @@ function createInventorySlot (engine, amount, creator) {
 } 
 
 function addRandomBasicGrubToMap (mode, pos) {
-  const entityCreator = () => createRandomBasicGrub(mode, pos)
+  const entityCreator = () => createRandomBasic(mode, pos)
   addEntityToMapWithStatsUsingCreator(mode, entityCreator)
 }
 

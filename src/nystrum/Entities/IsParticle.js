@@ -29,6 +29,7 @@ export const IsParticle = superclass => class extends superclass {
     this.particleEasingFunction = particleEasingFunction
     this.particleAnimationTimeStep = particleAnimationTimeStep
     this.entityTypes = this.entityTypes.concat('PARTICLE');
+    this.lightPassable = true
   }
   
   update(step) {

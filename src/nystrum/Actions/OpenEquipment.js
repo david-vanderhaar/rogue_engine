@@ -1,7 +1,8 @@
 import { Base } from './Base';
 import { UnequipItemToTile } from './UnequipItemToTile';
 import { GoToPreviousKeymap } from './GoToPreviousKeymap';
-
+import { UnequipItem } from './UnequipItem';
+// UnequipItem
 
 export class OpenEquipment extends Base {
   constructor({ 
@@ -24,6 +25,7 @@ export class OpenEquipment extends Base {
     };
 
     this.actor.equipment.filter((slot) => slot.item).forEach((slot, index) => {
+      // keymap[index] = () => new UnequipItem({
       keymap[index] = () => new UnequipItemToTile({
         item: slot.item,
         game: this.game,

@@ -5,9 +5,15 @@ function Tooltip ({title = 'Effect', text = '', children}) {
     <div className="Tooltip">
       {children}
       <div className="top">
-        <h3>{title}</h3>
-        <p>{text}</p>
-        <i></i>
+        <strong>{title}</strong>
+        {
+          text != '' && (
+            <>
+              <hr />
+              <p>{text}</p>
+            </>
+          )
+        }
       </div>
     </div>
   )

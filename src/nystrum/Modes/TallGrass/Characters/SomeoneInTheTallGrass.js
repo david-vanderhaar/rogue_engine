@@ -17,9 +17,9 @@ import {OpenUpgrades} from '../../../Actions/OpenUpgrades';
 import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
 import {Upgrade} from '../../../Entities/Upgradable';
 import {PickupAllItems} from '../../../Actions/PickupAllItems';
-import { Grenade } from '../../../Items/Weapons/Grenade';
 import { Ammo } from '../../../Items/Pickups/Ammo';
 import {COLORS} from '../../Jacinto/theme';
+import * as TALL_GRASS_CONSTANT from '../../TallGrass/theme';
 import { Reload } from '../../../Actions/Reload';
 import { AddSandSkinStatusEffect } from '../../../Actions/AddSandSkinStatusEffect';
 import {UpgradeResource} from '../../../Actions/ActionResources/UpgradeResource';
@@ -32,7 +32,11 @@ import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../../../Actions/MoveTowards';
 import { GoToPreviousKeymap } from '../../../Actions/GoToPreviousKeymap';
 import { Lantern } from '../../../Items/Environment/Lantern';
-import { Revolver } from '../../../Items/Weapons/Revolver';
+import { Revolver } from '../Items/Weapons/Revolver';
+import { Battery } from '../Items/Pickups/Battery';
+import { LayGrass } from '../StatusEffects/LayGrass';
+import { GlowStick, SuperGlowStick } from '../Items/Pickups/GlowSticks';
+import { Grenade } from '../Items/Weapons/Grenade';
 
 
 export default function (engine) {
@@ -40,12 +44,39 @@ export default function (engine) {
   // define keymap
   const keymap = (engine, actor) => {
 
+    function updateLookedAt() {
+      const targets = Helper.getEntitiesByPosition({
+        game: engine.game,
+        position: actor.getPosition()
+      })
+
+      const targetExcludingSelf = targets.filter((target) => target.id !== actor.id) 
+      engine.game.entityLog.setLookedAt(targetExcludingSelf)
+    }
+
     function stepOnGrass () {
-      return
-      const tile = engine.game.map[Helper.coordsToString(actor.getPosition())];
-      if (tile && tile.type === 'TALL_GRASS') {
-        tile.type = 'LAYED_GRASS';
-      }
+      const entities = Helper.getEntitiesByPositionByAttr({
+        game: engine.game,
+        position: actor.getPosition(),
+        attr: 'name',
+        value: 'tall grass', 
+      })
+      
+      
+      entities.forEach((entity) => {
+        const effect = new LayGrass({
+          game: engine.game,
+          actor: entity,
+          lifespan: Constant.ENERGY_THRESHOLD * 3,
+          stepInterval: Constant.ENERGY_THRESHOLD
+        })
+        engine.addStatusEffect(effect);
+      })
+    }
+
+    function handleMoveSuccess() {
+      stepOnGrass()
+      updateLookedAt()
     }
 
     return {
@@ -57,25 +88,38 @@ export default function (engine) {
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
       e: () => new Say({
-        label: 'Brighten',
-        message: 'you crank the knob right. the light burns brighter.',
+        label: 'Lantern Light +',
+        message: 'you use the hand crank. the light burns brighter.',
         game: engine.game,
         actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
+        energyCost: Math.ceil(actor.speed / 100 / 2) * Constant.ENERGY_THRESHOLD,
+        // energyCost: Constant.ENERGY_THRESHOLD * ,
         onSuccess: () => {
-          lantern.lightRange += 1
+          lantern.incrementLightRange()
         },
       }),
-      q: () => new Say({
-        label: 'Dim',
-        message: 'you crank the knob left. the light dims.',
+      q: () => new AddStatusEffect({
+        label: 'Steady Nerves',
         game: engine.game,
         actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-        onSuccess: () => {
-          lantern.lightRange -= 1
-        },
+        energyCost: Constant.ENERGY_THRESHOLD * 2,
+        onSuccess: () => actor.setFear(0),
+        effect: new TakeAim({
+          buffValue: 10,
+          game: engine.game,
+          actor,
+        }),
       }),
+      // q: () => new Say({
+      //   label: 'Dim',
+      //   message: 'you crank the knob left. the light dims.',
+      //   game: engine.game,
+      //   actor,
+      //   energyCost: Constant.ENERGY_THRESHOLD,
+      //   onSuccess: () => {
+      //     lantern.lightRange -= 1
+      //   },
+      // }),
       'w,ArrowUp': () => {
         const direction = Constant.DIRECTIONS.N;
         let newX = actor.pos.x + direction[0];
@@ -86,7 +130,7 @@ export default function (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: stepOnGrass
+          onSuccess: handleMoveSuccess,
         });
       },
       's,ArrowDown': () => {
@@ -99,7 +143,7 @@ export default function (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: stepOnGrass
+          onSuccess: handleMoveSuccess,
         });
       },
       'a,ArrowLeft': () => {
@@ -112,7 +156,7 @@ export default function (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: stepOnGrass
+          onSuccess: handleMoveSuccess,
         });
       },
       'd,ArrowRight': () => {
@@ -125,9 +169,19 @@ export default function (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: stepOnGrass
+          onSuccess: handleMoveSuccess,
         });
       },
+      g: () => new PickupAllItems({
+        label: 'Pickup',
+        game: engine.game,
+        actor,
+      }),
+      o: () => new OpenDropInventory({
+        label: 'Drop Items',
+        game: engine.game,
+        actor,
+      }),
       l: () => new PrepareLooking({
         label: 'Look',
         game: engine.game,
@@ -153,38 +207,17 @@ export default function (engine) {
         game: engine.game,
         actor,
       }),
-      o: () => new OpenDropInventory({
-        label: 'Drop Items',
-        game: engine.game,
-        actor,
-      }),
       p: () => new OpenEquipment({
         label: 'Equipment',
         game: engine.game,
         actor,
       }),
-      g: () => new PickupAllItems({
-        label: 'Pickup',
-        game: engine.game,
-        actor,
-      }),
       t: () => new PrepareDirectionalThrow({ // add glow stick throwable?
         label: 'Grenade',
-        projectileType: 'Grenade',
+        projectileType: 'grenade',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      }),
-      v: () => new AddStatusEffect({
-        label: 'Steady The Nerves',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD * 2,
-        effect: new TakeAim({
-          buffValue: 10,
-          game: engine.game,
-          actor,
-        }),
       }),
       mouseOver: (mousePosition) => {
         return new MoveTargetingCursor({
@@ -215,33 +248,38 @@ export default function (engine) {
   // instantiate class
   const durability = 5;
   let actor = new Player({
-    pos: { x: 23, y: 7 },
+    pos: { x: 0, y: 7 },
     renderer: {
       sprite: '',
       character: '@',
-      color: COLORS.base3,
-      background: COLORS.cog2,
+      color: TALL_GRASS_CONSTANT.COLORS.white,
+      background: TALL_GRASS_CONSTANT.COLORS.brown_sugar,
     },
     lightPassable: true,
-    name: 'Someone',
-    speed: Constant.ENERGY_THRESHOLD * 5,
+    name: 'field agent',
+    baseDescription: 'you, a C.C.C member stationed in the Layoria region.',
+    speed: Constant.ENERGY_THRESHOLD * 3,
     durability,
     baseRangedAccuracy: 0,
     baseRangedDamage: 0,
-    attackDamage: 0,
+    attackDamage: 1,
     equipment: Constant.EQUIPMENT_LAYOUTS.human(),
     game: engine.game,
     presentingUI: true,
     faction: 'PEOPLE',
     enemyFactions: ['MONSTER'],
+    maxFearPoints: 10,
     initializeKeymap: keymap,
   })
 
   // add default items to container
-  const primary = Revolver({engine, position: actor.getPosition()});
+  const primary = Revolver(engine, actor.getPosition());
   const lantern = Lantern({engine, lightRange: 6})
-  const ammo = Array(10).fill('').map(() => Ammo(engine));
-  const grenades = Array(2).fill('').map(() => Grenade(engine, 6));
+  const ammo = Helper.duplicate(4, () => Ammo(engine))
+  const grenades = Array(1).fill('').map(() => Grenade(engine, actor.getPosition()));
+  const glowSticks = Array(1).fill('').map(() => GlowStick(engine, actor.getPosition()))
+  // const glowSticks = Array(1).fill('').map(() => SuperGlowStick(engine, actor.getPosition()))
+  const batteries = Array(1).fill('').map(() => Battery());
   actor.container = [
     new ContainerSlot({
       itemType: ammo[0].name,
@@ -250,6 +288,14 @@ export default function (engine) {
     new ContainerSlot({
       itemType: grenades[0].name,
       items: grenades,
+    }),
+    new ContainerSlot({
+      itemType: batteries[0].name,
+      items: batteries,
+    }),
+    new ContainerSlot({
+      itemType: glowSticks[0].name,
+      items: glowSticks,
     }),
   ]
 

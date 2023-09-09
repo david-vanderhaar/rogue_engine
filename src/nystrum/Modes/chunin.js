@@ -44,8 +44,6 @@ export class Chunin extends Mode {
       this.game.mapHeight,
       this.game.mapWidth,
     );
-    generateBuilding(this.game.map, 10, 10, 2, 4);
-    generateBuilding(this.game.map, 20, 5, 6, 4);
 
     this.placePlayersInSafeZone();
     let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')

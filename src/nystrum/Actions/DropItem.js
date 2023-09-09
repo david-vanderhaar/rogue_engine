@@ -33,6 +33,7 @@ export class DropItem extends Base {
 
     item.pos = newItemPosition
     tile.entities.push(item);
+    item?.processDropEffects && item.processDropEffects(this.actor)
 
     this.game.addMessage(`${this.actor.name} drops ${item.name}.`, MESSAGE_TYPE.ACTION);
     return {

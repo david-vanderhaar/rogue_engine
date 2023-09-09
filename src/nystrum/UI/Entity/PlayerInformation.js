@@ -1,5 +1,6 @@
 import React from 'react';
-import CharacterCard from './CharacterCard';
+// import CharacterCard from './CharacterCard';
+import CharacterCard from '../../Modes/TallGrass/UI/CharacterCard';
 import * as _ from 'lodash';
 
 const PlayerInformation = ({game}) => {

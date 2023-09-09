@@ -13,4 +13,8 @@ export const HasPickupEffects = superclass => class extends superclass {
   processPickupEffects(actor) {
     this.pickupEffects.forEach((effect) => effect(actor, this))
   }
+
+  processDropEffects(actor) {
+    this.dropEffects.forEach((effect) => effect(actor, this))
+  }
 };

@@ -4,7 +4,7 @@ export const VisibleEntities = ({game}) => {
   return (
     <div className="UI" style={{marginBottom: 20}}>
       {
-        game.entityLog.getAllUniqueEntities().map(
+        game.entityLog.getAllUniqueEntitiesInFov().map(
           (entity, index) => <VisibleEntityCard key={index} entity={entity} />
         )
       }
@@ -16,7 +16,11 @@ const VisibleEntityCard = ({entity}) => {
   return (
     <div>
       <EntityIcon renderer={entity.renderer} />
-      <EntityName entity={entity} />
+      <EntityName entity={entity}/>
+      {/* <div style={{marginLeft: 20}}>
+        <EntityDescription entity={entity} />
+        <StatusEffects actor={entity} />
+      </div> */}
     </div>
   )
 }
@@ -26,7 +30,8 @@ export const LookedAtEntites = ({game}) => {
   if (lookedAt.length <= 0) return null
 
   return (
-    <div style={{top: 0, position: 'absolute', textAlign: 'left', zIndex: 1, maxWidth: '60%'}}>
+    //<div style={{bottom: 0, position: 'absolute', textAlign: 'left', zIndex: 1, maxWidth: '60%'}}>
+    <div style={{textAlign: 'left', zIndex: 1, maxWidth: '60%'}}>
       {lookedAt.map((entity, index) => (
         <div key={index} style={{marginBottom: 10}}>
           <EntityIcon renderer={entity.renderer} />
@@ -67,7 +72,6 @@ function StatusEffect ({effect}) {
       </span>
       <div style={{marginLeft: 20}}>
         {effect.description}
-        asdasddg sfasfg asdfasdf asfasgrrg
       </div>
     </div>
   )

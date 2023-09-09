@@ -8,7 +8,6 @@ export const Attacking = superclass => class extends superclass {
     this.attackDamage = attackDamage;
   }
   getAttackDamage(additional = 0) {
-
     return this.attackDamage + additional;
   }
   canAttack(entity) {
@@ -35,6 +34,7 @@ export const Attacking = superclass => class extends superclass {
             }
           });
         }
+
         this.game.addMessage(`${this.name} does ${damage} to ${target.name}`, MESSAGE_TYPE.DANGER);
         target.decreaseDurability(damage);
         if (this.entityTypes.includes('PLAYING')) this.game.display.shakeScreen({intensity: 1})

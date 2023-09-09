@@ -87,6 +87,8 @@ export class PrepareRangedAttack extends Base {
     const pos = this.actor.getPosition();
     const range = this.actor.getAttackRange();
     const equippedWeapon = this.actor.getItemInSlot(EQUIPMENT_TYPES.HAND)
+    if (!equippedWeapon) return {success: false, alternative: null}
+    if (!equippedWeapon.entityTypes.includes('RANGED_ATTACKING')) return {success: false, alternative: null}
 
     const pathAnimations = [];
     const rangeAnims = []
@@ -112,7 +114,8 @@ export class PrepareRangedAttack extends Base {
       let tile = this.game.map[Helper.coordsToString(position)];
       if (tile) {
         // const validTargets = Helper.getDestructableEntities(tile.entities);
-        const validTargets = tile.entities.filter((actor) => this.actor.isEnemy(actor));
+        const validTargets = tile.entities
+          .filter((actor) => this.actor.isEnemy(actor) && actor['isInFov']);
         let newTarget = validTargets.length ? validTargets[0] : null;
         if (newTarget) {
           targets.push(newTarget);

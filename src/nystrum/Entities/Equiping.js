@@ -12,12 +12,24 @@ export const Equiping = superclass => class extends superclass {
     const success = super.move(targetPos)
 
     if (success) {
-      this.equipment.forEach((slot) => {
-        if (slot.item) slot.item.setPosition(targetPos)
-      })
+      this.setAllEquipmentPositions()
+      // this.equipment.forEach((slot) => {
+      //   if (slot.item) slot.item.setPosition(targetPos)
+      // })
     }
 
     return success
+  }
+
+  setAllEquipmentPositions() {
+    const targetPos = this.getPosition()
+    this.equipment.forEach((slot) => {
+      if (slot.item) slot.item.setPosition(targetPos)
+    })
+  }
+
+  getEquippedItems() {
+    return this.equipment.map((slot) => slot.item).filter((item) => item !== null)
   }
 
   hasItemNameEquipped(itemName) {
@@ -32,12 +44,6 @@ export const Equiping = superclass => class extends superclass {
     return equipment.length > 0;
   }
   getItemInSlot(slotName) {
-    let openSlots = this.equipment.filter((slot) => {
-      return (slot.item === null && slot.type === slotName);
-    });
-    if (openSlots.length > 0) {
-      return false;
-    }
     let slot = this.equipment.find((slot) => slot.type === slotName);
     if (!slot) {
       return false;
@@ -52,6 +58,7 @@ export const Equiping = superclass => class extends superclass {
     this.equipment = this.equipment.map((slot) => {
       if (!foundSlot && slot.type === slotName && slot.item === null) {
         slot.item = item;
+        item.setPosition(this.getPosition())
         foundSlot = true;
         SOUNDS.equip_1.play();
       }

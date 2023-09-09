@@ -14,7 +14,8 @@ import {VisibleEntities, LookedAtEntites} from '../UI/VisibleEntities';
 import Equipment from '../UI/Jacinto/Equipment';
 // import Equipment from '../UI/Equipment';
 
-import Help from '../UI/Jacinto/Help';
+// import Help from '../UI/Jacinto/Help';
+// import Help from '../UI/TallGrass/Help';
 
 class Level extends React.Component {
   constructor(props) {
@@ -66,11 +67,13 @@ class Level extends React.Component {
             <PlayerInformation game={this.state.game} />
           </div>
           <div style={{flex: 5}}>
-            <LookedAtEntites game={this.state.game} />
+            {/* <LookedAtEntites game={this.state.game} /> */}
             <div className='game_display_container'>
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
             </div>
-            <Help id="jacinto_help" />
+            <LookedAtEntites game={this.state.game} />
+            {/* <Help id="jacinto_help" /> */}
+            <InfoBlocks game={this.state.game} />
             <Instructions 
               game={this.state.game}
               spriteMode={this.state.game.spriteMode}
@@ -78,10 +81,9 @@ class Level extends React.Component {
               toggleSpriteMode={this.toggleSpriteMode.bind(this)}
             />
             {/* <PlayerInformation game={this.state.game} /> */}
-            {/* <Information game={this.state.game} /> */}
+            <Information game={this.state.game} />
           </div>
           <div style={{flex: 2, paddingRight: 16}}>
-            <InfoBlocks game={this.state.game} />
             <Messages messages={this.state.game.messages.slice(-5).reverse()} />
             <VisibleEntities game={this.state.game} />
             <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} />

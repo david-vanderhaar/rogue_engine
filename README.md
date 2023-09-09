@@ -46,3 +46,7 @@ A place to keep universal values that never change
 ## UI
 ## Keymap
 ## Messages
+
+## Deploy
+To Github Pages: `npm run deploy`
+To itch.io: copy `/build`, compress `/build`, upload zipped file to itch page.

@@ -27,16 +27,20 @@ export default {
     src: [window.PUBLIC_URL + '/sounds/water-05.wav']
   }),
   chop_0: new Howl({
-    src: [window.PUBLIC_URL + '/sounds/chop-00.wav']
+    src: [window.PUBLIC_URL + '/sounds/chop-00.wav'],
+    volume: 0.2,
   }),
   chop_1: new Howl({
-    src: [window.PUBLIC_URL + '/sounds/chop-01.wav']
+    src: [window.PUBLIC_URL + '/sounds/chop-01.wav'],
+    volume: 0.2,
   }),
   equip_0: new Howl({
-    src: [window.PUBLIC_URL + '/sounds/equip-00.wav']
+    src: [window.PUBLIC_URL + '/sounds/equip-00.wav'],
+    volume: 0.2,
   }),
   equip_1: new Howl({
-    src: [window.PUBLIC_URL + '/sounds/equip-01.wav']
+    src: [window.PUBLIC_URL + '/sounds/equip-01.wav'],
+    volume: 0.2,
   }),
   explosion_0: new Howl({
     src: [window.PUBLIC_URL + '/sounds/explosion-00.wav'],
@@ -50,8 +54,10 @@ export default {
   }),
   grab_0: new Howl({
     src: [window.PUBLIC_URL + '/sounds/grab-00.wav'],
+    volume: 0.2,
   }),
   release_0: new Howl({
     src: [window.PUBLIC_URL + '/sounds/grab-01.wav'],
+    volume: 0.2,
   }),
 }

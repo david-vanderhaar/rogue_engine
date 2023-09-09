@@ -1,3 +1,4 @@
+import uuid from 'uuid/v1'
 import * as Helper from '../../helper';
 
 export class Base {
@@ -12,8 +13,10 @@ export class Base {
     onStart = () => null,
     onStep = () => null,
     onStop = () => null,
-    renderer = {background: 'green', color: 'white', character: '*'}
+    renderer = {background: 'green', color: 'white', character: '*'},
+    processOnlyOnPlayerTurn = false,
   }) {
+    this.id = uuid()
     this.game = game
     this.actor = actor
     this.name = name
@@ -27,6 +30,7 @@ export class Base {
     this.onStep = onStep
     this.onStop = onStop
     this.renderer = renderer
+    this.processOnlyOnPlayerTurn = processOnlyOnPlayerTurn
   }
 
   static displayName = 'Base Effect'

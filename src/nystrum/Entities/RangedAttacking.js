@@ -6,6 +6,7 @@ import {JACINTO_SOUNDS} from '../Modes/Jacinto/sounds'
 import { ANIMATION_TYPES } from '../Display/konvaCustom';
 const DEFAULT_HIT_SOUNDS = [SOUNDS.chop_0, SOUNDS.chop_1]
 const DEFAULT_MISS_SOUNDS = [SOUNDS.release_0]
+const DEFAULT_RELOAD_SOUNDS = [JACINTO_SOUNDS.reload]
 
 export const RangedAttacking = superclass => class extends superclass {
   constructor({
@@ -15,6 +16,7 @@ export const RangedAttacking = superclass => class extends superclass {
     magazineSize = 0,
     rangedHitSounds = [],
     rangedMissSounds = [],
+    rangedReloadSounds = [],
     ...args
   }) {
     super({ ...args });
@@ -26,6 +28,7 @@ export const RangedAttacking = superclass => class extends superclass {
     this.magazine = magazineSize;
     this.rangedHitSounds = rangedHitSounds;
     this.rangedMissSounds = rangedMissSounds;
+    this.rangedReloadSounds = rangedReloadSounds;
   }
 
   getRangedAttackChance(targetPos = null) {
@@ -169,7 +172,7 @@ export const RangedAttacking = superclass => class extends superclass {
     }
 
     if (reloaded) {
-      JACINTO_SOUNDS.reload.play()
+      this.playReloadSound()
       return true
     }
 
@@ -222,6 +225,11 @@ export const RangedAttacking = superclass => class extends superclass {
     );
   }
 
+  playReloadSound() {
+    const sound = Helper.getRandomInArray(this.getReloadSounds());
+    sound.play();
+  }
+
   playMissSound() {
     const sound = Helper.getRandomInArray(this.getMissSounds());
     sound.play();
@@ -242,6 +250,12 @@ export const RangedAttacking = superclass => class extends superclass {
     const sounds = this.getWeaponSounds('rangedMissSounds')
     if (sounds.length > 0) return sounds
     return DEFAULT_MISS_SOUNDS
+  }
+
+  getReloadSounds() {
+    const sounds = this.getWeaponSounds('rangedReloadSounds')
+    if (sounds.length > 0) return sounds
+    return DEFAULT_RELOAD_SOUNDS
   }
 
   getWeaponSounds(property) {

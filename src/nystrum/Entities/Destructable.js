@@ -1,6 +1,7 @@
-import { destroyEntity } from './helper';
+import { destroyActor } from './helper';
 import * as Helper from '../../helper';
 import { ANIMATION_TYPES } from '../Display/konvaCustom';
+import spatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 
 export const Destructable = superclass => class extends superclass {
   constructor({ durability = 1, defense = 0, onDestroy = () => null, ...args }) {
@@ -40,13 +41,26 @@ export const Destructable = superclass => class extends superclass {
     this.durability = Math.min(current, newDurability);
     this.addAnimation(-decreaseBy)
     this.updateActorRenderer();
-    if (this.entityTypes.includes('PLAYING')) this.shakePlayer(value)
+    if (this.entityTypes.includes('PLAYING')) this.bloodSpatter(value)
     if (this.durability <= 0) {
       this.destroy();
     }
   }
+
+  bloodSpatter(value) {
+    spatterEmitter({
+      game: this.game,
+      fromPosition: this.getPosition(),
+      spatterAmount: .2 * value,
+      spatterRadius: 3,
+      // spatterDirection: Helper.getDirectionFromOrigin(this.actor.getPosition(), this.targetPos),
+      transfersBackground: true,
+      spatterColors: ['#833139', '#aa2123'],
+    }).start()
+  }
+
   shakePlayer() {
-    const nodeKey = Helper.coordsToString(this.getPosition())
+    const nodeKey = Helper.coordsToString(this.getPosition()) // needs to be relative rendered position
     const actorNode = this.game.tileMap[nodeKey]
     this.game.display.shakeNode({node: actorNode, intensity: 2})
   }
@@ -86,6 +100,6 @@ export const Destructable = superclass => class extends superclass {
   }
   destroy() {
     this.onDestroy(this);
-    destroyEntity(this);
+    destroyActor(this);
   }
 };

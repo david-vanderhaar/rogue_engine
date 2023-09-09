@@ -14,8 +14,8 @@ class Instructions extends React.Component {
         <div className='flow-text'>
           <div 
             className='Instructions__block'
-            onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}
-            // onClick={() => window.location.reload()}
+            // onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}
+            onClick={() => window.location.reload()}
           >
             <button 
               style={{

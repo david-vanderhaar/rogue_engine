@@ -76,6 +76,13 @@ export const TILE_KEY = {
     sprite: '',
     passable: true,
   },
+  'GROUND_ALT': {
+    background: THEMES.SOLARIZED.base03,
+    foreground: THEMES.SOLARIZED.base03,
+    character: '',
+    sprite: '',
+    passable: true,
+  },
   'FLOOR': {
     background: THEMES.SOLARIZED.base02,
     foreground: THEMES.SOLARIZED.base0,
@@ -285,6 +292,15 @@ export const CLONE_PATTERNS = {
       { x: 0, y: 0, taken: false, },
       { x: 0, y: 0, taken: false, },
       { x: 0, y: 0, taken: false, },
+    ]
+  },
+  tri_force: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: -1, y: -1, taken: false, },
+      { x: 1, y: -1, taken: false, },
     ]
   },
   spread: {

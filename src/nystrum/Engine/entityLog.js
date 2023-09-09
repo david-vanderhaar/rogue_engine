@@ -13,6 +13,18 @@ const EntityLog = () => {
 
       return unique
     },
+    getAllUniqueEntitiesInFov: () => {
+      const unique = []
+      entities.forEach((entity) => {
+        if (!unique.find((item) => item.name === entity.name)) {
+          if (entity['isInFov']) {
+            unique.push(entity)
+          }
+        }
+      })
+
+      return unique
+    },
     setLookedAt: (targets = []) => lookedAt = targets,
     getLookedAt: () => lookedAt,
   }

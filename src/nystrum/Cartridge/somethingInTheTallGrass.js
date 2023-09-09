@@ -2,10 +2,10 @@ import {createCartridge} from './cartridge'
 import Modes from '../Modes/index';
 import { COLORS } from '../Modes/TallGrass/theme';
 import { SCREENS } from '../Screen/constants';
-import CharacterSelect from '../Screen/CharacterSelect';
+import CharacterSelect from '../Modes/TallGrass/Screen/CharacterSelect';
 import Level from '../Screen/Level';
-import Win from '../Screen/Win';
-import Lose from '../Screen/Lose';
+import Win from '../Modes/TallGrass/Screen/Win';
+import Lose from '../Modes/TallGrass/Screen/Lose';
 import SomeoneInTheTallGrass from '../Modes/TallGrass/Characters/SomeoneInTheTallGrass';
 
 export const somethingInTheTallGrassCart = () => {

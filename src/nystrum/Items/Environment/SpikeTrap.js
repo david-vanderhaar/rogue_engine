@@ -8,6 +8,7 @@ export const SpikeTrap = (engine, actor, attackDamage = 1, useCount = 2) => {
     game: engine.game,
     name: 'Trap',
     passable: true,
+    lightPassable: true,
     renderer: {
       character: '*',
       sprite: '',

@@ -183,7 +183,6 @@ export class Engine {
         effect.actor.id === newEffect.actor.id &&
         effect.name === newEffect.name
       )).length > 0) {
-        console.log(`${newEffect.name} cannot be applied twice to ${newEffect.actor.name}`);
         return false;
       };
     }
@@ -223,15 +222,25 @@ export class Engine {
   }
 
   processStatusEffects (timePassed) {
-    this.statusEffects.forEach((effect) => {
+    let effects = this.statusEffects
+    if (!this.currentActorIsPlayer()) effects = effects.filter((effect) => !effect.processOnlyOnPlayerTurn)
+
+    effects.forEach((effect) => {
       effect.timeSinceLastStep += timePassed;
       effect.timeToLive -= timePassed;
       if (effect.timeSinceLastStep >= effect.stepInterval) {
-        effect.onStep();
+        effect.onStep(timePassed);
         effect.timeSinceLastStep = 0;
       } 
     });
     this.removeDeadStatusEffects();
+  }
+
+  currentActorIsPlayer() {
+    const actor = this.actors[this.currentActor]
+    if (!actor) return false
+
+    return actor.entityTypes.includes('PLAYING')
   }
 
   async processActionFX (action, actionSuccess) {
@@ -247,7 +256,7 @@ export class Engine {
       })
       this.game.placeActorOnMap(particle);
       this.game.draw();
-      await Helper.delay(100);
+      await Helper.delay(25);
       this.game.removeActorFromMap(particle);
       particle.update(1);
       this.game.draw();
@@ -263,8 +272,9 @@ export class Engine {
           this.game.placeActorOnMap(particle);
         })
         this.game.draw();
-        const delay = Math.max(time * 100, 12)
-        await Helper.delay(delay);
+        // const delay = Math.max(time * 100, 12)
+        // await Helper.delay(delay);
+        await Helper.delay(10);
         action.particles.forEach((particle) => {
           this.game.removeActorFromMap(particle);
           particle.update(1);

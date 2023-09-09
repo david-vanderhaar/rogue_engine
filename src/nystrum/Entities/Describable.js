@@ -21,4 +21,8 @@ export const Describable = superclass => class extends superclass {
       // ...this.getStatusEffectDescriptions
     ]
   }
+
+  addDescriptor(description) {
+    this.baseDescriptors.push(description)
+  }
 };

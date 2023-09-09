@@ -7,6 +7,7 @@ export const Gnasher = (engine, pos) => new RangedWeapon({
   game: engine.game,
   name: 'Gnasher',
   passable: true,
+  lightPassable: true,
   attackRange: 4,
   magazineSize: 2,
   baseRangedAccuracy: 0.9,

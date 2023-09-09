@@ -4,7 +4,7 @@ import Tooltip from '../Tooltip';
 import ActionBar from '../ActionBar';
 import ActionMenu from '../Jacinto/ActionMenu'
 
-function Portrait ({actor}) {
+export function Portrait ({actor}) {
   return (
     <div className="Portrait" style={{
       backgroundColor: actor.renderer.background, 
@@ -16,7 +16,7 @@ function Portrait ({actor}) {
   )
 }
 
-function StatusEffect ({effect}) {
+export function StatusEffect ({effect}) {
   return (
     <div className="StatusEffects__effect" style={{
       backgroundColor: effect.renderer.background, 
@@ -28,7 +28,7 @@ function StatusEffect ({effect}) {
   )
 }
 
-function StatusEffects ({actor}) {
+export function StatusEffects ({actor}) {
   return (
     <div className="StatusEffects">
       {
@@ -37,7 +37,7 @@ function StatusEffects ({actor}) {
             <Tooltip 
               key={i}
               title={effect.name}
-              text={effect.name}
+              text={effect.description}
             >
               <StatusEffect effect={effect} />
             </Tooltip>
@@ -48,7 +48,7 @@ function StatusEffects ({actor}) {
   )
 }
 
-function NamePlate ({actor}) {
+export function NamePlate ({actor}) {
   return (
     <div className="NamePlate">
       {actor.name}
@@ -56,7 +56,7 @@ function NamePlate ({actor}) {
   )
 }
 
-function ProgressBar ({
+export function ProgressBar ({
   actor, 
   label, 
   colorFilled = 'red',

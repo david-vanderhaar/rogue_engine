@@ -7,6 +7,7 @@ export const delay = (timeDelayed = 100) => {
 }
 
 export const range = (number) => [...Array(number).keys()]
+export const duplicate = (number, item) => [...Array(number).fill('').map(item)]
 
 export const clamp = (value, min, max) => {
   return Math.min(Math.max(value, min), max);
@@ -14,6 +15,19 @@ export const clamp = (value, min, max) => {
 
 export const getRandomInArray = (array) => {
   return array[Math.floor(Math.random() * array.length)];
+}
+
+export function getNumberOfItemsInArray(number, originalArray) {
+  const array = [...originalArray]
+  let result = []
+
+  range(number).forEach(() => {
+    const index = Math.floor(Math.random() * array.length)
+    const item = array.splice(index, 1)
+    result = result.concat(item)
+  })
+
+  return result
 }
 
 export const getRandomInt = (min, max) => {
@@ -152,14 +166,24 @@ export const filterEntitiesByType = (entites, type) => {
   return entites.filter((entity) => entity.entityTypes.includes(type));
 }
 
+export const filterEntitiesByAttr = (entites, attr, value) => {
+  return entites.filter((entity) => entity[attr] === value);
+}
+
 export const getEntitiesByPosition = ({game, position}) => {
   const tile = getTileAtPosition(game, position)
+  if (!tile) return []
   return tile.entities
 }
 
 export const getEntitiesByPositionByType = ({game, position, entityType}) => {
   const entities = getEntitiesByPosition({game, position})
   return filterEntitiesByType(entities, entityType);
+}
+
+export const getEntitiesByPositionByAttr = ({game, position, attr, value}) => {
+  const entities = getEntitiesByPosition({game, position})
+  return filterEntitiesByAttr(entities, attr, value);
 }
 
 const getGranularity = (radius) => {

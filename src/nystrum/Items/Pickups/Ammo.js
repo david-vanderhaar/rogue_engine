@@ -5,6 +5,7 @@ export const Ammo = (engine) => new AmmoEntity({
   game: engine.game,
   name: 'Ammo',
   passable: true,
+  lightPassable: true,
   renderer: {
     character: '||',
     sprite: '',

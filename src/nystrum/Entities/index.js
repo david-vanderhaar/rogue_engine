@@ -47,6 +47,7 @@ import { Projecting } from './Projecting';
 import { TimeBombing } from './TimeBombing';
 import { HasPickupEffects } from './HasPickupEffects';
 import { Illuminating } from './Illuminating';
+import { Fearful } from './Fearful';
 
 export const UI_Actor = pipe(
   Acting,
@@ -188,7 +189,8 @@ export const Player = pipe(
   HasFaction,
   CanActivateStatusEffects,
   UsesCover,
-  // Illuminating,
+  HasInnerGates,
+  // Fearful,
 )(Entity);
 
 export const Weapon = pipe(
@@ -293,3 +295,11 @@ export const ParticleEmitter = pipe(
   Destructable,
   Parent,
 )(Entity);
+
+export const Light = pipe(
+  Rendering,
+  Equipable,
+  Illuminating,
+)(Entity)
+
+export const GlowingPickup = pipe(Illuminating)(RenderedWithPickUpEffects)

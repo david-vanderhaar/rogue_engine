@@ -6,6 +6,7 @@ export const Grenade = (engine, range) => new GrenadeEntity({
   game: engine.game,
   name: 'Grenade',
   passable: true,
+  lightPassable: true,
   renderer: {
     character: 'x',
     sprite: '',

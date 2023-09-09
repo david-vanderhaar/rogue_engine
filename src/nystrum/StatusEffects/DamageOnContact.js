@@ -2,9 +2,10 @@ import {Base} from './Base';
 import * as Helper from '../../helper';
 import { COLORS } from '../Modes/Jacinto/theme';
 import SOUNDS from '../sounds';
+import { MESSAGE_TYPE } from '../message';
 
 export class DamageOnContact extends Base {
-  constructor({damage = 1, useCount = 3, ...args}) {
+  constructor({damage = 1, useCount = 3, messageOnDamage = null, messageType = MESSAGE_TYPE.DANGER, ...args}) {
     super({ ...args });
     this.name = 'Trap Damage';
     this.allowDuplicates = false
@@ -14,6 +15,8 @@ export class DamageOnContact extends Base {
       background: COLORS.flesh2,
       character: '^'
     };
+    this.messageOnDamage = messageOnDamage
+    this.messageType = messageType
     this.damage = damage
     this.uses = useCount
     this.onStep = this.handleStep
@@ -27,10 +30,16 @@ export class DamageOnContact extends Base {
     enemies[0].decreaseDurability(this.damage)
     this.uses -=1
     this.playDamageSound()
+    this.displayMessage()
     if (this.uses <= 0) {
       this.actor.destroy()
       this.playDestroyedSound()
     }
+  }
+
+  displayMessage() {
+    if (!this.messageOnDamage) return
+    this.actor.game.addMessage(this.messageOnDamage, this.messageType);
   }
 
   playDamageSound() {

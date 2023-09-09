@@ -96,7 +96,7 @@
     min-width:200px; 
     top:-20px;
     left:50%;
-    transform:translate(-50%, -100%);
+    transform:translate(0%, -100%);
     padding:10px 20px;
     color:#444444;
     background-color:#EEEEEE;
@@ -202,6 +202,7 @@
   width: 20px;
   height: 20px;
   padding: 10px;
+  cursor: pointer;
 }
 
 .ItemPortrait {
@@ -256,17 +257,20 @@
 
 .modal-content, 
 .modal-footer {
-  background-color: #07111Dff !important;
-  color: #E19D3Fff;
+  background-color: #16161d !important;
+  color: #ec9c5d;
 }
 
+/* 16161d
+f9d091
+ec9c5d */
 
 .modal-footer .modal-close {
-  color: #E19D3Fff;
+  color: #ec9c5d;
 }
 
 .Jacinto_Help .Jacinto_Help__section_header {
-  border: #E19D3Fff 1px solid;
+  border: #ec9c5d 1px solid;
   border-radius: 5px;
   font-size: 20px;
 }
@@ -366,17 +370,19 @@
 
 .EquipmentCard__item {
   margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .EquipmentCard__item__label {
-  background-color: #222;
+  /* background-color: #222;
   border: #222 1px solid;
   border-radius: 6px;
   margin: auto;
   text-align: center;
-  /* position: relative; */
-  width: 90px;
-  /* top: 10px; */
+  width: 90px; */
 }
 
 .SimpleEquipmentCard {
@@ -386,7 +392,7 @@
 
 .EquipmentCard__item__label--simple {
   border-radius: 6px;
-  margin: auto;
+  /* margin: auto; */
 }
 
 .EquipmentCard__item__label__amount {
@@ -399,11 +405,11 @@
   border-radius: 6px;
   display: flex;
   /* font-family: 'Roboto', 'scroll-o-script'; */
-  height: 100px;
   justify-content: center;
-  margin: auto;
+  /* margin: auto; */
   padding: 10px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   font-size: 40px;
 }
 
@@ -556,13 +562,13 @@
 }
 
 .Jacinto__ActionMenu__Actions__item:hover {
-  border: 2px solid #E19D3Fff;
+  border: 2px solid #ec9c5d;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .Jacinto__ActionMenu__Actions__item__label {
-  color: #E19D3Fff;
+  color: #ec9c5d;
   margin-right: 10px;
 }
 
@@ -575,11 +581,11 @@
 }
 
 .range-field {
-  background-color: #07111D;
+  background-color: #16161d;
 }
 
 .range-field > label {
-  color: #E19D3Fff;
+  color: #ec9c5d;
 }
 
 .range-field > input {

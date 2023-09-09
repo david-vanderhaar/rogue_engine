@@ -12,6 +12,7 @@ import { OpenDropInventory } from '../Actions/OpenDropInventory';
 import { PickupRandomItem } from '../Actions/PickupRandomItem';
 import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
 import { PrepareTackle } from '../Actions/PrepareTackle';
+import { AddOpenGatesStatusEffect } from '../Actions/AddOpenGatesStatusEffect';
 
 
 
@@ -126,10 +127,14 @@ export default function (engine) {
       //   activate: () => Keymap.leafWhirlwind(engine),
       //   label: 'Leaf Whirlwind',
       // },
-      // g: {
-      //   activate: () => Keymap.openInnerGate(engine),
-      //   label: 'Gate of Opening',
-      // },
+      g: () => new AddOpenGatesStatusEffect({
+        label: 'Open Inner Gate',
+        game: engine.game,
+        actor,
+        // requiredResources: [
+        //   new ChakraResource({ getResourceCost: () => 2 }),
+        // ],
+      }),
     };
   }
   // instantiate class

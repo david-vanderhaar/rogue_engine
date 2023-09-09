@@ -1,3 +1,4 @@
+
 import { ParticleEmitter } from '../particleEmitter'
 import * as Helper from '../../../../helper'
 
@@ -7,7 +8,8 @@ export default ({
   spatterRadius = 3,
   spatterAmount = .3, // percent
   spatterDirection = {x: 0, y: 0},
-  spatterColors = ['#ff551a', '#673ab7', '#aa2123'],
+  // spatterColors = ['#ff551a', '#673ab7', '#aa2123'],
+  spatterColors = ['#833139', '#859900', '#aa2123'],
   animationTimeStep = 0.2,
   reverse = false,
   transfersBackground = false,

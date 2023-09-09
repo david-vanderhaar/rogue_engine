@@ -4,6 +4,7 @@ import ExecuteRangedAttack from './ExecuteRangedAttack';
 import ExecuteStatusEffects from './ExecuteStatusEffects';
 import ExecuteStatusEffectOnAllies from './ExecuteStatusEffectOnAllies';
 import ExecuteStatusEffectOnEnemies from './ExecuteStatusEffectOnEnemies';
+import MoveTowardsEntityInRangeByAttr from './MoveTowards';
 import MoveTowardsCover from './MoveTowardsCover';
 import MoveTowardsEnemy from './MoveTowardsEnemy';
 import MoveTowardsPlayer from './MoveTowardsPlayer';
@@ -19,6 +20,7 @@ export {
   ExecuteStatusEffects,
   ExecuteStatusEffectOnAllies,
   ExecuteStatusEffectOnEnemies,
+  MoveTowardsEntityInRangeByAttr,
   MoveTowardsCover,
   MoveTowardsEnemy,
   MoveTowardsPlayer,

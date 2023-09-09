@@ -1,5 +1,5 @@
 import uuid from 'uuid/v1';
-import { destroyEntity } from './helper';
+import { destroyActor } from './helper';
 import { cloneDeep, find } from 'lodash';
 
 export const Cloning = superclass => class extends superclass {
@@ -16,10 +16,10 @@ export const Cloning = superclass => class extends superclass {
     // if this actor dies, clones should be destroyed as well
     if (this.clones) {
       this.clones.map((clone) => {
-        destroyEntity(clone);
+        destroyActor(clone);
       });
     }
-    destroyEntity(this);
+    destroyActor(this);
   }
   destroyClone(id) {
     // overrides clone destroy function

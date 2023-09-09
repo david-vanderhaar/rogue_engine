@@ -15,10 +15,19 @@ export let GAME = null
 
 // const MAP_WIDTH = 10;
 // const MAP_HEIGHT = 10;
-const MAP_WIDTH = 50;
-const MAP_HEIGHT = 30;
+// const MAP_WIDTH = 50;
+// const MAP_HEIGHT = 30;
 // const MAP_WIDTH = 28;
 // const MAP_HEIGHT = 20;
+// const MAP_WIDTH = 80;
+// const MAP_HEIGHT = 60;
+const MAP_WIDTH = 40;
+const MAP_HEIGHT = 30;
+
+const CAMERA_WIDTH = MAP_WIDTH;
+const CAMERA_HEIGHT = MAP_HEIGHT;
+// const CAMERA_WIDTH = Math.floor(MAP_WIDTH / 2);
+// const CAMERA_HEIGHT = Math.floor(MAP_HEIGHT / 2);
 
 const TILE_OFFSET = 0;
 
@@ -38,8 +47,8 @@ export class Game {
     tileMap = {},
     mapWidth = MAP_WIDTH,
     mapHeight = MAP_HEIGHT,
-    cameraWidth = MAP_WIDTH,
-    cameraHeight = MAP_HEIGHT,
+    cameraWidth = CAMERA_WIDTH,
+    cameraHeight = CAMERA_HEIGHT,
     tileWidth = TILE_WIDTH,
     tileHeight = TILE_HEIGHT,
     tileOffset = TILE_OFFSET,
@@ -323,7 +332,6 @@ export class Game {
       //   }
       // }
 
-      // Proto code to handle tile animations
       let tileRenderer = {...this.tileKey[tile.type]}
       let nextFrame = this.animateTile(tile, tileRenderer, shouldAnimate);
       let character = nextFrame.character;
@@ -334,8 +342,11 @@ export class Game {
         background = 'transparent'
       }
       
+      const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
+
+      renderedEntities.forEach((entity) => entity['isInFov'] = false)
+
       if (!this.fovActive) {
-        const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
         if (renderedEntities.length > 0) {
           let entity = renderedEntities[renderedEntities.length - 1]
           nextFrame = this.animateEntity(entity);
@@ -365,7 +376,7 @@ export class Game {
       const renderedY = pos.y + renderOffsetY
 
       this.FOV.compute(renderedX, renderedY, light.lightRange, (x, y, range, visibility) => {
-      // this.FOV.compute90(playerPosition.x, playerPosition.y, lightRange, 0, (x, y, range, visibility) => {
+      // this.FOV.compute90(renderedX, renderedY, light.lightRange, 0, (x, y, range, visibility) => {
         // console.log(range, visibility);
         const key = Helper.coordsToString({x, y})
         const tile = map[key]
@@ -376,13 +387,14 @@ export class Game {
         let foreground = nextFrame.foreground;
         let background = tile?.overriddenBackground || nextFrame.background;
 
-        const percentageByVisibility = Math.min(visibility, 0.8)
+        const percentageByVisibility = Math.min(visibility, 0.4)
         const percentageByRange = (1 - (range / light.lightRange))
         const percentage = percentageByVisibility * percentageByRange
 
         background = Helper.interpolateHexColor(background, light.lightColor, percentage)
   
         const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
+        renderedEntities.forEach((entity) => entity['isInFov'] = true)
         if (renderedEntities.length > 0) {
           let entity = renderedEntities[renderedEntities.length - 1]
           nextFrame = this.animateEntity(entity);
@@ -397,7 +409,6 @@ export class Game {
         callback(key, x, y, character, foreground, background);
       });
     })
-
   }
 
   fovLightPasses(x, y) {
