@@ -34,6 +34,8 @@ export const HasFaction = superclass => class extends superclass {
   }
 
   isAlly (actor) {
+    if (!actor.entityTypes.includes('HAS_FACTION')) return false
+    if (actor['faction'] === null) return false
     return actor['faction'] === this.faction;
   }
 };
