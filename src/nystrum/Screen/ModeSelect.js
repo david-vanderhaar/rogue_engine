@@ -3,7 +3,7 @@ import { SCREENS } from './constants';
 import ModeSelect from '../UI/ModeSelect';
 import { CARTRIDGE } from '../Nystrum';
 
-class Title extends React.Component {
+class ModeSelectScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -38,4 +38,4 @@ class Title extends React.Component {
   }
 }
 
-export default Title;
+export default ModeSelectScreen;

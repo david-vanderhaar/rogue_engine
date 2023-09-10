@@ -4,6 +4,7 @@ import Modes from '../Modes/index';
 import { COLORS } from '../Modes/Jacinto/theme';
 import { THEMES } from '../constants';
 import { jacintoCart } from './jacinto'
+import { hiddenLeafCart } from './hiddenLeaf'
 import { developmentCart } from './development'
 import { somethingInTheTallGrassCart } from './somethingInTheTallGrass';
 
@@ -37,19 +38,6 @@ const flumeCart = () => {
       modes: {Flume: Modes.Flume},
       characters: {
         FireFighter: Characters.FireFighter,
-      },
-      theme: COLORS
-    })
-  )
-}
-
-const hiddenLeafCart = () => {
-  return (
-    createCartridge({
-      modes: {The_Chunin_Exams: Modes.Chunin},
-      characters: {
-        Gaara: Characters.Gaara,
-        Rock_Lee: Characters.Rock_Lee,
       },
       theme: COLORS
     })

@@ -1,8 +1,15 @@
+/* root */
+
+:root {
+  --color-main: #07111D;
+  --color-secondary: #ec9c5d;
+}
+
 .App {
   text-align: center;
   outline: none;
   /* background-color: #424242; */
-  background-color: #07111D;
+  background-color: var(--color-main);
   color: #eee;
   min-height: 100%;
   height: 100vh;
@@ -10,7 +17,7 @@
 
 .Nystrum {
   /* background-color: #424242; */
-  background-color: #07111D;
+  background-color: var(--color-main);
 }
 
 .App-logo {
@@ -258,19 +265,18 @@
 .modal-content, 
 .modal-footer {
   background-color: #16161d !important;
-  color: #ec9c5d;
+  color: var(--color-secondary);
 }
 
 /* 16161d
-f9d091
-ec9c5d */
+f9d091var(--color-secondary) */
 
 .modal-footer .modal-close {
-  color: #ec9c5d;
+  color: var(--color-secondary);
 }
 
 .Jacinto_Help .Jacinto_Help__section_header {
-  border: #ec9c5d 1px solid;
+  border: var(--color-secondary) 1px solid;
   border-radius: 5px;
   font-size: 20px;
 }
@@ -396,7 +402,7 @@ ec9c5d */
 }
 
 .EquipmentCard__item__label__amount {
-  color: #E19D3Fff
+  color: var(--color-secondary);
 }
 
 .EquipmentCard__item__content {
@@ -456,8 +462,8 @@ ec9c5d */
 }
 
 .Instructions__block--Jacinto {
-  background-color: #07111Dff !important;
-  color: #E19D3Fff;
+  background-color: var(--color-main) !important;
+  color: var(--color-secondary);
 }
 
 .Instructions__block .btn-main {
@@ -541,7 +547,7 @@ ec9c5d */
 }
 
 .Title__header {
-  color: #E19D3Fff;
+  color: var(--color-secondary);
 }
 
 .btn-main {
@@ -562,13 +568,13 @@ ec9c5d */
 }
 
 .Jacinto__ActionMenu__Actions__item:hover {
-  border: 2px solid #ec9c5d;
+  border: 2px solid var(--color-secondary);
   border-radius: 5px;
   cursor: pointer;
 }
 
 .Jacinto__ActionMenu__Actions__item__label {
-  color: #ec9c5d;
+  color: var(--color-secondary);
   margin-right: 10px;
 }
 
@@ -585,7 +591,7 @@ ec9c5d */
 }
 
 .range-field > label {
-  color: #ec9c5d;
+  color: var(--color-secondary);
 }
 
 .range-field > input {

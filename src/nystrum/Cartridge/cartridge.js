@@ -24,8 +24,8 @@ export const createCartridge = (data = {}) => {
 
 const updateWindowTitle = (title) => window.document.title = title
 
-// const getScreens = (screensFromData = {}) => ({...defaultScreens, ...screensFromData})
-const getScreens = (screensFromData) => screensFromData || defaultScreens
+const getScreens = (screensFromData = {}) => ({...defaultScreens, ...screensFromData})
+// const getScreens = (screensFromData) => screensFromData || defaultScreens
 
 const defaultScreens = {
   [SCREENS.TITLE]: {
@@ -38,7 +38,7 @@ const defaultScreens = {
     component: CharacterSelect,
   },
   [SCREENS.LEVEL]: {
-    component: Level, // level
+    component: Level,
   },
   [SCREENS.WIN]: {
     component: Win,

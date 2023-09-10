@@ -20,6 +20,8 @@ export const THEMES = {
   NARUTO: {
     gaara: '#603030',
     rock_lee: '#155859',
+    leaf: '#36635b',
+    wraps: '#F0D8C0',
   },
   SOLARIZED: {
     main: '#002b36',
