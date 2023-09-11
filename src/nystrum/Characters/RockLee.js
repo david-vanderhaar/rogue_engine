@@ -13,6 +13,8 @@ import { PickupRandomItem } from '../Actions/PickupRandomItem';
 import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
 import { PrepareTackle } from '../Actions/PrepareTackle';
 import { AddOpenGatesStatusEffect } from '../Actions/AddOpenGatesStatusEffect';
+import { RemoveWeights } from '../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
+import { AddStatusEffect } from '../Actions/AddStatusEffect';
 
 
 
@@ -115,10 +117,19 @@ export default function (engine) {
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
       }),
-      // k: {
-      //   activate: () => Keymap.removeWeights(engine, 200),
-      //   label: 'Remove wraps',
-      // },
+      k: () => new AddStatusEffect({
+        label: 'Remove Weights',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        effect: new RemoveWeights({
+          lifespan: Constant.ENERGY_THRESHOLD * 10,
+          speedBuff: Constant.ENERGY_THRESHOLD * 10,
+          damageBuff: -1,
+          game: engine.game,
+          actor,
+        }),
+      }),
       // j: {
       //   activate: () => Keymap.drunkenFist(engine),
       //   label: 'Sip Sake',
