@@ -6,6 +6,7 @@ import { ContainerSlot } from '../Entities/Containing';
 import { ChakraResource } from '../Actions/ActionResources/ChakraResource';
 import { Say } from '../Actions/Say';
 import { MoveOrAttack } from '../Actions/MoveOrAttack';
+import { MultiTargetAttack } from '../Actions/MultiTargetAttack';
 import { OpenInventory } from '../Actions/OpenInventory';
 import { OpenEquipment } from '../Actions/OpenEquipment';
 import { OpenDropInventory } from '../Actions/OpenDropInventory';
@@ -13,8 +14,9 @@ import { PickupRandomItem } from '../Actions/PickupRandomItem';
 import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
 import { PrepareTackle } from '../Actions/PrepareTackle';
 import { AddOpenGatesStatusEffect } from '../Actions/AddOpenGatesStatusEffect';
-import { RemoveWeights } from '../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
 import { AddStatusEffect } from '../Actions/AddStatusEffect';
+import { RemoveWeights } from '../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
+import { DrunkenFist } from '../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
 
 
 
@@ -130,14 +132,60 @@ export default function (engine) {
           actor,
         }),
       }),
-      // j: {
-      //   activate: () => Keymap.drunkenFist(engine),
-      //   label: 'Sip Sake',
-      // },
-      // h: {
-      //   activate: () => Keymap.leafWhirlwind(engine),
-      //   label: 'Leaf Whirlwind',
-      // },
+      j: () => new AddStatusEffect({
+        label: 'Sip Sake',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        effect: new DrunkenFist({
+          lifespan: Constant.ENERGY_THRESHOLD * 30,
+          speedBuff: -Constant.ENERGY_THRESHOLD * 2,
+          damageBuff: 3,
+          game: engine.game,
+          actor,
+        }),
+      }),
+      h: () => new MultiTargetAttack({
+        label: 'Leaf Whirlwind',
+        targetPositions: [
+          {
+            x: actor.pos.x - 1,
+            y: actor.pos.y,
+          },
+          {
+            x: actor.pos.x - 1,
+            y: actor.pos.y - 1,
+          },
+          {
+            x: actor.pos.x,
+            y: actor.pos.y - 1,
+          },
+          {
+            x: actor.pos.x + 1,
+            y: actor.pos.y - 1,
+          },
+          {
+            x: actor.pos.x + 1,
+            y: actor.pos.y,
+          },
+          {
+            x: actor.pos.x + 1,
+            y: actor.pos.y + 1,
+          },
+          {
+            x: actor.pos.x,
+            y: actor.pos.y + 1,
+          },
+          {
+            x: actor.pos.x - 1,
+            y: actor.pos.y + 1,
+          },
+        ],
+        game: engine.game,
+        actor,
+        energyCost: (Constant.ENERGY_THRESHOLD * 2),
+        particleTemplate: Constant.PARTICLE_TEMPLATES.leaf,
+      }),
       g: () => new AddOpenGatesStatusEffect({
         label: 'Open Inner Gate',
         game: engine.game,

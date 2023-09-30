@@ -36,7 +36,7 @@ export class Attack extends Base {
         game: this.game,
         fromPosition: this.targetPos,
         spatterAmount: .3,
-        spatterRadius: 3,
+        spatterRadius: 1,
         spatterDirection: Helper.getDirectionFromOrigin(this.actor.getPosition(), this.targetPos),
         transfersBackground: true,
       }).start()

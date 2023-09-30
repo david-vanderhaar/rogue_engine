@@ -233,6 +233,13 @@ export const DIRECTIONS = {
   NONE: [0, 0],
 }
 
+export const CARDINAL_DIRECTIONS = {
+  N: DIRECTIONS.N,
+  W: DIRECTIONS.W,
+  S: DIRECTIONS.S,
+  E: DIRECTIONS.E,
+}
+
 export const getDirectionKey = (direction) => {
   let directionString = `${direction}`;
   let keys = Object.keys(DIRECTIONS);
