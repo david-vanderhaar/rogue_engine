@@ -566,6 +566,7 @@ export class Display {
     let keymapKey = null
 
     tileNode.on('mouseover', () => {
+      console.log('mouseover');
       display['lastMouseOverNode'] = tileNode
       const position = display.getRelativeTilePosition(worldPosition)
       const entities = Helper.getEntitiesByPositionByType({

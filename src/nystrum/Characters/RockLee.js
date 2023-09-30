@@ -17,8 +17,9 @@ import { AddOpenGatesStatusEffect } from '../Actions/AddOpenGatesStatusEffect';
 import { AddStatusEffect } from '../Actions/AddStatusEffect';
 import { RemoveWeights } from '../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
 import { DrunkenFist } from '../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
-
-
+import { GoToPreviousKeymap } from '../Actions/GoToPreviousKeymap';
+import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
+import { MoveTowards } from '../Actions/MoveTowards';
 
 export default function (engine) {
   // define keymap
@@ -194,6 +195,29 @@ export default function (engine) {
         //   new ChakraResource({ getResourceCost: () => 2 }),
         // ],
       }),
+      // mouseOver: (mousePosition) => {
+      //   return new MoveTargetingCursor({
+      //     hidden: true,
+      //     actor: actor,
+      //     game: engine.game,
+      //     targetPos: mousePosition,
+      //   })
+      // },
+      mouseLeftButton: (mousePosition) => {
+        return new MoveTowards({
+          hidden: true,
+          actor,
+          game: engine.game,
+          targetPos: mousePosition,
+        })
+      },
+      mouseRightButton: (mousePosition) => {
+        return new GoToPreviousKeymap({
+          hidden: true,
+          actor,
+          game: engine.game,
+        })
+      },
     };
   }
   // instantiate class
