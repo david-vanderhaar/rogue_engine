@@ -21,8 +21,8 @@ export class Chunin extends Mode {
     };
     this.dataByLevel = [
       {
-        // enemies: Array(1).fill('Bandit'),
-        enemies: Array(10).fill('Bandit'),
+        enemies: Array(1).fill('Bandit'),
+        // enemies: Array(10).fill('Bandit'),
       },
       // {
       //   enemies: Array(10).fill('Bandit'),
