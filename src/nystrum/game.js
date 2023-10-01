@@ -86,8 +86,8 @@ export class Game {
     this.fovActive = fovActive;
     this.FOV = new ROT.FOV.PreciseShadowcasting((x, y) => this.fovLightPasses(x, y));
     // this.FOV = new ROT.FOV.RecursiveShadowcasting((x, y) => this.fovLightPasses(x, y));
-    this.tileKey = tileKey;
     this.mode = new mode({game: this});
+    this.tileKey = this.mode.tileKey || tileKey;
     this.messages = messages;
     this.getSelectedCharacter = getSelectedCharacter;
     this.tileAninmationInterval = null

@@ -21,13 +21,13 @@ export class AddOpenGatesStatusEffect extends AddStatusEffect {
   }
   perform() {
     let success = this.game.engine.addStatusEffect(this.effect);
-    let positions = Helper.getPointsOnCircumference(this.actor.pos.x, this.actor.pos.y, 4);
-    positions.forEach((pos) => {
-      this.addParticle(3, { ...pos }, {
-        x: -1 * Math.sign(pos.x - this.actor.pos.x),
-        y: -1 * Math.sign(pos.y - this.actor.pos.y)
-      });
-    });
+    // let positions = Helper.getPointsOnCircumference(this.actor.pos.x, this.actor.pos.y, 4);
+    // positions.forEach((pos) => {
+    //   this.addParticle(3, { ...pos }, {
+    //     x: -1 * Math.sign(pos.x - this.actor.pos.x),
+    //     y: -1 * Math.sign(pos.y - this.actor.pos.y)
+    //   });
+    // });
     return {
       success,
       alternative: null,

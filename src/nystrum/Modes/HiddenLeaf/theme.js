@@ -6,6 +6,9 @@ export const COLORS = {
   rock_lee: '#155859',
   leaf: '#36635b',
   wraps: '#F0D8C0',
+  dirt0: '#dbcdab',
+  grass00: '#435035',
+  grass0: '#87ac7b',
   base04: '#07111D',
   base03: '#02252e',
   // base03: '#002b36',
@@ -47,50 +50,28 @@ export const COLORS = {
 }
 export const TILE_KEY = {
   'GROUND': {
-    background: COLORS.base04,
-    foreground: COLORS.base02,
+    background: COLORS.grass00,
+    foreground: COLORS.grass0,
     character: '.',
     sprite: '',
     passable: true,
     tags: ['PROVIDING_COVER'],
-  },
-  'COVER_PLACEHOLDER': {
-    background: COLORS.base04,
-    foreground: COLORS.base02,
-    character: '.',
-    sprite: '',
-    passable: true,
-    tags: ['PROVIDING_COVER'],
+    animation: [
+      { background: COLORS.grass00, foreground: COLORS.grass00, character: ',', sprite: '"', passable: true, },
+      { background: COLORS.grass00, foreground: COLORS.grass0, character: '.', sprite: '', passable: true, },
+    ]
   },
   'GROUND_ALT': {
-    background: COLORS.base04,
+    background: COLORS.dirt0,
     foreground: COLORS.base02,
-    character: '',
-    sprite: '',
+    character: '.',
+    sprite: '.',
     passable: true,
     tags: ['PROVIDING_COVER'],
-  },
-  'EMERGENCE_DESTROYED': {
-    background: COLORS.base04,
-    foreground: COLORS.locust0,
-    character: '',
-    // sprite: '',
-    sprite: '',
-    passable: true,
-  },
-  'EMERGENCE_GROUND': {
-    background: COLORS.locust0,
-    foreground: COLORS.locust1,
-    character: '.',
-    sprite: '',
-    passable: true,
-  },
-  'EMERGENCE_OUTER_GROUND': {
-    background: COLORS.locust0,
-    foreground: COLORS.locust2,
-    character: '.',
-    sprite: '',
-    passable: true,
+    animation: [
+      { background: COLORS.dirt0, foreground: COLORS.dirt0, character: '.', sprite: '.', passable: true, },
+      { background: COLORS.dirt0, foreground: COLORS.gray, character: '.', sprite: '.', passable: true, },
+    ]
   },
   'FLOOR': {
     background: COLORS.base02,

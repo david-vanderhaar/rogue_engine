@@ -41,6 +41,12 @@ export const HasInnerGates = superclass => class extends superclass {
       },
     ];
   }
+  getCurrentGate() {
+    return this.currentGate;
+  }
+  getCurrentGateLevel() {
+    return this.gates.findIndex((gate) => this.currentGate.name === gate.name) + 1;
+  }
   setNextGate() {
     let currentGate = this.currentGate;
     let nextGate = null;

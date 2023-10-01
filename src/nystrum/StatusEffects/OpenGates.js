@@ -1,6 +1,7 @@
 import {Base} from './Base';
 import {MESSAGE_TYPE} from '../message';
 import * as Helper from '../../helper';
+import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter'
 
 export class OpenGates extends Base {
   constructor({...args}) {
@@ -25,6 +26,17 @@ export class OpenGates extends Base {
       this.actor.decreaseDurability(nextGate.durabilityDebuff);
       this.actor.decreaseDurability(0);
       this.game.addMessage(`${this.actor.name} suffers ${nextGate.durabilityDebuff} damage from physical stress.`)
+      const currentGateLevel = this.actor.getCurrentGateLevel();
+      SpatterEmitter({
+        game: this.game,
+        fromPosition: this.actor.getPosition(),
+        spatterAmount: (currentGateLevel + 3) / 10,
+        spatterRadius: Math.max(3, currentGateLevel * 2),
+        animationTimeStep: 0.6,
+        // spatterDirection: Helper.getDirectionFromOrigin(actor.getPosition(), targetPos),
+        transfersBackground: false,
+        spatterColors: [this.renderer.color, this.renderer.background],
+      }).start()
     }
   }
   

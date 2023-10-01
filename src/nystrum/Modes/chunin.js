@@ -8,10 +8,12 @@ import { MESSAGE_TYPE } from '../message';
 import { Mode } from './default';
 import SOUNDS from '../sounds';
 import * as _ from 'lodash';
+import { TILE_KEY } from './HiddenLeaf/theme';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
     super({ ...args });
+    this.tileKey = TILE_KEY
     this.data = {
       level: 1,
       highestLevel: null,
@@ -30,7 +32,7 @@ export class Chunin extends Mode {
 
   initialize () {
     super.initialize();
-    this.game.createEmptyLevel();
+    this.createEmptyLevel();
     this.game.initializeMapTiles();
     
     this.setWaveData();
@@ -45,6 +47,24 @@ export class Chunin extends Mode {
       this.game.mapWidth,
     );
 
+    // add a random number of blobs of random size of GROUND
+    // using addTileZone
+    for (let i = 0; i < 20; i++) {
+      let size = Helper.getRandomInt(4, 12);
+      let x = Helper.getRandomInt(0, this.game.mapWidth);
+      let y = Helper.getRandomInt(0, this.game.mapHeight);
+      MapHelper.addTileZone(
+        this.game.tileKey,
+        { x, y },
+        size,
+        size,
+        'GROUND',
+        this.game.map,
+        this.game.mapHeight,
+        this.game.mapWidth,
+      );
+    }
+
     this.placePlayersInSafeZone();
     let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
     this.data.enemies.forEach((enemyName) => {
@@ -52,6 +72,17 @@ export class Chunin extends Mode {
       let posXY = pos.split(',').map((coord) => parseInt(coord));
       this[`add${enemyName}`]({ x: posXY[0], y: posXY[1] });
     })
+  }
+
+
+  createEmptyLevel () {
+    for (let i = 0; i < this.game.mapHeight; i ++) {
+      for (let j = 0; j < this.game.mapWidth; j ++) {
+        const key = `${j},${i}`
+        let type = 'GROUND_ALT';
+        MapHelper.addTileToMap({map: this.game.map, key, tileKey: this.tileKey, tileType: type})
+      }
+    }
   }
 
   getPlayers () {
@@ -184,7 +215,7 @@ export class Chunin extends Mode {
         renderer: {
           character: Helper.getRandomInArray(['r']),
           color: '#ced5dd',
-          background: '',
+          background: 'black',
         },
         durability: 1,
         attackDamage: 1,
@@ -196,7 +227,7 @@ export class Chunin extends Mode {
         renderer: {
           character: Helper.getRandomInArray(['r']),
           color: '#3fc072',
-          background: '',
+          background: 'black',
         },
         durability: 2,
         attackDamage: 1,
@@ -208,7 +239,7 @@ export class Chunin extends Mode {
         renderer: {
           character: Helper.getRandomInArray(['b']),
           color: '#ced5dd',
-          background: '',
+          background: 'black',
         },
         durability: 1,
         attackDamage: 1,
@@ -220,7 +251,7 @@ export class Chunin extends Mode {
         renderer: {
           character: Helper.getRandomInArray(['b']),
           color: '#3fc072',
-          background: '',
+          background: 'black',
         },
         durability: 2,
         attackDamage: 1,
@@ -232,7 +263,7 @@ export class Chunin extends Mode {
         renderer: {
           character: Helper.getRandomInArray(['b']),
           color: '#67a1d7',
-          background: '',
+          background: 'black',
         },
         durability: 3,
         attackDamage: 1,
@@ -244,7 +275,7 @@ export class Chunin extends Mode {
         renderer: {
           character: Helper.getRandomInArray(['b']),
           color: '#e16264',
-          background: '',
+          background: 'black',
         },
         durability: 1,
         attackDamage: 5,
@@ -256,7 +287,7 @@ export class Chunin extends Mode {
         renderer: {
           character: Helper.getRandomInArray(['b']),
           color: '#9f62e1',
-          background: '',
+          background: 'black',
         },
         durability: 15,
         attackDamage: 10,
