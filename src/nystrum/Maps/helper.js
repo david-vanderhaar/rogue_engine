@@ -1,5 +1,13 @@
 import * as _ from 'lodash';
 import * as Helper from '../../helper';
+import { GAME } from '../game'
+
+export const getCenter = () => {
+  return {
+    x: Math.floor(GAME.mapWidth / 2),
+    y: Math.floor(GAME.mapHeight / 2),
+  }
+}
 
 export const addTileZone = (
   tileKey,
@@ -10,12 +18,32 @@ export const addTileZone = (
   map,
   mapHeight,
   mapWidth,
-  fill = true,
 ) => {
   for (let i = 0; i < mapHeight; i++) {
     for (let j = 0; j < mapWidth; j++) {
       if (i >= origin.y && i <= origin.y + (height - 1) && j >= origin.x && j <= origin.x + (width - 1)) {
         const key = `${j},${i}`
+        addTileToMap({map, key, tileKey, tileType: type})
+      }
+    }
+  }
+}
+
+export const addTileZoneRectFilled = addTileZone
+export const addTileZoneRectUnfilled = (
+  tileKey,
+  origin = { x: 0, y: 0 },
+  height = 3,
+  width = 3,
+  type = 'GROUND',
+  map,
+) => {
+  // add tiles to the edges of a rectangle defined by origin, height, and width
+  // but not the interior
+  for (let y = origin.y; y < origin.y + height; y++) {
+    for (let x = origin.x; x < origin.x + width; x++) {
+      if (y === origin.y || y === origin.y + height - 1 || x === origin.x || x === origin.x + width - 1) {
+        const key = `${x},${y}`
         addTileToMap({map, key, tileKey, tileType: type})
       }
     }

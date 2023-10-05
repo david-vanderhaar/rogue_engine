@@ -3,6 +3,7 @@ import * as Helper from '../../helper';
 import * as Item from '../items';
 import * as MapHelper from '../Maps/helper';
 import { generate as generateBuilding } from '../Maps/generator';
+import * as CoverGenerator from '../Maps/coverGenerator';
 import { Debris, Bandit, RangedBandit } from '../Entities/index';
 import { MESSAGE_TYPE } from '../message';
 import { Mode } from './default';
@@ -24,9 +25,9 @@ export class Chunin extends Mode {
         enemies: Array(1).fill('Bandit'),
         // enemies: Array(10).fill('Bandit'),
       },
-      // {
-      //   enemies: Array(10).fill('Bandit'),
-      // },
+      {
+        enemies: Array(1).fill('Bandit'),
+      },
     ]
   }
 
@@ -36,16 +37,6 @@ export class Chunin extends Mode {
     this.game.initializeMapTiles();
     
     this.setWaveData();
-    MapHelper.addTileZone(
-      this.game.tileKey,
-      { x: 31, y: 9 },
-      4,
-      4,
-      'SAFE',
-      this.game.map,
-      this.game.mapHeight,
-      this.game.mapWidth,
-    );
 
     // add a random number of blobs of random size of GROUND
     // using addTileZone
@@ -65,8 +56,48 @@ export class Chunin extends Mode {
       );
     }
 
+    // outer walls
+    MapHelper.addTileZoneRectUnfilled(
+      this.game.tileKey,
+      { x: 0, y: 0 },
+      this.game.mapHeight,
+      this.game.mapWidth,
+      'WALL',
+      this.game.map,
+    );
+    
+    // inner walls
+    MapHelper.addTileZoneRectUnfilled(
+      this.game.tileKey,
+      { x: 1, y: 1 },
+      this.game.mapHeight - 2,
+      this.game.mapWidth - 2,
+      'WALL',
+      this.game.map,
+    );
+
+    // place columns
+    const centerPos = MapHelper.getCenter();
+    CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y - 5 }, this.game);
+    CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y - 5 }, this.game);
+    CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y + 5 }, this.game);
+    CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y + 5 }, this.game);
+    
+    // place player start zone
+    MapHelper.addTileZone(
+      this.game.tileKey,
+      { x: 31, y: 9 },
+      4,
+      4,
+      'SAFE',
+      this.game.map,
+      this.game.mapHeight,
+      this.game.mapWidth,
+    );
+    // place player
     this.placePlayersInSafeZone();
     let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
+
     this.data.enemies.forEach((enemyName) => {
       let pos = Helper.getRandomInArray(groundTiles);
       let posXY = pos.split(',').map((coord) => parseInt(coord));

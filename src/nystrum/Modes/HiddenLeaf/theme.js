@@ -6,6 +6,9 @@ export const COLORS = {
   rock_lee: '#155859',
   leaf: '#36635b',
   wraps: '#F0D8C0',
+  wall: '#a3625f',
+  wall_alt: '#714545',
+  dirt00: '#2a251f', 
   dirt0: '#dbcdab',
   grass00: '#435035',
   grass0: '#87ac7b',
@@ -50,27 +53,27 @@ export const COLORS = {
 }
 export const TILE_KEY = {
   'GROUND': {
-    background: COLORS.grass00,
-    foreground: COLORS.grass0,
+    background: COLORS.grass0,
+    foreground: COLORS.grass00,
     character: '.',
     sprite: '',
     passable: true,
     tags: ['PROVIDING_COVER'],
     animation: [
-      { background: COLORS.grass00, foreground: COLORS.grass00, character: ',', sprite: '"', passable: true, },
-      { background: COLORS.grass00, foreground: COLORS.grass0, character: '.', sprite: '', passable: true, },
+      { background: COLORS.grass0, foreground: COLORS.grass0, character: ',', sprite: '"', passable: true, },
+      { background: COLORS.grass0, foreground: COLORS.grass00, character: '.', sprite: '', passable: true, },
     ]
   },
   'GROUND_ALT': {
     background: COLORS.dirt0,
-    foreground: COLORS.base02,
+    foreground: COLORS.dirt00,
     character: '.',
     sprite: '.',
     passable: true,
     tags: ['PROVIDING_COVER'],
     animation: [
       { background: COLORS.dirt0, foreground: COLORS.dirt0, character: '.', sprite: '.', passable: true, },
-      { background: COLORS.dirt0, foreground: COLORS.gray, character: '.', sprite: '.', passable: true, },
+      { background: COLORS.dirt0, foreground: COLORS.dirt00, character: '.', sprite: '.', passable: true, },
     ]
   },
   'FLOOR': {
@@ -81,10 +84,10 @@ export const TILE_KEY = {
     tags: ['BURNABLE'],
   },
   'WALL': {
-    background: COLORS.base02,
-    foreground: COLORS.locust2,
+    background: COLORS.wall_alt,
+    foreground: COLORS.wall,
     character: '#',
-    sprite: '',
+    sprite: '#',
     passable: false,
     tags: ['BURNABLE', 'WALL'],
   },
