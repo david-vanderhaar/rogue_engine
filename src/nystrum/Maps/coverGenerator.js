@@ -3,6 +3,7 @@ import * as Helper from '../../helper';
 import * as MapHelper from '../Maps/helper';
 import { CoverWall } from '../Entities/index';
 import {COLORS} from '../Modes/Jacinto/theme';
+import {COLORS as HIDDEN_LEAF_COLORS} from '../Modes/HiddenLeaf/theme'
 import Map from 'rot-js/lib/map/map';
 
 export const generateCoverBlock = (
@@ -12,15 +13,16 @@ export const generateCoverBlock = (
     character = '%',
     durability = 5,
     background = COLORS.base02,
-    color = COLORS.base01
+    color = COLORS.base01,
+    sprite = null,
   ) => {
-    let sprite = Helper.getRandomInArray(['', '', '']);
+    let randomSprite = Helper.getRandomInArray(['', '', '']);
 
     let box = new CoverWall({
       pos,
       renderer: {
         character,
-        sprite,
+        sprite: sprite || randomSprite,
         color,
         background,
       },
@@ -33,6 +35,27 @@ export const generateCoverBlock = (
 
     game.placeActorOnMap(box)
   }
+
+const generateTrunkBlock = (...args) => {
+  generateCoverBlock(...args,
+    'trunk',
+    'o',
+    10,
+    HIDDEN_LEAF_COLORS.wall_alt,
+    HIDDEN_LEAF_COLORS.wall,
+  )
+}
+
+const generateLeafBlock = (...args) => {
+  generateCoverBlock(...args,
+    'leaf',
+    '&',
+    1,
+    HIDDEN_LEAF_COLORS.grass00,
+    HIDDEN_LEAF_COLORS.grass0,
+    ''
+  )
+}
 
 const SHAPES = {
   point: {
@@ -169,7 +192,7 @@ export const generate = (pos, game, shape) => {
   const positions = Helper.getPositionsFromStructure(shape, pos);
   positions.forEach((position) => {
     let tile = game.map[Helper.coordsToString(position)];
-    if (!tile) return;
+    if (!tile) return false;
     if (MapHelper.tileHasTag({tile, tag: 'PROVIDING_COVER'})) {
       generateCoverBlock(position, game);
     }
@@ -184,3 +207,22 @@ export const generateRandom = (pos, game) => {
   const shape = SHAPES[Helper.getRandomInArray(shapeChanceTable)];
   generate(pos, game, shape);
 };
+
+// generate tree, first a 2x2 trunk, then two layers of leaves around it
+export const generateTree = (pos, game) => {
+  // square positions
+  const trunk = Helper.getPositionsFromStructure(SHAPES.point, pos);
+  trunk.forEach((position) => {
+    let tile = game.map[Helper.coordsToString(position)];
+    if (!tile) return false;
+    generateTrunkBlock(position, game);
+  });
+
+  // positions within a 3 radius circle
+  const leaves = Helper.getPointsWithinRadius(pos, 2);
+  leaves.forEach((position) => {
+    let tile = game.map[Helper.coordsToString(position)];
+    if (!tile) return false;
+    generateLeafBlock(position, game);
+  });
+}

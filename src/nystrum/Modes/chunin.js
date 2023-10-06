@@ -77,11 +77,11 @@ export class Chunin extends Mode {
     );
 
     // place columns
-    const centerPos = MapHelper.getCenter();
-    CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y - 5 }, this.game);
-    CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y - 5 }, this.game);
-    CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y + 5 }, this.game);
-    CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y + 5 }, this.game);
+    // const centerPos = MapHelper.getCenter();
+    // CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y - 5 }, this.game);
+    // CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y - 5 }, this.game);
+    // CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y + 5 }, this.game);
+    // CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y + 5 }, this.game);
     
     // place player start zone
     MapHelper.addTileZone(
@@ -94,15 +94,28 @@ export class Chunin extends Mode {
       this.game.mapHeight,
       this.game.mapWidth,
     );
-    // place player
     this.placePlayersInSafeZone();
-    let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
 
+    // place enemies
+    let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
     this.data.enemies.forEach((enemyName) => {
       let pos = Helper.getRandomInArray(groundTiles);
       let posXY = pos.split(',').map((coord) => parseInt(coord));
       this[`add${enemyName}`]({ x: posXY[0], y: posXY[1] });
     })
+
+    const edgeTiles = MapHelper.getPositionsInTileZone(
+      this.game.mapHeight,
+      this.game.mapWidth,
+      { x: 3, y: 3 },
+      this.game.mapHeight - 6,
+      this.game.mapWidth - 6,
+    )
+
+    for (let i = 0; i < 10; i++) {
+      let posXY = Helper.getRandomInArray(edgeTiles);
+      CoverGenerator.generateTree(posXY, this.game);
+    }
   }
 
 
