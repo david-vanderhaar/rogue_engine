@@ -209,12 +209,14 @@ export class Game {
 
   canOccupyPosition (pos, entity = {passable: false}) {
     let result = false;
-    let targetTile = this.map[Helper.coordsToString(pos)];
-    if (targetTile) {
-      let hasImpassableEntity = targetTile.entities.filter((entity) => !entity.passable).length > 0;
+    let tile = this.map[Helper.coordsToString(pos)];
+    if (tile) {
+      let hasImpassableEntity = tile.entities.filter((entity) => !entity.passable).length > 0;
       if (!hasImpassableEntity || entity.passable) {
-        let tile = this.map[Helper.coordsToString(pos)];
         if (this.tileKey[tile.type].passable) {
+          result = true;
+        }
+        if (entity?.canTraverse && entity.canTraverse(tile.type)) {
           result = true;
         }
       }
@@ -224,12 +226,14 @@ export class Game {
 
   canPassPositionWhenThrown (pos, entity = {passable: false}) {
     let result = false;
-    let targetTile = this.map[Helper.coordsToString(pos)];
-    if (targetTile) {
-      let hasImpassableEntity = targetTile.entities.filter((entity) => !entity.passable).length > 0;
+    let tile = this.map[Helper.coordsToString(pos)];
+    if (tile) {
+      let hasImpassableEntity = tile.entities.filter((entity) => !entity.passable).length > 0;
       if (!hasImpassableEntity) {
-        let tile = this.map[Helper.coordsToString(pos)];
         if (this.tileKey[tile.type].passable) {
+          result = true;
+        }
+        if (entity?.canTraverse && entity.canTraverse(tile.type)) {
           result = true;
         }
       }
@@ -514,7 +518,7 @@ export class Game {
       foreground = frame.foreground;
       background = frame.background;
 
-      if (shouldAnimate) {
+      if (shouldAnimate || renderer?.forceAnimate) {
         tile.currentFrame = (tile.currentFrame + 1) % renderer.animation.length;
       }
     }

@@ -229,6 +229,7 @@ export const directionalKunai = (engine, pos, direction, range) => new Direction
       { background: 'lightgrey', color: 'grey', character: '>', },
     ],
   },
+  traversableTiles: ['WATER'],
   name: TYPE.DIRECTIONAL_KUNAI,
   speed: 600,
   energy: 0,

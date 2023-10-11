@@ -201,6 +201,28 @@ export const TILE_KEY = {
       { background: COLORS.base03, foreground: COLORS.red, character: 'X', sprite: '', passable: true, },
     ]
   },
+  'WATER': {
+    animation: [
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '~', passable: false,},
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '=', passable: false, },
+      { background: COLORS.cog1, foreground: COLORS.cog2, character: '%', passable: false, },
+    ],
+    background: COLORS.cog2,
+    foreground: COLORS.cog1,
+    character: '~',
+    passable: false,
+    forceAnimate: true,
+  },
 }
 
 export const STAT_RENDERERS = {

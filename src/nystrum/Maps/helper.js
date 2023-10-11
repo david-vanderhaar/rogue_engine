@@ -69,6 +69,28 @@ export const addTileZoneRectUnfilled = (
   }
 }
 
+export const addTileZoneFilledCircle = (
+  origin = { x: 0, y: 0 },
+  radius = 3,
+  type = 'GROUND',
+) => {
+  Helper.getPointsWithinRadius(origin, radius).forEach((point) => {
+    const key = `${point.x},${point.y}`
+    addTileToMap({map: GAME.map, key, tileKey: GAME.tileKey, tileType: type})
+  })
+}
+
+export const addTileZoneUnfilledCircle = (
+  origin = { x: 0, y: 0 },
+  radius = 3,
+  type = 'GROUND',
+) => {
+  Helper.getPointsOnCircumference(origin, radius).forEach((point) => {
+    const key = `${point.x},${point.y}`
+    addTileToMap({map: GAME.map, key, tileKey: GAME.tileKey, tileType: type})
+  })
+}
+
 export const addTileToMap = ({map, key, tileKey, tileType, entities = []}) => {
   const numberOfAnimationFrames = _.get(tileKey[tileType], 'animation.length', 0);
   const currentFrame = Helper.getRandomInt(0, numberOfAnimationFrames);

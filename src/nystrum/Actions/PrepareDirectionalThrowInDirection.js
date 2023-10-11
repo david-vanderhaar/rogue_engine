@@ -105,6 +105,7 @@ export class PrepareDirectionalThrowInDirection extends Base {
           label: `throw ${this.directionToPrepareThrow}`,
           onBefore: () => {
             projectile.direction = DIRECTIONS[this.directionToPrepareThrow];
+            projectile.passable = true
           },
           onSuccess: () => {
             this.actor.deactivateCursor()

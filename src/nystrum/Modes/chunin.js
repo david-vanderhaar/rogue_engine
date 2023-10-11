@@ -56,6 +56,19 @@ export class Chunin extends Mode {
       );
     }
 
+    // add a random number of blobs of random size of WATER
+    // using addTileZone
+    for (let i = 0; i < 3; i++) {
+      let size = Helper.getRandomInt(2, 6);
+      let x = Helper.getRandomInt(0, this.game.mapWidth);
+      let y = Helper.getRandomInt(0, this.game.mapHeight);
+      MapHelper.addTileZoneFilledCircle(
+        { x, y },
+        size,
+        'WATER',
+      );
+    }
+
     // outer walls
     MapHelper.addTileZoneRectUnfilled(
       this.game.tileKey,
@@ -76,13 +89,6 @@ export class Chunin extends Mode {
       this.game.map,
     );
 
-    // place columns
-    // const centerPos = MapHelper.getCenter();
-    // CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y - 5 }, this.game);
-    // CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y - 5 }, this.game);
-    // CoverGenerator.generateSquare({ x: centerPos.x + 5, y: centerPos.y + 5 }, this.game);
-    // CoverGenerator.generateSquare({ x: centerPos.x - 5, y: centerPos.y + 5 }, this.game);
-    
     // place player start zone
     MapHelper.addTileZone(
       this.game.tileKey,

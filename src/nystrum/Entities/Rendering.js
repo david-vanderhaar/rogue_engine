@@ -1,12 +1,13 @@
 import * as Helper from '../../helper';
 
 export const Rendering = superclass => class extends superclass {
-  constructor({ pos = { x: 0, y: 0 }, renderer, ...args }) {
+  constructor({ pos = { x: 0, y: 0 }, renderer, traversableTiles = [], ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('RENDERING');
     this.pos = pos;
     this.renderer = { ...renderer };
     this.currentFrame = 0;
+    this.traversableTiles = traversableTiles;
   }
 
   getRenderer() {
@@ -31,6 +32,10 @@ export const Rendering = superclass => class extends superclass {
       success = true;
     }
     return success;
+  }
+
+  canTraverse(tileType) {
+    return this.traversableTiles.includes(tileType);
   }
 
   shove(targetPos, direction) {
