@@ -11,7 +11,7 @@ export default {
   The_Veteran,
   The_Commander,
   The_Stranded,
-  Rock_Lee,
-  Gaara,
+  Rock_Lee: Rock_Lee().initialize,
+  Gaara: Gaara().initialize,
   FireFighter,
 }

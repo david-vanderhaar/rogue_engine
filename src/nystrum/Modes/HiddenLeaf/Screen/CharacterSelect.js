@@ -1,6 +1,6 @@
 import React from 'react';
 import { CARTRIDGE } from '../../../Nystrum';
-import CharacterSelect from '../../../UI/CharacterSelect';
+import CharacterSelect from '../../../UI/CharacterCardSelect';
 
 class CharacterSelectScreen extends React.Component {
   constructor(props) {

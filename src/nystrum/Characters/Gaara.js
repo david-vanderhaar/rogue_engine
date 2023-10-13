@@ -17,7 +17,23 @@ import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {CloneSelf} from '../Actions/CloneSelf';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
 
-export default function (engine) {
+const basicInfo = {
+  name: 'Gaara',
+  description: 'Some say he is a demon.',
+  renderer: {
+    character: 'G',
+    color: Constant.THEMES.SOLARIZED.base2,
+    background: Constant.THEMES.NARUTO.gaara,
+  },
+  speed: 400,
+  energy: 1000,
+  durability: 10,
+  durabilityMax: 20,
+  charge: 6,
+  chargeMax: 10,
+}
+
+function initialize (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
@@ -159,16 +175,12 @@ export default function (engine) {
   // instantiate class
   let actor = new Player({
     pos: { x: 23, y: 7 },
-    renderer: {
-      character: 'G',
-      color: Constant.THEMES.SOLARIZED.base2,
-      background: Constant.THEMES.NARUTO.gaara,
-    },
+    renderer: basicInfo.renderer,
     name: 'Gaara',
     actions: [],
-    speed: 400,
-    durability: 20,
-    charge: 10,
+    speed: basicInfo.speed,
+    durability: basicInfo.durability,
+    charge: basicInfo.charge,
     game: engine.game,
     presentingUI: true,
     initializeKeymap: keymap,
@@ -189,4 +201,11 @@ export default function (engine) {
   ]
 
   return actor;
+}
+
+export default function () {
+  return {
+    basicInfo,
+    initialize,
+  }
 }

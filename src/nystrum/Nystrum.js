@@ -18,7 +18,8 @@ class Nystrum extends React.Component {
     super();
     let characters = Object.entries(CARTRIDGE.characters).map(([key, value]) => {
       return {
-        initialize: value,
+        initialize: value?.initialize || value,
+        basicInfo: value?.basicInfo || null,
         selected: false,
         name: key.split('_').join(' '),
       }

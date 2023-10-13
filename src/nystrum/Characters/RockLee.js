@@ -21,7 +21,24 @@ import { GoToPreviousKeymap } from '../Actions/GoToPreviousKeymap';
 import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../Actions/MoveTowards';
 
-export default function (engine) {
+const basicInfo = {
+  name: 'Rock Lee',
+  description: 'A young ninja who can only use taijutsu.',
+  renderer: {
+    character: 'R',
+    color: Constant.THEMES.SOLARIZED.base3,
+    background: Constant.THEMES.NARUTO.rock_lee,
+  },
+  speed: 600,
+  energy: 600,
+  durability: 20,
+  durabilityMax: 20,
+  charge: 0,
+  chargeMax: 10,
+}
+  
+
+function initialize (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
@@ -223,15 +240,11 @@ export default function (engine) {
   // instantiate class
   let actor = new Player({
     pos: { x: 23, y: 7 },
-    renderer: {
-      character: 'R',
-      color: Constant.THEMES.SOLARIZED.base3,
-      background: Constant.THEMES.NARUTO.rock_lee,
-    },
-    name: 'Rock Lee',
+    renderer: basicInfo.renderer,
+    name: basicInfo.name,
     actions: [],
-    speed: 600,
-    durability: 20,
+    speed: basicInfo.speed,
+    durability: basicInfo.durability,
     game: engine.game,
     presentingUI: true,
     initializeKeymap: keymap,
@@ -251,5 +264,12 @@ export default function (engine) {
     }),
   ]
 
-  return actor;
+  return actor
+}
+
+export default function () {
+  return {
+    initialize: initialize,
+    basicInfo: basicInfo,
+  }
 }
