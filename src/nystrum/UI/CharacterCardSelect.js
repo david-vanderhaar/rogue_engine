@@ -1,18 +1,21 @@
 import React from 'react';
 import { CARTRIDGE } from '../Nystrum';
 import { SCREENS } from '../Screen/constants';
-import { Portrait, NamePlate, ProgressBar } from '../UI/Entity/CharacterCard';
 
 const CharacterCardSelect = (props) => {
   return (
-    <div className='CharacterSelect'>
+    <div style={
+      {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }
+    }>
       {
         props.characters.map((character, index) => {
           const actor = character.basicInfo
-          let color = '';
-          if (props.selectedCharacter) {
-            color = props.selectedCharacter.name === character.name ? 'red' : ''
-          }
 
           return (
             <button
@@ -20,43 +23,37 @@ const CharacterCardSelect = (props) => {
               style={{
                 backgroundColor: CARTRIDGE.theme.accent,
                 color: CARTRIDGE.theme.main,
-                height: 'fit-content',
+                margin: '1rem',
+                padding: '1rem',
+                maxHeight: '20rem',
+                width: '20rem',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                border: 'none',
               }}
-              className={`CharacterSelect__button btn btn-main`}
               onClick={() => {
                 props.setSelectedCharacter(character)
                 props.setActiveScreen(SCREENS.LEVEL)
               }}
             >
-              <div className='CharacterCard'>
-                <div>
-                  <NamePlate actor={actor} />
-                  <Portrait actor={actor} />
-                  <ProgressBar
-                    label='Action'
-                    attributePath='energy'
-                    attributePathMax='speed'
-                    colorFilled='#ff9926'
-                    unit={100}
-                    actor={actor}
-                  />
-                  <ProgressBar
-                    label='Health'
-                    attributePath='durability'
-                    attributePathMax='durabilityMax'
-                    colorFilled='#dc322f'
-                    unit={1}
-                    actor={actor}
-                  />
-                  <ProgressBar
-                    label='Chakra'
-                    attributePath='charge'
-                    attributePathMax='chargeMax'
-                    colorFilled='#13b8d7'
-                    unit={1}
-                    actor={actor}
-                  />
-                </div>
+              {/* a small, bordered character portrait */}
+              <div>
+                <img
+                  src={actor.portrait}
+                  alt={actor.name}
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                  }}
+                />
+              </div>
+              {/* the character's name */}
+              <div>
+                {actor.name}
+              </div>
+              {/* the character's description */}
+              <div>
+                {actor.description}
               </div>
             </button>
           )

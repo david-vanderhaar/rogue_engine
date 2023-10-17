@@ -31,6 +31,7 @@ const basicInfo = {
   durabilityMax: 20,
   charge: 6,
   chargeMax: 10,
+  portrait: `${window.PUBLIC_URL}/hidden_leaf/gaara_full.png`,
 }
 
 function initialize (engine) {
