@@ -52,7 +52,7 @@ const basicInfo = {
   durabilityMax: 20,
   charge: 0,
   chargeMax: 10,
-  portrait: `${window.PUBLIC_URL}/hidden_leaf/rock_full.png`,
+  portrait: `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`,
 }
   
 
