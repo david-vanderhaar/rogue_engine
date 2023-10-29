@@ -29,6 +29,23 @@ const basicInfo = {
     color: Constant.THEMES.SOLARIZED.base3,
     background: Constant.THEMES.NARUTO.rock_lee,
   },
+  abilities: [
+    {
+      name: 'Leaf Whirlwind',
+      description: 'A taijutsu technique where the user spins rapidly to attack surrounding enemies.',
+    },
+    {
+      name: 'Flying Lotus',
+      description: 'Use your speed to close the distance and attack your enemy.',
+    },
+    {
+      name: 'Inner Gates',
+      description: 'How many gates can you open before you die?',
+    },
+  ],
+  speedRating: 3,
+  durabilityRating: 2,
+  chakraRating: 0,
   speed: 600,
   energy: 600,
   durability: 20,

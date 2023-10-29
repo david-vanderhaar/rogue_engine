@@ -25,6 +25,23 @@ const basicInfo = {
     color: Constant.THEMES.SOLARIZED.base2,
     background: Constant.THEMES.NARUTO.gaara,
   },
+  abilities: [
+    {
+      name: 'Sand Wall',
+      description: 'A technique where the user creates a wall of sand to protect themselves.',
+    },
+    {
+      name: 'Sand Pulse',
+      description: 'A technique where the user sends a wave of sand out in all directions.',
+    },
+    {
+      name: 'Sand Skin',
+      description: 'A technique where the user covers themselves in sand to protect themselves.',
+    },
+  ],
+  speedRating: 1,
+  durabilityRating: 2,
+  chakraRating: 3,
   speed: 400,
   energy: 1000,
   durability: 10,

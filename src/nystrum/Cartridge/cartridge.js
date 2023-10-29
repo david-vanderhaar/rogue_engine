@@ -19,10 +19,16 @@ export const createCartridge = (data = {}) => {
   }
 
   updateWindowTitle(cart.name)
+  updateCssVars(cart.theme)
   return cart
 }
 
 const updateWindowTitle = (title) => window.document.title = title
+const updateCssVars = (theme) => {
+  const root = document.documentElement
+  root.style.setProperty('--color-main', theme.main)
+  root.style.setProperty('--color-accent', theme.accent)
+}
 
 const getScreens = (screensFromData = {}) => ({...defaultScreens, ...screensFromData})
 // const getScreens = (screensFromData) => screensFromData || defaultScreens

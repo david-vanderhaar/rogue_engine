@@ -63,15 +63,21 @@ export function ProgressBar ({
   colorEmpty = 'gray',
   attributePathMax, 
   attributePath, 
+  attributeValueMax,
+  attributeValue,
   unit,
 }) {
-  const valueMax = _.get(actor, attributePathMax, 0) / unit;
-  const valueCurrent = _.get(actor, attributePath, 0) / unit;
+  const valueMax = attributeValueMax || _.get(actor, attributePathMax, 0) / unit;
+  const valueCurrent = attributeValue || _.get(actor, attributePath, 0) / unit;
   return (
     <div className="ProgressBar">
-      <div>
-        <span className='ProgressBar__label'>{label}</span>
-      </div>
+      {
+        label && (
+          <div>
+            <span className='ProgressBar__label'>{label}</span>
+          </div>
+        )
+      }
       <div>
         <div className='ProgressBar__blips'>
           {

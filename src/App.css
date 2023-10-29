@@ -3,6 +3,7 @@
 :root {
   --color-main: #07111D;
   --color-secondary: #ec9c5d;
+  --color-accent: #f9d091;
 }
 
 .App {
@@ -600,3 +601,22 @@ f9d091var(--color-secondary) */
   display: block;
 }
 
+.hidden-leaf-character-card {
+  margin: 1rem;
+  padding: 1rem;
+  min-height: 27rem;
+  width: 20rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  color: var(--color-main);
+  background-color: var(--color-accent);
+  transition: background-color .2s ease-out;
+}
+
+.hidden-leaf-character-card:hover {
+  background-color: var(--hover-background-color);
+  color: var(--hover-color);
+  border-color: var(--hover-color);
+  border: 2px solid;
+} 
