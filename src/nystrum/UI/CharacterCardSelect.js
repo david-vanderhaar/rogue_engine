@@ -1,12 +1,10 @@
 import React from 'react';
-// import { CARTRIDGE } from '../Nystrum';
-import { SCREENS } from '../Screen/constants';
+import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
 import Tooltip from './Tooltip';
 import { ProgressBar } from './Entity/CharacterCard';
 
 const CharacterCardSelect = (props) => {
-  // const characters = props.characters
-  const characters = [...props.characters, ...props.characters, ...props.characters, ...props.characters]
+  const characters = props.characters
   return (
     // grid of character cards at least 4 wide
     <div style={{
@@ -45,7 +43,7 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
       }}
       onClick={() => {
         setSelectedCharacter(character)
-        setActiveScreen(SCREENS.LEVEL)
+        setActiveScreen(SCREENS.TOURNAMENT)
       }}
     >
       {/* a small, bordered character portrait */}

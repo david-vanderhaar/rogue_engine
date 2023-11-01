@@ -556,6 +556,22 @@ f9d091var(--color-secondary) */
   font-weight: bold;
 }
 
+.btn-themed {
+  background-color: var(--color-accent);
+  color: var(--color-main);
+  border: 1px solid var(--color-main);
+}
+
+.btn-themed:hover,
+.btn-themed:focus,
+.btn-themed:active {
+  background-color: var(--color-main);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+
+
 .Jacinto__ActionMenu__Actions {
   display: flex;
   flex-direction: column;
@@ -608,15 +624,17 @@ f9d091var(--color-secondary) */
   width: 14rem;
   cursor: pointer;
   border-radius: 5px;
-  border: none;
+  border: 2px solid var(--color-main);
   color: var(--color-main);
   background-color: var(--color-accent);
   transition: background-color .2s ease-out;
 }
 
-.hidden-leaf-character-card:hover {
+.hidden-leaf-character-card:hover, 
+.hidden-leaf-character-card:focus, 
+.hidden-leaf-character-card:active {
   background-color: var(--hover-background-color);
   color: var(--hover-color);
   border-color: var(--hover-color);
-  border: 2px solid;
+  border: 2px solid var(--hover-color);
 } 

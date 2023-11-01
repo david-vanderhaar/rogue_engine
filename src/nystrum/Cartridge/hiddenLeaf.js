@@ -3,7 +3,8 @@ import Modes from '../Modes/index';
 import { COLORS } from '../Modes/HiddenLeaf/theme';
 import Title from '../Modes/HiddenLeaf/Screen/Title';
 import CharacterSelect from '../Modes/HiddenLeaf/Screen/CharacterSelect';
-import { SCREENS } from '../Screen/constants';
+import Tournament from '../Modes/HiddenLeaf/Screen/Tournament';
+import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
 import RockLee from '../Characters/RockLee';
 import Gaara from '../Characters/Gaara';
 
@@ -22,6 +23,9 @@ export const hiddenLeafCart = () => {
         },
         [SCREENS.CHARACTER_SELECT]: {
           component: CharacterSelect,
+        },
+        [SCREENS.TOURNAMENT]: {
+          component: Tournament,
         },
       }
     })

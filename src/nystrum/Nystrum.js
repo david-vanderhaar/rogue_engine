@@ -35,7 +35,8 @@ class Nystrum extends React.Component {
 
     this.state = {
       activeScreen: Object.keys(CARTRIDGE.screens)[0],
-      characters,
+      // characters,
+      characters: [...characters, ...characters],
       modes,
       selectedCharacter: null,
       selectedMode: modes.length === 1 ? modes[0] : null,
@@ -56,6 +57,7 @@ class Nystrum extends React.Component {
 
   getActiveScreen () {
     const ScreenComponent = CARTRIDGE.screens[this.state.activeScreen].component
+
     return (
       <div key={this.state.activeScreen}>
         {
