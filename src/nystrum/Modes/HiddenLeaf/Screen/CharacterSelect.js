@@ -15,7 +15,6 @@ class CharacterSelectScreen extends React.Component {
           className="Title__content"
           style={{
             width: '100vw',
-            height: '100vh',
             backgroundColor: CARTRIDGE.theme.main,
           }}
         >

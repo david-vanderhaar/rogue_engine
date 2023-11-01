@@ -68,7 +68,7 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
         {actor.description}
       </div>
       <div style={{display: 'flex', marginTop: 10}}> {/* bottom half of card  */}
-      <div style={{flex: 2}}>
+      <div>
           {/* stats */}
           <div style={{textAlign: 'left',}}>
             <b style={{minWidth: 70, marginRight: 5}}>Speed</b>
@@ -103,7 +103,7 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
         </div>        
         <div style={{flex: 1, textAlign: 'left'}}>
           {/* summary of charactet's special abilities */}
-          <b>Jutsus</b>
+          <div><b>Jutsus</b></div>
           {actor.abilities.map((ability, index) => {
             return (
               <Tooltip 
