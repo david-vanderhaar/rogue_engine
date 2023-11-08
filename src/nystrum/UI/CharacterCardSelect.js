@@ -38,8 +38,8 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
     <button
       className='hidden-leaf-character-card'
       style={{
-        '--hover-background-color': character.basicInfo.renderer.background,
-        '--hover-color': character.basicInfo.renderer.color,
+        '--character-background-color': character.basicInfo.renderer.background,
+        '--character-color': character.basicInfo.renderer.color,
       }}
       onClick={() => {
         setSelectedCharacter(character)

@@ -16,7 +16,6 @@ class Title extends React.Component {
           style={{
             width: '100vw',
             height: '100vh',
-            backgroundColor: CARTRIDGE.theme.main,
           }}
         >
           <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>The Chunin Exams</h2>

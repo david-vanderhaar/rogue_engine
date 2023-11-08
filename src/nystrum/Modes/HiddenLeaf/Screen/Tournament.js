@@ -1,26 +1,52 @@
 import React from 'react';
-import { CARTRIDGE } from '../../../Nystrum';
 import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
-import { Player } from '../../../Entities';
 
 export default function Tournament(props) {
   const characters = props.characters.map((character) => character.basicInfo)
   const player = props.selectedCharacter.basicInfo
+  const active = 4
   return (
     <div className="Title">
       <div
         className="Title__content"
         style={{
-          height: '100vh',
           width: '100vw',
-          backgroundColor: CARTRIDGE.theme.main,
+          padding: 50,
         }}
       >
         <h1>Tournament</h1>
-        <PlayerCard character={player} />
-        <OpponentLineup characters={characters} />
+        <Lineup active={active}>
+          {
+            characters.map((character, index) => {
+              return (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <OpponentCard 
+                    key={index}
+                    character={character}
+                    animated={index === active}
+                  />
+                  {(index === active) && (
+                    <div>
+                      <h2>VS</h2>
+                      <div style={{padding: 8, marginLeft: 50, marginRight: 50}}>
+                        <PlayerCard character={player} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })
+          }
+        </Lineup>
         <button
           className='btn btn-main btn-themed'
+          style={{marginTop: 100}}
           onClick={() => props.setActiveScreen(SCREENS.LEVEL)}
         >
           Let's Go!
@@ -30,10 +56,10 @@ export default function Tournament(props) {
   );
 }
 
-function OpponentLineup({characters, player}) {
+// a lineup of components with a active index
+function Lineup({active, children}) {
   return (
     <div
-      className='opponent-lineup'
       style={{
         display: 'flex',
         flexDirection: 'row',
@@ -42,24 +68,49 @@ function OpponentLineup({characters, player}) {
         width: '100%',
       }}
     >
-      {
-        characters.map((character, index) => {
-          return (
-            <OpponentCard 
-              key={index}
-              character={character} 
-            />
-          )
-        })
-      }
-    </div>
+        {
+          children.map((child, index) => {
+            // if index is less than active, render the child with opacity 0.5 and grayscale
+            // if index is greater than active, render the child with opacity 0.5
+            let style = {opacity: 1}
+            if (index < active) {
+              style = {
+                opacity: 0.9,
+                filter: 'grayscale(100%)',
+              }
+            } else if (index > active) {
+              style = {
+                opacity: 0.6,
+              }
+            }
+
+            return (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                  ...style,
+                }}
+              >
+                {child}
+              </div>
+            )
+          })
+        }
+      </div>
   )
+    
 }
 
-function OpponentCard({character}) {
+function OpponentCard({character, animated}) {
   return (
     <div
-      className='opponent-card'
+      className={`opponent-card ${animated ? 'animated-border' : '' }`}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -71,6 +122,8 @@ function OpponentCard({character}) {
         borderColor: character.renderer.color,
         padding: 5,
         margin: 5,
+        '--character-background-color': character.renderer.background,
+        '--character-color': character.renderer.color,
       }}
     >
       <img
@@ -104,9 +157,9 @@ function PlayerCard({character}) {
         justifyContent: 'center',
         alignItems: 'center',
         width: 200,
-        border: '3px solid ',
+        border: '5px solid ',
         borderRadius: 5,
-        borderColor: character.renderer.color,
+        borderColor: character.renderer.background,
       }}
     >
       <img
