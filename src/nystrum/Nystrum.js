@@ -40,6 +40,7 @@ class Nystrum extends React.Component {
       modes,
       selectedCharacter: null,
       selectedMode: modes.length === 1 ? modes[0] : null,
+      meta: null,
     };
   }
 
@@ -55,6 +56,10 @@ class Nystrum extends React.Component {
     this.setState({selectedMode: mode})
   }
 
+  setMeta(data) {
+    this.setState({meta: data})
+  }
+
   getActiveScreen () {
     const ScreenComponent = CARTRIDGE.screens[this.state.activeScreen].component
 
@@ -65,6 +70,8 @@ class Nystrum extends React.Component {
             setActiveScreen={this.setActiveScreen.bind(this)}
             setSelectedCharacter={this.setSelectedCharacter.bind(this)}
             setSelectedMode={this.setSelectedMode.bind(this)}
+            setMeta={this.setMeta.bind(this)}
+            meta={this.state.meta}
             selectedCharacter={this.state.selectedCharacter}
             selectedMode={this.state.selectedMode}
             characters={this.state.characters}
@@ -73,64 +80,6 @@ class Nystrum extends React.Component {
         }
       </div>
     )
-  }
-
-  getActiveScreen_v1 () {
-    const characterScreen = <Screens.CharacterSelect 
-      key={SCREENS.CHARACTER_SELECT} 
-      setActiveScreen={this.setActiveScreen.bind(this)}
-      setSelectedCharacter={this.setSelectedCharacter.bind(this)}
-      selectedCharacter={this.state.selectedCharacter}
-      characters={this.state.characters}
-    />
-    const modeScreen = <Screens.ModeSelect 
-      key={SCREENS.MODE_SELECT} 
-      setActiveScreen={this.setActiveScreen.bind(this)}
-      setSelectedMode={this.setSelectedMode.bind(this)}
-      selectedMode={this.state.selectedMode}
-      modes={this.state.modes}
-    />
-    const titleScreen = <Screens.Title 
-      key={SCREENS.TITLE} 
-      setActiveScreen={this.setActiveScreen.bind(this)}
-    />
-    const loseScreen = <Screens.Lose 
-      key={SCREENS.LOSE} 
-      setActiveScreen={this.setActiveScreen.bind(this)}
-      setSelectedCharacter={this.setSelectedCharacter.bind(this)}
-      selectedCharacter={this.state.selectedCharacter}
-      characters={this.state.characters}
-    />
-    const winScreen = <Screens.Win 
-      key={SCREENS.WIN} 
-      setActiveScreen={this.setActiveScreen.bind(this)}
-      setSelectedCharacter={this.setSelectedCharacter.bind(this)}
-      selectedCharacter={this.state.selectedCharacter}
-      characters={this.state.characters}
-    />
-    const levelScreen = <Screens.Level 
-      key={SCREENS.LEVEL} 
-      setActiveScreen={this.setActiveScreen.bind(this)}
-      selectedCharacter={this.state.selectedCharacter}
-      selectedMode={this.state.selectedMode}
-    />
-
-    switch (this.state.activeScreen) {
-      case SCREENS.CHARACTER_SELECT:
-        return characterScreen
-      case SCREENS.MODE_SELECT:
-        return modeScreen
-      case SCREENS.TITLE:
-        return titleScreen
-      case SCREENS.LOSE:
-        return loseScreen
-      case SCREENS.WIN:
-        return winScreen
-      case SCREENS.LEVEL:
-        return levelScreen
-      default:
-        return titleScreen
-    }
   }
 
   render() {

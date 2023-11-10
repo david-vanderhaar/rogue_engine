@@ -1,10 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
 
+function getTournament (props) {
+  return props.meta?.tournament || createTournament(props)
+}
+
+function createTournament ({characters, selectedCharacter: player}) {
+  // filter characters that match the player's name
+  const opponents = characters.filter((character) => character.name !== player.name)
+  const shuffledOpponents = shuffle(opponents)
+
+  return {
+    opponents: shuffledOpponents,
+    player: player,
+    active: 0,
+  }
+}
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
 export default function Tournament(props) {
-  const characters = props.characters.map((character) => character.basicInfo)
-  const player = props.selectedCharacter.basicInfo
-  const active = 4
+  // const {opponents, player, active} = getTournament(props)
+  const tournament = getTournament(props)
+
+  useEffect(() => {
+    props.setMeta({tournament})
+  }, []);
+
   return (
     <div className="Title">
       <div
@@ -15,9 +39,9 @@ export default function Tournament(props) {
         }}
       >
         <h1>Tournament</h1>
-        <Lineup active={active}>
+        <Lineup active={tournament.active}>
           {
-            characters.map((character, index) => {
+            tournament.opponents.map((character, index) => {
               return (
                 <div
                   style={{
@@ -28,14 +52,14 @@ export default function Tournament(props) {
                 >
                   <OpponentCard 
                     key={index}
-                    character={character}
-                    animated={index === active}
+                    character={character.basicInfo}
+                    animated={index === tournament.active}
                   />
-                  {(index === active) && (
+                  {(index === tournament.active) && (
                     <div>
                       <h2>VS</h2>
                       <div style={{padding: 8, marginLeft: 50, marginRight: 50}}>
-                        <PlayerCard character={player} />
+                        <PlayerCard character={tournament.player.basicInfo} />
                       </div>
                     </div>
                   )}
