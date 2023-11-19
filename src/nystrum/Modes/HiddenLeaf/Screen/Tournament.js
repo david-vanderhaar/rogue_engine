@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
 
 function getTournament (props) {
-  return props.meta?.tournament || createTournament(props)
+  return props.meta()?.tournament || createTournament(props)
 }
 
 function createTournament ({characters, selectedCharacter: player}) {
@@ -26,7 +26,7 @@ export default function Tournament(props) {
   const tournament = getTournament(props)
 
   useEffect(() => {
-    props.setMeta({tournament})
+    props.meta({tournament})
   }, []);
 
   return (
@@ -44,6 +44,7 @@ export default function Tournament(props) {
             tournament.opponents.map((character, index) => {
               return (
                 <div
+                  key={index}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -51,7 +52,6 @@ export default function Tournament(props) {
                   }}
                 >
                   <OpponentCard 
-                    key={index}
                     character={character.basicInfo}
                     animated={index === tournament.active}
                   />

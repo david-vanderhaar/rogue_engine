@@ -56,8 +56,17 @@ class Nystrum extends React.Component {
     this.setState({selectedMode: mode})
   }
 
+  getSetMeta(data = null) {
+    if (data) this.setMeta(data)
+    return this.getMeta()
+  }
+
   setMeta(data) {
     this.setState({meta: data})
+  }
+
+  getMeta() {
+    return this.state.meta
   }
 
   getActiveScreen () {
@@ -70,8 +79,8 @@ class Nystrum extends React.Component {
             setActiveScreen={this.setActiveScreen.bind(this)}
             setSelectedCharacter={this.setSelectedCharacter.bind(this)}
             setSelectedMode={this.setSelectedMode.bind(this)}
-            setMeta={this.setMeta.bind(this)}
-            meta={this.state.meta}
+            meta={this.getSetMeta.bind(this)}
+            // meta={this.state.meta}
             selectedCharacter={this.state.selectedCharacter}
             selectedMode={this.state.selectedMode}
             characters={this.state.characters}

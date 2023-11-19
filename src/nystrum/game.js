@@ -40,6 +40,7 @@ const canvasHeight = (MAP_HEIGHT * TILE_HEIGHT) + TILE_OFFSET;
 export class Game {
   constructor({
     engine = null,
+    meta = () => {},
     map = {},
     entityMap = {},
     entityDictionary = {},
@@ -60,6 +61,7 @@ export class Game {
     messages = [],
   }) {
     this.engine = engine;
+    this.meta = meta;
     this.map = map;
     this.entityMap = entityMap;
     this.entityDictionary = entityDictionary;
@@ -96,7 +98,7 @@ export class Game {
   }
 
   initializeMode () {
-    this.mode.initialize();
+    this.mode.initialize(this.meta);
   }
   
   updateMode () { // this is run every game turn

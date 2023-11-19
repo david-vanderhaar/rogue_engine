@@ -25,6 +25,7 @@ class Level extends React.Component {
       engine: ENGINE, 
       getSelectedCharacter: () => this.props.selectedCharacter.initialize(ENGINE),
       mode: this.props.selectedMode.class,
+      meta: this.props.meta,
     })
     this.state = {
       game: game,
@@ -36,6 +37,7 @@ class Level extends React.Component {
 
   async componentDidMount() {
     this.state.game.initialize(this.presserRef, document)
+    this.state.game['setActiveScreen'] = (activeScreen) => this.props.setActiveScreen(activeScreen)
     this.state.game['backToTitle'] = () => this.props.setActiveScreen(SCREENS.TITLE);
     this.state.game['toLose'] = () => {
       this.props.setActiveScreen(SCREENS.LOSE)

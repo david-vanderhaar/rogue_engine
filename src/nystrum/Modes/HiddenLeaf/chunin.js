@@ -1,15 +1,15 @@
-import * as Constant from '../constants';
-import * as Helper from '../../helper';
-import * as Item from '../items';
-import * as MapHelper from '../Maps/helper';
-import { generate as generateBuilding } from '../Maps/generator';
-import * as CoverGenerator from '../Maps/coverGenerator';
-import { Debris, Bandit, RangedBandit } from '../Entities/index';
-import { MESSAGE_TYPE } from '../message';
-import { Mode } from './default';
-import SOUNDS from '../sounds';
+import * as Constant from '../../constants';
+import * as Helper from '../../../helper';
+import * as Item from '../../items';
+import * as MapHelper from '../../Maps/helper';
+import { generate as generateBuilding } from '../../Maps/generator';
+import * as CoverGenerator from '../../Maps/coverGenerator';
+import { Debris, Bandit, RangedBandit } from '../../Entities/index';
+import { MESSAGE_TYPE } from '../../message';
+import { Mode } from '../default';
+import SOUNDS from '../../sounds';
 import * as _ from 'lodash';
-import { TILE_KEY } from './HiddenLeaf/theme';
+import { TILE_KEY } from './theme';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
@@ -31,10 +31,19 @@ export class Chunin extends Mode {
     ]
   }
 
-  initialize () {
+  initialize (meta) {
     super.initialize();
     this.createEmptyLevel();
     this.game.initializeMapTiles();
+
+    // temp test of modifiying meta data
+    // TODO: instance enemy character based on meta data
+    const tournament = meta().tournament;
+    tournament.active += 1;
+    meta({tournament})
+    setTimeout(() => {
+      this.game.setActiveScreen('Tournament');
+    }, 1000);
     
     this.setWaveData();
 
