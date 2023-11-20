@@ -2,6 +2,8 @@ import {createCartridge} from './cartridge'
 import Modes from '../Modes/index';
 import { COLORS } from '../Modes/HiddenLeaf/theme';
 import Title from '../Modes/HiddenLeaf/Screen/Title';
+import Win from '../Modes/HiddenLeaf/Screen/Win';
+import Lose from '../Modes/HiddenLeaf/Screen/Lose';
 import CharacterSelect from '../Modes/HiddenLeaf/Screen/CharacterSelect';
 import Tournament from '../Modes/HiddenLeaf/Screen/Tournament';
 import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
@@ -20,6 +22,12 @@ export const hiddenLeafCart = () => {
       screens: {
         [SCREENS.TITLE]: {
           component: Title,
+        },
+        [SCREENS.WIN]: {
+          component: Win,
+        },
+        [SCREENS.LOSE]: {
+          component: Lose,
         },
         [SCREENS.CHARACTER_SELECT]: {
           component: CharacterSelect,

@@ -16,7 +16,7 @@ export class Chunin extends Mode {
     super({ ...args });
     this.tileKey = TILE_KEY
     this.data = {
-      level: 1,
+      level: 0,
       highestLevel: null,
       turnCount: 0,
     };
@@ -31,20 +31,18 @@ export class Chunin extends Mode {
     ]
   }
 
+  getTournamentOpponent () {
+    const tournament = this.meta().tournament;
+    const opponent = tournament.opponents[tournament.active]
+    return opponent;
+  }
+
   initialize (meta) {
+    this['meta'] = meta;
     super.initialize();
     this.createEmptyLevel();
     this.game.initializeMapTiles();
 
-    // temp test of modifiying meta data
-    // TODO: instance enemy character based on meta data
-    const tournament = meta().tournament;
-    tournament.active += 1;
-    meta({tournament})
-    setTimeout(() => {
-      this.game.setActiveScreen('Tournament');
-    }, 1000);
-    
     this.setWaveData();
 
     // add a random number of blobs of random size of GROUND
@@ -164,16 +162,14 @@ export class Chunin extends Mode {
   update () {
     super.update();
     // this.updateUI();
-    if (this.hasWon()) {
-      this.game.toWin()
-    }
     if (this.hasLost()) {
       SOUNDS.lose.play();
       this.game.toLose();
       this.reset();
       this.game.initializeGameData();
-    }
-    if (this.levelComplete()) {
+    } else if (this.hasWon()) {
+      this.game.toWin()
+     } else if (this.levelComplete()) {
       this.nextLevel();
       this.setWaveData();
       this.game.initializeGameData();
@@ -182,22 +178,33 @@ export class Chunin extends Mode {
   
   //Extras
   setLevel (level) {
-    this.data.level = level;
     this.data.turnCount = 0;
+    this.setMetaTournamentLevel(level)
   }
 
   nextLevel () {
-    this.setLevel(this.data.level + 1);
+    const level = this.getMetaTournamentLevel() + 1
+    this.setLevel(level);
+    this.game.setActiveScreen('Tournament');
+  }
+
+  setMetaTournamentLevel(level) {
+    const metaData = this.meta()
+    metaData.tournament.active = level;
+    this.meta(metaData)
+  }
+
+  getMetaTournamentLevel() {
+    return this.meta().tournament.active;
   }
 
   reset () {
-    this.setLevel(1);
+    this.setLevel(0);
     this.initialize();
   }
 
   setWaveData () {
-    const level = this.data.level - 1
-    const nextLevelData = _.get(this.dataByLevel, level, {});
+    const nextLevelData = this.dataByLevel[0];
     this.data = {...this.data, ...nextLevelData}
   }
 
@@ -206,7 +213,9 @@ export class Chunin extends Mode {
   }
 
   hasWon () {
-    return this.data.level > this.dataByLevel.length;
+    const level = this.getMetaTournamentLevel()
+    const maxLevel = this.meta().tournament.opponents.length - 1;
+    return this.levelComplete() && (level >= maxLevel);
   }
 
   hasLost () {
@@ -360,17 +369,21 @@ export class Chunin extends Mode {
   addBandit (pos) {
     let players = this.getPlayers()
     let targetEntity = players[0]
-    const banditStats = this.getBanditStats();
-    let entity = new banditStats.entityClass({
+    // tournament opponent stats
+    const stats = this.getTournamentOpponent().basicInfo;
+    // const stats = this.getBanditStats();
+    // let entity = new stats.entityClass({
+    let entity = new Bandit({
       targetEntity,
       pos,
-      renderer: banditStats.renderer,
-      name: banditStats.name,
+      renderer: stats.renderer,
+      name: stats.name,
       game: this.game,
       actions: [],
-      attackDamage: banditStats.attackDamage,
-      durability: banditStats.durability,
-      speed: banditStats.speed,
+      attackDamage: stats.attackDamage,
+      // durability: stats.durability,
+      durability: 1,
+      speed: stats.speed,
       // directional projectile destruction breaks engine
       getProjectile: ({ pos, targetPos, direction, range }) => Item.directionalKunai(this.game.engine, { ...pos }, direction, range)
       // getProjectile: ({ pos, targetPos, direction, range }) => Item.kunai(game.engine, { ...pos }, { ...targetPos })
