@@ -22,11 +22,29 @@ function shuffle(array) {
 }
 
 export default function Tournament(props) {
-  // const {opponents, player, active} = getTournament(props)
   const tournament = getTournament(props)
 
   useEffect(() => {
+    // set the meta data in a global state
     props.meta({tournament})
+  }, []);
+
+  function gotToLevel () {
+    props.setActiveScreen(SCREENS.LEVEL)
+  }
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+        gotToLevel()
+      }
+    };
+    // Add event listener when the component mounts
+    window.addEventListener('keydown', handleKeyPress);
+    // Clean up by removing the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
   }, []);
 
   return (
@@ -36,6 +54,7 @@ export default function Tournament(props) {
         style={{
           width: '100vw',
           padding: 50,
+          paddingTop: 0,
         }}
       >
         <h1>Tournament</h1>
@@ -51,18 +70,18 @@ export default function Tournament(props) {
                     alignItems: 'center',
                   }}
                 >
+                  {(index === tournament.active) && (
+                    <div>
+                      <div style={{padding: 8, marginLeft: 50, marginRight: 50}}>
+                        <PlayerCard character={tournament.player.basicInfo} />
+                      </div>
+                      <h2>VS</h2>
+                    </div>
+                  )}
                   <OpponentCard 
                     character={character.basicInfo}
                     animated={index === tournament.active}
                   />
-                  {(index === tournament.active) && (
-                    <div>
-                      <h2>VS</h2>
-                      <div style={{padding: 8, marginLeft: 50, marginRight: 50}}>
-                        <PlayerCard character={tournament.player.basicInfo} />
-                      </div>
-                    </div>
-                  )}
                 </div>
               )
             })
@@ -71,9 +90,9 @@ export default function Tournament(props) {
         <button
           className='btn btn-main btn-themed'
           style={{marginTop: 100}}
-          onClick={() => props.setActiveScreen(SCREENS.LEVEL)}
+          onClick={gotToLevel}
         >
-          Let's Go!
+          Press Enter to start
         </button>
       </div>
     </div>

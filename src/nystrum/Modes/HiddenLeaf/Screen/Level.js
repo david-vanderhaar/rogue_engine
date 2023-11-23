@@ -7,7 +7,6 @@ import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
 import InfoBlocks from '../../../UI/InfoBlocks';
 import Equipment from '../../../UI/Jacinto/Equipment';
-import { OpponentCard } from './Tournament';
 import { ImagePortrait, NamePlate } from '../../../UI/Entity/CharacterCard';
 
 class Level extends React.Component {
@@ -63,7 +62,6 @@ class Level extends React.Component {
       <div className="Level">
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
           <div style={{flex: 2}}>
-            {/* <OpponentCard character={player} /> */}
             <div style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
             <ImagePortrait actor={player} />
             <NamePlate actor={player} />
@@ -82,7 +80,6 @@ class Level extends React.Component {
             />
           </div>
           <div style={{flex: 2, paddingRight: 16}}>
-            {/* <OpponentCard character={opponent} /> */}
             <div style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Opponent</div>
             <ImagePortrait actor={opponent} />
             <NamePlate actor={opponent} />
