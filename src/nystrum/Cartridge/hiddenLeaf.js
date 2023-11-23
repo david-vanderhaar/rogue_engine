@@ -10,6 +10,7 @@ import Tournament from '../Modes/HiddenLeaf/Screen/Tournament';
 import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
 import RockLee from '../Characters/RockLee';
 import Gaara from '../Characters/Gaara';
+import Sasuke from '../Characters/Sasuke';
 
 export const hiddenLeafCart = () => {
   return (
@@ -18,6 +19,7 @@ export const hiddenLeafCart = () => {
       characters: {
         Gaara: Gaara(),
         Rock_Lee: RockLee(),
+        Sasuke: Sasuke(),
       },
       theme: COLORS,
       screens: {

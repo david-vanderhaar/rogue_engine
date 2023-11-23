@@ -1,6 +1,7 @@
 // import deps
 import * as Item from '../items';
 import * as Constant from '../constants';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
 import { Player } from '../Entities/index';
 import { ContainerSlot } from '../Entities/Containing';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
@@ -17,34 +18,34 @@ import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {CloneSelf} from '../Actions/CloneSelf';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
 
-const portrait =  `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`;
+const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
-  name: 'Gaara',
-  description: 'Some say he is a demon.',
+  name: 'Sasuke',
+  description: 'The last of his clan.',
   renderer: {
-    character: 'G',
-    color: Constant.THEMES.SOLARIZED.base2,
-    background: Constant.THEMES.NARUTO.gaara,
+    character: 'S',
+    color: HIDDEN_LEAF_COLORS.sasuke_alt,
+    background: HIDDEN_LEAF_COLORS.sasuke,
     portrait,
   },
   abilities: [
     {
-      name: 'Sand Wall',
-      description: 'A technique where the user creates a wall of sand to protect themselves.',
+      name: 'Fire Ball',
+      description: 'A technique where the user creates a ball of fire to attack their opponent.',
     },
     {
-      name: 'Sand Pulse',
-      description: 'A technique where the user sends a wave of sand out in all directions.',
+      name: 'Chidori',
+      description: 'A technique where the user creates a ball of lightning to attack their opponent.',
     },
     {
-      name: 'Sand Skin',
-      description: 'A technique where the user covers themselves in sand to protect themselves.',
+      name: 'Sharingan',
+      description: 'A technique where the user can see their opponents moves.',
     },
   ],
-  speedRating: 1,
-  durabilityRating: 3,
+  speedRating: 2,
+  durabilityRating: 2,
   chakraRating: 2,
-  speed: 400,
+  speed: 500,
   energy: 1000,
   durability: 10,
   durabilityMax: 20,
@@ -196,7 +197,7 @@ function initialize (engine) {
   let actor = new Player({
     pos: { x: 23, y: 7 },
     renderer: basicInfo.renderer,
-    name: 'Gaara',
+    name: 'Sasuke',
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,
