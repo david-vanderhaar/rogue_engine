@@ -131,7 +131,7 @@ function Lineup({active, children}) {
     
 }
 
-function OpponentCard({character, animated}) {
+export function OpponentCard({character, animated}) {
   return (
     <div
       className={`opponent-card ${animated ? 'animated-border' : '' }`}

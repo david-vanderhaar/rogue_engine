@@ -21,6 +21,8 @@ import { GoToPreviousKeymap } from '../Actions/GoToPreviousKeymap';
 import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../Actions/MoveTowards';
 
+const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
+
 const basicInfo = {
   name: 'Rock Lee',
   description: 'A young ninja who can only use taijutsu.',
@@ -28,6 +30,7 @@ const basicInfo = {
     character: 'R',
     color: Constant.THEMES.SOLARIZED.base3,
     background: Constant.THEMES.NARUTO.rock_lee,
+    portrait
   },
   abilities: [
     {
@@ -52,7 +55,7 @@ const basicInfo = {
   durabilityMax: 20,
   charge: 0,
   chargeMax: 10,
-  portrait: `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`,
+  portrait,
 }
   
 
@@ -263,6 +266,7 @@ function initialize (engine) {
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,
+    charge: basicInfo.charge,
     game: engine.game,
     presentingUI: true,
     initializeKeymap: keymap,

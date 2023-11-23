@@ -17,6 +17,7 @@ import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {CloneSelf} from '../Actions/CloneSelf';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
 
+const portrait =  `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`;
 const basicInfo = {
   name: 'Gaara',
   description: 'Some say he is a demon.',
@@ -24,6 +25,7 @@ const basicInfo = {
     character: 'G',
     color: Constant.THEMES.SOLARIZED.base2,
     background: Constant.THEMES.NARUTO.gaara,
+    portrait,
   },
   abilities: [
     {
@@ -48,7 +50,7 @@ const basicInfo = {
   durabilityMax: 20,
   charge: 6,
   chargeMax: 10,
-  portrait: `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`,
+  portrait,
 }
 
 function initialize (engine) {

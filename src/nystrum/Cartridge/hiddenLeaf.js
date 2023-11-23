@@ -4,6 +4,7 @@ import { COLORS } from '../Modes/HiddenLeaf/theme';
 import Title from '../Modes/HiddenLeaf/Screen/Title';
 import Win from '../Modes/HiddenLeaf/Screen/Win';
 import Lose from '../Modes/HiddenLeaf/Screen/Lose';
+import Level from '../Modes/HiddenLeaf/Screen/Level';
 import CharacterSelect from '../Modes/HiddenLeaf/Screen/CharacterSelect';
 import Tournament from '../Modes/HiddenLeaf/Screen/Tournament';
 import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
@@ -28,6 +29,9 @@ export const hiddenLeafCart = () => {
         },
         [SCREENS.LOSE]: {
           component: Lose,
+        },
+        [SCREENS.LEVEL]: {
+          component: Level,
         },
         [SCREENS.CHARACTER_SELECT]: {
           component: CharacterSelect,
