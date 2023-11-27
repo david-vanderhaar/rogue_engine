@@ -5,7 +5,7 @@ export const COLORS = {
   gaara: '#603030',
   rock_lee: '#155859',
   sasuke: '#103880',
-  sasuke_alt: '#912d31',
+  sasuke_alt: '#b75a5e',
   leaf: '#36635b',
   wraps: '#F0D8C0',
   wall: '#a3625f',

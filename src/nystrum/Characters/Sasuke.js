@@ -17,6 +17,11 @@ import {OpenEquipment} from '../Actions/OpenEquipment';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {CloneSelf} from '../Actions/CloneSelf';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
+import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
+import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
+import GradientPathEmitter from '../Engine/Particle/Emitters/gradientPathEmitter';
+import { Tackle } from '../Actions/Tackle';
+import { getPositionInDirection } from '../../helper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -45,12 +50,9 @@ const basicInfo = {
   speedRating: 2,
   durabilityRating: 2,
   chakraRating: 2,
-  speed: 500,
-  energy: 1000,
-  durability: 10,
-  durabilityMax: 20,
+  speed: 400,
+  durability: 5,
   charge: 6,
-  chargeMax: 10,
   portrait,
 }
 
@@ -121,49 +123,37 @@ function initialize (engine) {
         interrupt: true,
         energyCost: 0,
       }),
-      l: () => new PrepareSandWall({
-        label: 'Sand Wall',
-        game: engine.game,
-        actor,
-        sandWallRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
-      }),
-      r: () => new PrepareSubstitution({
-        label: 'Substitution',
+      l: () => new PrepareDirectionalAction({
+        label: 'Chidori',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
-      }),
-      k: () => new SandPulse({
-        label: 'Sand Pulse',
-        game: engine.game,
-        actor,
-      }),
-      h: () => new AddSandSkinStatusEffect({
-        label: 'Sand Skin',
-        game: engine.game,
-        actor,
-        requiredResources: [
-          new ChakraResource({ getResourceCost: () => 2 }),
-        ],
-      }),
-      c: () => new CloneSelf({
-        label: 'Sand Clone',
-        game: engine.game,
-        actor,
-        cloneArgs: [
-          {
-            attribute: 'renderer',
-            value: { ...actor.renderer, background: '#A89078' }
-          },
-          {
-            attribute: 'ignoredKeys',
-            value: ['g'],
-          },
-        ],
-        requiredResources: [
-          new ChakraResource({ getResourceCost: () => 4 }),
-        ],
+        actionLabel: 'Chidori',
+        actionClass: Tackle,
+        positionsByDirection: (actor, direction) => {
+          const pos = actor.getPosition();
+          return Array(actor.energy / Constant.ENERGY_THRESHOLD).fill('').map((none, distance) => {
+            if (distance > 0) {
+              return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
+            } else {
+              return null;
+            }
+          }).filter((pos) => pos !== null);
+        },
+        actionParams: {
+          additionalDamage: 2,
+          onAfter: () => {
+            SpatterEmitter({
+              game: engine.game,
+              fromPosition: actor.getPosition(),
+              spatterAmount: 0.1,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: ['#94e0ef', '#d3d3d3', '#495877']
+            }).start()
+          }
+        }
       }),
       i: () => new OpenInventory({
         label: 'Inventory',

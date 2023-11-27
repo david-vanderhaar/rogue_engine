@@ -3,10 +3,11 @@ import { Attack } from './Attack';
 import {ENERGY_THRESHOLD} from '../constants';
 
 export class Tackle extends MoveMultiple {
-  constructor({ direction, processDelay = 25, ...args }) {
+  constructor({ direction, additionalDamage = 0, processDelay = 25, ...args }) {
     super({ ...args });
     this.direction = direction;
     this.stepCount = 0;
+    this.additionalDamage = additionalDamage;
     this.processDelay = processDelay;
   }
   perform() {
@@ -17,7 +18,7 @@ export class Tackle extends MoveMultiple {
 
     alternative = new Attack({
       targetPos,
-      additionalDamage: this.stepCount,
+      additionalDamage: this.additionalDamage || this.stepCount,
       game: this.game,
       actor: this.actor,
       energyCost: 0,

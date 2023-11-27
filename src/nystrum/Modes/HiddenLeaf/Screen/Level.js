@@ -55,7 +55,6 @@ class Level extends React.Component {
 
   render() {
     const meta = this.props.meta()
-    console.log('meta', meta);
     const opponent = meta.tournament.opponents[meta.tournament.active].basicInfo
     const player = meta.tournament.player.basicInfo
     return (

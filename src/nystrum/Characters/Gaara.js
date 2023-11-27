@@ -44,12 +44,9 @@ const basicInfo = {
   speedRating: 1,
   durabilityRating: 3,
   chakraRating: 2,
-  speed: 400,
-  energy: 1000,
+  speed: 300,
   durability: 10,
-  durabilityMax: 20,
   charge: 6,
-  chargeMax: 10,
   portrait,
 }
 
