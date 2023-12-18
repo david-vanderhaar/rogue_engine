@@ -11,4 +11,8 @@ export const Charging = superclass => class extends superclass {
   increaseCharge(value) {
     this.charge = Math.min(this.chargeMax, this.charge + value);
   }
+  gainEnergy(arg) {
+    super.gainEnergy(arg);
+    this.increaseCharge(1);
+  }
 };

@@ -18,7 +18,7 @@ class Win extends React.Component {
             height: '100vh',
           }}
         >
-          <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>Congratulation to the top Chunin of the year!</h2>
+          <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>Congratulations to the top Chunin of the year!</h2>
           <button
             className='btn btn-main btn-themed'
             onClick={() => {
