@@ -4,6 +4,8 @@ import * as MapHelper from '../Maps/helper';
 import SOUNDS from '../sounds';
 import {JACINTO_SOUNDS} from '../Modes/Jacinto/sounds'
 import { ANIMATION_TYPES } from '../Display/konvaCustom';
+import gradientPathEmitter from '../Engine/Particle/Emitters/gradientPathEmitter';
+import { THEMES} from '../constants';
 const DEFAULT_HIT_SOUNDS = [SOUNDS.chop_0, SOUNDS.chop_1]
 const DEFAULT_MISS_SOUNDS = [SOUNDS.release_0]
 const DEFAULT_RELOAD_SOUNDS = [JACINTO_SOUNDS.reload]
@@ -17,6 +19,7 @@ export const RangedAttacking = superclass => class extends superclass {
     rangedHitSounds = [],
     rangedMissSounds = [],
     rangedReloadSounds = [],
+    afterFireSuccess = null,
     ...args
   }) {
     super({ ...args });
@@ -29,6 +32,7 @@ export const RangedAttacking = superclass => class extends superclass {
     this.rangedHitSounds = rangedHitSounds;
     this.rangedMissSounds = rangedMissSounds;
     this.rangedReloadSounds = rangedReloadSounds;
+    this.afterFireSuccess = afterFireSuccess ? afterFireSuccess.bind(this) : this.defaultAfterFireSuccess.bind(this);
   }
 
   getRangedAttackChance(targetPos = null) {
@@ -223,6 +227,34 @@ export const RangedAttacking = superclass => class extends superclass {
         text: 'miss',
       }
     );
+  }
+
+  async defaultAfterFireSuccess({
+    fromPosition,
+    targetPositions,
+    hits,
+    misses,
+  }) {
+    // called after multi target ranged attack
+    // used to control fire animations
+    const emitter = gradientPathEmitter({
+      game: this.game,
+      fromPosition: this.getPosition(),
+      targetPositions: hits,
+      backgroundColorGradient: [THEMES.SOLARIZED.green, THEMES.SOLARIZED.cyan],
+      colorGradient: [THEMES.SOLARIZED.base3, THEMES.SOLARIZED.base3],
+    })
+
+    misses.forEach((targetPos) => {
+      emitter.addParticle({
+        life: 5,
+        pos: {...targetPos},
+        direction: {x: 0, y: 0},
+        character: '-'
+      })
+    })
+
+    await emitter.start()
   }
 
   playReloadSound() {

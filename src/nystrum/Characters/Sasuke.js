@@ -7,21 +7,18 @@ import { ContainerSlot } from '../Entities/Containing';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
 import {MoveOrAttack} from '../Actions/MoveOrAttack';
-import {PrepareSandWall} from '../Actions/SandWall';
+import {PrepareRangedAttack} from '../Actions/PrepareRangedAttack';
 import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
-import {PrepareSubstitution} from '../Actions/PrepareSubstitution';
-import {SandPulse} from '../Actions/SandPulse';
-import {AddSandSkinStatusEffect} from '../Actions/AddSandSkinStatusEffect';
 import {OpenInventory} from '../Actions/OpenInventory';
 import {OpenEquipment} from '../Actions/OpenEquipment';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
-import {CloneSelf} from '../Actions/CloneSelf';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
 import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 import { Tackle } from '../Actions/Tackle';
 import { getPositionInDirection } from '../../helper';
+import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -168,6 +165,14 @@ function initialize (engine) {
           }
         }
       }),
+      f: () => new PrepareRangedAttack({
+        label: 'Katon',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        // passThroughRequiredResources: [],
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
+      }),
       i: () => new OpenInventory({
         label: 'Inventory',
         game: engine.game,
@@ -224,6 +229,8 @@ function initialize (engine) {
     }),
   ]
 
+  const katon = Katon(engine, actor.getPosition());
+  actor.equip(katon.equipmentType, katon);
   return actor;
 }
 

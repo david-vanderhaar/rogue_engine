@@ -14,28 +14,38 @@ export class MultiTargetRangedAttack extends Base {
     this.multiTargetRangedAttackMisses = []
     this.onSuccess = () => {
       args?.onSuccess && args.onSuccess()
-      this.handleOnAfter()
+      this.handleSuccess()
     }
   }
-  
-  async handleOnAfter() {
-    const emitter = GradientPathEmitter({
-      game: this.game,
-      fromPosition: this.actor.getPosition(),
-      targetPositions: this.multiTargetRangedAttackHits,
-      backgroundColorGradient: [COLORS.green, COLORS.cyan],
-      colorGradient: [COLORS.base3, COLORS.base3],
-    })
 
-    this.multiTargetRangedAttackMisses.forEach((targetPos) => {
-      emitter.addParticle({
-        life: 5,
-        pos: {...targetPos},
-        direction: {x: 0, y: 0},
-        character: '-'
-      })
-    })
-    await emitter.start()
+  // handleWeaponFireSuccess() {
+  //   const weapon = this.getFirstWeapon();
+  //   if (!weapon) return false;
+  //   if (weapon['afterFireSuccess'] === undefined) return false;
+
+  //   weapon.afterFireSuccess({
+  //     targetPositions: this.targetPositions,
+  //     hits: this.multiTargetRangedAttackHits,
+  //     misses: this.multiTargetRangedAttackMisses,
+  //   });
+  //   return true;
+  // }
+  
+  async handleSuccess() {
+    const weapon = this.getFirstWeapon();
+    if (!weapon) return false;
+    weapon.afterFireSuccess({
+      fromPosition: weapon.getPosition(),
+      targetPositions: this.targetPositions,
+      hits: this.multiTargetRangedAttackHits,
+      misses: this.multiTargetRangedAttackMisses,
+    });
+  }
+
+  getFirstWeapon() {
+    const weapons = this.actor.getEquipedWeapons();
+    if (weapons.length <= 0) return null;
+    return weapons[0];
   }
 
   perform() {

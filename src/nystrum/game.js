@@ -112,13 +112,11 @@ export class Game {
     while (!placed) {
       let pos = Helper.getRandomPos(this.map).coordinates
       if (this.canOccupyPosition(pos, actor)) {
-        let tile = this.map[Helper.coordsToString(pos)]
-        actor.pos = { ...pos }
-        tile.entities.push(actor);
+        actor.move(pos)
         placed = true;
       }
       kill += 1;
-      if (kill >= 100) {
+      if (kill >= 1000) {
         placed = true;
       }
     }

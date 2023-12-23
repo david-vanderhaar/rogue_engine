@@ -404,11 +404,7 @@ export class Chunin extends Mode {
           x: parseInt(key.split(',')[0]),
           y: parseInt(key.split(',')[1]),
         }
-        player.pos = position;
-        let tile = this.game.map[key];
-        if (tile) {
-          tile.entities.push(player);
-        }
+        player.move(position)
       }
     })
   }

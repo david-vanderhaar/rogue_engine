@@ -2,7 +2,7 @@
 import { ParticleEmitter } from '../particleEmitter'
 import * as Helper from '../../../../helper'
 
-export default ({
+export default function SpatterEmitter ({
   game,
   fromPosition,
   spatterRadius = 3,
@@ -14,7 +14,7 @@ export default ({
   reverse = false,
   transfersBackground = false,
   transfersBackgroundOnDestroy = false,
-}) => {
+}) {
   const emitter = new ParticleEmitter({
     game,
     easingFunction: Helper.EASING.easeOut,

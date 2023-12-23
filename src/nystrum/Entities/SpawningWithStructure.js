@@ -24,6 +24,7 @@ export const SpawningWithStructure = superclass => class extends superclass {
     this.createEntitiesToSpawn().forEach((entity) => {
       if (entity.entityTypes.includes('ACTING')) this.game.engine.addActor(entity);
       this.game.placeActorOnMap(entity);
+      entity.direction = this.direction // hack, abstract in onAfterSpawnEntity
     })
   }
 };
