@@ -92,8 +92,10 @@ export default function Tournament(props) {
           style={{marginTop: 100}}
           onClick={gotToLevel}
         >
-          Press Enter to start
+          Fight!
         </button>
+        <br/>
+        <span>press enter to start</span>
       </div>
     </div>
   );

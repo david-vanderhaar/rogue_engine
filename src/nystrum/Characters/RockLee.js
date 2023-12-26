@@ -261,6 +261,7 @@ function initialize (engine) {
     pos: { x: 23, y: 7 },
     renderer: basicInfo.renderer,
     name: basicInfo.name,
+    enemyFactions: ['ALL'],
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,

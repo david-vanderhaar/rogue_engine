@@ -194,6 +194,7 @@ function initialize (engine) {
     pos: { x: 23, y: 7 },
     renderer: basicInfo.renderer,
     name: 'Gaara',
+    enemyFactions: ['ALL'],
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,

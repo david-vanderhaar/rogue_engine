@@ -20,7 +20,7 @@ export function Katon(engine, pos) {
       pathTailLength: 3,
       backgroundColorGradient: [Constant.THEMES.SOLARIZED.red, Constant.THEMES.SOLARIZED.red],
       colorGradient: [Constant.THEMES.SOLARIZED.red, Constant.THEMES.SOLARIZED.violet],
-      animationTimeStep: 0.6,
+      animationTimeStep: 0.1,
     })
   
     await emitter.start()

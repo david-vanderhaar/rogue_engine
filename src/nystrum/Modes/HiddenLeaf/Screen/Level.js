@@ -6,7 +6,7 @@ import Instructions from '../../../UI/Instructions';
 import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
 import InfoBlocks from '../../../UI/InfoBlocks';
-import Equipment from '../../../UI/Jacinto/Equipment';
+import Equipment from '../../../UI/HiddenLeaf/Equipment';
 import { ImagePortrait, NamePlate } from '../../../UI/Entity/CharacterCard';
 
 class Level extends React.Component {
