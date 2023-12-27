@@ -77,4 +77,8 @@ export const Equiping = superclass => class extends superclass {
       return slot;
     });
   }
+  addEquipmentSlot({type, name = null, item = null}) {
+    const slot = {type, name: name || type, item};
+    this.equipment.push(slot);
+  }
 };

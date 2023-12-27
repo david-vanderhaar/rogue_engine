@@ -166,11 +166,11 @@ function initialize (engine) {
         game: engine.game,
         actor,
       }),
-      o: () => new OpenEquipment({
-        label: 'Equipment',
-        game: engine.game,
-        actor,
-      }),
+      // o: () => new OpenEquipment({
+      //   label: 'Equipment',
+      //   game: engine.game,
+      //   actor,
+      // }),
       u: () => new OpenDropInventory({
         label: 'Drop Items',
         game: engine.game,

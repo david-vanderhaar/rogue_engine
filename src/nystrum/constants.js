@@ -259,6 +259,7 @@ export const EQUIPMENT_TYPES = {
   HAND: 'HAND',
   FEET: 'FEET',
   GENERIC: 'GENERIC',
+  JUTSU: 'JUTSU',
 }
 
 export const EQUIPMENT_LAYOUTS = {

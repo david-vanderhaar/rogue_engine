@@ -67,7 +67,8 @@ export function Katon(engine, pos) {
     attackDamage: 0,
     pos,
     shapePattern: Constant.CLONE_PATTERNS.square,
-    equipmentType: Constant.EQUIPMENT_TYPES.HAND,
+    // equipmentType: Constant.EQUIPMENT_TYPES.HAND,
+    equipmentType: Constant.EQUIPMENT_TYPES.JUTSU,
     renderer: {
       character: '',
       color: COLORS.red,

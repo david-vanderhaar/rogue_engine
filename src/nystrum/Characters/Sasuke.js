@@ -32,7 +32,7 @@ const basicInfo = {
   },
   abilities: [
     {
-      name: 'Fire Ball',
+      name: 'Katon',
       description: 'A technique where the user creates a ball of fire to attack their opponent.',
     },
     {
@@ -167,8 +167,8 @@ function initialize (engine) {
         label: 'Katon',
         game: engine.game,
         actor,
+        equipmentSlotType: Constant.EQUIPMENT_TYPES.JUTSU,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        // passThroughRequiredResources: [],
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
       }),
       i: () => new OpenInventory({
@@ -176,11 +176,11 @@ function initialize (engine) {
         game: engine.game,
         actor,
       }),
-      o: () => new OpenEquipment({
-        label: 'Equipment',
-        game: engine.game,
-        actor,
-      }),
+      // o: () => new OpenEquipment({
+      //   label: 'Equipment',
+      //   game: engine.game,
+      //   actor,
+      // }),
       u: () => new OpenDropInventory({
         label: 'Drop Items',
         game: engine.game,
@@ -229,6 +229,7 @@ function initialize (engine) {
   ]
 
   const katon = Katon(engine, actor.getPosition());
+  actor.addEquipmentSlot({type: katon.equipmentType})
   actor.equip(katon.equipmentType, katon);
   return actor;
 }

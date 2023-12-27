@@ -9,12 +9,14 @@ import * as Constant from '../constants'
 import {find} from 'lodash';
 
 export class PrepareRangedAttack extends Base {
-  constructor({ 
+  constructor({
+    equipmentSlotType = EQUIPMENT_TYPES.HAND,
     passThroughEnergyCost = ENERGY_THRESHOLD, 
     passThroughRequiredResources = [], 
     ...args 
   }) {
     super({ ...args });
+    this.equipmentSlotType = equipmentSlotType;
     this.passThroughEnergyCost = passThroughEnergyCost;
     this.passThroughRequiredResources = passThroughRequiredResources;
     this.processDelay = 0;
@@ -86,7 +88,7 @@ export class PrepareRangedAttack extends Base {
   perform() {
     const pos = this.actor.getPosition();
     const range = this.actor.getAttackRange();
-    const equippedWeapon = this.actor.getItemInSlot(EQUIPMENT_TYPES.HAND)
+    const equippedWeapon = this.actor.getItemInSlot(this.equipmentSlotType)
     if (!equippedWeapon) return {success: false, alternative: null}
     if (!equippedWeapon.entityTypes.includes('RANGED_ATTACKING')) return {success: false, alternative: null}
 
