@@ -124,14 +124,14 @@ export class Base {
     return !_.find(this.listPayableResources(), {'canPay': false});
   }
 
-  payRequiredResources() {
+  payRequiredResources(multiplier = 1) {
     _.each(this.requiredResources, (resource) => {
       const getResourceCost = resource.getResourceCost;
       const actorResourcePath = resource.actorResourcePath;
       const actorResourceSetter = resource.actorResourceSetter;
       
       const actorVariable = _.get(this.actor, actorResourcePath, null);
-      const resourceCost = getResourceCost();
+      const resourceCost = getResourceCost() * multiplier;
       // if the actor has provided a setter for this variable, use that 
       if (_.get(this.actor, actorResourceSetter, null)) {
         this.actor[actorResourceSetter](actorVariable - resourceCost)
@@ -146,6 +146,10 @@ export class Base {
       }
       return false;
     })
+  }
+
+  gainRequiredResources() {
+    return this.payRequiredResources(-1);
   }
   
   perform() {

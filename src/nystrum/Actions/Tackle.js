@@ -3,13 +3,13 @@ import { Attack } from './Attack';
 import {ENERGY_THRESHOLD} from '../constants';
 
 export class Tackle extends MoveMultiple {
-  constructor({ direction, additionalDamage = 0, processDelay = 25, tackleRange = null, ...args }) {
+  constructor({ direction, additionalDamage = 0, processDelay = 25, range = null, ...args }) {
     super({ ...args });
     this.direction = direction;
     this.stepCount = 0;
     this.additionalDamage = additionalDamage;
     this.processDelay = processDelay;
-    this.tackleRange = tackleRange;
+    this.range = range;
   }
   perform() {
     let alternative = null;
@@ -25,7 +25,8 @@ export class Tackle extends MoveMultiple {
       energyCost: 0,
     });
 
-    if (this.actor.energy > ENERGY_THRESHOLD) {
+    if ((this.range !== null && this.stepCount < this.range)
+     || (this.range === null && this.actor.energy > ENERGY_THRESHOLD)) {
       const shoveSuccess = this.actor.shove(targetPos, this.direction);
       if (shoveSuccess) {
         alternative = this
@@ -37,6 +38,10 @@ export class Tackle extends MoveMultiple {
         }
 
         this.stepCount += 1;
+
+        if (this.range !== null) {
+          this.gainRequiredResources()
+        }
       }
     }
 

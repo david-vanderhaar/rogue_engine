@@ -124,15 +124,13 @@ function initialize (engine) {
         label: 'Chidori',
         game: engine.game,
         actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-        // requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD * (basicInfo.speed/100),
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 2 })],
         actionLabel: 'Chidori',
         actionClass: Tackle,
         positionsByDirection: (actor, direction) => {
           const pos = actor.getPosition();
-          return Array(actor.energy / Constant.ENERGY_THRESHOLD).fill('').map((none, distance) => {
-          // return Array(10).fill('').map((none, distance) => {
+          return Array(10).fill('').map((none, distance) => {
             if (distance > 0) {
               return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
             } else {
@@ -142,7 +140,7 @@ function initialize (engine) {
         },
         actionParams: {
           additionalDamage: 5,
-          // tackleRange: 10,
+          range: 10,
           onAfter: () => {
             if (actor.energy <= 0) {
               GradientRadialEmitter({
