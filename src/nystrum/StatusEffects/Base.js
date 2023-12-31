@@ -37,4 +37,8 @@ export class Base {
   static getValidTargetsOnTile (tile, actor) {
     return Helper.getDestructableEntities(tile.entities);
   }
+
+  remove() {
+    this.game.engine.removeStatusEffectById(this.id)
+  }
 }

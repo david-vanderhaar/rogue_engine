@@ -34,6 +34,7 @@ export const COLORS = {
   blue: '#268bd2',
   cyan: '#2aa198',
   green: '#859900',
+  black: '#16161d',
   // // base1: '#07111D',
   // base1: '#0B0B0B',
   // base2: '#5A7178',

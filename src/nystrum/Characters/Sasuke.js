@@ -16,10 +16,10 @@ import {PickupRandomItem} from '../Actions/PickupRandomItem';
 import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { Tackle } from '../Actions/Tackle';
 import { getPositionInDirection } from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
+import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -191,6 +191,16 @@ function initialize (engine) {
         label: 'Pickup',
         game: engine.game,
         actor,
+      }),
+      h: () => new AddSharinganStatusEffect({
+        label: 'Sharingan',
+        game: engine.game,
+        actor,
+        energyCost: 0,
+        requiredResources: [
+          // new EnergyResource({ getResourceCost: () => Constant.ENERGY_THRESHOLD }),
+          // new ChakraResource({ getResourceCost: () => 1 }),
+        ],
       }),
       t: () => new PrepareDirectionalThrow({
         label: 'Throw',
