@@ -19,6 +19,7 @@ import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmi
 import { Tackle } from '../Actions/Tackle';
 import { getPositionInDirection } from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
+import { TackleByRange } from '../Actions/TackleByRange';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -127,7 +128,7 @@ function initialize (engine) {
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD * (basicInfo.speed/100),
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 2 })],
         actionLabel: 'Chidori',
-        actionClass: Tackle,
+        actionClass: TackleByRange,
         positionsByDirection: (actor, direction) => {
           const pos = actor.getPosition();
           return Array(10).fill('').map((none, distance) => {

@@ -1,14 +1,11 @@
-import { MoveMultiple } from './MoveMultiple';
+import { Tackle } from './Tackle';
 import { Attack } from './Attack';
 import {ENERGY_THRESHOLD} from '../constants';
 
-export class Tackle extends MoveMultiple {
-  constructor({ direction, additionalDamage = 0, processDelay = 25, ...args }) {
+export class TackleByRange extends Tackle {
+  constructor({ range = 3, ...args }) {
     super({ ...args });
-    this.direction = direction;
-    this.stepCount = 0;
-    this.additionalDamage = additionalDamage;
-    this.processDelay = processDelay;
+    this.range = range;
   }
   perform() {
     let alternative = null;
@@ -24,18 +21,13 @@ export class Tackle extends MoveMultiple {
       energyCost: 0,
     });
 
-    if (this.actor.energy > ENERGY_THRESHOLD) {
+    if (this.stepCount < this.range) {
       const shoveSuccess = this.actor.shove(targetPos, this.direction);
       if (shoveSuccess) {
         alternative = this
-        for (let i = 0; i < 3; i++) {
-          this.addParticle(1, {
-            x: this.actor.pos.x - (this.direction[0] * i),
-            y: this.actor.pos.y - (this.direction[1] * i),
-          }, { x: 0, y: 0 });
-        }
-
         this.stepCount += 1;
+        // reset payed resources so that we can pay all at once at the end
+        this.gainRequiredResources()
       }
     }
 
