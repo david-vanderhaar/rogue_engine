@@ -4,6 +4,7 @@ import The_Stranded from './GearStranded';
 import The_Commander from './GearCommander';
 import Rock_Lee from './RockLee';
 import Gaara from './Gaara';
+import Naruto from './Naruto';
 import FireFighter from './FireFighter';
 
 export default {
@@ -13,5 +14,6 @@ export default {
   The_Stranded,
   Rock_Lee: Rock_Lee().initialize,
   Gaara: Gaara().initialize,
+  Naruto: Naruto().initialize,
   FireFighter,
 }

@@ -20,37 +20,39 @@ import { getPositionInDirection } from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
+import { PrepareCallReinforcements } from '../Actions/PrepareCallReinforcements';
+import { SpawnShadowClones } from '../Actions/SpawnShadowClones';
 
-const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
+const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
 const basicInfo = {
-  name: 'Sasuke',
-  description: 'The last of his clan.',
+  name: 'Naruto',
+  description: 'Believe it!',
   renderer: {
-    character: 'S',
-    color: HIDDEN_LEAF_COLORS.sasuke_alt,
-    background: HIDDEN_LEAF_COLORS.sasuke,
+    character: 'N',
+    color: HIDDEN_LEAF_COLORS.black,
+    background: HIDDEN_LEAF_COLORS.orange,
     portrait,
   },
   abilities: [
     {
-      name: 'Katon',
-      description: 'A technique where the user creates a ball of fire to attack their opponent.',
+      name: 'Uzumaki Combo',
+      description: 'A barrage of punches and kicks.',
     },
     {
-      name: 'Chidori',
-      description: 'A technique where the user creates a ball of lightning to attack their opponent.',
+      name: 'Shadow Clone Jutsu',
+      description: 'A technique where the user creates many clones to overwhelm their opponent.',
     },
     {
-      name: 'Sharingan',
-      description: 'A technique where the user can see their opponents moves.',
+      name: 'Nine Tails',
+      description: 'The nine tailed fox can\'t be stopped.',
     },
   ],
-  speedRating: 2,
+  speedRating: 1,
   durabilityRating: 2,
-  chakraRating: 2,
-  speed: 400,
+  chakraRating: 3,
+  speed: 300,
   durability: 5,
-  charge: 6,
+  charge: 9,
   portrait,
 }
 
@@ -192,14 +194,13 @@ function initialize (engine) {
         game: engine.game,
         actor,
       }),
-      h: () => new AddSharinganStatusEffect({
-        label: 'Sharingan',
+      c: () => new SpawnShadowClones({
+        label: 'Shadow Clone Jutsu',
         game: engine.game,
         actor,
-        energyCost: 0,
+        energyCost: Constant.ENERGY_THRESHOLD * 3,
         requiredResources: [
-          // new EnergyResource({ getResourceCost: () => Constant.ENERGY_THRESHOLD }),
-          // new ChakraResource({ getResourceCost: () => 1 }),
+          new ChakraResource({ getResourceCost: () => 9 }),
         ],
       }),
       t: () => new PrepareDirectionalThrow({
@@ -214,8 +215,8 @@ function initialize (engine) {
   let actor = new Player({
     pos: { x: 23, y: 7 },
     renderer: basicInfo.renderer,
-    name: 'Sasuke',
-    faction: 'SASUKE',
+    name: 'Naruto',
+    faction: 'NARUTO',
     enemyFactions: ['ALL'],
     actions: [],
     speed: basicInfo.speed,
