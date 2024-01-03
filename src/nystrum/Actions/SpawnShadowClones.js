@@ -1,10 +1,9 @@
 import { Base } from './Base';
 import * as Helper from '../../helper';
-import { Bandit, ThrowableSpawner } from '../Entities';
+import { Bandit, JacintoAI, ThrowableSpawner } from '../Entities';
+import * as Behaviors from '../Entities/AI/Behaviors';
 import { COLORS } from '../Modes/HiddenLeaf/theme';
-import { ENERGY_THRESHOLD } from '../constants';
-
-
+import { ENERGY_THRESHOLD, CLONE_PATTERNS } from '../constants';
 export class SpawnShadowClones extends Base {
   constructor({ cloneCount = 10, ...args }) {
     super({ ...args });
@@ -32,7 +31,40 @@ export class SpawnShadowClones extends Base {
   }
 
   spawnedEntityClass() {
-    return Bandit;
+    // return Bandit;
+    return JacintoAI;
+  }
+
+  spawnedEntityOptions() {
+    // return {
+    //   renderer: {...this.actor.renderer},
+    //   name: 'Shadow Clone',
+    //   game: this.game,
+    //   durability: 1,
+    //   speed: 300,
+    //   targetEntity: this.targetEntity(),
+    //   // faction: this.actor.faction,
+    //   enemyFactions: this.actor.enemyFactions,
+    // }
+    return {
+      name: 'Shadow Clone',
+      game: this.game,
+      renderer: {
+        character: this.actor.renderer.character,
+        color: this.actor.renderer.background,
+        background: this.actor.renderer.color,
+      },
+      durability: 1,
+      attackDamage: 1,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({repeat: 5}),
+        // new Behaviors.Telegraph({repeat: 1}),
+        new Behaviors.Telegraph({repeat: 1, attackPattern: CLONE_PATTERNS.clover}),
+        new Behaviors.ExecuteAttack({repeat: 1}),
+      ],
+      faction: this.actor.faction,
+      enemyFactions: this.actor.enemyFactions,
+    }
   }
 
   targetEntity() {
@@ -47,19 +79,6 @@ export class SpawnShadowClones extends Base {
     return enemy
   }
 
-  spawnedEntityOptions() {
-    return {
-      renderer: {...this.actor.renderer},
-      name: 'Shadow Clone',
-      game: this.game,
-      durability: 1,
-      speed: 300,
-      targetEntity: this.targetEntity(),
-      // faction: this.actor.faction,
-      enemyFactions: this.actor.enemyFactions,
-    }
-  }
-
   createSpawner(positions) {
     return new ThrowableSpawner({
       game: this.game,
@@ -71,7 +90,7 @@ export class SpawnShadowClones extends Base {
         color: COLORS.base3,
         background: COLORS.base2,
       },
-      position: this.actor.getPosition(),
+      // pos: this.actor.getPosition(),
       attackDamage: 0,
       speed: ENERGY_THRESHOLD,
       energy: ENERGY_THRESHOLD,

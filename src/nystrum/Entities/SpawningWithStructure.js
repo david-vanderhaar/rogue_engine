@@ -11,7 +11,7 @@ export const SpawningWithStructure = superclass => class extends superclass {
   }
 
   createEntitiesToSpawn() {
-    return Helper.getPositionsFromStructure(this.spawnStructure, this.getPosition()).map((position) => (
+    return Helper.getPositionsFromStructure(this.spawnStructure, this.getPosition()).map((position, index) => (
       new this.spawnedEntityClass({
         pos: {...position},
         game: this.game,
@@ -21,12 +21,21 @@ export const SpawningWithStructure = superclass => class extends superclass {
   }
 
   spawnEntities() {
-    this.createEntitiesToSpawn().forEach((entity) => {
-      if (this.game.canOccupyPosition(this.entity.getPosition(), this.entity)) {
+    const entities = this.createEntitiesToSpawn();
+    console.log('entities');
+    console.log(entities);
+    entities.forEach((entity) => {
+      if(this.game.placeActorOnMap(entity)) {
         if (entity.entityTypes.includes('ACTING')) this.game.engine.addActor(entity);
-        this.game.placeActorOnMap(entity);
         entity.direction = this.direction // hack, abstract in onAfterSpawnEntity
       }
+      // const canOcc = this.game.canOccupyPosition(entity.getPosition(), entity)
+      // console.log(canOcc);
+      // if (canOcc) {
+      //   if (entity.entityTypes.includes('ACTING')) this.game.engine.addActor(entity);
+      //   this.game.placeActorOnMap(entity);
+      //   entity.direction = this.direction // hack, abstract in onAfterSpawnEntity
+      // }
     })
   }
 };
