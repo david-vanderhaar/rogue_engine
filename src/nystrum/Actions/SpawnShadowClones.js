@@ -4,6 +4,8 @@ import { Bandit, JacintoAI, ThrowableSpawner } from '../Entities';
 import * as Behaviors from '../Entities/AI/Behaviors';
 import { COLORS } from '../Modes/HiddenLeaf/theme';
 import { ENERGY_THRESHOLD, CLONE_PATTERNS } from '../constants';
+import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
+import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 export class SpawnShadowClones extends Base {
   constructor({ cloneCount = 10, ...args }) {
     super({ ...args });
@@ -12,13 +14,27 @@ export class SpawnShadowClones extends Base {
 
   animateSmoke(positions) {
     // emitter smoke puff effect for each spawn position
+    positions.forEach((position) => {
+      SpatterEmitter({
+        game: this.game,
+        fromPosition: position,
+        spatterAmount: 0.3,
+        spatterRadius: 3,
+        animationTimeStep: 0.9,
+        easingFunction: Helper.EASING.easeIn,
+        transfersBackground: false,
+        spatterColors: ['#495877']
+      }).start()
+    })
   }
 
   getSpawnPositions() {
     // get cloneCount number of positions at random within radius of actor
-    const points = Helper.getPointsWithinRadius(this.actor.getPosition(), 10)
-    const randomPoints = Helper.getNumberOfItemsInArray(this.cloneCount, points)
+    const points = Helper.getPointsWithinRadius(this.actor.getPosition(), 10).filter((point) => {
+      return this.game.canOccupyPosition(point, {passable: false})
+    })
 
+    const randomPoints = Helper.getNumberOfItemsInArray(this.cloneCount, points)
     return randomPoints
   }
 
