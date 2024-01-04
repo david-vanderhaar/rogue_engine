@@ -10,7 +10,7 @@ export const CyclesBehaviors = superclass => class extends superclass {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('CYCLES_BEHAVIORS');
     this.behaviors = behaviors.map((behavior) => {
-      behavior['actor'] = this;
+      behavior['actor'] = this
       return behavior;
     });
     this.activeBehaviorIndex = 0;

@@ -31,21 +31,10 @@ export class SpawnShadowClones extends Base {
   }
 
   spawnedEntityClass() {
-    // return Bandit;
     return JacintoAI;
   }
 
   spawnedEntityOptions() {
-    // return {
-    //   renderer: {...this.actor.renderer},
-    //   name: 'Shadow Clone',
-    //   game: this.game,
-    //   durability: 1,
-    //   speed: 300,
-    //   targetEntity: this.targetEntity(),
-    //   // faction: this.actor.faction,
-    //   enemyFactions: this.actor.enemyFactions,
-    // }
     return {
       name: 'Shadow Clone',
       game: this.game,
@@ -57,26 +46,13 @@ export class SpawnShadowClones extends Base {
       durability: 1,
       attackDamage: 1,
       behaviors: [
-        new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        // new Behaviors.Telegraph({repeat: 1}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: CLONE_PATTERNS.clover}),
+        new Behaviors.MoveTowardsEnemy({repeat: 2, maintainDistanceOf: 1, chainOnFail: true}),
+        new Behaviors.Telegraph({repeat: 1, attackPattern: CLONE_PATTERNS.clover, chainOnSuccess: true}),
         new Behaviors.ExecuteAttack({repeat: 1}),
       ],
       faction: this.actor.faction,
       enemyFactions: this.actor.enemyFactions,
     }
-  }
-
-  targetEntity() {
-    // get enemies in game
-    const enemies = this.actor.game.engine.actors.filter(actor => {
-      return this.actor.isEnemy(actor) && actor.id !== this.actor.id
-    })
-
-    const enemy = enemies.at(0)
-
-    console.log(enemy);
-    return enemy
   }
 
   createSpawner(positions) {
@@ -90,13 +66,12 @@ export class SpawnShadowClones extends Base {
         color: COLORS.base3,
         background: COLORS.base2,
       },
-      // pos: this.actor.getPosition(),
       attackDamage: 0,
       speed: ENERGY_THRESHOLD,
       energy: ENERGY_THRESHOLD,
       spawnStructure: this.createSpawnStructure(positions),
       spawnedEntityClass: this.spawnedEntityClass(),
-      spawnedEntityOptions: this.spawnedEntityOptions(),
+      getSpawnedEntityOptions: this.spawnedEntityOptions.bind(this),
     })
   }
 

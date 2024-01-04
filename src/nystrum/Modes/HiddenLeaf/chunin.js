@@ -382,7 +382,6 @@ export class Chunin extends Mode {
       actions: [],
       attackDamage: stats.attackDamage,
       durability: stats.durability,
-      // durability: 1,
       speed: stats.speed,
       // directional projectile destruction breaks engine
       getProjectile: ({ pos, targetPos, direction, range }) => Item.directionalKunai(this.game.engine, { ...pos }, direction, range)

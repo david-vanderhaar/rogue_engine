@@ -1,6 +1,7 @@
 import { Move } from '../../../Actions/Move';
 import Behavior from './Behavior';
 import { calculatePathAroundObstacles } from '../../../../helper'; 
+import { MoveOrAttack } from '../../../Actions/MoveOrAttack';
 
 export default class MoveTowardsEnemy extends Behavior {
   constructor({maintainDistanceOf = 1, ...args }) {
@@ -39,7 +40,7 @@ export default class MoveTowardsEnemy extends Behavior {
     if (!enemy) return [null, null]; 
     // get path to enemy
     let path = calculatePathAroundObstacles(this.actor.game, enemy.getPosition(), this.actor.getPosition());
-    path = path.slice(0, -this.maintainDistanceOf)
+    if (this.maintainDistanceOf > 0) path = path.slice(0, -this.maintainDistanceOf)
     let moveToPosition = path.length > 0 ? path[0] : null;
     if (!moveToPosition) return [null, null]
 
