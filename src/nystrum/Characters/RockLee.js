@@ -121,8 +121,7 @@ function initialize (engine) {
         message: 'pass turn...',
         game: engine.game,
         actor,
-        interrupt: true,
-        energyCost: 0,
+        energyCost: actor.energy,
       }),
       i: () => new OpenInventory({
         label: 'Inventory',

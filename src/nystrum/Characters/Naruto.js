@@ -19,9 +19,10 @@ import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmi
 import { getPositionInDirection } from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
-import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
+import { AddNineTailsStatusEffect } from '../Actions/AddNineTailsStatusEffect';
 import { PrepareCallReinforcements } from '../Actions/PrepareCallReinforcements';
 import { SpawnShadowClones } from '../Actions/SpawnShadowClones';
+import { DurabilityResource } from '../Actions/ActionResources/DurabilityResource';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
 const basicInfo = {
@@ -120,59 +121,7 @@ function initialize (engine) {
         message: 'pass turn...',
         game: engine.game,
         actor,
-        interrupt: true,
-        energyCost: 0,
-      }),
-      l: () => new PrepareDirectionalAction({
-        label: 'Chidori',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD * (basicInfo.speed/100),
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 2 })],
-        actionLabel: 'Chidori',
-        actionClass: TackleByRange,
-        positionsByDirection: (actor, direction) => {
-          const pos = actor.getPosition();
-          return Array(10).fill('').map((none, distance) => {
-            if (distance > 0) {
-              return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
-            } else {
-              return null;
-            }
-          }).filter((pos) => pos !== null);
-        },
-        actionParams: {
-          additionalDamage: 5,
-          range: 10,
-          onAfter: () => {
-            if (actor.energy <= 0) {
-              GradientRadialEmitter({
-                game: engine.game,
-                fromPosition: actor.getPosition(),
-                radius: 3,
-                colorGradient: ['#d3d3d3', '#94e0ef'],
-                backgroundColorGradient: ['#d3d3d3', '#94e0ef']
-              }).start()
-            }
-            SpatterEmitter({
-              game: engine.game,
-              fromPosition: actor.getPosition(),
-              spatterAmount: 0.1,
-              spatterRadius: 3,
-              animationTimeStep: 0.6,
-              transfersBackground: false,
-              spatterColors: ['#94e0ef', '#d3d3d3', '#495877']
-            }).start()
-          }
-        }
-      }),
-      f: () => new PrepareRangedAttack({
-        label: 'Katon',
-        game: engine.game,
-        actor,
-        equipmentSlotType: Constant.EQUIPMENT_TYPES.JUTSU,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
+        energyCost: actor.energy,
       }),
       i: () => new OpenInventory({
         label: 'Inventory',
@@ -198,9 +147,18 @@ function initialize (engine) {
         label: 'Shadow Clone Jutsu',
         game: engine.game,
         actor,
-        energyCost: Constant.ENERGY_THRESHOLD * 3,
+        energyCost: Constant.ENERGY_THRESHOLD * 1,
         requiredResources: [
           new ChakraResource({ getResourceCost: () => 9 }),
+        ],
+      }),
+      h: () => new AddNineTailsStatusEffect({
+        label: 'Tailed Beast',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD * 3,
+        requiredResources: [
+          new DurabilityResource({ getResourceCost: () => 2 }),
         ],
       }),
       t: () => new PrepareDirectionalThrow({

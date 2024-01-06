@@ -4,7 +4,6 @@ import { Bandit, JacintoAI, ThrowableSpawner } from '../Entities';
 import * as Behaviors from '../Entities/AI/Behaviors';
 import { COLORS } from '../Modes/HiddenLeaf/theme';
 import { ENERGY_THRESHOLD, CLONE_PATTERNS } from '../constants';
-import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 export class SpawnShadowClones extends Base {
   constructor({ cloneCount = 10, ...args }) {

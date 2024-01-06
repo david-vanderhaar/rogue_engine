@@ -27,8 +27,7 @@ export default function (engine) {
         message: 'pass turn...',
         game: engine.game,
         actor,
-        interrupt: true,
-        energyCost: 0,
+        energyCost: actor.energy,
       }),
       'w,ArrowUp': () => {
         const direction = Constant.DIRECTIONS.N;
