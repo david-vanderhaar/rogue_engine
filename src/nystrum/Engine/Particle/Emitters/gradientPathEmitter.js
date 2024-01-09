@@ -11,11 +11,13 @@ export default ({
   animationTimeStep = 0.2,
   reverse = false,
   pathTailLength = 0,
+  character = '*',
 }) => {
   const emitter = new ParticleEmitter({
     game,
     easingFunction,
     animationTimeStep,
+    character,
   })
 
   targetPositions.forEach((targetPos) => {
@@ -45,6 +47,7 @@ export default ({
           color: colorGradient,
           backgroundColor: backgroundColorGradient,
         },
+        character: character,
       })
     })
 

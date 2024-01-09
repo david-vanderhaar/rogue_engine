@@ -4,7 +4,8 @@ import { COLORS as HIDDEN_LEAF_COLORS } from '../../../HiddenLeaf/theme';
 import SOUNDS from '../../../../sounds';
 import gradientPathEmitter from '../../../../Engine/Particle/Emitters/gradientPathEmitter';
 import SpatterEmitter from '../../../../Engine/Particle/Emitters/spatterEmitter';
-import { getNumberOfItemsInArray, getRandomInArray } from '../../../../../helper';
+import * as Helper from '../../../../../helper';
+import { ANIMATION_TYPES } from '../../../../Display/konvaCustom';
 
 export function UzumakiBarrage(engine, pos) {
   async function afterFireSuccess({fromPosition, targetPositions, hits, misses}) {
@@ -14,27 +15,48 @@ export function UzumakiBarrage(engine, pos) {
     // create a gradient path emitter from the fromPosition to the targetPositions
     // start emitters in sequence, await each one
 
-    const emitter = gradientPathEmitter({
-      game: engine.game,
-      fromPosition,
-      targetPositions,
-      pathTailLength: 3,
-      backgroundColorGradient: [Constant.THEMES.SOLARIZED.red, Constant.THEMES.SOLARIZED.red],
-      colorGradient: [Constant.THEMES.SOLARIZED.red, Constant.THEMES.SOLARIZED.violet],
-      animationTimeStep: 0.1,
+    const characters = ['u', 'zu', 'ma', 'ki', 'barrage!']
+    const points = Helper.getPointsOnCircumference(targetPositions[0].x, targetPositions[0].y, 5)
+
+    const randomPoints = Helper.getNumberOfItemsInArray(5, points)
+
+    const emitters = randomPoints.map((point, index) => {
+      const emitter = gradientPathEmitter({
+        game: engine.game,
+        fromPosition: point,
+        targetPositions,
+        pathTailLength: 1,
+        backgroundColorGradient: [HIDDEN_LEAF_COLORS.orange, HIDDEN_LEAF_COLORS.orange],
+        colorGradient: [HIDDEN_LEAF_COLORS.black, HIDDEN_LEAF_COLORS.black],
+        animationTimeStep: 0.5,
+        character: 'N'
+      })
+      
+      return emitter
     })
-  
-    await emitter.start()
+
+    // apply each emitter in sequence
+    for (let i = 0; i < emitters.length; i++) {
+      await emitters[i].start()
+      engine.game.display.addAnimation(
+        ANIMATION_TYPES.TEXT_FLOAT,
+        {
+          ...targetPositions[0],
+          color: HIDDEN_LEAF_COLORS.black,
+          text: characters[i],
+        }
+      );
+    }
 
     // choose random number of hits to explode
     // using the splatter emitter
     const randomHits = hits.filter(() => Math.random() < .5)
-    if (randomHits.length === 0) randomHits.push(getRandomInArray(hits))
+    if (randomHits.length === 0) randomHits.push(Helper.getRandomInArray(hits))
     randomHits.forEach(async (targetPos) => {
       const spatterRadius = 5
       const spatterAmount = .3
       const spatterDirection = {x: 0, y: 0}
-      const spatterColors = [HIDDEN_LEAF_COLORS.red, HIDDEN_LEAF_COLORS.yellow]
+      const spatterColors = [HIDDEN_LEAF_COLORS.base1, HIDDEN_LEAF_COLORS.base3]
       const animationTimeStep = 0.2
       const reverse = false
       const transfersBackground = false
