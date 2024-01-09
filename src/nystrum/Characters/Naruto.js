@@ -23,6 +23,7 @@ import { AddNineTailsStatusEffect } from '../Actions/AddNineTailsStatusEffect';
 import { PrepareCallReinforcements } from '../Actions/PrepareCallReinforcements';
 import { SpawnShadowClones } from '../Actions/SpawnShadowClones';
 import { DurabilityResource } from '../Actions/ActionResources/DurabilityResource';
+import { UzumakiBarrage } from '../Modes/HiddenLeaf/Items/Weapons/UzumakiBarrage';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
 const basicInfo = {
@@ -166,7 +167,15 @@ function initialize (engine) {
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      })
+      }),
+      f: () => new PrepareRangedAttack({
+        label: 'Uzumaki Barrage',
+        game: engine.game,
+        actor,
+        equipmentSlotType: Constant.EQUIPMENT_TYPES.JUTSU,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
+      }),
     };
   }
   // instantiate class
@@ -199,9 +208,9 @@ function initialize (engine) {
     }),
   ]
 
-  const katon = Katon(engine, actor.getPosition());
-  actor.addEquipmentSlot({type: katon.equipmentType})
-  actor.equip(katon.equipmentType, katon);
+  const jutsu = UzumakiBarrage(engine, actor.getPosition());
+  actor.addEquipmentSlot({type: jutsu.equipmentType})
+  actor.equip(jutsu.equipmentType, jutsu);
   return actor;
 }
 

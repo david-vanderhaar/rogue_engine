@@ -1,21 +1,22 @@
 import * as Constant from '../../../../constants';
 import {RangedWeapon} from '../../../../Entities/index';
-import {COLORS} from '../../../Jacinto/theme';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../../../HiddenLeaf/theme';
 import SOUNDS from '../../../../sounds';
 import gradientPathEmitter from '../../../../Engine/Particle/Emitters/gradientPathEmitter';
 import SpatterEmitter from '../../../../Engine/Particle/Emitters/spatterEmitter';
 import { getNumberOfItemsInArray, getRandomInArray } from '../../../../../helper';
 
-export function Katon(engine, pos) {
+export function UzumakiBarrage(engine, pos) {
   async function afterFireSuccess({fromPosition, targetPositions, hits, misses}) {
-    // called after multi target ranged attack
-    // used to control fire animations
 
-    // const posiitons = getNumberOfItemsInArray(2, hits)
+    // pick five positions to around target position at same distance
+    // u - zu - ma - ki - barrage!
+    // create a gradient path emitter from the fromPosition to the targetPositions
+    // start emitters in sequence, await each one
+
     const emitter = gradientPathEmitter({
       game: engine.game,
       fromPosition,
-      // targetPositions: posiitons,
       targetPositions,
       pathTailLength: 3,
       backgroundColorGradient: [Constant.THEMES.SOLARIZED.red, Constant.THEMES.SOLARIZED.red],
@@ -33,7 +34,7 @@ export function Katon(engine, pos) {
       const spatterRadius = 5
       const spatterAmount = .3
       const spatterDirection = {x: 0, y: 0}
-      const spatterColors = [COLORS.red, COLORS.yellow]
+      const spatterColors = [HIDDEN_LEAF_COLORS.red, HIDDEN_LEAF_COLORS.yellow]
       const animationTimeStep = 0.2
       const reverse = false
       const transfersBackground = false
@@ -57,25 +58,24 @@ export function Katon(engine, pos) {
 
   return new RangedWeapon({
     game: engine.game,
-    name: 'Katon Jutsu',
+    name: 'Uzumaki Barrage',
     passable: true,
     lightPassable: true,
-    attackRange: 20,
+    attackRange: 3,
     magazineSize: Infinity,
     baseRangedAccuracy: Infinity,
-    baseRangedDamage: 2,
+    baseRangedDamage: 3,
     attackDamage: 0,
     pos,
-    shapePattern: Constant.CLONE_PATTERNS.square,
-    // equipmentType: Constant.EQUIPMENT_TYPES.HAND,
+    shapePattern: Constant.CLONE_PATTERNS.point,
     equipmentType: Constant.EQUIPMENT_TYPES.JUTSU,
     renderer: {
-      character: '',
-      color: COLORS.red,
-      background: COLORS.base02,
+      character: '',
+      color: HIDDEN_LEAF_COLORS.black,
+      background: HIDDEN_LEAF_COLORS.orange,
     },
-    rangedHitSounds: [SOUNDS.explosion_0],
-    rangedMissSounds: [SOUNDS.explosion_0],
+    // rangedHitSounds: [SOUNDS.explosion_0],
+    // rangedMissSounds: [SOUNDS.explosion_0],
     afterFireSuccess: afterFireSuccess,
   });
 }
