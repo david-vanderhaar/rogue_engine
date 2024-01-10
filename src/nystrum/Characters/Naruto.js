@@ -172,7 +172,7 @@ function initialize (engine) {
         label: 'Uzumaki Barrage',
         game: engine.game,
         actor,
-        equipmentSlotType: Constant.EQUIPMENT_TYPES.JUTSU,
+        equipmentSlotType: 'Uzumaki Barrage',
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
       }),

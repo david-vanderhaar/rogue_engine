@@ -9,6 +9,9 @@ import { ChakraResource } from '../../../Actions/ActionResources/ChakraResource'
 import { Grenade } from '../../../Items/Weapons/Grenade';
 import { ContainerSlot } from '../../../Entities/Containing';
 import { remove } from 'lodash';
+import { UzumakiBarrage } from '../Items/Weapons/UzumakiBarrage';
+import { PrepareRangedAttack } from '../../../Actions/PrepareRangedAttack';
+import { BeastBomb } from '../Items/Weapons/BeastBomb';
 
 export class NineTailsBeastMode extends Base {
   constructor({speedBuff = 200, damageBuff = 1, chakraBuff = 9, lifeCost = 1, ...args}) {
@@ -21,6 +24,7 @@ export class NineTailsBeastMode extends Base {
     this['actor_background'] = this.actor.renderer.background;
     this['actor_color'] = this.actor.renderer.color;
     this['actor_inialize_keymap'] = this.actor.initializeKeymap
+    this['actor_equipment'] = this.actor.equipment
     this.renderer = {
       color: HIDDEN_LEAF_COLORS.black,
       background: HIDDEN_LEAF_COLORS.red,
@@ -88,17 +92,15 @@ export class NineTailsBeastMode extends Base {
 }
 
 function addBeastBombs (engine, actor) {
-  const grenades = Array(100).fill('').map(() => Grenade(engine, 8, 3));
-  const slot = new ContainerSlot({
-    itemType: grenades[0].name,
-    items: grenades,
-  })
-
-  actor.container.push(slot)
+  actor.equipment = []
+  const jutsu = BeastBomb(engine, actor.getPosition());
+  actor.addEquipmentSlot({type: jutsu.equipmentType})
+  actor.equip(jutsu.equipmentType, jutsu);
 }
 
 function removeBeastBombs (actor) {
-  actor.container = actor.container.filter((slot) => slot.itemType !== 'Grenade')
+  actor.removeEquipmentSlot('Beast Bomb')
+  actor.equipment = actor['actor_equipment']
 }
 
 const nineTailsKeymap = (engine, actor) => {
@@ -151,13 +153,13 @@ const nineTailsKeymap = (engine, actor) => {
         energyCost: Constant.ENERGY_THRESHOLD
       });
     },
-    t: () => new PrepareDirectionalThrow({
+    f: () => new PrepareRangedAttack({
       label: 'Beast Bomb',
-      projectileType: 'Grenade',
       game: engine.game,
       actor,
+      equipmentSlotType: 'Beast Bomb',
       passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
       passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
-    })
+    }),
   };
 }
