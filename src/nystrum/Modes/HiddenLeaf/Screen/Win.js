@@ -11,13 +11,7 @@ class Win extends React.Component {
   render() {
     return (
       <div className="Title">
-        <div
-          className="Title__content"
-          style={{
-            width: '100vw',
-            height: '100vh',
-          }}
-        >
+        <div className="Title__content">
           <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>Congratulations to the top Chunin of the year!</h2>
           <button
             className='btn btn-main btn-themed'

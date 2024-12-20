@@ -11,14 +11,7 @@ class Lose extends React.Component {
   render() {
     return (
       <div className="Title">
-        <div
-          className="Title__content"
-          style={{
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: '#222',
-          }}
-        >
+        <div className="Title__content">
           <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>You'll get 'em next year.</h2>
           <button
             className='btn btn-main btn-themed'

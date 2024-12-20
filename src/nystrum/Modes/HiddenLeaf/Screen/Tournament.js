@@ -49,14 +49,7 @@ export default function Tournament(props) {
 
   return (
     <div className="Title">
-      <div
-        className="Title__content"
-        style={{
-          width: '100vw',
-          padding: 50,
-          paddingTop: 0,
-        }}
-      >
+      <div className="Title__content">
         <h1>Tournament</h1>
         <Lineup active={tournament.active}>
           {
@@ -70,18 +63,19 @@ export default function Tournament(props) {
                     alignItems: 'center',
                   }}
                 >
-                  {(index === tournament.active) && (
-                    <div>
-                      <div style={{padding: 8, marginLeft: 50, marginRight: 50}}>
-                        <PlayerCard character={tournament.player.basicInfo} />
-                      </div>
-                      <h2>VS</h2>
-                    </div>
-                  )}
                   <OpponentCard 
                     character={character.basicInfo}
                     animated={index === tournament.active}
                   />
+                  {(index === tournament.active) && (
+                    <div>
+                      <h2>VS</h2>
+                      <div style={{padding: 8, marginLeft: 50, marginRight: 50}}>
+                        <PlayerCard character={tournament.player.basicInfo} />
+                      </div>
+                    </div>
+                  )}
+
                 </div>
               )
             })
@@ -89,7 +83,6 @@ export default function Tournament(props) {
         </Lineup>
         <button
           className='btn btn-main btn-themed'
-          style={{marginTop: 100}}
           onClick={gotToLevel}
         >
           Fight!
@@ -111,6 +104,8 @@ function Lineup({active, children}) {
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
+        overflow: 'hidden',
+        marginBottom: 24,
       }}
     >
         {
@@ -157,15 +152,9 @@ export function OpponentCard({character, animated}) {
     <div
       className={`opponent-card ${animated ? 'animated-border' : '' }`}
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        // width: '100%',
         border: '3px solid ',
         borderRadius: 5,
         borderColor: character.renderer.color,
-        padding: 5,
         margin: 5,
         '--character-background-color': character.renderer.background,
         '--character-color': character.renderer.color,
@@ -175,8 +164,7 @@ export function OpponentCard({character, animated}) {
         src={character.portrait}
         alt={character.name}
         style={{
-          height: '100%',
-          width: '100%',
+          width: '242px',
         }}
       />
       <div
@@ -197,11 +185,6 @@ function PlayerCard({character}) {
     <div
       className='player-card'
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 200,
         border: '5px solid ',
         borderRadius: 5,
         borderColor: character.renderer.background,
@@ -211,8 +194,7 @@ function PlayerCard({character}) {
         src={character.portrait}
         alt={character.name}
         style={{
-          height: '100%',
-          width: '100%',
+          width: '342px',
         }}
       />
       <div

@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
 import Tooltip from './Tooltip';
 import { ProgressBar } from './Entity/CharacterCard';
 
-const CharacterCardSelect = (props) => {
-  const characters = props.characters
+const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}) => {
+  const [selected, setSelected] = useState(null)
+  // allow number key events to select character
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      const options = Array(characters.length).fill(null).map((_, i) => (i + 1).toString())
+      if (options.includes(event.key)) {
+        const index = parseInt(event.key) - 1
+
+        console.log(selected, index);
+        
+        if (selected === index) {
+          setSelectedCharacter(characters[index])
+          setActiveScreen(SCREENS.TOURNAMENT)
+        } else {
+          setSelected(index)
+        }
+      }
+    };
+    // Add event listener when the component mounts
+    window.addEventListener('keydown', handleKeyPress);
+    // Clean up by removing the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [selected]);
+
   return (
     // grid of character cards at least 4 wide
     <div style={{
@@ -18,12 +43,17 @@ const CharacterCardSelect = (props) => {
       {
         characters.map((character, index) => {
           return (
-            <CharacterCard 
-              key={index}
-              character={character} 
-              setSelectedCharacter={props.setSelectedCharacter} 
-              setActiveScreen={props.setActiveScreen} 
-            />
+            <div key={index}>
+              <CharacterCard 
+                character={character} 
+                setSelectedCharacter={setSelectedCharacter} 
+                setActiveScreen={setActiveScreen} 
+              />
+              <div style={{fontSize: 16, width: 200, margin: 'auto'}}>
+              {selected === index && (<p className='text--blinking'>press {index + 1} again to confirm</p>)}
+              {selected !== index && (<p style={{fontSize: 12}}>press {index + 1} to select</p>)}
+              </div>
+            </div>
           )
         })
       }

@@ -169,7 +169,7 @@ export class Chunin extends Mode {
       this.game.initializeGameData();
     } else if (this.hasWon()) {
       this.game.toWin()
-     } else if (this.levelComplete()) {
+    } else if (this.levelComplete()) {
       this.nextLevel();
       this.setWaveData();
       this.game.initializeGameData();
@@ -370,8 +370,15 @@ export class Chunin extends Mode {
     let players = this.getPlayers()
     let targetEntity = players[0]
     // tournament opponent stats
-    const stats = this.getTournamentOpponent().basicInfo;
-    // const stats = this.getBanditStats();
+    let stats = null;
+
+    // TODO: fix, this.meta() is not a function error
+    try {
+      stats = this.getTournamentOpponent().basicInfo;
+    } catch (error) {
+      console.log(error);
+      stats = this.getBanditStats();
+    }
     // let entity = new stats.entityClass({
     let entity = new Bandit({
       targetEntity,

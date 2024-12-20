@@ -23,13 +23,7 @@ function Title(props) {
 
   return (
     <div className="Title">
-      <div
-        className="Title__content"
-        style={{
-          width: '100vw',
-          height: '100vh',
-        }}
-      >
+      <div className="Title__content">
         <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>The Chunin Exams</h2>
         <button
           className='btn btn-main btn-themed'

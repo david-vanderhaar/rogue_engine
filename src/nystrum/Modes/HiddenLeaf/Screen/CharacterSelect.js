@@ -11,13 +11,8 @@ class CharacterSelectScreen extends React.Component {
   render() {
     return (
       <div className="Title">
-        <div
-          className="Title__content"
-          style={{
-            width: '100vw',
-            backgroundColor: CARTRIDGE.theme.main,
-          }}
-        >
+        <div className="Title__content">
+          <h1>Choose your Ninja</h1>
           <CharacterSelect 
             characters={this.props.characters} 
             selectedCharacter={this.props.selectedCharacter} 
