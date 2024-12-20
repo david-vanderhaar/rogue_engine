@@ -58,10 +58,10 @@ class Level extends React.Component {
     const opponent = meta.tournament.opponents[meta.tournament.active].basicInfo
     const player = meta.tournament.player.basicInfo
     return (
-      <div className="Level">
+      <div className="Level" style={{fontSize: 12, padding: 16}}>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
           <div style={{flex: 2}}>
-            <div style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
+            <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
             <ImagePortrait actor={player} />
             <NamePlate actor={player} />
             <PlayerInformation game={this.state.game} />
@@ -78,8 +78,8 @@ class Level extends React.Component {
               toggleSpriteMode={this.toggleSpriteMode.bind(this)}
             />
           </div>
-          <div style={{flex: 2, paddingRight: 16}}>
-            <div style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Opponent</div>
+          <div style={{flex: 2}}>
+            <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Opponent</div>
             <ImagePortrait actor={opponent} />
             <NamePlate actor={opponent} />
             <div style={{marginBottom: 16}}></div>

@@ -4,6 +4,8 @@
   --color-main: #07111D;
   --color-secondary: #ec9c5d;
   --color-accent: #f9d091;
+  /* --overflow: hidden; */
+  --overflow: visible;
 }
 
 .App {
@@ -31,6 +33,9 @@
   
   /* ensuring game is alway centered on screen */
   margin: auto;
+
+  /* may need to toggle on/off durring development */
+  overflow: var(--overflow);
 }
 
 .App-logo {
