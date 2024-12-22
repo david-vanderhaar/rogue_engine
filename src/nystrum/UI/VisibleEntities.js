@@ -25,10 +25,12 @@ const VisibleEntityCard = ({entity}) => {
   )
 }
 
-export const LookedAtEntites = ({game}) => {
-  const lookedAt = game.entityLog.getLookedAt()
-  if (lookedAt.length <= 0) return null
+export const LookedAtEntites = ({game, lookedAt = null}) => {
+  if (lookedAt === null) {
+    lookedAt = game.entityLog.getLookedAt()
+  }
 
+  if (lookedAt.length <= 0) return null
   return (
     //<div style={{bottom: 0, position: 'absolute', textAlign: 'left', zIndex: 1, maxWidth: '60%'}}>
     <div style={{textAlign: 'left', zIndex: 1, maxWidth: '60%'}}>

@@ -4,12 +4,14 @@
   --color-main: #07111D;
   --color-secondary: #ec9c5d;
   --color-accent: #f9d091;
-  /* --overflow: hidden; */
   --overflow: visible;
 }
 
+html {
+  background-color: #07111D;
+}
+
 .App {
-  /* background-color: var(--color-main); */
   background-color: #07111D;
   color: #eee;
   

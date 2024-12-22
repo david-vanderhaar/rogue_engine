@@ -8,6 +8,7 @@ import Messages from '../../../UI/Messages';
 import InfoBlocks from '../../../UI/InfoBlocks';
 import Equipment from '../../../UI/HiddenLeaf/Equipment';
 import { ImagePortrait, NamePlate } from '../../../UI/Entity/CharacterCard';
+import { LookedAtEntites } from '../../../UI/VisibleEntities';
 
 class Level extends React.Component {
   constructor(props) {
@@ -83,6 +84,7 @@ class Level extends React.Component {
             <ImagePortrait actor={opponent} />
             <NamePlate actor={opponent} />
             <div style={{marginBottom: 16}}></div>
+            <LookedAtEntites game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()}/>
             <Messages messages={this.state.game.messages.slice(-5).reverse()} />
             <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} />
           </div>
