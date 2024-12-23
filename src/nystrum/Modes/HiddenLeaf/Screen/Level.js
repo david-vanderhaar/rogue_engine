@@ -8,7 +8,8 @@ import Messages from '../../../UI/Messages';
 import InfoBlocks from '../../../UI/InfoBlocks';
 import Equipment from '../../../UI/HiddenLeaf/Equipment';
 import { ImagePortrait, NamePlate } from '../../../UI/Entity/CharacterCard';
-import { LookedAtEntites } from '../../../UI/VisibleEntities';
+import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntities';
+import { COLORS } from '../theme';
 
 class Level extends React.Component {
   constructor(props) {
@@ -59,34 +60,45 @@ class Level extends React.Component {
     const opponent = meta.tournament.opponents[meta.tournament.active].basicInfo
     const player = meta.tournament.player.basicInfo
     return (
-      <div className="Level" style={{fontSize: 12, padding: 16}}>
+      <div className="Level" style={{fontSize: 12}}>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
-          <div style={{flex: 2}}>
-            <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
-            <ImagePortrait actor={player} />
-            <NamePlate actor={player} />
-            <PlayerInformation game={this.state.game} />
-          </div>
           <div style={{flex: 5}}>
-            <div className='game_display_container'>
+            <div className='game_display_container' style={{margin: 0, height: 680, width: 924, backgroundColor: COLORS.bg_override}}>
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
             </div>
-            <InfoBlocks game={this.state.game} />
+            {/* <InfoBlocks game={this.state.game} />
             <Instructions 
               game={this.state.game}
               spriteMode={this.state.game.spriteMode}
               setActiveScreen={this.props.setActiveScreen}
               toggleSpriteMode={this.toggleSpriteMode.bind(this)}
-            />
+            /> */}
+            <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -50, height: 90, position: 'relative'}}>
+              <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()} />
+            </div>
           </div>
-          <div style={{flex: 2}}>
-            <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Opponent</div>
-            <ImagePortrait actor={opponent} />
-            <NamePlate actor={opponent} />
-            <div style={{marginBottom: 16}}></div>
-            <LookedAtEntites game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()}/>
+          {/* <div style={{flex: 2}}>
+            <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
+            <ImagePortrait actor={player} />
+            <NamePlate actor={player} />
+            <PlayerInformation game={this.state.game} />
+          </div> */}
+          <div style={{flex: 2, padding: 12, paddingLeft: 28}}>
+            <div style={{display: 'flex'}}>
+              <div>
+                <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
+                <ImagePortrait actor={player} width={200} height={74} />
+                <NamePlate actor={player} />
+              </div>
+              <div style={{marginLeft: 12, marginTop: 42}}>
+                <div style={{fontSize: 12, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>vs</div>
+                <ImagePortrait actor={opponent} width={100} height={37} />
+                <NamePlate actor={opponent} />
+              </div>
+            </div>
+            <PlayerInformation game={this.state.game} />
             <Messages messages={this.state.game.messages.slice(-5).reverse()} />
-            <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} />
+            {/* <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} /> */}
           </div>
         </div>
       </div>

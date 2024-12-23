@@ -16,7 +16,7 @@ export function Portrait ({actor}) {
   )
 }
 
-export function ImagePortrait ({actor}) {
+export function ImagePortrait ({actor, width = null, height = null}) {
   return (
     <div className="Portrait" style={{
       backgroundColor: actor.renderer.background, 
@@ -24,6 +24,8 @@ export function ImagePortrait ({actor}) {
       border: '3px solid',
       borderRadius: 5,
       borderColor: actor.renderer.color,
+      width: width || '100%',
+      height: height|| '100%',
     }}>
       <img src={actor.renderer.portrait} style={{
         width: '100%',

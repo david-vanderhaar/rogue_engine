@@ -76,7 +76,7 @@ html {
   /* overflow-x: scroll; */
   /* border: solid 4px #eee; */
   /* height: 100%; */
-  height: calc(100vh - 200px);
+  /* height: calc(100vh - 200px); */
   margin: 10px;
   position: relative;
 }
@@ -620,6 +620,49 @@ f9d091var(--color-secondary) */
 
 .Jacinto__ActionMenu__Actions__item__resources {
   display: flex;
+}
+
+.HiddenLeaf__ActionMenu__Actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.HiddenLeaf__ActionMenu__Actions__item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.HiddenLeaf__ActionMenu__Actions__item:hover {
+  border: 2px solid var(--color-secondary);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.HiddenLeaf__ActionMenu__Actions__item__label {
+  color: var(--color-secondary);
+  margin-right: 10px;
+}
+
+.HiddenLeaf__ActionMenu__Actions__item__content {
+  margin-right: 10px;
+}
+
+.HiddenLeaf__ActionMenu__Actions__item__resources {
+  display: flex;
+}
+
+.HiddenLeaf__ResourceBlock {
+  /* border: 3px solid;
+  border-radius: 6px;
+  box-shadow: 3px 3px #424242;
+  display: flex;
+  font-size: 16;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 10px; */
 }
 
 .range-field {

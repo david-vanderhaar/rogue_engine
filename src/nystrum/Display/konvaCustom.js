@@ -302,7 +302,8 @@ export class Display {
     d.appendChild(displayContainer);
     d.oncontextmenu = (event) => event.preventDefault();
 
-    this.adjustContentToScreen(d);
+    // this.adjustContentToScreen(d);
+    this.hidden_leaf__adjustContentToScreen(d);
     
     this.stage = new Konva.Stage({
       container: 'display',   // id of container <div>
@@ -366,9 +367,10 @@ export class Display {
 
   adjustContentToScreen (display_element) {
     const DEVICE_HEIGHT = display_element.offsetHeight;
-    const value = (DEVICE_HEIGHT - this.tileOffset) / this.game.getRenderHeight();
     const DEVICE_WIDTH = display_element.offsetWidth;
+    const value = (DEVICE_HEIGHT - this.tileOffset) / this.game.getRenderHeight();
     // const value = (DEVICE_WIDTH - this.tileOffset) / this.game.getRenderWidth();
+    // this.tileWidth = value
     this.tileWidth = Math.round(value);
     this.tileHeight = this.tileWidth;
 
@@ -379,6 +381,13 @@ export class Display {
     const adjustedCameraHeight = this.getTilesDownOnScreenByHeight(DEVICE_HEIGHT)
     const newRenderHeight = this.game.setRenderHeight(adjustedCameraHeight)
     this.height = (newRenderHeight * this.tileHeight) + this.tileOffset;
+  }
+  
+  hidden_leaf__adjustContentToScreen (display_element) {
+    this.height = 680;
+    this.width = 924;
+    this.tileWidth = 26;
+    this.tileHeight = 26;
   }
 
   adjustGameCameraHeightToScreenHeight (height) { this.game.cameraHeight = this.getTilesDownOnScreenByHeight(height) }

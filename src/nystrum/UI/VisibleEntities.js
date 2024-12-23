@@ -48,6 +48,28 @@ export const LookedAtEntites = ({game, lookedAt = null}) => {
   )
 }
 
+export const LookedAtEntitesInline = ({game, lookedAt = null}) => {
+  if (lookedAt === null) {
+    lookedAt = game.entityLog.getLookedAt()
+  }
+
+  if (lookedAt.length <= 0) return null
+  return (
+    <div style={{textAlign: 'left', zIndex: 1}}>
+      {lookedAt.map((entity, index) => (
+        <span key={index} style={{marginBottom: 10, display: "inline-block"}}>
+          <EntityIcon renderer={entity.renderer} />
+          <EntityName entity={entity} />
+          <span style={{marginLeft: 20}}>
+            <EntityDescription entity={entity} />
+            <StatusEffects actor={entity} />
+          </span>
+        </span>
+      ))}
+    </div>
+  )
+}
+
 const EntityIcon = ({renderer}) => {
   return (
     <span style={{

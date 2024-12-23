@@ -21,8 +21,12 @@ export let GAME = null
 // const MAP_HEIGHT = 20;
 // const MAP_WIDTH = 80;
 // const MAP_HEIGHT = 60;
-const MAP_WIDTH = 40;
-const MAP_HEIGHT = 30;
+// const MAP_WIDTH = 47;
+// const MAP_HEIGHT = 32;
+// const MAP_WIDTH = 44;
+// const MAP_HEIGHT = 32;
+const MAP_WIDTH = 35;
+const MAP_HEIGHT = 26;
 
 const CAMERA_WIDTH = MAP_WIDTH;
 const CAMERA_HEIGHT = MAP_HEIGHT;
@@ -645,6 +649,7 @@ export const DisplayElement = (presserRef, handleKeyPress, engine) => {
       onKeyDown={(event) => handleKeyPress(event, engine)}
       // onKeyUp={(event) => handleKeyPress(event, engine)}
       tabIndex='0'
+      // style={{height: 680, width: 924}}
     />
   )
 }
