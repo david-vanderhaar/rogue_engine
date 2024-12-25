@@ -2,7 +2,7 @@ import { MESSAGE_TYPE } from '../message';
 import * as Helper from '../../helper';
 
 export const Attacking = superclass => class extends superclass {
-  constructor({ attackDamage = 1, ...args }) {
+  constructor({ attackDamage = 2, ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('ATTACKING');
     this.attackDamage = attackDamage;
@@ -43,7 +43,7 @@ export const Attacking = superclass => class extends superclass {
       let target = targets[targets.length - 1];
       if (this.canAttack(target)) {
         const damage = this.getAttackDamageWithEquipment(additional)
-        this.game.addMessage(`${this.name} does ${damage} to ${target.name}`, MESSAGE_TYPE.DANGER);
+        this.game.addMessage(`${this.name} attacks ${target.name} for ${damage}`, MESSAGE_TYPE.DANGER);
         target.decreaseDurability(damage);
         if (this.entityTypes.includes('PLAYING')) this.game.display.shakeScreen({intensity: 1})
         

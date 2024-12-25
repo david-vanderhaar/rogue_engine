@@ -2,6 +2,7 @@ import { destroyActor } from './helper';
 import * as Helper from '../../helper';
 import { ANIMATION_TYPES } from '../Display/konvaCustom';
 import spatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
+import { MESSAGE_TYPE } from '../message';
 
 export const Destructable = superclass => class extends superclass {
   constructor({ durability = 1, defense = 0, onDestroy = () => null, ...args }) {
@@ -36,15 +37,23 @@ export const Destructable = superclass => class extends superclass {
   }
   decreaseDurability(value) {
     const current = this.durability;
-    const decreaseBy = value - this.getDefense()
+    const defense = this.getDefense()
+    const decreaseBy = value - defense
     const newDurability = current - decreaseBy;
     this.durability = Math.min(current, newDurability);
-    this.addAnimation(-decreaseBy)
+    this.addDurabilityChangeAnimation(-decreaseBy)
+    this.addDefenseAppliedAnimation(defense)
+    this.addDecreaseDurabilityMessage(decreaseBy, defense)
     this.updateActorRenderer();
     if (this.entityTypes.includes('PLAYING')) this.bloodSpatter(value)
     if (this.durability <= 0) {
       this.destroy();
     }
+  }
+
+  addDecreaseDurabilityMessage(decreaseBy, defendFor) {
+    if (defendFor <= 0) return;
+    this.game.addMessage(`${this.name} blocks ${defendFor} of ${decreaseBy} damage`, MESSAGE_TYPE.INFORMATION);
   }
 
   bloodSpatter(value) {
@@ -66,7 +75,7 @@ export const Destructable = superclass => class extends superclass {
   }
   increaseDurability(value) {
     this.durability += value;
-    this.addAnimation(+value)
+    this.addDurabilityChangeAnimation(+value)
     this.updateActorRenderer();
   }
   updateActorRenderer() {
@@ -79,25 +88,38 @@ export const Destructable = superclass => class extends superclass {
     }
     this.game.draw();
   }
-  addAnimation(value) {
+
+  addDurabilityChangeAnimation(value) {
     let sign = ''
     let color = '#dc322f'
 
-    if (value >= 0) {
+    if (value > 0) {
       sign = '+'
       color = '#3e7dc9'
     }
 
     const text = sign + value
+    this.animateText(text, color)
+  }
+
+  addDefenseAppliedAnimation(value) {
+    // don't show defense if none is applied
+    if (value <= 0) return;
+    this.animateText(`block ${value}`, '#eee')
+  }
+
+  animateText(text, color) {
     this.game.display.addAnimation(
       ANIMATION_TYPES.TEXT_FLOAT,
       {
         ...this.getPosition(),
         color,
         text,
+        timeToLive: 750,
       }
     );
   }
+
   destroy() {
     this.onDestroy(this);
     destroyActor(this);

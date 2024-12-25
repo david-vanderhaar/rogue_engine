@@ -14,10 +14,11 @@ export const ANIMATION_TYPES = {
 }
 
 class Animation {
-  constructor({display, game}) {
+  constructor({display, ...args}) {
     const id = uuid();
     this.id = id;
     this.lifeTime = 0;
+    this.timeToLive = args?.timeToLive || 500;
     this.active = true;
     this.node = null;
     this.display = display;
@@ -68,10 +69,12 @@ class TextFloat extends Animation {
     this.color = color;
     this.text = text;
     this.textAttributes = textAttributes;
+    this.speedY = Helper.getRandomInt(-2, -1)
+    this.speedX = Helper.getRandomInt(-3, 3)
   }
 
   getActive () {
-    if (this.lifeTime > 500) {
+    if (this.lifeTime > this.timeToLive) {
       return false;
     }
     return true;
@@ -104,8 +107,12 @@ class TextFloat extends Animation {
 
   update (frame) {
     let y = this.node.y();
-    y += (1 * -1)
+    y += this.speedY
     this.node.y(y)
+
+    let x = this.node.x();
+    x += this.speedX
+    this.node.x(x)
     super.update(frame);
   }
 }
