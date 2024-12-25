@@ -70,6 +70,8 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
       style={{
         '--character-background-color': character.basicInfo.renderer.background,
         '--character-color': character.basicInfo.renderer.color,
+        fontFamily: 'player-start-2p',
+        fontSize: 12,
       }}
       onClick={() => {
         setSelectedCharacter(character)
@@ -95,7 +97,7 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
       <div>
         {actor.description}
       </div>
-      <div style={{display: 'flex', marginTop: 10}}> {/* bottom half of card  */}
+      <div style={{display: 'flex', marginTop: 10, fontSize: 10}}> {/* bottom half of card  */}
       <div>
           {/* stats */}
           <div style={{textAlign: 'left',}}>

@@ -97,7 +97,7 @@ class Level extends React.Component {
               </div>
             </div>
             <PlayerInformation game={this.state.game} />
-            <Messages messages={this.state.game.messages.slice(-5).reverse()} />
+            <Messages messages={this.state.game.messages.slice(-20).reverse()} />
             {/* <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} /> */}
           </div>
         </div>

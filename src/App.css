@@ -9,6 +9,7 @@
 
 html {
   background-color: #07111D;
+  font-family: 'player-start-2p';
 }
 
 .App {
@@ -79,6 +80,10 @@ html {
   /* height: calc(100vh - 200px); */
   margin: 10px;
   position: relative;
+}
+
+.btn {
+  font-family: 'player-start-2p';
 }
 
 .Instructions {
@@ -165,7 +170,6 @@ html {
 .CharacterCard_Container {
   display: flex;
   justify-content: flex-start;
-  padding: 16px 0 0 16px;
 }
 
 .CharacterCard {
@@ -305,7 +309,6 @@ f9d091var(--color-secondary) */
   text-align: left;
   margin: 15px 0;
 }
-
 
 .Keymap {
   /* left: 0px; */
@@ -682,7 +685,7 @@ f9d091var(--color-secondary) */
 .hidden-leaf-character-card {
   margin: 8px;
   padding: 6px;
-  min-height: 24rem;
+  min-height: 27rem;
   width: 14rem;
   cursor: pointer;
   border-radius: 5px;

@@ -20,21 +20,23 @@ class Messages extends React.Component {
     return (
       <div className="Messages UI">
         <div>Messages</div>
-        {
-          this.props.messages && (
-            this.props.messages.map((message, index) => {
-              return (
-                <Message 
-                  key={index} 
-                  color={message.type.color}
-                  backgroundColor={message.type.backgroundColor}
-                >
-                  {`${message.text}`}
-                </Message>
-              )
-            })
-          )
-        }
+        <div style={{height: 264, overflowY: 'scroll', scrollbarWidth: 'none'}}>
+          {
+            this.props.messages && (
+              this.props.messages.map((message, index) => {
+                return (
+                  <Message 
+                    key={index} 
+                    color={message.type.color}
+                    backgroundColor={message.type.backgroundColor}
+                  >
+                    {`${message.text}`}
+                  </Message>
+                )
+              })
+            )
+          }
+        </div>
       </div>
     );
   }

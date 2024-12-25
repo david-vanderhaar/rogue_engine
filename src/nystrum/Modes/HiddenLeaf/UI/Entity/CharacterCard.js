@@ -1,9 +1,7 @@
 import React from 'react';
 // import ActionBar from '../../../../UI/ActionBar';
-// import ActionMenu from '../../../../UI/Jacinto/ActionMenu'
 import ActionMenu from '../ActionMenu';
 import * as _ from 'lodash'
-import { NamePlate, ProgressBar, StatusEffects, ImagePortrait } from '../../../../UI/Entity/CharacterCard';
 
 export function SimpleProgressBar ({
   actor, 
@@ -19,7 +17,7 @@ export function SimpleProgressBar ({
   // const valueMax = attributeValueMax || _.get(actor, attributePathMax, 0) / unit;
   const valueCurrent = attributeValue || _.get(actor, attributePath, 0) / unit;
   return (
-    <span style={{marginRight: 24}} >
+    <span style={{marginRight: 12}} >
       {label}:<span style={{color: colorFilled}}>{valueCurrent}</span>
     </span>
   )
@@ -28,7 +26,7 @@ export function SimpleProgressBar ({
 function CharacterCard ({actor, game}) {
   return (
     <div className='CharacterCard'>
-      <div style={{marginBottom: 12}}>
+      <div style={{marginBottom: 12, marginTop: 12}}>
         <SimpleProgressBar 
           label='AP'
           attributePath='energy'
@@ -57,6 +55,21 @@ function CharacterCard ({actor, game}) {
             />
           )
         }
+        <br/>
+        <SimpleProgressBar 
+          label='ATK'
+          attributeValue={actor.getAttackDamageWithEquipment()}
+          colorFilled='#ff9926'
+          unit={1}
+          actor={actor} 
+        />
+        <SimpleProgressBar 
+          label='DEF'
+          attributeValue={actor.getDefense()}
+          colorFilled='#dc322f'
+          unit={1}
+          actor={actor} 
+        />
         {/* <StatusEffects actor={actor} /> */}
       </div>
       <div>

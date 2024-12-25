@@ -41,7 +41,7 @@ const basicInfo = {
       description: 'A technique where the user creates a ball of lightning to attack their opponent.',
     },
     {
-      name: 'Sharingan',
+      name: 'Sharin-gan',
       description: 'A technique where the user can see their opponents moves.',
     },
   ],
