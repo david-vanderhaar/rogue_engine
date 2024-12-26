@@ -58,7 +58,7 @@ export class Game {
     tileHeight = TILE_HEIGHT,
     tileOffset = TILE_OFFSET,
     getSelectedCharacter = () => false,
-    spriteMode = true,
+    spriteMode = false,
     fovActive = false,
     tileKey = Constant.TILE_KEY,
     mode = Mode.Flume,

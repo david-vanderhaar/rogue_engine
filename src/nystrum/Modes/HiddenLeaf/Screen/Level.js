@@ -2,7 +2,7 @@ import React from 'react';
 import { SCREENS } from './constants';
 import * as Engine from '../../../Engine/engine';
 import * as Game from '../../../game';
-import Instructions from '../../../UI/Instructions';
+import Instructions from '../UI/Instructions';
 import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
 import InfoBlocks from '../../../UI/InfoBlocks';
@@ -66,13 +66,7 @@ class Level extends React.Component {
             <div className='game_display_container' style={{margin: 0, height: 680, width: 924, backgroundColor: COLORS.bg_override}}>
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
             </div>
-            {/* <InfoBlocks game={this.state.game} />
-            <Instructions 
-              game={this.state.game}
-              spriteMode={this.state.game.spriteMode}
-              setActiveScreen={this.props.setActiveScreen}
-              toggleSpriteMode={this.toggleSpriteMode.bind(this)}
-            /> */}
+            {/* <InfoBlocks game={this.state.game} /> */}
             <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -50, height: 90, position: 'relative'}}>
               <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()} />
             </div>
@@ -100,6 +94,12 @@ class Level extends React.Component {
             <Messages messages={this.state.game.messages.slice(-20).reverse()} />
             {/* <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} /> */}
           </div>
+          <Instructions 
+            game={this.state.game}
+            spriteMode={this.state.game.spriteMode}
+            setActiveScreen={this.props.setActiveScreen}
+            toggleSpriteMode={this.toggleSpriteMode.bind(this)}
+          />
         </div>
       </div>
     );
