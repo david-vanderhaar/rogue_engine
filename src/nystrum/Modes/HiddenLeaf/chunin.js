@@ -10,6 +10,7 @@ import { Mode } from '../default';
 import SOUNDS from '../../sounds';
 import * as _ from 'lodash';
 import { TILE_KEY } from './theme';
+import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
@@ -163,17 +164,49 @@ export class Chunin extends Mode {
     super.update();
     // this.updateUI();
     if (this.hasLost()) {
+      console.log('lost');
+      
       SOUNDS.lose.play();
-      this.game.toLose();
-      this.reset();
-      this.game.initializeGameData();
+      // this.game.toLose();
+      // this.reset();
+      // this.game.initializeGameData();
     } else if (this.hasWon()) {
-      this.game.toWin()
+      // this.game.toWin()
+      this.addFireWorks();
     } else if (this.levelComplete()) {
       this.nextLevel();
       this.setWaveData();
       this.game.initializeGameData();
     }
+  }
+
+  addSingleCelebratoryDebris () {
+    // const position = this.getPlayers()[0].getPosition();
+    const position = Helper.getRandomPos(this.game.map).coordinates;
+    this.addCelebratoryDebris(position);
+  }
+
+  addCelebratoryDebris (position) {
+    SpatterEmitter({
+      game: this.game,
+      fromPosition: position,
+      spatterAmount: .3,
+      spatterRadius: 10,
+      transfersBackground: false,
+      spatterColors: ['#ff551a', '#673ab7', '#3fc072', '#e16264', '#67a1d7'],
+    }).start()
+  }
+
+  addFireWorks () {
+    // pick a range of random positions
+    // then add celebratory debris to each on a timer
+    const positions = Array(10).fill(null).map(() => Helper.getRandomPos(this.game.map).coordinates);
+
+    positions.forEach((position) => {
+      setTimeout(() => {
+        this.addCelebratoryDebris(position);
+      }, Helper.getRandomInt(0, 1000))
+    })
   }
   
   //Extras

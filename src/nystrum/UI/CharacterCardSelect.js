@@ -12,8 +12,6 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
       if (options.includes(event.key)) {
         const index = parseInt(event.key) - 1
 
-        console.log(selected, index);
-        
         if (selected === index) {
           setSelectedCharacter(characters[index])
           setActiveScreen(SCREENS.TOURNAMENT)

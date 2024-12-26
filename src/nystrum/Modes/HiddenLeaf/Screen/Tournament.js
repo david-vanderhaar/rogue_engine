@@ -11,7 +11,8 @@ function createTournament ({characters, selectedCharacter: player}) {
   const shuffledOpponents = shuffle(opponents)
 
   return {
-    opponents: shuffledOpponents,
+    opponents: [shuffledOpponents.at(0)],
+    // opponents: shuffledOpponents,
     player: player,
     active: 0,
   }

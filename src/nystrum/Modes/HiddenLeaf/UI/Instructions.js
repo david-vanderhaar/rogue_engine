@@ -41,9 +41,9 @@ function Instructions(props) {
   return (
     <div
       style={{
-        position: 'absolute',
-        bottom: 112,
-        right: 74,
+        position: 'relative',
+        top: 688,
+        right: 152,
       }}
     >
       {infoHeader && (<p>{infoHeader}</p>)}

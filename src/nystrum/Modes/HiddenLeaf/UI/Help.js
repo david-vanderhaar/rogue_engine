@@ -16,15 +16,14 @@ function Help(props) {
 
   useEffect(() => {
     const handleKeyPress = (event) => {
-      console.log(event);
-      
       if (event.key === '?') {
         triggerHelpModal()
       }
     };
-    // Add event listener when the component mounts
+
     window.addEventListener('keydown', handleKeyPress);
-    // Clean up by removing the event listener when the component unmounts
+    
+    // Remove event listeners on cleanup
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };

@@ -15,6 +15,6 @@ export const Playing = superclass => class extends superclass {
   }
   destroy() {
     super.destroy()
-    this.game.toLose();
+    // this.game.toLose();
   }
 };
