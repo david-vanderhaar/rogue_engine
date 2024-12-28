@@ -163,12 +163,7 @@ export class Chunin extends Mode {
     super.update();
     // this.updateUI();
     if (this.hasLost()) {
-      console.log('lost');
-      
-      SOUNDS.lose.play();
-      // this.game.toLose();
-      // this.reset();
-      // this.game.initializeGameData();
+      this.onLose()
     } else if (this.hasWon()) {
       this.onWin()
     } else if (this.levelComplete()) {
@@ -178,6 +173,19 @@ export class Chunin extends Mode {
     }
   }
 
+  onLose() {
+    if (!this.data['hasLost']) {
+      SOUNDS.lose.play();
+      // this.game.toLose();
+      // this.reset();
+      // this.game.initializeGameData();
+      this.createOrUpdateInfoBlock('hasLost', {text: `${this.meta().tournament.player.name} is down! Good luck next year.`})
+      this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to Play Again'})
+      this.addOnEnterListener();
+    }
+    this.data['hasLost'] = true;
+  }
+
   onWin() {
     // this.game.toWin()
     if (!this.data['hasWon']) {
@@ -185,7 +193,6 @@ export class Chunin extends Mode {
       this.createOrUpdateInfoBlock('hasWon', {text: `${this.game.getFirstPlayer().name} has won the Chunin Tournament!`})
       this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to Play Again'})
       this.addOnEnterListener();
-      // TODO (reset data)
     }
     this.data['hasWon'] = true;
   }
@@ -194,6 +201,8 @@ export class Chunin extends Mode {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
         this.game.backToTitle()
+        this.meta({})
+        // TODO (reset data)
         window.removeEventListener('keydown', handleKeyPress);
       }
     };
