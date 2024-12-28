@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { SCREENS } from '../Screen/constants';
-import * as _ from 'lodash';
+import React from 'react';
 import { CARTRIDGE } from '../../../Nystrum';
 import Help from './Help';
 
@@ -31,8 +29,6 @@ function Button({triggerModal = null, onClick, children}) {
 }
 
 function Instructions(props) {
-  const infoHeader = _.get(props.game, 'mode.infoHeader', null);
-  // const infoBlocks = _.get(props.game, 'mode.infoBlocks', {});
   const restart = () => {
     // props.setActiveScreen(SCREENS.TITLE)
     window.location.reload()
@@ -42,12 +38,12 @@ function Instructions(props) {
     <div
       style={{
         position: 'relative',
-        top: 688,
-        right: 152,
+        top: 701,
+        right: 198,
+        height: 'fit-content'
       }}
     >
-      {infoHeader && (<p>{infoHeader}</p>)}
-      <div>
+      <div style={{width: 'max-content'}}>
         <Button onClick={restart}>Restart</Button>
         {/* <Button onClick={props.toggleSpriteMode}>
           {

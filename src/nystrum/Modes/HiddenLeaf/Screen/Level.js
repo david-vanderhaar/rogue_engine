@@ -5,7 +5,7 @@ import * as Game from '../../../game';
 import Instructions from '../UI/Instructions';
 import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
-import InfoBlocks from '../../../UI/InfoBlocks';
+import InfoBlocks from '../UI/InfoBlocks';
 import Equipment from '../../../UI/HiddenLeaf/Equipment';
 import { ImagePortrait, NamePlate } from '../../../UI/Entity/CharacterCard';
 import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntities';
@@ -65,18 +65,12 @@ class Level extends React.Component {
           <div style={{flex: 5}}>
             <div className='game_display_container' style={{margin: 0, height: 680, width: 924, backgroundColor: COLORS.bg_override}}>
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
+              <InfoBlocks game={this.state.game} />
             </div>
-            {/* <InfoBlocks game={this.state.game} /> */}
-            <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -50, height: 90, position: 'relative'}}>
+            <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -52, height: 92, position: 'relative'}}>
               <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()} />
             </div>
           </div>
-          {/* <div style={{flex: 2}}>
-            <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
-            <ImagePortrait actor={player} />
-            <NamePlate actor={player} />
-            <PlayerInformation game={this.state.game} />
-          </div> */}
           <div style={{flex: 2, padding: 12, paddingLeft: 28}}>
             <div style={{display: 'flex'}}>
               <div>

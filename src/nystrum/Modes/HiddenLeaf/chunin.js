@@ -43,7 +43,6 @@ export class Chunin extends Mode {
     super.initialize();
     this.createEmptyLevel();
     this.game.initializeMapTiles();
-
     this.setWaveData();
 
     // add a random number of blobs of random size of GROUND
@@ -171,8 +170,7 @@ export class Chunin extends Mode {
       // this.reset();
       // this.game.initializeGameData();
     } else if (this.hasWon()) {
-      // this.game.toWin()
-      this.addFireWorks();
+      this.onWin()
     } else if (this.levelComplete()) {
       this.nextLevel();
       this.setWaveData();
@@ -180,8 +178,30 @@ export class Chunin extends Mode {
     }
   }
 
+  onWin() {
+    // this.game.toWin()
+    if (!this.data['hasWon']) {
+      this.addFireWorks();
+      this.createOrUpdateInfoBlock('hasWon', {text: `${this.game.getFirstPlayer().name} has won the Chunin Tournament!`})
+      this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to Play Again'})
+      this.addOnEnterListener();
+      // TODO (reset data)
+    }
+    this.data['hasWon'] = true;
+  }
+
+  addOnEnterListener() {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+        this.game.backToTitle()
+        window.removeEventListener('keydown', handleKeyPress);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+  }
+
   addSingleCelebratoryDebris () {
-    // const position = this.getPlayers()[0].getPosition();
     const position = Helper.getRandomPos(this.game.map).coordinates;
     this.addCelebratoryDebris(position);
   }
@@ -193,19 +213,19 @@ export class Chunin extends Mode {
       spatterAmount: .3,
       spatterRadius: 10,
       transfersBackground: false,
-      spatterColors: ['#ff551a', '#673ab7', '#3fc072', '#e16264', '#67a1d7'],
+      spatterColors: ['#e9d679', '#673ab7', '#3fc072', '#e16264', '#67a1d7'],
     }).start()
   }
 
   addFireWorks () {
     // pick a range of random positions
     // then add celebratory debris to each on a timer
-    const positions = Array(10).fill(null).map(() => Helper.getRandomPos(this.game.map).coordinates);
+    const positions = Array(30).fill(null).map(() => Helper.getRandomPos(this.game.map).coordinates);
 
     positions.forEach((position) => {
       setTimeout(() => {
         this.addCelebratoryDebris(position);
-      }, Helper.getRandomInt(0, 1000))
+      }, Helper.getRandomInt(0, 10000))
     })
   }
   
