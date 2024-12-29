@@ -4,7 +4,7 @@ import {COLORS} from '../../../Jacinto/theme';
 import SOUNDS from '../../../../sounds';
 import gradientPathEmitter from '../../../../Engine/Particle/Emitters/gradientPathEmitter';
 import SpatterEmitter from '../../../../Engine/Particle/Emitters/spatterEmitter';
-import { getNumberOfItemsInArray, getRandomInArray } from '../../../../../helper';
+import { getNumberOfItemsInArray, getRandomInArray, EASING } from '../../../../../helper';
 
 export function Katon(engine, pos) {
   async function afterFireSuccess({fromPosition, targetPositions, hits, misses}) {
@@ -20,7 +20,8 @@ export function Katon(engine, pos) {
       pathTailLength: 3,
       backgroundColorGradient: [Constant.THEMES.SOLARIZED.red, Constant.THEMES.SOLARIZED.red],
       colorGradient: [Constant.THEMES.SOLARIZED.red, Constant.THEMES.SOLARIZED.violet],
-      animationTimeStep: 0.1,
+      animationTimeStep: 0.01,
+      easingFunction: EASING.easeOut,
     })
   
     await emitter.start()
