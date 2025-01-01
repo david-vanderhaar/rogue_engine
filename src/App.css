@@ -712,6 +712,11 @@ f9d091var(--color-secondary) */
   animation: border-pulse 2s infinite;
 }
 
+.blinking-border {
+  transition: all .2s linear;
+  animation: border-blink .4s infinite;
+}
+
 @keyframes border-pulse {
   0% {
     border-color: var(--character-color);
@@ -723,6 +728,31 @@ f9d091var(--color-secondary) */
     border-color: var(--character-color);
   }
 }
+
+
+@keyframes border-blink {
+  0% {
+    border-style: solid;
+  }
+  50% {
+    border-style: dashed;
+  }
+  100% {
+    border-style: solid;
+  }
+}
+
+/* @keyframes border-blink {
+  0% {
+    border-width: 0;
+  }
+  50% {
+    border-width: 4px
+  }
+  100% {
+    border-width: 0;
+  }
+} */
 
 .text--blinking {
   animation: text-pulse 1s infinite;

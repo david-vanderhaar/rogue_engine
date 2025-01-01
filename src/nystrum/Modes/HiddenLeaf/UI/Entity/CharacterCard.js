@@ -2,6 +2,7 @@ import React from 'react';
 // import ActionBar from '../../../../UI/ActionBar';
 import ActionMenu from '../ActionMenu';
 import * as _ from 'lodash'
+import Tooltip from '../../../../UI/Tooltip';
 
 export default function CharacterCard ({actor, game}) {
   return (
@@ -61,15 +62,22 @@ export default function CharacterCard ({actor, game}) {
 }
 
 export function ImagePortrait ({actor, width = null, height = null}) {
+  let borderColor = actor.renderer.color
+  let blinking = ''
+  const effects = actor?.game?.engine?.getStatusEffectsByActorId(actor.id) || []
+  if (effects.length > 0) {
+    borderColor = effects[0].renderer.color
+    blinking = 'blinking-border'
+  }
   return (
-    <div className="Portrait" style={{
+    <div className={`Portrait ${blinking}`} style={{
       backgroundColor: actor.renderer.background, 
       color: actor.renderer.color,
       border: '3px solid',
       borderRadius: 5,
-      borderColor: actor.renderer.color,
+      borderColor,
       width: width || '100%',
-      height: height|| '100%',
+      height: height || '100%',
     }}>
       <img
         src={actor.renderer.portrait}
@@ -99,5 +107,37 @@ export function SimpleProgressBar ({
     <span style={{marginRight: 12}} >
       {label}:<span style={{color: colorFilled}}>{valueCurrent}</span>
     </span>
+  )
+}
+
+export function StatusEffect ({effect}) {
+  return (
+    <div className="StatusEffects__effect" style={{
+      backgroundColor: effect.renderer.background, 
+      color: effect.renderer.color,
+      borderColor: effect.renderer.color,
+    }}>
+      {effect.renderer.sprite ? effect.renderer.sprite : effect.renderer.character}
+    </div>
+  )
+}
+
+export function StatusEffects ({actor}) {
+  return (
+    <div className="StatusEffects">
+      {
+        actor.game.engine.getStatusEffectsByActorId(actor.id).map((effect, i) => {
+          return (
+            <Tooltip 
+              key={i}
+              title={effect.name}
+              text={effect.description}
+            >
+              <StatusEffect effect={effect} />
+            </Tooltip>
+          )
+        })
+      }
+    </div>
   )
 }
