@@ -30,6 +30,8 @@ const basicInfo = {
     color: HIDDEN_LEAF_COLORS.sasuke_alt,
     background: HIDDEN_LEAF_COLORS.sasuke,
     portrait,
+    basePortrait: portrait,
+    damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,
   },
   abilities: [
     {

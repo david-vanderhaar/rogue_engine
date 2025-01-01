@@ -3,27 +3,7 @@ import React from 'react';
 import ActionMenu from '../ActionMenu';
 import * as _ from 'lodash'
 
-export function SimpleProgressBar ({
-  actor, 
-  label, 
-  colorFilled = 'red',
-  colorEmpty = 'gray',
-  attributePathMax, 
-  attributePath, 
-  attributeValueMax,
-  attributeValue,
-  unit,
-}) {
-  // const valueMax = attributeValueMax || _.get(actor, attributePathMax, 0) / unit;
-  const valueCurrent = attributeValue || _.get(actor, attributePath, 0) / unit;
-  return (
-    <span style={{marginRight: 12}} >
-      {label}:<span style={{color: colorFilled}}>{valueCurrent}</span>
-    </span>
-  )
-}
-
-function CharacterCard ({actor, game}) {
+export default function CharacterCard ({actor, game}) {
   return (
     <div className='CharacterCard'>
       <div style={{marginBottom: 12, marginTop: 12}}>
@@ -80,4 +60,44 @@ function CharacterCard ({actor, game}) {
   )
 }
 
-export default CharacterCard;
+export function ImagePortrait ({actor, width = null, height = null}) {
+  return (
+    <div className="Portrait" style={{
+      backgroundColor: actor.renderer.background, 
+      color: actor.renderer.color,
+      border: '3px solid',
+      borderRadius: 5,
+      borderColor: actor.renderer.color,
+      width: width || '100%',
+      height: height|| '100%',
+    }}>
+      <img
+        src={actor.renderer.portrait}
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      />
+    </div>
+  )
+}
+
+export function SimpleProgressBar ({
+  actor, 
+  label, 
+  colorFilled = 'red',
+  colorEmpty = 'gray',
+  attributePathMax, 
+  attributePath, 
+  attributeValueMax,
+  attributeValue,
+  unit,
+}) {
+  // const valueMax = attributeValueMax || _.get(actor, attributePathMax, 0) / unit;
+  const valueCurrent = attributeValue || _.get(actor, attributePath, 0) / unit;
+  return (
+    <span style={{marginRight: 12}} >
+      {label}:<span style={{color: colorFilled}}>{valueCurrent}</span>
+    </span>
+  )
+}

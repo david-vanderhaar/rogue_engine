@@ -45,6 +45,8 @@ export const Destructable = superclass => class extends superclass {
     this.addDefenseAppliedAnimation(defense)
     this.addDecreaseDurabilityMessage(decreaseBy, defense)
     this.updateActorRenderer();
+    this.portraitFlash()
+    // this.shakePlayer()
     if (this.entityTypes.includes('PLAYING')) this.bloodSpatter(value)
     if (this.durability <= 0) {
       this.destroy();
@@ -66,6 +68,37 @@ export const Destructable = superclass => class extends superclass {
       transfersBackground: true,
       spatterColors: ['#833139', '#aa2123'],
     }).start()
+  }
+
+  portraitFlash() {
+    const portrait = this.renderer?.basePortrait
+    const altPortrait = this.renderer?.damageFlashPortrait
+
+    if (!portrait || !altPortrait) return; // don't flash if character doesn't have portrait;
+
+    const ports = [portrait, altPortrait]
+    let port_index = 0
+
+    function switch_port() {
+      port_index = 1 - port_index
+      const new_port = ports[port_index]
+      
+      return new_port
+    }
+
+    const flashInterval = 50; // Time between flashes in milliseconds
+    const flashCount = 12; // Total number of flashes
+
+    let flashStep = 0;
+    const flashEffect = setInterval(() => {
+      this.renderer.portrait = switch_port(); // Switch the portrait
+      this.game.updateReact(this.game);
+
+      flashStep++;
+      if (flashStep >= flashCount) {
+        clearInterval(flashEffect); // Stop flashing after completing cycles
+      }
+    }, flashInterval);
   }
 
   shakePlayer() {

@@ -34,6 +34,8 @@ const basicInfo = {
     color: HIDDEN_LEAF_COLORS.black,
     background: HIDDEN_LEAF_COLORS.orange,
     portrait,
+    basePortrait: portrait,
+    damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,
   },
   abilities: [
     {

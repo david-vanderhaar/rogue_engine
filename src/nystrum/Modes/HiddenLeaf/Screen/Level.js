@@ -7,7 +7,8 @@ import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
 import InfoBlocks from '../UI/InfoBlocks';
 import Equipment from '../../../UI/HiddenLeaf/Equipment';
-import { ImagePortrait, NamePlate } from '../../../UI/Entity/CharacterCard';
+import { ImagePortrait } from '../UI/Entity/CharacterCard';
+import { NamePlate } from '../../../UI/Entity/CharacterCard';
 import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntities';
 import { COLORS } from '../theme';
 
@@ -55,10 +56,24 @@ class Level extends React.Component {
     this.setState({ spriteMode: this.state.game.spriteMode})
   }
 
+  getPlayer(meta) {
+    let player = this.state.game.getFirstPlayer()
+    if (!player) player = meta.tournament.player.basicInfo
+
+    return player
+  }
+
+  getOpponent(meta) {
+    let opponent = this.state.game.mode.getOpponentActor()
+    if (!opponent) opponent = meta.tournament.opponents[meta.tournament.active].basicInfo
+
+    return opponent
+  }
+
   render() {
     const meta = this.props.meta()
-    const opponent = meta.tournament.opponents[meta.tournament.active].basicInfo
-    const player = meta.tournament.player.basicInfo
+    const opponent = this.getOpponent(meta)
+    const player = this.getPlayer(meta)
     return (
       <div className="Level" style={{fontSize: 12}}>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>

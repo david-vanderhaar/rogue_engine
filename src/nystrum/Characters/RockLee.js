@@ -30,7 +30,9 @@ const basicInfo = {
     character: 'R',
     color: Constant.THEMES.SOLARIZED.base3,
     background: Constant.THEMES.NARUTO.rock_lee,
-    portrait
+    portrait,
+    basePortrait: portrait,
+    damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,
   },
   abilities: [
     {

@@ -18,6 +18,7 @@ import {CloneSelf} from '../Actions/CloneSelf';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`;
+
 const basicInfo = {
   name: 'Gaara',
   description: 'Some say he is a demon.',
@@ -26,6 +27,8 @@ const basicInfo = {
     color: Constant.THEMES.SOLARIZED.base2,
     background: Constant.THEMES.NARUTO.gaara,
     portrait,
+    basePortrait: portrait,
+    damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,
   },
   abilities: [
     {
@@ -63,7 +66,7 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
         });
       },
       's,ArrowDown': () => {

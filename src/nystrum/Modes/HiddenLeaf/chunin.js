@@ -146,6 +146,10 @@ export class Chunin extends Mode {
     return this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
   }
 
+  getOpponentActor() {
+    return this.game.engine.actors.find((actor) => actor.name === this.getTournamentOpponent().name)
+  }
+
   updateUI() {
     _.each(this.getPlayers(), (player, index) => {
       const currentBlips = Math.floor(player.energy / 100);
@@ -175,7 +179,7 @@ export class Chunin extends Mode {
 
   onLose() {
     if (!this.data['hasLost']) {
-      SOUNDS.lose.play();
+      // SOUNDS.lose.play();
       // this.game.toLose();
       // this.reset();
       // this.game.initializeGameData();
