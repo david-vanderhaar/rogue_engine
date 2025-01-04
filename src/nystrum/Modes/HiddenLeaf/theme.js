@@ -10,6 +10,7 @@ export const COLORS = {
   wraps: '#F0D8C0',
   wall: '#a3625f',
   wall_alt: '#714545',
+  chakra: '#3e7dc9',
   dirt00: '#2a251f', 
   dirt0: '#dbcdab',
   grass00: '#435035',

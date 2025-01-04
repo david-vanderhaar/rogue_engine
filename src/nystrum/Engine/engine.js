@@ -221,6 +221,12 @@ export class Engine {
     return this.statusEffects.filter((effect) => effect.actor.id === actorId);
   }
 
+  actorHasStatusEffect(actorId, effectName) {
+    return this.getStatusEffectsByActorId(actorId)
+      .filter((effect) => effect.name === effectName)
+      .length > 0;
+  }
+
   processStatusEffects (timePassed) {
     let effects = this.statusEffects
     if (!this.currentActorIsPlayer()) effects = effects.filter((effect) => !effect.processOnlyOnPlayerTurn)

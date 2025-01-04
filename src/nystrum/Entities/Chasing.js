@@ -9,23 +9,28 @@ export const Chasing = superclass => class extends superclass {
     this.entityTypes = this.entityTypes.concat('CHASING');
     this.targetEntity = targetEntity;
   }
+
   getAction(game) {
-    if (this.targetEntity) {
-      let path = Helper.calculatePath(game, this.targetEntity.pos, this.pos);
-      let targetPos = path.length > 0 ? path[0] : this.pos;
-      return new MoveOrAttack({
-        targetPos,
-        game,
-        actor: this,
-        energyCost: Constant.ENERGY_THRESHOLD
-      });
-    } else {
-      return new Say({
-        message: 'Where are they?',
-        game,
-        actor: this,
-        energyCost: Constant.ENERGY_THRESHOLD
-      });
-    }
+    if (!this.targetEntity) return this.sayAction(game)
+    
+    let path = Helper.calculatePath(game, this.targetEntity.pos, this.pos);
+    if (path.length <= 0) return this.sayAction(game)
+    
+    let targetPos = path[0];
+    return new MoveOrAttack({
+      targetPos,
+      game,
+      actor: this,
+      energyCost: Constant.ENERGY_THRESHOLD
+    });
   }
+
+  sayAction(game) {
+    return new Say({
+      message: 'Where are they?',
+      game,
+      actor: this,
+      energyCost: Constant.ENERGY_THRESHOLD
+    });
+  } 
 };
