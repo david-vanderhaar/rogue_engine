@@ -24,6 +24,7 @@ import { PrepareCallReinforcements } from '../Actions/PrepareCallReinforcements'
 import { SpawnShadowClones } from '../Actions/SpawnShadowClones';
 import { DurabilityResource } from '../Actions/ActionResources/DurabilityResource';
 import { UzumakiBarrage } from '../Modes/HiddenLeaf/Items/Weapons/UzumakiBarrage';
+import { checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
 const basicInfo = {
@@ -73,7 +74,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       's,ArrowDown': () => {
@@ -85,7 +87,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -97,7 +100,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       'd,ArrowRight': () => {
@@ -109,7 +113,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       p: () => new Say({
@@ -188,6 +193,7 @@ function initialize (engine) {
     faction: 'NARUTO',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
+    traversableTiles: ['WATER'],
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,

@@ -13,9 +13,9 @@ export class WalkingOnWater extends Base {
     this.allowDuplicates = false
     this.lifespan = -1
     this.renderer = {
-      color: '#424242',
-      background: '#e6e6e6',
-      character: '〣'
+      color: HIDDEN_LEAF_COLORS.black,
+      background: HIDDEN_LEAF_COLORS.cog2,
+      character: '~'
     }
 
     this.onStart = () => {
@@ -51,7 +51,7 @@ export class WalkingOnWater extends Base {
         this.actor.traversableTiles.push('WATER')
       }
       
-      if (this.actor.charge < 1) {
+      if (this.actor.getCharge() < 1) {
         this.actor.traversableTiles = this.actor.traversableTiles.filter((type) => type !== 'WATER')
       }
 

@@ -16,12 +16,11 @@ import {PickupRandomItem} from '../Actions/PickupRandomItem';
 import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { getPositionInDirection, getTileAtPosition } from '../../helper';
+import { getPositionInDirection } from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
-import { ChakraBleed } from '../Modes/HiddenLeaf/StatusEffects/ChakraBleed';
-import { WalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/WalkingOnWater';
+import { checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -59,23 +58,6 @@ const basicInfo = {
 }
 
 function initialize (engine) {
-
-  function checkIsWalkingOnWater (engine, actor) {
-    if (engine.actorHasStatusEffect(actor.id, 'walking on water')) return;
-
-    const tile = getTileAtPosition(engine.game, actor.getPosition())
-    if (!tile) return;
-
-    if (tile.type === 'WATER') {
-      const effect = new WalkingOnWater({
-        game: engine.game,
-        actor,
-        stepInterval: Constant.ENERGY_THRESHOLD,
-      })
-      engine.addStatusEffect(effect);
-    }
-  }
-
   // define keymap
   const keymap = (engine, actor) => {
     return {
@@ -89,7 +71,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: () => checkIsWalkingOnWater(engine, actor)
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       's,ArrowDown': () => {
@@ -102,7 +84,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: () => checkIsWalkingOnWater(engine, actor)
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -115,7 +97,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: () => checkIsWalkingOnWater(engine, actor)
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       'd,ArrowRight': () => {
@@ -128,7 +110,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onSuccess: () => checkIsWalkingOnWater(engine, actor)
+          onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       p: () => new Say({
@@ -150,7 +132,7 @@ function initialize (engine) {
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD * (basicInfo.speed/100),
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 2 })],
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
         actionLabel: 'Chidori',
         actionClass: TackleByRange,
         positionsByDirection: (actor, direction) => {

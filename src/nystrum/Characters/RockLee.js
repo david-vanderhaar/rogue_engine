@@ -20,6 +20,7 @@ import { DrunkenFist } from '../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
 import { GoToPreviousKeymap } from '../Actions/GoToPreviousKeymap';
 import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../Actions/MoveTowards';
+import { checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
 
@@ -72,7 +73,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          // onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       's,ArrowDown': () => {
@@ -84,7 +86,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          // onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -96,7 +99,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          // onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       'd,ArrowRight': () => {
@@ -108,7 +112,8 @@ function initialize (engine) {
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
-          energyCost: Constant.ENERGY_THRESHOLD
+          energyCost: Constant.ENERGY_THRESHOLD,
+          // onAfter: () => checkIsWalkingOnWater(engine, actor),
         });
       },
       p: () => new Say({

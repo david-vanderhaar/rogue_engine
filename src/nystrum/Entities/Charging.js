@@ -5,6 +5,9 @@ export const Charging = superclass => class extends superclass {
     this.charge = charge;
     this.chargeMax = charge;
   }
+  getCharge() {
+    return this.charge;
+  }
   decreaseCharge(value) {
     this.charge = Math.max(0, this.charge - value);
   }
