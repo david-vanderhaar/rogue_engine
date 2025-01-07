@@ -4,6 +4,8 @@ export const COLORS = {
   text: '#eee',
   gaara: '#603030',
   rock_lee: '#155859',
+  tenten: '#b75a5e',
+  tenten_alt: '#F0D8C0',
   sasuke: '#103880',
   sasuke_alt: '#b75a5e',
   leaf: '#36635b',

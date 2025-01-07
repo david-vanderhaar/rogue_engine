@@ -12,6 +12,7 @@ import RockLee from '../Characters/RockLee';
 import Gaara from '../Characters/Gaara';
 import Sasuke from '../Characters/Sasuke';
 import Naruto from '../Characters/Naruto';
+import Tenten from '../Characters/Tenten';
 
 export const hiddenLeafCart = () => {
   return (
@@ -22,6 +23,7 @@ export const hiddenLeafCart = () => {
         Rock_Lee: RockLee(),
         Sasuke: Sasuke(),
         Naruto: Naruto(),
+        Tenten: Tenten(),
       },
       theme: COLORS,
       screens: {
