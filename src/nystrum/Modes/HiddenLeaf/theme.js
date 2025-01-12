@@ -67,7 +67,7 @@ export const TILE_KEY = {
     character: '.',
     sprite: '',
     passable: true,
-    tags: ['PROVIDING_COVER'],
+    tags: ['PROVIDING_COVER', 'BURNABLE'],
     animation: [
       { background: COLORS.bg_override || COLORS.grass0, foreground: COLORS.grass0, character: ',', sprite: '"', passable: true, },
       { background: COLORS.bg_override || COLORS.grass0, foreground: COLORS.grass00, character: '.', sprite: '', passable: true, },
@@ -79,7 +79,7 @@ export const TILE_KEY = {
     character: '.',
     sprite: '.',
     passable: true,
-    tags: ['PROVIDING_COVER'],
+    tags: ['PROVIDING_COVER', 'BURNABLE'],
     animation: [
       { background: COLORS.bg_override || COLORS.dirt0, foreground: COLORS.dirt0, character: '.', sprite: '.', passable: true, },
       { background: COLORS.bg_override || COLORS.dirt0, foreground: COLORS.dirt00, character: '.', sprite: '.', passable: true, },

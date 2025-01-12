@@ -4,7 +4,7 @@ import * as Item from '../../items';
 import * as MapHelper from '../../Maps/helper';
 import { generate as generateBuilding } from '../../Maps/generator';
 import * as CoverGenerator from '../../Maps/coverGenerator';
-import { Debris, Bandit, RangedBandit } from '../../Entities/index';
+import { Debris, Bandit, RangedBandit, FireSpread } from '../../Entities/index';
 import { MESSAGE_TYPE } from '../../message';
 import { Mode } from '../default';
 import SOUNDS from '../../sounds';

@@ -6,11 +6,19 @@ import {MESSAGE_TYPE} from '../message';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 
 export const Exploding = superclass => class extends superclass {
-  constructor({ flammability = 1, explosivity = 1, ...args }) {
+  constructor({ 
+    flammability = 1,
+    explosivity = 1,
+    timeToSpread = 1,
+    spreadCount = 1,
+    ...args 
+  }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('EXPLODING');
     this.flammability = flammability;
     this.explosivity = explosivity;
+    this.timeToSpread = timeToSpread;
+    this.spreadCount = spreadCount;
   }
   enflame() {
     // create num of fireSpreads
@@ -24,8 +32,8 @@ export const Exploding = superclass => class extends superclass {
           color: Constant.THEMES.SOLARIZED.base3,
           background: Constant.THEMES.SOLARIZED.red,
         },
-        timeToSpread: 1,
-        spreadCount: 1,
+        timeToSpread: this.timeToSpread,
+        spreadCount: this.spreadCount,
         durability: 1,
         attackDamage: 1,
         speed: 100,

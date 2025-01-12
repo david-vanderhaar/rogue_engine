@@ -21,6 +21,9 @@ import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
 import { checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { PiercingKunai } from '../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
+import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
+import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/tenten.png`;
 const basicInfo = {
@@ -127,56 +130,20 @@ function initialize (engine) {
         actor,
         energyCost: actor.energy,
       }),
-      l: () => new PrepareDirectionalAction({
-        label: 'Chidori',
+      // l: () => null,
+      f: () => new PrepareDirectionalThrow({
+        label: 'Exploding Tag',
+        projectileType: 'exploding tag',
         game: engine.game,
         actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD * (basicInfo.speed/100),
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-        actionLabel: 'Chidori',
-        actionClass: TackleByRange,
-        positionsByDirection: (actor, direction) => {
-          const pos = actor.getPosition();
-          return Array(10).fill('').map((none, distance) => {
-            if (distance > 0) {
-              return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
-            } else {
-              return null;
-            }
-          }).filter((pos) => pos !== null);
-        },
-        actionParams: {
-          additionalDamage: 5,
-          range: 10,
-          onAfter: () => {
-            if (actor.energy <= 0) {
-              GradientRadialEmitter({
-                game: engine.game,
-                fromPosition: actor.getPosition(),
-                radius: 3,
-                colorGradient: ['#d3d3d3', '#94e0ef'],
-                backgroundColorGradient: ['#d3d3d3', '#94e0ef']
-              }).start()
-            }
-            SpatterEmitter({
-              game: engine.game,
-              fromPosition: actor.getPosition(),
-              spatterAmount: 0.1,
-              spatterRadius: 3,
-              animationTimeStep: 0.6,
-              transfersBackground: false,
-              spatterColors: ['#94e0ef', '#d3d3d3', '#495877']
-            }).start()
-          }
-        }
-      }),
-      f: () => new PrepareRangedAttack({
-        label: 'Katon',
-        game: engine.game,
-        actor,
-        equipmentSlotType: Constant.EQUIPMENT_TYPES.JUTSU,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
+      }),
+      r: () => new PrepareSubstitution({
+        label: 'Substitution',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
       }),
       i: () => new OpenInventory({
         label: 'Inventory',
@@ -198,16 +165,7 @@ function initialize (engine) {
         game: engine.game,
         actor,
       }),
-      h: () => new AddSharinganStatusEffect({
-        label: 'Sharingan',
-        game: engine.game,
-        actor,
-        energyCost: 0,
-        requiredResources: [
-          // new EnergyResource({ getResourceCost: () => Constant.ENERGY_THRESHOLD }),
-          // new ChakraResource({ getResourceCost: () => 1 }),
-        ],
-      }),
+      // h: () => null,
       t: () => new PrepareDirectionalThrow({
         label: 'Throw',
         game: engine.game,
@@ -220,8 +178,8 @@ function initialize (engine) {
   let actor = new Player({
     pos: { x: 23, y: 7 },
     renderer: basicInfo.renderer,
-    name: 'Sasuke',
-    faction: 'SASUKE',
+    name: 'Tenten',
+    faction: 'TENTEN',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
     traversableTiles: ['WATER'],
@@ -237,20 +195,21 @@ function initialize (engine) {
   // add default items to container
   const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
   const swords = Array(2).fill('').map(() => Item.sword(engine));
+  const tags = Array(2).fill('').map(() => ExplodingTag(engine, { ...actor.pos }));
   actor.container = [
     new ContainerSlot({
       itemType: kunais[0].name,
       items: kunais,
     }),
     new ContainerSlot({
-      itemType: swords[0].name,
-      items: swords,
+      itemType: tags[0].name,
+      items: tags,
     }),
   ]
 
-  const katon = Katon(engine, actor.getPosition());
-  actor.addEquipmentSlot({type: katon.equipmentType})
-  actor.equip(katon.equipmentType, katon);
+  const jutsu = PiercingKunai(engine, actor.getPosition());
+  actor.addEquipmentSlot({type: jutsu.equipmentType})
+  actor.equip(jutsu.equipmentType, jutsu);
   return actor;
 }
 

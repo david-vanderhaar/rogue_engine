@@ -411,6 +411,15 @@ export const CLONE_PATTERNS = {
       ...Helper.getPointsOnCircumference(0, 0, 3),
     ]
   },
+  ring_3: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      ...Helper.getPointsOnCircumference(0, 0, 2),
+      ...Helper.getPointsOnCircumference(0, 0, 4),
+      ...Helper.getPointsOnCircumference(0, 0, 6),
+    ]
+  },
   big_circle: {
     x_offset: 0,
     y_offset: 0,

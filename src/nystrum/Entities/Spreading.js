@@ -59,13 +59,11 @@ export const Spreading = superclass => class extends superclass {
         let newPos = Helper.getRandomInArray(adjacentPositions);
         let newTile = MapHelper.getTileFromMap({map: this.game.map, position: newPos});
         let tileExists = Boolean(newTile);
-        let notBurnt = true;
         let canBurn = false;
         if (newTile) {
-          notBurnt = newTile.type !== 'BURNT';
           canBurn = MapHelper.tileHasTag({tile: newTile, tag: 'BURNABLE'});
         }
-        if (tileExists && notBurnt && canBurn) {
+        if (tileExists && canBurn) {
           adjacentPos = newPos;
           break;
         }

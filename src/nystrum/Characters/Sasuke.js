@@ -208,12 +208,12 @@ function initialize (engine) {
           // new ChakraResource({ getResourceCost: () => 1 }),
         ],
       }),
-      t: () => new PrepareDirectionalThrow({
-        label: 'Throw',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      })
+      // t: () => new PrepareDirectionalThrow({
+      //   label: 'Throw',
+      //   game: engine.game,
+      //   actor,
+      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      // })
     };
   }
   // instantiate class
@@ -235,18 +235,18 @@ function initialize (engine) {
   })
 
   // add default items to container
-  const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
-  const swords = Array(2).fill('').map(() => Item.sword(engine));
-  actor.container = [
-    new ContainerSlot({
-      itemType: kunais[0].name,
-      items: kunais,
-    }),
-    new ContainerSlot({
-      itemType: swords[0].name,
-      items: swords,
-    }),
-  ]
+  // const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
+  // const swords = Array(2).fill('').map(() => Item.sword(engine));
+  // actor.container = [
+  //   new ContainerSlot({
+  //     itemType: kunais[0].name,
+  //     items: kunais,
+  //   }),
+  //   new ContainerSlot({
+  //     itemType: swords[0].name,
+  //     items: swords,
+  //   }),
+  // ]
 
   const katon = Katon(engine, actor.getPosition());
   actor.addEquipmentSlot({type: katon.equipmentType})
