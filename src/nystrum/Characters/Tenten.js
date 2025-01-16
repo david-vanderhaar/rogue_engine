@@ -20,7 +20,7 @@ import { getPositionInDirection } from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
-import { checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnWater, checkIsWalkingOnFire } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { PiercingKunai } from '../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
 import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
@@ -74,7 +74,10 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => {
+            checkIsWalkingOnWater(engine, actor)
+            checkIsWalkingOnFire(engine, actor)
+          },
         });
       },
       's,ArrowDown': () => {
@@ -87,7 +90,10 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => {
+            checkIsWalkingOnWater(engine, actor)
+            checkIsWalkingOnFire(engine, actor)
+          },
         });
       },
       'a,ArrowLeft': () => {
@@ -100,7 +106,10 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => {
+            checkIsWalkingOnWater(engine, actor)
+            checkIsWalkingOnFire(engine, actor)
+          },
         });
       },
       'd,ArrowRight': () => {
@@ -113,7 +122,10 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => {
+            checkIsWalkingOnWater(engine, actor)
+            checkIsWalkingOnFire(engine, actor)
+          },
         });
       },
       p: () => new Say({

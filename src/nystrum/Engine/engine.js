@@ -188,7 +188,8 @@ export class Engine {
         return false;
       };
     }
-    newEffect.onStart();
+    // newEffect.onStart();
+    newEffect.start();
     this.statusEffects.push(newEffect)
     return true;
   }
@@ -196,7 +197,8 @@ export class Engine {
   removeStatusEffectById (id) {
     this.statusEffects = this.statusEffects.filter((effect) => {
       if (effect.id !== id) return true;
-      effect.onStop();
+      // effect.onStop();
+      effect.stop();
       return false;
     });
   }
@@ -204,7 +206,8 @@ export class Engine {
   removeStatusEffectByActorId (actorId) {
     this.statusEffects = this.statusEffects.filter((effect) => {
       if (effect.actor.id !== actorId) return true;
-      effect.onStop();
+      // effect.onStop();
+      effect.stop();
       return false;
     });
   }
@@ -212,7 +215,8 @@ export class Engine {
   removeDeadStatusEffects() {
     this.statusEffects = this.statusEffects.filter((effect) =>{
       if (effect.lifespan >= 0 && effect.timeToLive <= 0) {
-        effect.onStop();
+        // effect.onStop();
+        effect.stop();
         return false;
       }
       return true;
@@ -237,7 +241,8 @@ export class Engine {
       effect.timeSinceLastStep += timePassed;
       effect.timeToLive -= timePassed;
       if (effect.timeSinceLastStep >= effect.stepInterval) {
-        effect.onStep(timePassed);
+        // effect.onStep(timePassed);
+        effect.step(timePassed);
         effect.timeSinceLastStep = 0;
       } 
     });
