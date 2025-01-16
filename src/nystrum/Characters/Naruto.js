@@ -24,7 +24,7 @@ import { PrepareCallReinforcements } from '../Actions/PrepareCallReinforcements'
 import { SpawnShadowClones } from '../Actions/SpawnShadowClones';
 import { DurabilityResource } from '../Actions/ActionResources/DurabilityResource';
 import { UzumakiBarrage } from '../Modes/HiddenLeaf/Items/Weapons/UzumakiBarrage';
-import { checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
 const basicInfo = {
@@ -62,6 +62,11 @@ const basicInfo = {
 }
 
 function initialize (engine) {
+
+  function onAfterMoveOrAttack(enginee, actor) {
+    checkIsWalkingOnWater(enginee, actor)
+    checkIsWalkingOnFire(enginee, actor)
+  }
   // define keymap
   const keymap = (engine, actor) => {
     return {
@@ -75,7 +80,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
       's,ArrowDown': () => {
@@ -88,7 +93,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -101,7 +106,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
       'd,ArrowRight': () => {
@@ -114,7 +119,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnWater(engine, actor),
+          onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
       p: () => new Say({
