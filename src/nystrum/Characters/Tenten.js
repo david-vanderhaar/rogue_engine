@@ -16,7 +16,7 @@ import {PickupRandomItem} from '../Actions/PickupRandomItem';
 import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { getPositionInDirection } from '../../helper';
+import * as Helper from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
@@ -24,6 +24,8 @@ import { checkIsWalkingOnWater, checkIsWalkingOnFire } from '../Modes/HiddenLeaf
 import { PiercingKunai } from '../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
 import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
+import { EquipItem } from '../Actions/EquipItem';
+import { PlaceItem } from '../Actions/PlaceItem';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/tenten.png`;
 const basicInfo = {
@@ -66,6 +68,23 @@ function initialize (engine) {
     checkIsWalkingOnWater(enginee, actor)
     checkIsWalkingOnFire(enginee, actor)
   }
+
+  async function summonSuccess(actor) {
+    const spatterEmitter = SpatterEmitter({
+      game: engine.game,
+      fromPosition: actor.getPosition(),
+      spatterRadius: 5,
+      spatterAmount: 0.3,
+      spatterDirection: { x: 0, y: 0 },
+      spatterColors: [HIDDEN_LEAF_COLORS.red, HIDDEN_LEAF_COLORS.wraps],
+      animationTimeStep: 0.9,
+      reverse: true,
+      transfersBackground: false,
+      transfersBackgroundOnDestroy: false,
+    })
+    await spatterEmitter.start()
+  }
+
   // define keymap
   const keymap = (engine, actor) => {
     return {
@@ -135,7 +154,32 @@ function initialize (engine) {
         actor,
         energyCost: actor.energy,
       }),
-      // l: () => null,
+      l: () => {
+        const item = Item.sword(engine);
+
+        return new EquipItem({
+          label: 'Weapon Scroll Summon',
+          item,
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD,
+          requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+          onSuccess: () => summonSuccess(actor),
+        });
+        
+        // // get open neighboring position
+        // const neigbors = Helper.getNeighboringPoints(actor.getPosition(), false)
+        // const neigbor = Helper.getRandomInArray(neigbors)
+        // return new PlaceItem({
+        //   label: 'Weapon Scroll Summon',
+        //   entity: item,
+        //   targetPos: neigbor,
+        //   game: engine.game,
+        //   actor,
+        //   energyCost: Constant.ENERGY_THRESHOLD,
+        //   requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+        // });
+      },
       f: () => new PrepareDirectionalThrow({
         label: 'Exploding Tag',
         projectileType: 'exploding tag',

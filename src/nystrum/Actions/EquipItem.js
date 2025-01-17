@@ -2,7 +2,7 @@ import { MESSAGE_TYPE } from '../message';
 import { Base } from './Base';
 import * as Helper from '../../helper';
 
-export class EquipItemFromTile extends Base {
+export class EquipItem extends Base {
   // entities can only equip items from their container/inventory
   constructor({ item, ...args }) {
     super({ ...args });
