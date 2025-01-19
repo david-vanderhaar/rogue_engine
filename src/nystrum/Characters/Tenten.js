@@ -44,12 +44,12 @@ const basicInfo = {
   },
   abilities: [
     {
-      name: 'Weapon Barrage',
-      description: 'An area attack that throws a barrage of weapons at the opponent.',
+      name: 'Kunai Throw',
+      description: 'Throws a kunai in the direction of the target.',
     },
     {
-      name: 'Caltrops',
-      description: 'A technique that scatters a large number of caltrops in the area.',
+      name: 'Exploding Tags',
+      description: 'Throws an exploding tag in the direction of the target.',
     },
     {
       name: 'Summon Weapon',
@@ -157,6 +157,12 @@ function initialize (engine) {
         actor,
         energyCost: actor.energy,
       }),
+      t: () => new PrepareDirectionalThrow({
+        label: 'Throw Kunai',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      }),
       l: () => {
         // const item = Item.sword(engine);
         // let item = TentenSummons.getRandomWeapon(engine, actor.getPosition())
@@ -223,12 +229,6 @@ function initialize (engine) {
         attemptEquip: true,
       }),
       // h: () => null,
-      t: () => new PrepareDirectionalThrow({
-        label: 'Throw',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      })
     };
   }
   // instantiate class
@@ -250,8 +250,8 @@ function initialize (engine) {
   })
 
   // add default items to container
-  const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
-  const swords = Array(2).fill('').map(() => Item.sword(engine));
+  const kunais = Array(3).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
+  // const swords = Array(2).fill('').map(() => Item.sword(engine));
   const tags = Array(2).fill('').map(() => ExplodingTag(engine, { ...actor.pos }));
   actor.container = [
     new ContainerSlot({
