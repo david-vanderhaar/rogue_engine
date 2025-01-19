@@ -26,6 +26,9 @@ import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
 import { EquipItem } from '../Actions/EquipItem';
 import { PlaceItem } from '../Actions/PlaceItem';
+import * as TentenSummons from '../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
+import { destroyEntity } from '../Entities/helper';
+import { SpawnAndPlaceItem } from '../Actions/SpawnAndPlaceItem';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/tenten.png`;
 const basicInfo = {
@@ -69,10 +72,10 @@ function initialize (engine) {
     checkIsWalkingOnFire(enginee, actor)
   }
 
-  async function summonSuccess(actor) {
+  async function summonSuccess(position) {
     const spatterEmitter = SpatterEmitter({
       game: engine.game,
-      fromPosition: actor.getPosition(),
+      fromPosition: position,
       spatterRadius: 5,
       spatterAmount: 0.3,
       spatterDirection: { x: 0, y: 0 },
@@ -155,30 +158,34 @@ function initialize (engine) {
         energyCost: actor.energy,
       }),
       l: () => {
-        const item = Item.sword(engine);
-
-        return new EquipItem({
-          label: 'Weapon Scroll Summon',
-          item,
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-          onSuccess: () => summonSuccess(actor),
-        });
+        // const item = Item.sword(engine);
+        // let item = TentenSummons.getRandomWeapon(engine, actor.getPosition())
         
-        // // get open neighboring position
-        // const neigbors = Helper.getNeighboringPoints(actor.getPosition(), false)
-        // const neigbor = Helper.getRandomInArray(neigbors)
-        // return new PlaceItem({
+        // return new EquipItem({
         //   label: 'Weapon Scroll Summon',
-        //   entity: item,
-        //   targetPos: neigbor,
+        //   item,
         //   game: engine.game,
         //   actor,
         //   energyCost: Constant.ENERGY_THRESHOLD,
         //   requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+        //   onBefore: () => item = TentenSummons.getRandomWeapon(engine, actor.getPosition()),
+        //   onSuccess: () => summonSuccess(actor.getPosition()),
+        //   onFailure: () => destroyEntity(item),
         // });
+        
+        // get open neighboring position
+        const neigbors = Helper.getNeighboringPoints(actor.getPosition(), false)
+        const neigbor = Helper.getRandomInArray(neigbors)
+        return new SpawnAndPlaceItem({
+          label: 'Weapon Scroll Summon',
+          entitySpawnFunction: TentenSummons.getRandomWeapon,
+          targetPos: neigbor,
+          game: engine.game,
+          actor,
+          energyCost: Constant.ENERGY_THRESHOLD,
+          requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+          onSuccess: () => summonSuccess(neigbor),
+        });
       },
       f: () => new PrepareDirectionalThrow({
         label: 'Exploding Tag',
@@ -213,6 +220,7 @@ function initialize (engine) {
         label: 'Pickup',
         game: engine.game,
         actor,
+        attemptEquip: true,
       }),
       // h: () => null,
       t: () => new PrepareDirectionalThrow({

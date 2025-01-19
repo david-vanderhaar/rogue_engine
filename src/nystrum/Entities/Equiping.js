@@ -58,6 +58,7 @@ export const Equiping = superclass => class extends superclass {
     this.equipment = this.equipment.map((slot) => {
       if (!foundSlot && slot.type === slotName && slot.item === null) {
         slot.item = item;
+        item.equippedBy = this;
         item.setPosition(this.getPosition())
         foundSlot = true;
         SOUNDS.equip_1.play();
@@ -71,6 +72,7 @@ export const Equiping = superclass => class extends superclass {
       if (slot.item) {
         if (slot.item.id === item.id) {
           slot.item = null;
+          item.equippedBy = null;
           SOUNDS.equip_0.play();
         }
       }

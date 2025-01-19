@@ -48,6 +48,7 @@ import { TimeBombing } from './TimeBombing';
 import { HasPickupEffects } from './HasPickupEffects';
 import { Illuminating } from './Illuminating';
 import { Fearful } from './Fearful';
+import { DeterioratesOnAttack } from './DeterioratesOnAttack';
 
 export const UI_Actor = pipe(
   Acting,
@@ -198,6 +199,11 @@ export const Weapon = pipe(
   Equipable,
   Attacking
 )(Entity);
+
+export const DeterioratingWeapon = pipe(
+  Destructable,
+  DeterioratesOnAttack,
+)(Weapon);
 
 export const RangedWeapon = pipe(
   Rendering,

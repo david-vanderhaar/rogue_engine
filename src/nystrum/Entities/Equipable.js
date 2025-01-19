@@ -6,5 +6,6 @@ export const Equipable = superclass => class extends superclass {
     this.entityTypes = this.entityTypes.concat('EQUIPABLE');
     this.name = name;
     this.equipmentType = equipmentType;
+    this.equippedBy = null;
   }
 };
