@@ -13,6 +13,7 @@ import Gaara from '../Characters/Gaara';
 import Sasuke from '../Characters/Sasuke';
 import Naruto from '../Characters/Naruto';
 import Tenten from '../Characters/Tenten';
+import Temari from '../Characters/Temari';
 
 export const hiddenLeafCart = () => {
   return (
@@ -24,6 +25,7 @@ export const hiddenLeafCart = () => {
         Sasuke: Sasuke(),
         Naruto: Naruto(),
         Tenten: Tenten(),
+        Temari: Temari(),
       },
       theme: COLORS,
       screens: {
