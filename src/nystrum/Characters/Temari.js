@@ -23,6 +23,7 @@ import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
 import * as TentenSummons from '../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
 import { SpawnAndPlaceItem } from '../Actions/SpawnAndPlaceItem';
+import { WindPush } from '../Modes/HiddenLeaf/Items/Weapons/WindPush';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -152,48 +153,14 @@ function initialize (engine) {
         energyCost: actor.energy,
       }),
       t: () => new PrepareDirectionalThrow({
-        label: 'Throw Kunai',
+        label: 'Wind Release',
+        projectileType: 'wind push',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
       }),
-      l: () => {
-        // const item = Item.sword(engine);
-        // let item = TentenSummons.getRandomWeapon(engine, actor.getPosition())
-        
-        // return new EquipItem({
-        //   label: 'Weapon Scroll Summon',
-        //   item,
-        //   game: engine.game,
-        //   actor,
-        //   energyCost: Constant.ENERGY_THRESHOLD,
-        //   requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-        //   onBefore: () => item = TentenSummons.getRandomWeapon(engine, actor.getPosition()),
-        //   onSuccess: () => summonSuccess(actor.getPosition()),
-        //   onFailure: () => destroyEntity(item),
-        // });
-        
-        // get open neighboring position
-        const neigbors = Helper.getNeighboringPoints(actor.getPosition(), false)
-        const neigbor = Helper.getRandomInArray(neigbors)
-        return new SpawnAndPlaceItem({
-          label: 'Weapon Scroll Summon',
-          entitySpawnFunction: TentenSummons.getRandomWeapon,
-          targetPos: neigbor,
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-          onSuccess: () => summonSuccess(neigbor),
-        });
-      },
-      f: () => new PrepareDirectionalThrow({
-        label: 'Exploding Tag',
-        projectileType: 'exploding tag',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      }),
+      // l: () => {},
       r: () => new PrepareSubstitution({
         label: 'Substitution',
         game: engine.game,
@@ -243,24 +210,15 @@ function initialize (engine) {
     initializeKeymap: keymap,
   })
 
-  // add default items to container
-  const kunais = Array(3).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
-  // const swords = Array(2).fill('').map(() => Item.sword(engine));
-  const tags = Array(2).fill('').map(() => ExplodingTag(engine, { ...actor.pos }));
+  const items = Array(100).fill('').map(() => WindPush(engine, { ...actor.pos }));
   actor.container = [
     new ContainerSlot({
-      itemType: kunais[0].name,
-      items: kunais,
-    }),
-    new ContainerSlot({
-      itemType: tags[0].name,
-      items: tags,
+      itemType: items[0].name,
+      items: items,
+      hidden: true,
     }),
   ]
 
-  const jutsu = PiercingKunai(engine, actor.getPosition());
-  actor.addEquipmentSlot({type: jutsu.equipmentType})
-  actor.equip(jutsu.equipmentType, jutsu);
   return actor;
 }
 

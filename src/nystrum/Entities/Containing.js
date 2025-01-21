@@ -1,7 +1,10 @@
 export class ContainerSlot {
-  constructor({ itemType, items }) {
+  constructor({ itemType, items, hidden = false }) {
     this.itemType = itemType;
     this.items = items;
+
+    // if hidden, the slot will not be displayed in the inventory
+    this.hidden = hidden;
   }
 }
 

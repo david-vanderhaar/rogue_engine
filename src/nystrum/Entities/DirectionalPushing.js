@@ -23,7 +23,22 @@ export const DirectionalPushing = superclass => class extends superclass {
         game: game,
         actor: this,
         energyCost: Constant.ENERGY_THRESHOLD,
+        // energyCost: 0,
+        // onSuccess: () => this.range -= 1,
+        // onAfter: () => {
+        //   this.range -= 1;
+        //   // if (this.range <= 0) this.destroy()
+        //   // if (this.energy <= 100) {
+        //   //   game.engine.setActorToPrevious();
+        //   // }
+        // },
         onSuccess: () => this.range -= 1,
+        onAfter: () => {
+          if (this.energy <= 100) {
+            game.engine.setActorToPrevious();
+          }
+        },
+        onFailure: () => this.destroy()
       });
     }
     else {

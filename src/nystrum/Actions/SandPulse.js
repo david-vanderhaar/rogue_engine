@@ -24,7 +24,7 @@ export class SandPulse extends Base {
       },
       name: TYPE.KUNAI,
       durability: 3,
-      range: 10,
+      range: 3,
       speed: 300,
     }
     const pulseParticles = [

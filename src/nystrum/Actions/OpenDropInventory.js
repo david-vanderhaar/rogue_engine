@@ -23,7 +23,7 @@ export class OpenDropInventory extends Base {
       Escape: () => goToPreviousKeymap,
     };
 
-    this.actor.container.forEach((slot, index) => {
+    this.actor.container.filter((containerSlot) => !containerSlot.hidden).forEach((slot, index) => {
       const item = slot.items[0];
       keymap[index] = () => new DropItem({
         item,
