@@ -8,12 +8,14 @@ import { PrepareDirectionalThrowInDirection } from './PrepareDirectionalThrowInD
 
 export class PrepareDirectionalThrow extends Base {
   constructor({ 
+    passThroughOnSuccess = () => null,
     passThroughEnergyCost = ENERGY_THRESHOLD, 
     passThroughRequiredResources = [],
     projectileType = TYPE.DIRECTIONAL_KUNAI,
     ...args 
   }) {
     super({ ...args });
+    this.passThroughOnSuccess = passThroughOnSuccess;
     this.passThroughEnergyCost = passThroughEnergyCost;
     this.passThroughRequiredResources = passThroughRequiredResources;
     this.projectileType = projectileType;
@@ -38,6 +40,7 @@ export class PrepareDirectionalThrow extends Base {
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,
         passThroughRequiredResources: this.passThroughRequiredResources,
+        passThroughOnSuccess: this.passThroughOnSuccess,
       }),
       'd,ArrowRight': () => new PrepareDirectionalThrowInDirection({
         label: `throw E?`,
@@ -48,6 +51,7 @@ export class PrepareDirectionalThrow extends Base {
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,
         passThroughRequiredResources: this.passThroughRequiredResources,
+        passThroughOnSuccess: this.passThroughOnSuccess,
       }),
       's,ArrowDown': () => new PrepareDirectionalThrowInDirection({
         label: `throw S?`,
@@ -58,6 +62,7 @@ export class PrepareDirectionalThrow extends Base {
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,
         passThroughRequiredResources: this.passThroughRequiredResources,
+        passThroughOnSuccess: this.passThroughOnSuccess,
       }),
       'a,ArrowLeft': () => new PrepareDirectionalThrowInDirection({
         label: `throw W?`,
@@ -68,6 +73,7 @@ export class PrepareDirectionalThrow extends Base {
         actor: this.actor,
         passThroughEnergyCost: this.passThroughEnergyCost,
         passThroughRequiredResources: this.passThroughRequiredResources,
+        passThroughOnSuccess: this.passThroughOnSuccess,
       }),
     };
     this.actor.setKeymap(keymap);

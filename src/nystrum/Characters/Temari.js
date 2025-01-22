@@ -24,6 +24,7 @@ import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
 import * as TentenSummons from '../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
 import { SpawnAndPlaceItem } from '../Actions/SpawnAndPlaceItem';
 import { WindPush } from '../Modes/HiddenLeaf/Items/Weapons/WindPush';
+import { WindSlice } from '../Modes/HiddenLeaf/Items/Weapons/WindSlice';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -74,9 +75,11 @@ function initialize (engine) {
       spatterRadius: 5,
       spatterAmount: 0.3,
       spatterDirection: { x: 0, y: 0 },
-      spatterColors: [HIDDEN_LEAF_COLORS.red, HIDDEN_LEAF_COLORS.wraps],
-      animationTimeStep: 0.9,
-      reverse: true,
+      spatterColors: [
+        HIDDEN_LEAF_COLORS.wraps,
+        HIDDEN_LEAF_COLORS.temari,
+      ],
+      animationTimeStep: 0.2,
       transfersBackground: false,
       transfersBackgroundOnDestroy: false,
     })
@@ -159,6 +162,16 @@ function initialize (engine) {
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+        passThroughOnSuccess: () => summonSuccess(actor.getPosition()),
+      }),
+      f: () => new PrepareDirectionalThrow({
+        label: 'Wind Slice',
+        projectileType: 'wind slice',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })],
+        passThroughOnSuccess: () => summonSuccess(actor.getPosition()),
       }),
       // l: () => {},
       r: () => new PrepareSubstitution({
@@ -210,11 +223,17 @@ function initialize (engine) {
     initializeKeymap: keymap,
   })
 
-  const items = Array(100).fill('').map(() => WindPush(engine, { ...actor.pos }));
+  const windPushes = Array(100).fill('').map(() => WindPush(engine, { ...actor.pos }));
+  const windSlices = Array(100).fill('').map(() => WindSlice(engine, { ...actor.pos }, null, 10));
   actor.container = [
     new ContainerSlot({
-      itemType: items[0].name,
-      items: items,
+      itemType: windPushes[0].name,
+      items: windPushes,
+      hidden: true,
+    }),
+    new ContainerSlot({
+      itemType: windSlices[0].name,
+      items: windSlices,
       hidden: true,
     }),
   ]

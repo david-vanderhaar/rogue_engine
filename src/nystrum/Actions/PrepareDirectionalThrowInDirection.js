@@ -7,6 +7,7 @@ import * as Helper from '../../helper';
 
 export class PrepareDirectionalThrowInDirection extends Base {
   constructor({ 
+    passThroughOnSuccess = () => null,
     passThroughEnergyCost = ENERGY_THRESHOLD, 
     passThroughRequiredResources = [],
     projectileType = TYPE.DIRECTIONAL_KUNAI,
@@ -15,6 +16,7 @@ export class PrepareDirectionalThrowInDirection extends Base {
     ...args 
   }) {
     super({ ...args });
+    this.passThroughOnSuccess = passThroughOnSuccess;
     this.passThroughEnergyCost = passThroughEnergyCost;
     this.passThroughRequiredResources = passThroughRequiredResources;
     this.projectileType = projectileType;
@@ -81,14 +83,15 @@ export class PrepareDirectionalThrowInDirection extends Base {
       );
     })
 
+    const goBack = () => {
+      this.actor.goToPreviousKeymap()
+      this.actor.deactivateCursor()
+    }
 
     const goToPreviousKeymap = new GoToPreviousKeymap({
       actor: this.actor,
       game: this.game,
-      onAfter: () => {
-        this.actor.goToPreviousKeymap()
-        this.actor.deactivateCursor()
-      }
+      onAfter: goBack
     })
 
     let keymap = {
@@ -111,6 +114,7 @@ export class PrepareDirectionalThrowInDirection extends Base {
             this.actor.deactivateCursor()
             this.actor.removeFromContainer(projectile);
             this.actor.setNextAction(goToPreviousKeymap);
+            this.passThroughOnSuccess();
           },
         })
       },

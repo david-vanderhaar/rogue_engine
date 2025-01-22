@@ -14,6 +14,7 @@ export const WindPush = (engine, position) => new MovingWall({
     color: COLORS.temari,
     background: COLORS.white,
   },
+  traversableTiles: ['WATER'],
   durability: 1,
   attackDamage: 0,
   energy: 0,
