@@ -26,7 +26,6 @@ export class PrepareDirectionalThrowInDirection extends Base {
     this.energyCost = 0;
   }
   perform() {
-
     let projectile = this.actor.contains(this.projectileType);
     if (!projectile) return {
       success: false,
@@ -114,7 +113,7 @@ export class PrepareDirectionalThrowInDirection extends Base {
             this.actor.deactivateCursor()
             this.actor.removeFromContainer(projectile);
             this.actor.setNextAction(goToPreviousKeymap);
-            this.passThroughOnSuccess();
+            this.passThroughOnSuccess({direction: DIRECTIONS[this.directionToPrepareThrow]});
           },
         })
       },

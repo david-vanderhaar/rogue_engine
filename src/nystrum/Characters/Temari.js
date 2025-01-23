@@ -68,18 +68,18 @@ function initialize (engine) {
     checkIsWalkingOnFire(enginee, actor)
   }
 
-  async function summonSuccess(position) {
+  async function summonSuccess(position, direction) {
     const spatterEmitter = SpatterEmitter({
       game: engine.game,
       fromPosition: position,
       spatterRadius: 5,
-      spatterAmount: 0.3,
-      spatterDirection: { x: 0, y: 0 },
+      spatterAmount: 0.8,
+      spatterDirection: { x: direction[0], y: direction[1] },
       spatterColors: [
         HIDDEN_LEAF_COLORS.wraps,
         HIDDEN_LEAF_COLORS.temari,
       ],
-      animationTimeStep: 0.2,
+      animationTimeStep: 0.1,
       transfersBackground: false,
       transfersBackgroundOnDestroy: false,
     })
@@ -162,7 +162,7 @@ function initialize (engine) {
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-        passThroughOnSuccess: () => summonSuccess(actor.getPosition()),
+        passThroughOnSuccess: ({direction}) => summonSuccess(actor.getPosition(), direction),
       }),
       f: () => new PrepareDirectionalThrow({
         label: 'Wind Slice',
@@ -171,7 +171,7 @@ function initialize (engine) {
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })],
-        passThroughOnSuccess: () => summonSuccess(actor.getPosition()),
+        passThroughOnSuccess: ({direction}) => summonSuccess(actor.getPosition(), direction),
       }),
       // l: () => {},
       r: () => new PrepareSubstitution({

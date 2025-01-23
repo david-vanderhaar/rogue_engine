@@ -1,6 +1,7 @@
 import * as Constant from '../constants';
 import { Shove } from '../Actions/Shove';
 import { DestroySelf } from '../Actions/DestroySelf';
+import { ShoveOrDestroySelf } from '../Actions/ShoveOrDestroySelf';
 
 export const DirectionalPushing = superclass => class extends superclass {
   constructor({ path = false, direction = { x: 0, y: 0 }, range = 3, ...args }) {
@@ -17,7 +18,7 @@ export const DirectionalPushing = superclass => class extends superclass {
     let targetPos = { x: newX, y: newY };
     this.passable = false;
     if (this.range > 0) {
-      result = new Shove({
+      result = new ShoveOrDestroySelf({
         targetPos: targetPos,
         direction: this.direction,
         game: game,
@@ -29,10 +30,8 @@ export const DirectionalPushing = superclass => class extends superclass {
             game.engine.setActorToPrevious();
           }
         },
-        onFailure: () => this.destroy()
       });
-    }
-    else {
+    } else {
       result = new DestroySelf({
         game: game,
         actor: this,
