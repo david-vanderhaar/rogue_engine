@@ -25,6 +25,8 @@ import * as TentenSummons from '../Modes/HiddenLeaf/Items/Weapons/TentenSummons'
 import { SpawnAndPlaceItem } from '../Actions/SpawnAndPlaceItem';
 import { WindPush } from '../Modes/HiddenLeaf/Items/Weapons/WindPush';
 import { WindSlice } from '../Modes/HiddenLeaf/Items/Weapons/WindSlice';
+import { AddStatusEffect } from '../Actions/AddStatusEffect';
+import { WindGuard } from '../Modes/HiddenLeaf/StatusEffects/WindGuard';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -173,7 +175,16 @@ function initialize (engine) {
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })],
         passThroughOnSuccess: ({direction}) => summonSuccess(actor.getPosition(), direction),
       }),
-      // l: () => {},
+      l: () => new AddStatusEffect({
+        label: 'Wind Guard',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        effect: new WindGuard({
+          game: engine.game,
+          actor,
+        }),
+      }),
       r: () => new PrepareSubstitution({
         label: 'Substitution',
         game: engine.game,

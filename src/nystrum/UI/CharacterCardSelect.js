@@ -40,6 +40,11 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
     };
   }, [selected, characters, setActiveScreen, setSelectedCharacter]);
 
+  // focus first card when component mounts
+  useEffect(() => {
+    cardRefs.current[selected].focus();
+  }, []);
+
   return (
     // single row of character cards
     <div style={{

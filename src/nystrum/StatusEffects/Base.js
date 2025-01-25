@@ -43,17 +43,14 @@ export class Base {
   }
 
   start() {
-    console.log('Base: start');
     this.onStart();
   }
 
   step(timePassed) {
-    console.log('Base: step');
     this.onStep(timePassed);
   }
 
   stop() {
-    console.log('Base: stop');
     this.onStop();
   }
 }
