@@ -26,7 +26,7 @@ import { SpawnAndPlaceItem } from '../Actions/SpawnAndPlaceItem';
 import { WindPush } from '../Modes/HiddenLeaf/Items/Weapons/WindPush';
 import { WindSlice } from '../Modes/HiddenLeaf/Items/Weapons/WindSlice';
 import { AddStatusEffect } from '../Actions/AddStatusEffect';
-import { WindGuard } from '../Modes/HiddenLeaf/StatusEffects/WindGuard';
+import { WindBursts } from '../Modes/HiddenLeaf/StatusEffects/WindBursts';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -46,8 +46,8 @@ const basicInfo = {
       description: 'Summons a gust of wind in the direction of the target and pushes them away.',
     },
     {
-      name: 'Wind Barrier',
-      description: 'Automattically block attacks at the cost of chakra.',
+      name: 'Wind Bursts',
+      description: 'Summons short bursts of wind to speed up your movements and deflect attacks.',
     },
     {
       name: 'Wind Shuriken',
@@ -176,22 +176,22 @@ function initialize (engine) {
         passThroughOnSuccess: ({direction}) => summonSuccess(actor.getPosition(), direction),
       }),
       l: () => new AddStatusEffect({
-        label: 'Wind Guard',
+        label: 'Wind Bursts',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
-        effect: new WindGuard({
+        effect: new WindBursts({
           game: engine.game,
           actor,
         }),
       }),
-      r: () => new PrepareSubstitution({
-        label: 'Substitution',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
-      }),
+      // r: () => new PrepareSubstitution({
+      //   label: 'Substitution',
+      //   game: engine.game,
+      //   actor,
+      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      //   passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
+      // }),
       i: () => new OpenInventory({
         label: 'Inventory',
         game: engine.game,

@@ -5,10 +5,10 @@ import * as Helper from '../../../../helper';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter'
 import { COLORS } from '../theme';
 
-export class WindGuard extends Base {
+export class WindBursts extends Base {
   constructor({speedBuff = ENERGY_THRESHOLD, defenseBuff = 1, ...args}) {
     super({ ...args });
-    this.name = 'wind guard';
+    this.name = 'wind bursts';
     this.description = "summon short bursts of wind to speed up your movements and deflect attacks."
     this.allowDuplicates = false
     this.processOnlyOnPlayerTurn = true
