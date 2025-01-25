@@ -1,23 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
 import Tooltip from './Tooltip';
 import { ProgressBar } from './Entity/CharacterCard';
 
 const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}) => {
-  const [selected, setSelected] = useState(null)
-  // allow number key events to select character
+  const [selected, setSelected] = useState(Math.floor(characters.length / 2));
+  const cardRefs = useRef([]);
+
+  // allow number key events and arrow keys to select character
   useEffect(() => {
     const handleKeyPress = (event) => {
-      const options = Array(characters.length).fill(null).map((_, i) => (i + 1).toString())
+      const options = Array(characters.length).fill(null).map((_, i) => (i + 1).toString());
       if (options.includes(event.key)) {
-        const index = parseInt(event.key) - 1
-
-        if (selected === index) {
-          setSelectedCharacter(characters[index])
-          setActiveScreen(SCREENS.TOURNAMENT)
-        } else {
-          setSelected(index)
-        }
+        const index = parseInt(event.key) - 1;
+        setSelected(index);
+        cardRefs.current[index].focus();
+      } else if (event.key === 'ArrowLeft') {
+        setSelected((prev) => {
+          const newIndex = prev > 0 ? prev - 1 : characters.length - 1;
+          cardRefs.current[newIndex].focus();
+          return newIndex;
+        });
+      } else if (event.key === 'ArrowRight') {
+        setSelected((prev) => {
+          const newIndex = prev < characters.length - 1 ? prev + 1 : 0;
+          cardRefs.current[newIndex].focus();
+          return newIndex;
+        });
+      } else if (event.key === 'Enter') {
+        setSelectedCharacter(characters[selected]);
+        setActiveScreen(SCREENS.TOURNAMENT);
       }
     };
     // Add event listener when the component mounts
@@ -26,41 +38,55 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [selected]);
+  }, [selected, characters, setActiveScreen, setSelectedCharacter]);
 
   return (
-    // grid of character cards at least 4 wide
+    // single row of character cards
     <div style={{
       display: 'flex',
       flexDirection: 'row',
-      flexWrap: 'wrap',
       justifyContent: 'center',
       alignItems: 'center',
+      overflow: 'hidden',
+      position: 'relative',
+      width: '100%',
     }}
     >
-      {
-        characters.map((character, index) => {
-          return (
-            <div key={index}>
-              <CharacterCard 
-                character={character} 
-                setSelectedCharacter={setSelectedCharacter} 
-                setActiveScreen={setActiveScreen} 
-              />
-              <div style={{fontSize: 16, width: 200, margin: 'auto'}}>
-              {selected === index && (<p className='text--blinking'>press {index + 1} again to confirm</p>)}
-              {selected !== index && (<p style={{fontSize: 12}}>press {index + 1} to select</p>)}
+      <div style={{
+        display: 'flex',
+        transition: 'transform 0.5s ease',
+        transform: `translateX(${-selected * 220 + (window.innerWidth / 2 - 110)}px)`,
+      }}>
+        {
+          characters.map((character, index) => {
+            const distanceFromCenter = Math.abs(index - selected);
+            const opacity = 1 - (distanceFromCenter * 0.2);
+            return (
+              <div key={index} style={{ opacity, width: 220 }}>
+                <CharacterCard 
+                  character={character} 
+                  setSelectedCharacter={setSelectedCharacter} 
+                  setActiveScreen={setActiveScreen}
+                  index={index}
+                  ref={(el) => cardRefs.current[index] = el}
+                />
+                <div style={{fontSize: 16, width: 200, margin: 'auto'}}>
+                {selected === index && (<p className='text--blinking'>press Enter to confirm</p>)}
+                {selected !== index && index === selected - 1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&lt;</div>}
+                {selected !== index && index === selected + 1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&gt;</div>}
+                {selected !== index && (<p style={{fontSize: 12}}>press {index + 1} to select</p>)}
+                </div>
               </div>
-            </div>
-          )
-        })
-      }
+            )
+          })
+        }
+      </div>
     </div>
   );
 }
 
-const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
-  const actor = character.basicInfo
+const CharacterCard = React.forwardRef(({character, setActiveScreen, setSelectedCharacter}, ref) => {
+  const actor = character.basicInfo;
 
   return (
     <button
@@ -72,9 +98,10 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
         fontSize: 12,
       }}
       onClick={() => {
-        setSelectedCharacter(character)
-        setActiveScreen(SCREENS.TOURNAMENT)
+        setSelectedCharacter(character);
+        setActiveScreen(SCREENS.TOURNAMENT);
       }}
+      ref={ref}
     >
       {/* a small, bordered character portrait */}
       <div>
@@ -149,6 +176,6 @@ const CharacterCard = ({character, setActiveScreen, setSelectedCharacter}) => {
       </div>
     </button>
   )
-}
+});
 
 export default CharacterCardSelect;
