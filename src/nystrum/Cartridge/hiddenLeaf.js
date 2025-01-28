@@ -14,6 +14,7 @@ import Sasuke from '../Characters/Sasuke';
 import Naruto from '../Characters/Naruto';
 import Tenten from '../Characters/Tenten';
 import Temari from '../Characters/Temari';
+import Shino from '../Characters/Shino';
 
 export const hiddenLeafCart = () => {
   return (
@@ -23,6 +24,7 @@ export const hiddenLeafCart = () => {
         Gaara: Gaara(),
         Rock_Lee: RockLee(),
         Sasuke: Sasuke(),
+        Shino: Shino(),
         Naruto: Naruto(),
         Tenten: Tenten(),
         Temari: Temari(),

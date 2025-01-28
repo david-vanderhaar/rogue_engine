@@ -9,6 +9,8 @@ export const COLORS = {
   tenten_alt: '#F0D8C0',
   temari: '#423c58',
   temari_alt: '#f0b8f8',
+  shino: '#c0cfc8',
+  shino_alt: '#353641',
   sasuke: '#103880',
   sasuke_alt: '#b75a5e',
   leaf: '#36635b',

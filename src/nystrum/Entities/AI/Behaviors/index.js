@@ -7,6 +7,7 @@ import ExecuteStatusEffectOnEnemies from './ExecuteStatusEffectOnEnemies';
 import MoveTowardsEntityInRangeByAttr from './MoveTowards';
 import MoveTowardsCover from './MoveTowardsCover';
 import MoveTowardsEnemy from './MoveTowardsEnemy';
+import MoveOrAttackTowardsEnemy from './MoveOrAttackTowardsEnemy';
 import MoveTowardsPlayer from './MoveTowardsPlayer';
 import Telegraph from './Telegraph';
 import TelegraphRangedAttack from './TelegraphRangedAttack';
@@ -23,6 +24,7 @@ export {
   MoveTowardsEntityInRangeByAttr,
   MoveTowardsCover,
   MoveTowardsEnemy,
+  MoveOrAttackTowardsEnemy,
   MoveTowardsPlayer,
   Telegraph,
   TelegraphRangedAttack,
