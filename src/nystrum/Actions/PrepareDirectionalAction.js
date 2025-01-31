@@ -35,6 +35,9 @@ export class PrepareDirectionalAction extends Base {
       const positions = this.positionsByDirection(this.actor, direction)
       cursor_positions.push(...positions);
     });
+
+    console.log('cursor_positions', cursor_positions);
+    
     this.actor.activateCursor(cursor_positions)
 
     const goToPreviousKeymap = new GoToPreviousKeymap({
@@ -43,69 +46,27 @@ export class PrepareDirectionalAction extends Base {
       onAfter: () => this.actor.deactivateCursor(),
     })
 
+    const actionParams = (direction, label) => ({
+      actor: this.actor,
+      game: this.game,
+      energyCost: this.passThroughEnergyCost,
+      requiredResources: this.passThroughRequiredResources,
+      label: `${this.actionLabel} ${label}`,
+      direction: direction,
+      targetPos: getPositionInDirection(this.actor.getPosition(), direction),
+      onSuccess: () => {
+        this.actor.deactivateCursor();
+        this.actor.setNextAction(goToPreviousKeymap);
+      },
+      ...this.actionParams,
+    });
+
     let keymap = {
       Escape: () => goToPreviousKeymap,
-      
-      'w,ArrowUp': () => { 
-        return new this.actionClass({
-          actor: this.actor,
-          game: this.game,
-          energyCost: this.passThroughEnergyCost,
-          requiredResources: this.passThroughRequiredResources,
-          label: `${this.actionLabel} N`,
-          direction: DIRECTIONS.N,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
-          ...this.actionParams,
-        })
-      },
-      'd,ArrowRight': () => { 
-        return new this.actionClass({
-          actor: this.actor,
-          game: this.game,
-          energyCost: this.passThroughEnergyCost,
-          requiredResources: this.passThroughRequiredResources,
-          label: `${this.actionLabel} E`,
-          direction: DIRECTIONS.E,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
-          ...this.actionParams,
-        })
-      },
-      's,ArrowDown': () => { 
-        return new this.actionClass({
-          actor: this.actor,
-          game: this.game,
-          energyCost: this.passThroughEnergyCost,
-          requiredResources: this.passThroughRequiredResources,
-          label: `${this.actionLabel} S`,
-          direction: DIRECTIONS.S,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
-          ...this.actionParams,
-        })
-      },
-      'a,ArrowLeft': () => { 
-        return new this.actionClass({
-          actor: this.actor,
-          game: this.game,
-          energyCost: this.passThroughEnergyCost,
-          requiredResources: this.passThroughRequiredResources,
-          label: `${this.actionLabel} W`,
-          direction: DIRECTIONS.W,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
-          ...this.actionParams,
-        })
-      },
+      'w,ArrowUp': () => new this.actionClass(actionParams(DIRECTIONS.N, 'N')),
+      'd,ArrowRight': () => new this.actionClass(actionParams(DIRECTIONS.E, 'E')),
+      's,ArrowDown': () => new this.actionClass(actionParams(DIRECTIONS.S, 'S')),
+      'a,ArrowLeft': () => new this.actionClass(actionParams(DIRECTIONS.W, 'W')),
     };
     this.actor.setKeymap(keymap);
     return {

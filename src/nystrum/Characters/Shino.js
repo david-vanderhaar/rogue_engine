@@ -7,8 +7,6 @@ import { ContainerSlot } from '../Entities/Containing';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
 import {MoveOrAttack} from '../Actions/MoveOrAttack';
-import {PrepareRangedAttack} from '../Actions/PrepareRangedAttack';
-import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
 import {OpenInventory} from '../Actions/OpenInventory';
 import {OpenEquipment} from '../Actions/OpenEquipment';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
@@ -17,13 +15,7 @@ import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 import { getPositionInDirection } from '../../helper';
-import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
-import { TackleByRange } from '../Actions/TackleByRange';
-import { AddNineTailsStatusEffect } from '../Actions/AddNineTailsStatusEffect';
-import { PrepareCallReinforcements } from '../Actions/PrepareCallReinforcements';
-import { SpawnShadowClones } from '../Actions/SpawnShadowClones';
-import { DurabilityResource } from '../Actions/ActionResources/DurabilityResource';
-import { UzumakiBarrage } from '../Modes/HiddenLeaf/Items/Weapons/UzumakiBarrage';
+import { Attack } from '../Actions/Attack';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { SpawnKikaichu } from '../Actions/SpawnKikaichu';
 
@@ -162,6 +154,47 @@ function initialize (engine) {
         requiredResources: [
           new ChakraResource({ getResourceCost: () => 8 }),
         ],
+      }),
+      l: () => new PrepareDirectionalAction({
+        label: 'Chakra Leech',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+        actionLabel: 'Chakra Leech',
+        positionsByDirection: (actor, direction) => {
+          const pos = actor.getPosition();
+          return Array(2).fill('').map((none, distance) => {
+            if (distance > 0) {
+              return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
+            } else {
+              return null;
+            }
+          }).filter((pos) => pos !== null);
+        },
+        actionClass: Attack,
+        actionParams: {
+          onAfter: () => {
+            if (actor.energy <= 0) {
+              GradientRadialEmitter({
+                game: engine.game,
+                fromPosition: actor.getPosition(),
+                radius: 3,
+                colorGradient: ['#d3d3d3', '#94e0ef'],
+                backgroundColorGradient: ['#d3d3d3', '#94e0ef']
+              }).start()
+            }
+            SpatterEmitter({
+              game: engine.game,
+              fromPosition: actor.getPosition(),
+              spatterAmount: 0.1,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: ['#94e0ef', '#d3d3d3', '#495877']
+            }).start()
+          }
+        }
       }),
     };
   }
