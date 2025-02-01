@@ -162,6 +162,12 @@ export const getDestructableEntities = (entites) => {
   return entites.filter((entity) => entity.hasOwnProperty('durability'));
 }
 
+export const getFirstDestructableEntity = (entites) => {
+  const destrucableEntities = getDestructableEntities(entites)
+  if (destrucableEntities.length) return destrucableEntities[0]
+  else return null
+}
+
 export const filterEntitiesByType = (entites, type) => {
   return entites.filter((entity) => entity.entityTypes.includes(type));
 }

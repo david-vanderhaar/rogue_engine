@@ -152,6 +152,7 @@ export const Bandit = pipe(
   Rendering,
   Chasing,
   Destructable,
+  Charging,
   Attacking,
   Pushable,
   HasFaction,

@@ -18,6 +18,8 @@ import { getPositionInDirection } from '../../helper';
 import { Attack } from '../Actions/Attack';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { SpawnKikaichu } from '../Actions/SpawnKikaichu';
+import { StatLeechAttack } from '../Actions/StatLeechAttack';
+import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shino.png`;
 const basicInfo = {
@@ -45,7 +47,7 @@ const basicInfo = {
   durabilityRating: 1,
   chakraRating: 3,
   speed: 300,
-  durability: 4,
+  durability: 40,
   charge: 8,
   portrait,
 }
@@ -162,38 +164,9 @@ function initialize (engine) {
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
         actionLabel: 'Chakra Leech',
-        positionsByDirection: (actor, direction) => {
-          const pos = actor.getPosition();
-          return Array(2).fill('').map((none, distance) => {
-            if (distance > 0) {
-              return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
-            } else {
-              return null;
-            }
-          }).filter((pos) => pos !== null);
-        },
-        actionClass: Attack,
+        actionClass: StatChakraLeechAttack,
         actionParams: {
-          onAfter: () => {
-            if (actor.energy <= 0) {
-              GradientRadialEmitter({
-                game: engine.game,
-                fromPosition: actor.getPosition(),
-                radius: 3,
-                colorGradient: ['#d3d3d3', '#94e0ef'],
-                backgroundColorGradient: ['#d3d3d3', '#94e0ef']
-              }).start()
-            }
-            SpatterEmitter({
-              game: engine.game,
-              fromPosition: actor.getPosition(),
-              spatterAmount: 0.1,
-              spatterRadius: 3,
-              animationTimeStep: 0.6,
-              transfersBackground: false,
-              spatterColors: ['#94e0ef', '#d3d3d3', '#495877']
-            }).start()
-          }
+          changeByValue: -2,
         }
       }),
     };

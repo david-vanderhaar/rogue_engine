@@ -4,6 +4,16 @@ import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { DIRECTIONS, ENERGY_THRESHOLD, PARTICLE_TEMPLATES } from '../constants';
 import { getPositionInDirection } from '../../helper';
 
+function defaultPositionsByDirection(actor, direction) {
+  const pos = actor.getPosition();
+  return Array(2).fill('').map((none, distance) => {
+    if (distance > 0) {
+      return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
+    } else {
+      return null;
+    }
+  }).filter((pos) => pos !== null);
+}
 export class PrepareDirectionalAction extends Base {
   constructor({ 
     passThroughEnergyCost = ENERGY_THRESHOLD, 
@@ -11,7 +21,7 @@ export class PrepareDirectionalAction extends Base {
     actionClass = Tackle,
     actionLabel = 'tackle',
     actionParams = {},
-    positionsByDirection = (actor, direction) => [],
+    positionsByDirection = defaultPositionsByDirection,
     ...args 
   }) {
     super({ ...args });
@@ -36,8 +46,6 @@ export class PrepareDirectionalAction extends Base {
       cursor_positions.push(...positions);
     });
 
-    console.log('cursor_positions', cursor_positions);
-    
     this.actor.activateCursor(cursor_positions)
 
     const goToPreviousKeymap = new GoToPreviousKeymap({
