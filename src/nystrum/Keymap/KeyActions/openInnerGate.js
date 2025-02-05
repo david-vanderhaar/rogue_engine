@@ -1,4 +1,4 @@
-import * as StatusEffect from '../../statusEffects';
+import {Base as StatusEffect} from '../../StatusEffects/Base';
 import { AddStatusEffect } from "../../Actions/AddStatusEffect";
 import {THEMES} from '../../constants';
 
@@ -6,7 +6,7 @@ export const openInnerGate = (engine) => {
   let currentActor = engine.actors[engine.currentActor];
   let nextGate = currentActor.setNextGate();
   if (nextGate) {
-    let effect = new StatusEffect.Base({
+    let effect = new StatusEffect({
       game: engine.game,
       actor: currentActor,
       name: nextGate.name,

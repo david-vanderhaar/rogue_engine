@@ -1,5 +1,5 @@
 import * as Constant from '../constants';
-import * as StatusEffect from '../statusEffects';
+import {Base as StatusEffectBase} from '../StatusEffects/Base';
 
 export const TimeBombing = superclass => class extends superclass {
   constructor({ damagePerTick = 1, ...args }) {
@@ -10,7 +10,7 @@ export const TimeBombing = superclass => class extends superclass {
   }
 
   createTimeBombStatusEffect() {
-    return new StatusEffect.Base({
+    return new StatusEffectBase({
       game: this.game,
       actor: this,
       name: 'Dying',

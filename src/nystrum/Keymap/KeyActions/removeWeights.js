@@ -1,10 +1,10 @@
-import * as StatusEffect from '../../statusEffects';
+import {Base as StatusEffect} from '../../StatusEffects/Base';
 import { AddStatusEffect } from "../../Actions/AddStatusEffect";
 
 export const removeWeights = (engine, speedBoost = 600, damageDebuff = 1) => {
   let currentActor = engine.actors[engine.currentActor];
 
-  let effect = new StatusEffect.Base({
+  let effect = new StatusEffect({
     game: engine.game,
     actor: currentActor,
     name: 'Removed wraps (weights)',

@@ -1,5 +1,5 @@
 import { DIRECTIONS, ENERGY_THRESHOLD } from '../../constants';
-import * as StatusEffect from '../../statusEffects';
+import {Base as StatusEffect} from '../../StatusEffects/Base';
 import { MoveOrAttack } from "../../Actions/MoveOrAttack";
 import { AddStatusEffect } from "../../Actions/AddStatusEffect";
 import { walk } from './walk';
@@ -32,7 +32,7 @@ const drunkWalk = (direction, engine) => {
 export const drunkenFist = (engine, damageBuff = 1) => {
   let currentActor = engine.actors[engine.currentActor];
 
-  let effect = new StatusEffect.Base({
+  let effect = new StatusEffect({
     game: engine.game,
     actor: currentActor,
     name: 'Drunk',

@@ -20,6 +20,8 @@ import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf
 import { SpawnKikaichu } from '../Actions/SpawnKikaichu';
 import { StatLeechAttack } from '../Actions/StatLeechAttack';
 import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
+import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
+import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shino.png`;
 const basicInfo = {
@@ -169,6 +171,13 @@ function initialize (engine) {
           changeByValue: -2,
         }
       }),
+      k: () => new PrepareDirectionalThrow({
+        label: 'Smoke Grenade',
+        projectileType: 'Smoke Grenade',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      }),
     };
   }
   // instantiate class
@@ -190,18 +199,13 @@ function initialize (engine) {
   })
 
   // add default items to container
-  // const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
-  // const swords = Array(2).fill('').map(() => Item.sword(engine));
-  // actor.container = [
-  //   new ContainerSlot({
-  //     itemType: kunais[0].name,
-  //     items: kunais,
-  //   }),
-  //   new ContainerSlot({
-  //     itemType: swords[0].name,
-  //     items: swords,
-  //   }),
-  // ]
+  const smokes = Array(4).fill('').map(() => SmokeGrenade(engine, 2));
+  actor.container = [
+    new ContainerSlot({
+      itemType: smokes[0].name,
+      items: smokes,
+    }),
+  ]
 
   // const jutsu = UzumakiBarrage(engine, actor.getPosition());
   // actor.addEquipmentSlot({type: jutsu.equipmentType})
