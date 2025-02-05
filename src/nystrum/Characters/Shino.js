@@ -42,15 +42,19 @@ const basicInfo = {
       description: 'Spawn many chakra-eating insects.',
     },
     {
-      name: 'Insect Cage',
+      name: 'Kikaichu Cage',
       description: 'Surround the enemy with insects such that they struggle to even move.',
+    },
+    {
+      name: 'Chakra Leech',
+      description: 'Drain the enemy of their chakra.',
     },
   ],
   speedRating: 1,
   durabilityRating: 1,
   chakraRating: 3,
   speed: 300,
-  durability: 40,
+  durability: 4,
   charge: 8,
   portrait,
 }
