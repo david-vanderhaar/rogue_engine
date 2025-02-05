@@ -359,6 +359,20 @@ export const CLONE_PATTERNS = {
       { x: -1, y: 1, taken: false, },
     ]
   },
+  // square_donut: {
+  //   x_offset: 0,
+  //   y_offset: 0,
+  //   positions: [
+  //     { x: 0, y: 1, taken: false, },
+  //     { x: 1, y: 1, taken: false, },
+  //     { x: 1, y: 0, taken: false, },
+  //     { x: 1, y: -1, taken: false, },
+  //     { x: 0, y: -1, taken: false, },
+  //     { x: -1, y: -1, taken: false, },
+  //     { x: -1, y: 0, taken: false, },
+  //     { x: -1, y: 1, taken: false, },
+  //   ]
+  // },
   clover: {
     x_offset: 0,
     y_offset: 0,

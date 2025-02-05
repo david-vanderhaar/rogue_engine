@@ -22,6 +22,7 @@ import { StatLeechAttack } from '../Actions/StatLeechAttack';
 import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
 import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
 import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
+import { ShinoBugCage } from '../Modes/HiddenLeaf/Items/Weapons/ShinoBugCage';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shino.png`;
 const basicInfo = {
@@ -172,11 +173,12 @@ function initialize (engine) {
         }
       }),
       k: () => new PrepareDirectionalThrow({
-        label: 'Smoke Grenade',
-        projectileType: 'Smoke Grenade',
+        label: 'Kikaichu Cage',
+        projectileType: 'Kikaichu Cage',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })],
       }),
     };
   }
@@ -199,11 +201,11 @@ function initialize (engine) {
   })
 
   // add default items to container
-  const smokes = Array(4).fill('').map(() => SmokeGrenade(engine, 2));
+  const items = Array(100).fill('').map(() => ShinoBugCage({engine, range: 5}));
   actor.container = [
     new ContainerSlot({
-      itemType: smokes[0].name,
-      items: smokes,
+      itemType: items[0].name,
+      items: items,
     }),
   ]
 

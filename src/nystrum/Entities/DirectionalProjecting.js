@@ -41,8 +41,7 @@ export const DirectionalProjecting = superclass => class extends superclass {
           }
         }
       });
-    }
-    else {
+    } else {
       result = new DestroySelf({
         game: game,
         actor: this,
