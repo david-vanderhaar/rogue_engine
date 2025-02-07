@@ -51,10 +51,10 @@ export class Engine {
         // if (!actor.active) break;
         let action = actor.getAction(this.game);
         if (!action) { return false; } // if no action given, kick out to UI input
-        timePassed += action.getEnergyCost();
+        // timePassed += action.getEnergyCost();
         // console.log('timePassed ', timePassed);
         
-        // timePassed += action.energyCost;
+
         while (true) {
           let result = {
             success: false,
@@ -69,6 +69,7 @@ export class Engine {
             if (result.success) {
               await action.onSuccess();
               action.payRequiredResources();
+              timePassed += action.getEnergyCost();
             } else {
               await action.onFailure();
             }
@@ -87,7 +88,9 @@ export class Engine {
           if (result.alternative === null) break;
           action = result.alternative;
         }
-
+        
+        console.log('time passed: ', timePassed);
+        
         this.processStatusEffects(timePassed);
         if (action.interrupt) {
           acting = false;
