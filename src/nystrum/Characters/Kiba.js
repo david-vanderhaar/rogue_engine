@@ -2,50 +2,49 @@
 import * as Item from '../items';
 import * as Constant from '../constants';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
-import { Player } from '../Entities/index';
+import { JacintoAI, Player } from '../Entities/index';
 import { ContainerSlot } from '../Entities/Containing';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
 import {MoveOrAttack} from '../Actions/MoveOrAttack';
-import {PrepareRangedAttack} from '../Actions/PrepareRangedAttack';
-import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
 import {OpenInventory} from '../Actions/OpenInventory';
-import {OpenEquipment} from '../Actions/OpenEquipment';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
 import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 import { getPositionInDirection } from '../../helper';
-import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
-import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { AddStatusEffect } from '../Actions/AddStatusEffect';
+import { WolfSpeed } from '../Modes/HiddenLeaf/StatusEffects/WolfSpeed';
+import { PreparePlaceActorInDirection } from '../Actions/PreparePlaceActorInDirection';
+import * as Behaviors from '../Entities/AI/Behaviors/index';
 
-const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
+const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
 const basicInfo = {
-  name: 'Sasuke',
-  description: 'The last of his clan.',
+  name: 'Kiba',
+  description: 'Wolf Pack!',
   renderer: {
-    character: 'S',
-    color: HIDDEN_LEAF_COLORS.sasuke_alt,
-    background: HIDDEN_LEAF_COLORS.sasuke,
+    character: 'K',
+    color: HIDDEN_LEAF_COLORS.kiba_alt,
+    background: HIDDEN_LEAF_COLORS.kiba,
     portrait,
     basePortrait: portrait,
     damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,
   },
   abilities: [
     {
-      name: 'Katon',
-      description: 'A technique where the user creates a ball of fire to attack their opponent.',
+      name: 'Fang Over Fang',
+      description: 'A technique where the user spins rapidly to attack their opponent.',
     },
     {
-      name: 'Chidori',
-      description: 'A technique where the user creates a ball of lightning to attack their opponent.',
+      name: 'Wolf Speed',
+      description: 'Tapping into the power of the wolf.',
     },
     {
-      name: 'Sharin-gan',
-      description: 'A technique where the user can see their opponents moves.',
+      name: 'Summon Akamaru',
+      description: 'Summoning his trusty companion.',
     },
   ],
   speedRating: 2,
@@ -132,12 +131,12 @@ function initialize (engine) {
         energyCost: actor.energy,
       }),
       l: () => new PrepareDirectionalAction({
-        label: 'Chidori',
+        label: 'Fang Over Fang',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD * (basicInfo.speed/100),
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-        actionLabel: 'Chidori',
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 6 })],
+        actionLabel: 'Fang Over Fang',
         actionClass: TackleByRange,
         positionsByDirection: (actor, direction) => {
           const pos = actor.getPosition();
@@ -150,38 +149,74 @@ function initialize (engine) {
           }).filter((pos) => pos !== null);
         },
         actionParams: {
-          additionalDamage: 5,
-          range: 5,
+          additionalDamage: 3,
+          range: 8,
           onAfter: () => {
             if (actor.energy <= 0) {
               GradientRadialEmitter({
                 game: engine.game,
                 fromPosition: actor.getPosition(),
-                radius: 3,
-                colorGradient: ['#d3d3d3', '#94e0ef'],
-                backgroundColorGradient: ['#d3d3d3', '#94e0ef']
+                radius: 2,
+                // wolf gray, white, and kiba red
+                colorGradient: [HIDDEN_LEAF_COLORS.kiba, HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
+                backgroundColorGradient: [HIDDEN_LEAF_COLORS.white, HIDDEN_LEAF_COLORS.kiba, HIDDEN_LEAF_COLORS.kiba_alt],
               }).start()
             }
             SpatterEmitter({
               game: engine.game,
               fromPosition: actor.getPosition(),
               spatterAmount: 0.1,
-              spatterRadius: 3,
+              spatterRadius: 2,
               animationTimeStep: 0.6,
               transfersBackground: false,
-              spatterColors: ['#94e0ef', '#d3d3d3', '#495877']
+              spatterColors: [HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
             }).start()
           }
         }
       }),
-      f: () => new PrepareRangedAttack({
-        label: 'Katon',
+      k: () => new AddStatusEffect({
+        label: 'Wolf Speed',
         game: engine.game,
         actor,
-        equipmentSlotType: Constant.EQUIPMENT_TYPES.JUTSU,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })]
+        energyCost: Constant.ENERGY_THRESHOLD,
+        requiredResources: [ new ChakraResource({ getResourceCost: () => 2 }) ],
+        effect: new WolfSpeed({
+          lifespan: Constant.ENERGY_THRESHOLD * 10,
+          speedBuff: Constant.ENERGY_THRESHOLD * 2,
+          damageBuff: 0,
+          game: engine.game,
+          actor,
+        }),
       }),
+      t: () => new PreparePlaceActorInDirection({
+          label: 'Summon Akamaru',
+          game: engine.game,
+          actor,
+          passThroughEnergyCost: Constant.ENERGY_THRESHOLD * 1,
+          passThroughRequiredResources: [
+            new ChakraResource({ getResourceCost: () => 4 }),
+          ],
+          actorClass: JacintoAI,
+          actorParameters: {
+            name: 'Akamaru',
+            renderer: {
+              character: 'a',
+              color: HIDDEN_LEAF_COLORS.kiba_alt,
+              background: HIDDEN_LEAF_COLORS.white,
+            },
+            durability: 4,
+            attackDamage: 1,
+            // speed: Constant.ENERGY_THRESHOLD * 6,
+            behaviors: [
+              // new Behaviors.MoveTowardsEnemy({repeat: 6, maintainDistanceOf: 0, chainOnSuccess: true}),
+              new Behaviors.MoveTowardsEnemy({repeat: 6, maintainDistanceOf: 0, chainOnFail: true}),
+              new Behaviors.MoveOrAttackTowardsEnemy({repeat: 1, maintainDistanceOf: 0, chainOnSuccess: true, chainOnFail: true}),
+              new Behaviors.Wait({repeat: 1}),
+            ],
+            faction: actor.faction,
+            enemyFactions: actor.enemyFactions,
+          },
+        }),
       i: () => new OpenInventory({
         label: 'Inventory',
         game: engine.game,
@@ -202,30 +237,14 @@ function initialize (engine) {
         game: engine.game,
         actor,
       }),
-      h: () => new AddSharinganStatusEffect({
-        label: 'Sharingan',
-        game: engine.game,
-        actor,
-        energyCost: 0,
-        requiredResources: [
-          // new EnergyResource({ getResourceCost: () => Constant.ENERGY_THRESHOLD }),
-          // new ChakraResource({ getResourceCost: () => 1 }),
-        ],
-      }),
-      // t: () => new PrepareDirectionalThrow({
-      //   label: 'Throw',
-      //   game: engine.game,
-      //   actor,
-      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      // })
     };
   }
   // instantiate class
   let actor = new Player({
     pos: { x: 23, y: 7 },
     renderer: basicInfo.renderer,
-    name: 'Sasuke',
-    faction: 'SASUKE',
+    name: 'kiba',
+    faction: 'KIBA',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
     traversableTiles: ['WATER'],
@@ -252,9 +271,9 @@ function initialize (engine) {
   //   }),
   // ]
 
-  const katon = Katon(engine, actor.getPosition());
-  actor.addEquipmentSlot({type: katon.equipmentType})
-  actor.equip(katon.equipmentType, katon);
+  // const katon = Katon(engine, actor.getPosition());
+  // actor.addEquipmentSlot({type: katon.equipmentType})
+  // actor.equip(katon.equipmentType, katon);
   return actor;
 }
 
