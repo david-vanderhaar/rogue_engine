@@ -89,8 +89,6 @@ export class Engine {
           action = result.alternative;
         }
         
-        console.log('time passed: ', timePassed);
-        
         this.processStatusEffects(timePassed);
         if (action.interrupt) {
           acting = false;

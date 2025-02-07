@@ -13,13 +13,15 @@ import {PickupRandomItem} from '../Actions/PickupRandomItem';
 import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { getPositionInDirection } from '../../helper';
+import { calculateStraightPath, getDirectionFromOrigin, getPositionInDirection } from '../../helper';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { AddStatusEffect } from '../Actions/AddStatusEffect';
 import { WolfSpeed } from '../Modes/HiddenLeaf/StatusEffects/WolfSpeed';
 import { PreparePlaceActorInDirection } from '../Actions/PreparePlaceActorInDirection';
 import * as Behaviors from '../Entities/AI/Behaviors/index';
+import { Attack } from '../Actions/Attack';
+import { Move } from '../Actions/Move';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
 const basicInfo = {
@@ -171,6 +173,47 @@ function initialize (engine) {
               transfersBackground: false,
               spatterColors: [HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
             }).start()
+
+            // find Akamaru in engine.actors
+            // if found, move Akamaru to actor's position
+            const akamaru = engine.game.engine.actors.find((actor) => actor.name === 'Akamaru');
+            // find closest enemy to actor
+            const closestEnemy = engine.game.engine.actors.filter((actor) => actor.faction === 'OPPONENT').sort((a, b) => {
+              return a.distanceTo(actor) - b.distanceTo(actor)
+            })[0];
+
+            if (akamaru && closestEnemy) {
+              const path = calculateStraightPath(closestEnemy.getPosition(), akamaru.getPosition());
+              const targetPos = path.at(-1);
+
+              const move = new Move({
+                targetPos,
+                game: engine.game,
+                actor: akamaru,
+                energyCost: 0,
+              })
+
+              move.perform()
+
+              const attack = new Attack({
+                targetPos,
+                game: engine.game,
+                actor: akamaru,
+                energyCost: 0,
+              })
+
+              attack.perform()
+
+              SpatterEmitter({
+                game: engine.game,
+                fromPosition: akamaru.getPosition(),
+                spatterAmount: 0.1,
+                spatterRadius: 2,
+                animationTimeStep: 0.6,
+                transfersBackground: false,
+                spatterColors: [HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
+              }).start()
+            }
           }
         }
       }),
@@ -250,8 +293,8 @@ function initialize (engine) {
     traversableTiles: ['WATER'],
     actions: [],
     speed: basicInfo.speed,
-    durability: basicInfo.durability,
-    charge: basicInfo.charge,
+    durability: 100||basicInfo.durability,
+    charge: 100||basicInfo.charge,
     game: engine.game,
     presentingUI: true,
     initializeKeymap: keymap,
