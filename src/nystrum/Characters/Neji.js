@@ -14,13 +14,15 @@ import {PickupRandomItem} from '../Actions/PickupRandomItem';
 import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { getPositionInDirection } from '../../helper';
+import { getPositionInDirection, getPositionsFromStructure } from '../../helper';
 import { Attack } from '../Actions/Attack';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { SpawnKikaichu } from '../Actions/SpawnKikaichu';
 import { StatLeechAttack } from '../Actions/StatLeechAttack';
 import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
 import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
+import { MultiTargetAttack } from '../Actions/MultiTargetAttack';
+import { MultiTargetAttackAndShove } from '../Actions/MultiTargetAttackAndShove';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/neji.png`;
 const basicInfo = {
@@ -152,18 +154,42 @@ function initialize (engine) {
         game: engine.game,
         actor,
       }),
-      c: () => new SpawnKikaichu({
-        label: 'Kikaichu Release',
+      c: () => new MultiTargetAttackAndShove({
+        label: '64 Palms',
+        targetPositions: getPositionsFromStructure(Constant.CLONE_PATTERNS.clover, actor.getPosition()),
         game: engine.game,
         actor,
-        cloneCount: 6,
-        energyCost: Constant.ENERGY_THRESHOLD * 1,
-        requiredResources: [
-          new ChakraResource({ getResourceCost: () => 8 }),
-        ],
+        energyCost: (Constant.ENERGY_THRESHOLD * 1),
+        requiredResources: [new ChakraResource({ getResourceCost: () => 2 })],
+        onSuccess: () => {
+          GradientRadialEmitter({
+            game: engine.game,
+            fromPosition: actor.getPosition(),
+            radius: 1,
+            colorGradient: [HIDDEN_LEAF_COLORS.wraps, HIDDEN_LEAF_COLORS.chakra],
+            backgroundColorGradient: [HIDDEN_LEAF_COLORS.chakra, HIDDEN_LEAF_COLORS.chakra],
+          }).start()
+        }
+      }),
+      k: () => new MultiTargetAttackAndShove({
+        label: 'Revolving Heaven',
+        targetPositions: getPositionsFromStructure(Constant.CLONE_PATTERNS.bigSquare, actor.getPosition()),
+        game: engine.game,
+        actor,
+        energyCost: (Constant.ENERGY_THRESHOLD * 2),
+        requiredResources: [new ChakraResource({ getResourceCost: () => 5 })],
+        onSuccess: () => {
+          GradientRadialEmitter({
+            game: engine.game,
+            fromPosition: actor.getPosition(),
+            radius: 3,
+            colorGradient: [HIDDEN_LEAF_COLORS.wraps, HIDDEN_LEAF_COLORS.chakra],
+            backgroundColorGradient: [HIDDEN_LEAF_COLORS.chakra, HIDDEN_LEAF_COLORS.chakra],
+          }).start()
+        }
       }),
       l: () => new PrepareDirectionalAction({
-        label: 'Chakra Leech',
+        label: 'Gentle Fist',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
@@ -173,14 +199,6 @@ function initialize (engine) {
         actionParams: {
           changeByValue: -2,
         }
-      }),
-      k: () => new PrepareDirectionalThrow({
-        label: 'Kikaichu Cage',
-        projectileType: 'Kikaichu Cage',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })],
       }),
     };
   }
@@ -202,18 +220,6 @@ function initialize (engine) {
     initializeKeymap: keymap,
   })
 
-  // add default items to container
-  // const items = Array(100).fill('').map(() => ShinoBugCage({engine, range: 5}));
-  // actor.container = [
-  //   new ContainerSlot({
-  //     itemType: items[0].name,
-  //     items: items,
-  //   }),
-  // ]
-
-  // const jutsu = UzumakiBarrage(engine, actor.getPosition());
-  // actor.addEquipmentSlot({type: jutsu.equipmentType})
-  // actor.equip(jutsu.equipmentType, jutsu);
   return actor;
 }
 

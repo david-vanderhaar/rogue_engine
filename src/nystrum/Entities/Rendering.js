@@ -38,8 +38,9 @@ export const Rendering = superclass => class extends superclass {
     return this.traversableTiles.includes(tileType);
   }
 
-  shove(targetPos, direction) {
+  shove(targetPos, direction, moveSelf = true) {
     let success = false;
+    let entityMoveSuccess = false;
     let targetTile = this.game.map[Helper.coordsToString(targetPos)];
     if (targetTile) {
       targetTile.entities.map((entity) => {
@@ -48,12 +49,18 @@ export const Rendering = superclass => class extends superclass {
             let newX = entity.pos.x + direction[0];
             let newY = entity.pos.y + direction[1];
             let newPos = { x: newX, y: newY };
-            entity.move(newPos);
+            entityMoveSuccess = entity.move(newPos);
           }
         }
       });
     }
-    success = this.move(targetPos);
+
+    if (moveSelf) {
+      success = this.move(targetPos);
+    } else {
+      success = entityMoveSuccess;
+    }
+
     return success;
   }
 };
