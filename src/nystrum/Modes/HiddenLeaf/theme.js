@@ -15,6 +15,8 @@ export const COLORS = {
   sasuke_alt: '#b75a5e',
   kiba: '#9c9ca6',
   kiba_alt: '#89193b',
+  neji: '#F0D8C0',
+  neji_alt: '#353641',
   leaf: '#36635b',
   wraps: '#F0D8C0',
   wall: '#a3625f',
