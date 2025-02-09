@@ -193,11 +193,11 @@ function initialize (engine) {
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-        actionLabel: 'Chakra Leech',
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 3 })],
+        actionLabel: 'Chakra Bleed 3:',
         actionClass: StatChakraLeechAttack,
         actionParams: {
-          changeByValue: -2,
+          changeByValue: -3,
         }
       }),
     };
