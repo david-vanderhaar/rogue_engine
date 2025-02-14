@@ -17,6 +17,8 @@ export const COLORS = {
   kiba_alt: '#89193b',
   neji: '#F0D8C0',
   neji_alt: '#353641',
+  shikamaru: '#788b78',
+  shikamaru_alt: '#353641',
   leaf: '#36635b',
   wraps: '#F0D8C0',
   wall: '#a3625f',
