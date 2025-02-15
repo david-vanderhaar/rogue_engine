@@ -9,6 +9,7 @@ export class PrepareRangedAction extends Base {
   constructor({ 
     passThroughEnergyCost = Constant.ENERGY_THRESHOLD, 
     passThroughRequiredResources = [],
+    keymapTriggerString = 'f',
     validTargetFilter = (entityInTile) => true,
     range = 3,
     cursorShape = Constant.CLONE_PATTERNS.point,
@@ -19,6 +20,7 @@ export class PrepareRangedAction extends Base {
     super({ ...args });
     this.passThroughEnergyCost = passThroughEnergyCost;
     this.passThroughRequiredResources = passThroughRequiredResources;
+    this.keymapTriggerString = keymapTriggerString;
     this.validTargetFilter = validTargetFilter;
     this.range = range;
     this.actionClass = actionClass;
@@ -129,16 +131,17 @@ export class PrepareRangedAction extends Base {
           direction: Constant.DIRECTIONS.E,
         })
       },
-      f: () => {
+      [this.keymapTriggerString]: () => {
         return new this.actionClass({
           ...this.actionParams,
           actor: this.actor,
           game: this.game,
-          targetPos: { ...this.actor.getCursorPositions()[0] },
+          targetPosition: { ...this.actor.getCursorPositions().at(0) },
           targetPositions: { ...this.actor.getCursorPositions() },
           energyCost: this.passThroughEnergyCost,
           requiredResources: this.passThroughRequiredResources,
           onSuccess: () => {
+            this.actionParams.onSuccess && this.actionParams.onSuccess();
             this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
           }

@@ -12,6 +12,8 @@ export default ({
   reverse = false,
   pathTailLength = 0,
   character = '*',
+  transfersBackground = false,
+  transfersBackgroundOnDestroy = false,
 }) => {
   const emitter = new ParticleEmitter({
     game,
@@ -43,6 +45,8 @@ export default ({
         life: particlePath.length + 1,
         pos: particlePath[0],
         path: particlePath,
+        transfersBackground,
+        transfersBackgroundOnDestroy,
         rendererGradients: {
           color: colorGradient,
           backgroundColor: backgroundColorGradient,
