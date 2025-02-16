@@ -41,12 +41,16 @@ export class Engine {
     
     if (this.game.getFirstPlayer() === null) return false
     let acting = true;
+    let timePassed = 0;
+
     while (acting) {
       if (!actor) return false;
       // if (!actor.active) return false;
       if (!actor.active) break;
-      let timePassed = 0;
-      
+      // let timePassed = 0;
+      this.processStatusEffects(timePassed);
+      if (actor.skipTurn) break;
+
       if (actor.hasEnoughEnergy()) {
         // if (!actor.active) break;
         let action = actor.getAction(this.game);
@@ -54,7 +58,6 @@ export class Engine {
         // timePassed += action.getEnergyCost();
         // console.log('timePassed ', timePassed);
         
-
         while (true) {
           let result = {
             success: false,
@@ -89,7 +92,8 @@ export class Engine {
           action = result.alternative;
         }
         
-        this.processStatusEffects(timePassed);
+        // this.processStatusEffects(timePassed);
+
         if (action.interrupt) {
           acting = false;
           break;
@@ -235,8 +239,10 @@ export class Engine {
   }
 
   processStatusEffects (timePassed) {
-    let effects = this.statusEffects
-    if (!this.currentActorIsPlayer()) effects = effects.filter((effect) => !effect.processOnlyOnPlayerTurn)
+    let effects = this.statusEffects.filter((effect) => {
+      if (effect.processOnlyOnActorTurn) return effect.actor.id === this.getCurrentActor().id
+      else return true
+    })
 
     effects.forEach((effect) => {
       effect.timeSinceLastStep += timePassed;
@@ -321,6 +327,10 @@ export class Engine {
 
   setActorToNext (entity) {
     this.currentActor = (this.currentActor + 1) % this.actors.length;
+  }
+
+  getCurrentActor() {
+    return this.actors[this.currentActor]
   }
 
 }

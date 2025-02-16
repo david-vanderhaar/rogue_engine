@@ -8,6 +8,7 @@ export const Acting = superclass => class extends superclass {
     this.speed = speed;
     this.energy = speed;
     this.lastActionResult = null
+    this.skipTurn = false
   }
 
   getLastActionResult() {return this.lastActionResult}

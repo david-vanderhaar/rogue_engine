@@ -9,7 +9,7 @@ export class LayGrass extends Base {
     super({ ...args });
     this.name = 'flattened';
     this.allowDuplicates = true
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     const rendererOriginal = {
       ...this.actor.renderer
     }

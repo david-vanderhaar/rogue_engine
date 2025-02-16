@@ -11,7 +11,7 @@ export class WindBursts extends Base {
     this.name = 'wind bursts';
     this.description = "summon short bursts of wind to speed up your movements and deflect attacks."
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.lifespan = -1
     this.renderer = {
       character: '〣',

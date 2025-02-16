@@ -7,7 +7,7 @@ export class LightDrain extends Base {
     this.name = 'light drain';
     this.description = "all lights give out eventually"
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.lifespan = -1
     this.renderer = {
       color: COLORS.sunset,

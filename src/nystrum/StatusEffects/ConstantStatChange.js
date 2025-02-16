@@ -20,7 +20,7 @@ export default class ConstantStatChange extends Base {
     this.name = 'stat change';
     this.description = "this stat is changing every step"
     this.allowDuplicates = true
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.lifespan = -1
     this.statAttributePath = statAttributePath
     this.statAttributePathMax = statAttributePathMax

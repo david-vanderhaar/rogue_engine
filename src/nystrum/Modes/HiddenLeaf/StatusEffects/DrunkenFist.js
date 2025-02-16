@@ -10,7 +10,7 @@ export class DrunkenFist extends Base {
     this.name = 'enter the drunken fist';
     this.description = "you're drunk, but you're also a master of the drunken fist. there is power in those wild movements."
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.renderer = {
       color: '#c45ffd',
       background: '#424242',

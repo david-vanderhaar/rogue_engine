@@ -19,7 +19,7 @@ export class NineTailsBeastMode extends Base {
     this.name = 'Nine Tails Beast Mode';
     this.description = "tap into the endless chakra of the nine tails at the cost of your life force"
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     // this.lifespan = 1000
     this['actor_background'] = this.actor.renderer.background;
     this['actor_color'] = this.actor.renderer.color;

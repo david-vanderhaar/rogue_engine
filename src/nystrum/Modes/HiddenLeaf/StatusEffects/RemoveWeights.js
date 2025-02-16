@@ -7,7 +7,7 @@ export class RemoveWeights extends Base {
     this.name = 'Removed weights';
     this.description = "the weights are off, let's go!"
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.speedBuff = speedBuff
     this.damageBuff = damageBuff
     this.renderer = {

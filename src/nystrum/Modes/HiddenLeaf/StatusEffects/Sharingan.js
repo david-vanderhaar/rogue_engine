@@ -8,7 +8,7 @@ export class Sharingan extends Base {
     this.name = 'activate your birthright, your clan\'s kekkei genkai, the sharingan.';
     this.description = "at the cost of your chakra, you can see your opponent's moves."
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.lifespan = -1
     this['actor_background'] = this.actor.renderer.background;
     this['actor_color'] = this.actor.renderer.color;

@@ -8,7 +8,7 @@ export class WeakHits extends Base {
     this.name = 'weak hits';
     this.description = "you are losing your will to even strike back"
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.renderer = {
       color: COLORS.flesh2,
       background: COLORS.flesh3,

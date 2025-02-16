@@ -30,6 +30,8 @@ import { AddStatusEffect } from '../Actions/AddStatusEffect';
 import { AddStatusEffectAtPosition } from '../Actions/AddStatusEffectAtPosition';
 import { ChakraBleed } from '../Modes/HiddenLeaf/StatusEffects/ChakraBleed';
 import GradientPathEmitter from '../Engine/Particle/Emitters/gradientPathEmitter';
+import Stunned from '../StatusEffects/Stunned';
+import ShadowHold from '../StatusEffects/ShadowHold';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shikamaru.png`;
 const basicInfo = {
@@ -156,10 +158,10 @@ function initialize (engine) {
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [],
         keymapTriggerString: 'l',
-        cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+        // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
         actionClass: AddStatusEffectAtPosition,
         actionParams: {
-          effect: new ChakraBleed({ game: engine.game }),
+          effect: new ShadowHold({ game: engine.game, turnsStunned: 3 }),
           label: 'Shadow Hold',
           onSuccess: () => {
             GradientPathEmitter({
@@ -168,7 +170,7 @@ function initialize (engine) {
               targetPositions: actor.getCursorPositions(),
               animationTimeStep: 0.8,
               // animationTimeStep: 0.1,
-              transfersBackground: true,
+              // transfersBackground: true,
               backgroundColorGradient: [HIDDEN_LEAF_COLORS.black, HIDDEN_LEAF_COLORS.black],
               character: '',
             }).start()

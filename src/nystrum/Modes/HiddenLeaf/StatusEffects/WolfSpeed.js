@@ -9,7 +9,7 @@ export class WolfSpeed extends Base {
     this.name = 'Wolf Speed';
     this.description = "Channeling the ferocity of wolves to enhance speed and power!"
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.speedBuff = speedBuff
     this.damageBuff = damageBuff
     this.renderer = {

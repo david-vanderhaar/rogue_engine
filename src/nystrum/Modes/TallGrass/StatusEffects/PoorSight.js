@@ -8,7 +8,7 @@ export class PoorSight extends Base {
     this.name = 'poor sight';
     this.description = "you can't see it, but it's there."
     this.allowDuplicates = false
-    this.processOnlyOnPlayerTurn = true
+    this.processOnlyOnActorTurn = true
     this.renderer = {
       color: COLORS.white,
       background: COLORS.black,
