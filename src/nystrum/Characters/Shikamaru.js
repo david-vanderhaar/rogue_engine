@@ -1,5 +1,4 @@
 // import deps
-import * as Item from '../items';
 import * as Constant from '../constants';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
 import { Player } from '../Entities/index';
@@ -7,30 +6,16 @@ import { ContainerSlot } from '../Entities/Containing';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
 import {MoveOrAttack} from '../Actions/MoveOrAttack';
-import {PrepareRangedAttack} from '../Actions/PrepareRangedAttack';
 import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
 import {OpenInventory} from '../Actions/OpenInventory';
-import {OpenEquipment} from '../Actions/OpenEquipment';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
-import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import * as Helper from '../../helper';
-import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
-import { TackleByRange } from '../Actions/TackleByRange';
-import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
 import { checkIsWalkingOnWater, checkIsWalkingOnFire } from '../Modes/HiddenLeaf/StatusEffects/helper';
-import { PiercingKunai } from '../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
 import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
-import { PrepareLooking } from '../Actions/PrepareLooking';
 import { PrepareRangedAction } from '../Actions/PrepareRangedAction';
-import { AddStatusEffect } from '../Actions/AddStatusEffect';
 import { AddStatusEffectAtPosition } from '../Actions/AddStatusEffectAtPosition';
-import { ChakraBleed } from '../Modes/HiddenLeaf/StatusEffects/ChakraBleed';
 import GradientPathEmitter from '../Engine/Particle/Emitters/gradientPathEmitter';
-import Stunned from '../StatusEffects/Stunned';
 import ShadowHold from '../StatusEffects/ShadowHold';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shikamaru.png`;
@@ -47,7 +32,7 @@ const basicInfo = {
   },
   abilities: [
     {
-      name: 'Substitution Jutsu',
+      name: 'Sub. Jutsu',
       description: 'You were never there.',
     },
     {
@@ -143,12 +128,6 @@ function initialize (engine) {
         game: engine.game,
         actor,
         energyCost: actor.energy,
-      }),
-      t: () => new PrepareDirectionalThrow({
-        label: 'Throw Kunai',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
       }),
       l: () => new PrepareRangedAction({
         label: 'Shadow Hold',
