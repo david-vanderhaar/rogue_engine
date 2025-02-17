@@ -265,11 +265,6 @@ function initialize (engine) {
         game: engine.game,
         actor,
       }),
-      // o: () => new OpenEquipment({
-      //   label: 'Equipment',
-      //   game: engine.game,
-      //   actor,
-      // }),
       u: () => new OpenDropInventory({
         label: 'Drop Items',
         game: engine.game,
@@ -286,7 +281,7 @@ function initialize (engine) {
   let actor = new Player({
     pos: { x: 23, y: 7 },
     renderer: basicInfo.renderer,
-    name: 'kiba',
+    name: 'Kiba',
     faction: 'KIBA',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],

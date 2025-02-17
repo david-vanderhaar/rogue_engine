@@ -693,7 +693,7 @@ f9d091var(--color-secondary) */
   border: 2px solid var(--color-main);
   color: var(--color-main);
   background-color: var(--color-accent);
-  transition: background-color .2s ease-out;
+  transition: all .2s ease-out;
 }
 
 .hidden-leaf-character-card:hover, 

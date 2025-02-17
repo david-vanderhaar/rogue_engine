@@ -4,27 +4,39 @@ import Tooltip from './Tooltip';
 import { ProgressBar } from './Entity/CharacterCard';
 
 const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}) => {
-  const [selected, setSelected] = useState(Math.floor(characters.length / 2));
+  const [selected, setSelected] = useState(0);
   const cardRefs = useRef([]);
+
+  // Reorder the array so selected character is in the middle
+  const getReorderedCharacters = (selectedIndex) => {
+    console.log('selectedIndex: ', selectedIndex);
+    
+    const reordered = [...characters];
+    const length = characters.length;
+    const middle = Math.floor(length / 2);
+
+    // shift the array so the selected character is in the middle
+    // based on the selected index
+    for (let i = 0; i < (selectedIndex + middle); i++) {
+      reordered.push(reordered.shift());
+    }
+    return reordered;
+  };
 
   // allow number key events and arrow keys to select character
   useEffect(() => {
+    console.log('selected: ', selected);
+    console.log('character: ', characters[selected]);
+    
     const handleKeyPress = (event) => {
-      const options = Array(characters.length).fill(null).map((_, i) => (i + 1).toString());
-      if (options.includes(event.key)) {
-        const index = parseInt(event.key) - 1;
-        setSelected(index);
-        cardRefs.current[index].focus();
-      } else if (event.key === 'ArrowLeft') {
+      if (event.key === 'ArrowLeft') {
         setSelected((prev) => {
           const newIndex = prev > 0 ? prev - 1 : characters.length - 1;
-          cardRefs.current[newIndex].focus();
           return newIndex;
         });
       } else if (event.key === 'ArrowRight') {
         setSelected((prev) => {
           const newIndex = prev < characters.length - 1 ? prev + 1 : 0;
-          cardRefs.current[newIndex].focus();
           return newIndex;
         });
       } else if (event.key === 'Enter') {
@@ -40,13 +52,7 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
     };
   }, [selected, characters, setActiveScreen, setSelectedCharacter]);
 
-  // focus first card when component mounts
-  useEffect(() => {
-    cardRefs.current[selected].focus();
-  }, []);
-
   return (
-    // single row of character cards
     <div style={{
       display: 'flex',
       flexDirection: 'row',
@@ -55,31 +61,42 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
       overflow: 'hidden',
       position: 'relative',
       width: '100%',
-    }}
-    >
+    }}>
       <div style={{
         display: 'flex',
-        transition: 'transform 0.5s ease',
-        transform: `translateX(${-selected * 220 + (window.innerWidth / 2 - 110)}px)`,
+        justifyContent: 'center',
+        width: '100%',
       }}>
         {
-          characters.map((character, index) => {
-            const distanceFromCenter = Math.abs(index - selected);
-            const opacity = 1 - (distanceFromCenter * 0.2);
+          getReorderedCharacters(selected).map((character, index) => {
+            // Calculate the visual index relative to the center
+            const visualIndex = index - Math.floor(characters.length / 2);
+            const distanceFromCenter = Math.abs(visualIndex);
+            const opacity = 1 - (distanceFromCenter * 0.3);
+
+            if (Math.abs(visualIndex) > 2) return null;
+            
             return (
-              <div key={index} style={{ opacity, width: 220 }}>
+              <div 
+                key={character.basicInfo.name}
+                style={{ 
+                  opacity,
+                  // width: 210,
+                  position: 'relative',
+                }}
+              >
                 <CharacterCard 
-                  character={character} 
-                  setSelectedCharacter={setSelectedCharacter} 
+                  character={character}
+                  setSelectedCharacter={setSelectedCharacter}
                   setActiveScreen={setActiveScreen}
-                  index={index}
-                  ref={(el) => cardRefs.current[index] = el}
+                  index={characters.indexOf(character)} // Use original index for reference
+                  ref={(el) => cardRefs.current[characters.indexOf(character)] = el}
+                  selectedStyle={visualIndex === 0}
                 />
                 <div style={{fontSize: 16, width: 200, margin: 'auto'}}>
-                {selected === index && (<p className='text--blinking'>press Enter to confirm</p>)}
-                {selected !== index && index === selected - 1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&lt;</div>}
-                {selected !== index && index === selected + 1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&gt;</div>}
-                {selected !== index && (<p style={{fontSize: 12}}>press {index + 1} to select</p>)}
+                  {visualIndex === 0 && (<p className='text--blinking'>press Enter to confirm</p>)}
+                  {visualIndex === -1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&lt;</div>}
+                  {visualIndex === 1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&gt;</div>}
                 </div>
               </div>
             )
@@ -90,17 +107,29 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
   );
 }
 
-const CharacterCard = React.forwardRef(({character, setActiveScreen, setSelectedCharacter}, ref) => {
+const CharacterCard = React.forwardRef(({character, setActiveScreen, setSelectedCharacter, selectedStyle = false}, ref) => {
   const actor = character.basicInfo;
+  const background = selectedStyle ? actor.renderer.background : 'var(--color-accent)';
+  const color = selectedStyle ? actor.renderer.color : 'var(--color-main)';
+  const borderColor = selectedStyle ? actor.renderer.color : 'var(--color-main)';
+  const width = selectedStyle ? '14rem' : '14rem';
+  const height = selectedStyle ? '29rem' : '27rem';
+  const margin = selectedStyle ? '1rem' : '0.5rem';
 
   return (
     <button
       className='hidden-leaf-character-card'
       style={{
-        '--character-background-color': character.basicInfo.renderer.background,
-        '--character-color': character.basicInfo.renderer.color,
+        '--character-background-color': background,
+        '--character-color': color,
+        backgroundColor: background,
+        color: color,
+        borderColor: borderColor,
         fontFamily: 'player-start-2p',
         fontSize: 12,
+        width: width,
+        height: height,
+        margin: margin,
       }}
       onClick={() => {
         setSelectedCharacter(character);
