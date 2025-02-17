@@ -9,8 +9,6 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
 
   // Reorder the array so selected character is in the middle
   const getReorderedCharacters = (selectedIndex) => {
-    console.log('selectedIndex: ', selectedIndex);
-    
     const reordered = [...characters];
     const length = characters.length;
     const middle = Math.floor(length / 2);
@@ -25,9 +23,6 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
 
   // allow number key events and arrow keys to select character
   useEffect(() => {
-    console.log('selected: ', selected);
-    console.log('character: ', characters[selected]);
-    
     const handleKeyPress = (event) => {
       if (event.key === 'ArrowLeft') {
         setSelected((prev) => {

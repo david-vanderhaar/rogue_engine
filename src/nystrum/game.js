@@ -625,7 +625,13 @@ export const handleKeyPress = (event, engine) => {
       const getAction = getKeymapHandlerByCode(code, keymap)
       if (getAction === null) { return; }
       const action = getAction();
-      // const action = keymap[code];
+      
+      // // random action
+      // const entries = Object.entries(keymap).filter(([key, action]) => {
+      //   return !key.split(',').includes('Escape')
+      // })
+      // const action = Helper.getRandomInArray(entries)[1]()
+
       action.setAsNextAction();
       engine.start();
     }
