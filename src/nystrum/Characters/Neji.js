@@ -210,6 +210,7 @@ function initialize (engine) {
     faction: 'NEJI',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
+    faction: 'PLAYER',
     traversableTiles: ['WATER'],
     actions: [],
     speed: basicInfo.speed,

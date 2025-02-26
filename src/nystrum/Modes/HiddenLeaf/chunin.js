@@ -4,7 +4,8 @@ import * as Item from '../../items';
 import * as MapHelper from '../../Maps/helper';
 import { generate as generateBuilding } from '../../Maps/generator';
 import * as CoverGenerator from '../../Maps/coverGenerator';
-import { Debris, Bandit, RangedBandit, FireSpread } from '../../Entities/index';
+import { Debris, Bandit, RangedBandit, FireSpread, JacintoAI } from '../../Entities/index';
+import * as Behaviors from '../../Entities/AI/Behaviors';
 import { MESSAGE_TYPE } from '../../message';
 import { Mode } from '../default';
 import SOUNDS from '../../sounds';
@@ -446,7 +447,8 @@ export class Chunin extends Mode {
       stats = this.getBanditStats();
     }
     // let entity = new stats.entityClass({
-    let entity = new Bandit({
+    // let entity = new Bandit({
+    let entity = new JacintoAI({
       targetEntity,
       pos,
       renderer: stats.renderer,
@@ -458,6 +460,25 @@ export class Chunin extends Mode {
       speed: stats.speed,
       charge: 20,
       faction: 'OPPONENT',
+      enemyFactions: ['PLAYER'],
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: stats.speed/Constant.ENERGY_THRESHOLD,
+          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+          chainOnFail: true
+        }),
+        new Behaviors.Telegraph({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true
+        }),
+        new Behaviors.ExecuteAttack({repeat: 1}),
+        new Behaviors.MoveAwayFromEnemy({
+          repeat: stats.speed/Constant.ENERGY_THRESHOLD,
+          maintainDistanceOf: 4, // causes to move and attack in same turn if close enough
+          // chainOnFail: fals
+        }),
+      ],
       // directional projectile destruction breaks engine
       getProjectile: ({ pos, targetPos, direction, range }) => Item.directionalKunai(this.game.engine, { ...pos }, direction, range)
       // getProjectile: ({ pos, targetPos, direction, range }) => Item.kunai(game.engine, { ...pos }, { ...targetPos })

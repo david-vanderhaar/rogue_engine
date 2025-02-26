@@ -285,6 +285,7 @@ function initialize (engine) {
     faction: 'KIBA',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
+    faction: 'PLAYER',
     traversableTiles: ['WATER'],
     actions: [],
     speed: basicInfo.speed,

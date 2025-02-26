@@ -239,6 +239,7 @@ function initialize (engine) {
     faction: 'TENTEN',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
+    faction: 'PLAYER',
     traversableTiles: ['WATER'],
     actions: [],
     speed: basicInfo.speed,

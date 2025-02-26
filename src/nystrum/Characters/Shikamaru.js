@@ -202,6 +202,7 @@ function initialize (engine) {
     faction: 'SHIKAMARU',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
+    faction: 'PLAYER',
     traversableTiles: ['WATER'],
     actions: [],
     speed: basicInfo.speed,

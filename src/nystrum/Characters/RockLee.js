@@ -269,6 +269,7 @@ function initialize (engine) {
     name: basicInfo.name,
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
+    faction: 'PLAYER',
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,

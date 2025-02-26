@@ -198,6 +198,7 @@ function initialize (engine) {
     faction: 'NARUTO',
     // enemyFactions: ['ALL'],
     enemyFactions: ['OPPONENT'],
+    faction: 'PLAYER',
     traversableTiles: ['WATER'],
     actions: [],
     speed: basicInfo.speed,
