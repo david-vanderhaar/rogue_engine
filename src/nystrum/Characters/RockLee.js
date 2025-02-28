@@ -21,6 +21,7 @@ import { GoToPreviousKeymap } from '../Actions/GoToPreviousKeymap';
 import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../Actions/MoveTowards';
 import { checkIsWalkingOnFire } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import * as Behaviors from '../Entities/AI/Behaviors';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
 
@@ -296,9 +297,28 @@ function initialize (engine) {
   return actor
 }
 
+const behaviors = [
+  new Behaviors.MoveTowardsEnemy({
+    repeat: basicInfo.speed/Constant.ENERGY_THRESHOLD,
+    maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+    chainOnFail: true
+  }),
+  new Behaviors.Telegraph({
+    repeat: 1,
+    attackPattern: Constant.CLONE_PATTERNS.clover,
+    chainOnSuccess: true
+  }),
+  new Behaviors.ExecuteAttack({repeat: 1}),
+  new Behaviors.MoveAwayFromEnemy({
+    repeat: basicInfo.speed/Constant.ENERGY_THRESHOLD,
+    maintainDistanceOf: 4, // causes to move and attack in same turn if close enough
+    // chainOnFail: fals
+  }),
+]
+
 export default function () {
   return {
     initialize: initialize,
-    basicInfo: basicInfo,
+    basicInfo: {behaviors, ...basicInfo},
   }
 }

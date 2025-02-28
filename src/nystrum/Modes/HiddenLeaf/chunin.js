@@ -461,18 +461,12 @@ export class Chunin extends Mode {
       charge: 20,
       faction: 'OPPONENT',
       enemyFactions: ['PLAYER'],
-      behaviors: [
+      behaviors: stats?.behaviors || [
         new Behaviors.MoveTowardsEnemy({
           repeat: stats.speed/Constant.ENERGY_THRESHOLD,
           maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
           chainOnFail: true
         }),
-        new Behaviors.Telegraph({
-          repeat: 1,
-          attackPattern: Constant.CLONE_PATTERNS.clover,
-          chainOnSuccess: true
-        }),
-        new Behaviors.ExecuteAttack({repeat: 1}),
         new Behaviors.MoveAwayFromEnemy({
           repeat: stats.speed/Constant.ENERGY_THRESHOLD,
           maintainDistanceOf: 4, // causes to move and attack in same turn if close enough
