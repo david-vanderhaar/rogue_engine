@@ -5,6 +5,7 @@ import { Mode } from './default'
 import { Flume } from './flume'
 import { Development } from './Development/development'
 import { SomethingInTheTallGrass } from './TallGrass/tall_grass'
+import { Normandy } from './Normandy/normandy'
 
 export default {
   Castle,
@@ -14,4 +15,5 @@ export default {
   Mode,
   Development,
   SomethingInTheTallGrass,
+  Normandy,
 }
