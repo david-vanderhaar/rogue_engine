@@ -1,7 +1,32 @@
+export const THEME_COLORS = {
+  main: '#222326',
+  accent: '#82998f',
+  text: '#e1d8cb',
+  white: '#e1d8cb',
+  sand_2: '#c3b197',
+  sand_1: '#a68a64',
+  sand_0: '#614f38',
+  sand_00: '#362c20',
+  blue_2: '#82998f',
+  blue_1: '#525e5a',
+  blue_0: '#3a4040',
+  black_1: '#222326',
+  black_0: '#0a0d0a',
+  green_0: '#20331f',
+  green_1: '#495840',
+  green_2: '#888f72',
+  green_3: '#c7c7a5',
+  red_1: '#de8d7d',
+  red_0: '#833121',  
+}
+
 export const COLORS = {
-  main: '#603030',
-  accent: '#F0D8C0',
-  text: '#eeeeee',
+  main: '#16161d',
+  accent: '#9c7041',
+  text: '#f1e782',
+  // main: '#603030',
+  // accent: '#F0D8C0',
+  // text: '#eeeeee',
   white: '#eeeeee',
   gaara: '#603030',
   rock_lee: '#155859',
@@ -67,9 +92,10 @@ export const COLORS = {
   flesh2: '#CC7468',
   flesh3: '#DDA78F',
   gray: '#6D7886',
+  ...THEME_COLORS,
 }
 
-COLORS.bg_override = COLORS.dirt00
+COLORS.bg_override = COLORS.sand_00
 
 export const TILE_KEY = {
   'GROUND': {

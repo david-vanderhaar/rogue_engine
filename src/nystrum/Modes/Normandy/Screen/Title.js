@@ -24,7 +24,7 @@ function Title(props) {
   return (
     <div className="Title">
       <div className="Title__content">
-        <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>The Chunin Exams</h2>
+        <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>Normandy</h2>
         <button
           className='btn btn-main btn-themed'
           onClick={() => {
@@ -32,7 +32,7 @@ function Title(props) {
             props.setActiveScreen(SCREENS.CHARACTER_SELECT)
           }}
         >
-          It's my ninja way!
+          Hell on the beach.
         </button>
         <br/>
         <span>press enter to start</span>

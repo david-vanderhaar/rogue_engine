@@ -31,6 +31,8 @@ export class Normandy extends Mode {
         enemies: Array(1).fill('Bandit'),
       },
     ]
+
+    this.game.fovActive = true
   }
 
   getTournamentOpponent () {
