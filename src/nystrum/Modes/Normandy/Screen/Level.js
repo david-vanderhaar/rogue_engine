@@ -83,20 +83,17 @@ class Level extends React.Component {
               <InfoBlocks game={this.state.game} />
             </div>
             <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -52, height: 92, position: 'relative'}}>
-              <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()} />
+              <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntitiesInFov()} showDescription={false} />
             </div>
           </div>
           <div style={{flex: 2, padding: 12, paddingLeft: 28}}>
             <div style={{display: 'flex'}}>
               <div>
-                <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
                 <ImagePortrait actor={player} width={200} height={74} />
                 <NamePlate actor={player} />
               </div>
-              <div style={{marginLeft: 12, marginTop: 42}}>
-                <div style={{fontSize: 12, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>vs</div>
-                <ImagePortrait actor={opponent} width={100} height={37} />
-                <NamePlate actor={opponent} />
+              <div style={{marginLeft: 12}}>
+                stats go here
               </div>
             </div>
             <PlayerInformation game={this.state.game} />
