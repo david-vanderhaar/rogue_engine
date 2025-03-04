@@ -157,8 +157,9 @@ export function StatusEffect ({effect}) {
 }
 
 export function StatusEffects ({actor}) {
+  if (!actor?.id) return null
   return (
-    <div className="StatusEffects">
+    <div className="StatusEffects" style={{justifySelf: 'flex-start'}}>
       {
         actor.game.engine.getStatusEffectsByActorId(actor.id).map((effect, i) => {
           return (

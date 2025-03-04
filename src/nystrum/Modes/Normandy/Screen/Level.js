@@ -7,7 +7,7 @@ import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
 import InfoBlocks from '../UI/InfoBlocks';
 import Equipment from '../UI/Entity/Equipment';
-import { Portrait } from '../UI/Entity/CharacterCard';
+import { Portrait, StatusEffects } from '../UI/Entity/CharacterCard';
 import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntities';
 import { COLORS } from '../theme';
 import ActionMenu from '../UI/ActionMenu';
@@ -88,13 +88,18 @@ class Level extends React.Component {
             <div style={{display: 'flex'}}>
               <div>
                 <Portrait actor={player} width={200} height={74} />
+                <div style={{marginTop: 6}}>
+                  <StatusEffects actor={player} />
+                </div>
               </div>
               <div style={{marginLeft: 12}}>
                 {/* stats go here */}
                 <PlayerInformation game={this.state.game} />
               </div>
             </div>
-            <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} />
+            <div style={{marginTop: 12}}>
+              <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} />
+            </div>
             <hr></hr>
             <ActionMenu keymap={player.getKeymap()} game={this.state.game} />
             <hr></hr>
