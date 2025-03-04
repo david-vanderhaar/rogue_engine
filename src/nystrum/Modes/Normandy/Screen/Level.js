@@ -95,7 +95,9 @@ class Level extends React.Component {
               </div>
             </div>
             <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} />
+            <hr></hr>
             <ActionMenu keymap={player.getKeymap()} game={this.state.game} />
+            <hr></hr>
             <Messages messages={this.state.game.messages.slice(-20).reverse()} />
           </div>
           <Instructions 
