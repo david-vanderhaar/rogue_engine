@@ -16,6 +16,7 @@ export default function CharacterCard ({actor, game}) {
           unit={100}
           actor={actor} 
         />
+        <br/>
         <SimpleProgressBar 
           label='HP'
           attributePath='durability'
@@ -24,6 +25,7 @@ export default function CharacterCard ({actor, game}) {
           unit={1}
           actor={actor} 
         />
+        <br/>
         {
           actor.chargeMax > 0 && (
             <SimpleProgressBar 
@@ -37,7 +39,7 @@ export default function CharacterCard ({actor, game}) {
           )
         }
         <br/>
-        <SimpleProgressBar 
+        {/* <SimpleProgressBar 
           label='ATK'
           attributeValue={actor.getAttackDamageWithEquipment()}
           colorFilled='#ff9926'
@@ -50,13 +52,45 @@ export default function CharacterCard ({actor, game}) {
           colorFilled='#dc322f'
           unit={1}
           actor={actor} 
-        />
+        /> */}
         {/* <StatusEffects actor={actor} /> */}
       </div>
-      <div>
-        {/* <ActionBar keymap={actor.getKeymap()} game={game} /> */}
-        <ActionMenu keymap={actor.getKeymap()} game={game} />
-      </div>
+    </div>
+  )
+}
+
+// export function Portrait ({actor}) {
+//   return (
+//     <div className="Portrait" style={{
+//       backgroundColor: actor.renderer.background, 
+//       color: actor.renderer.color,
+//       borderColor: actor.renderer.color,
+//     }}>
+//       {actor.renderer.character || actor.renderer.sprite}
+//     </div>
+//   )
+// }
+
+export function Portrait ({actor, width = null, height = null}) {
+  let borderColor = actor.renderer.color
+  let blinking = ''
+  const effects = actor?.game?.engine?.getStatusEffectsByActorId(actor.id) || []
+  if (effects.length > 0) {
+    borderColor = effects[0].renderer.color
+    blinking = 'blinking-border'
+  }
+  return (
+    <div className={`Portrait ${blinking}`} style={{
+      backgroundColor: actor.renderer.background, 
+      color: actor.renderer.color,
+      border: '3px solid',
+      borderRadius: 5,
+      borderColor,
+      width: width || '100%',
+      height: height || '100%',
+      fontSize: 50,
+    }}>
+      {actor.renderer.character || actor.renderer.sprite}
     </div>
   )
 }

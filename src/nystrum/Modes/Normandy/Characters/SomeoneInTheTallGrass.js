@@ -309,7 +309,7 @@ function initialize(engine) {
   // add default items to container
   const primary = Revolver(engine, actor.getPosition());
   const lantern = Lantern({engine, lightRange: 6})
-  const ammo = Helper.duplicate(4, () => Ammo(engine))
+  const ammo = Helper.duplicate(1, () => Ammo(engine))
   const grenades = Array(1).fill('').map(() => Grenade(engine, actor.getPosition()));
   const glowSticks = Array(1).fill('').map(() => GlowStick(engine, actor.getPosition()))
   // const glowSticks = Array(1).fill('').map(() => SuperGlowStick(engine, actor.getPosition()))

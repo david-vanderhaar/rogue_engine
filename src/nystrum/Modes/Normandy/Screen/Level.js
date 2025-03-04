@@ -6,11 +6,11 @@ import Instructions from '../UI/Instructions';
 import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
 import InfoBlocks from '../UI/InfoBlocks';
-import Equipment from '../../../UI/HiddenLeaf/Equipment';
-import { ImagePortrait } from '../UI/Entity/CharacterCard';
-import { NamePlate } from '../../../UI/Entity/CharacterCard';
+import Equipment from '../UI/Entity/Equipment';
+import { Portrait } from '../UI/Entity/CharacterCard';
 import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntities';
 import { COLORS } from '../theme';
+import ActionMenu from '../UI/ActionMenu';
 
 class Level extends React.Component {
   constructor(props) {
@@ -58,21 +58,16 @@ class Level extends React.Component {
 
   getPlayer(meta) {
     let player = this.state.game.getFirstPlayer()
-    if (!player) player = meta.tournament.player.basicInfo
+    if (!player) {
+      player = meta.tournament.player.basicInfo
+      player['getKeymap'] = () => ({})
+    }
 
     return player
   }
 
-  getOpponent(meta) {
-    let opponent = this.state.game.mode.getOpponentActor()
-    if (!opponent) opponent = meta.tournament.opponents[meta.tournament.active].basicInfo
-
-    return opponent
-  }
-
   render() {
     const meta = this.props.meta()
-    const opponent = this.getOpponent(meta)
     const player = this.getPlayer(meta)
     return (
       <div className="Level" style={{fontSize: 12}}>
@@ -86,19 +81,22 @@ class Level extends React.Component {
               <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntitiesInFov()} showDescription={false} />
             </div>
           </div>
-          <div style={{flex: 2, padding: 12, paddingLeft: 28}}>
+          <div style={{flex: 2, padding: 12, paddingLeft: 28, }}>
+            <div className="NamePlate" style={{textAlign: 'left'}}>
+              {player.name}
+            </div>
             <div style={{display: 'flex'}}>
               <div>
-                <ImagePortrait actor={player} width={200} height={74} />
-                <NamePlate actor={player} />
+                <Portrait actor={player} width={200} height={74} />
               </div>
               <div style={{marginLeft: 12}}>
-                stats go here
+                {/* stats go here */}
+                <PlayerInformation game={this.state.game} />
               </div>
             </div>
-            <PlayerInformation game={this.state.game} />
+            <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} />
+            <ActionMenu keymap={player.getKeymap()} game={this.state.game} />
             <Messages messages={this.state.game.messages.slice(-20).reverse()} />
-            {/* <Equipment game={this.state.game} player={this.state.game.getFirstPlayer()} /> */}
           </div>
           <Instructions 
             game={this.state.game}
