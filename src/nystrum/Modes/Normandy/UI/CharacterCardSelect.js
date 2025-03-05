@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { SCREENS } from '../Screen/constants';
-import Tooltip from './Tooltip';
+import Tooltip from '../../../UI/Tooltip';
 import { ProgressBar } from '../../../UI/Entity/CharacterCard';
 
 const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}) => {
@@ -35,8 +35,13 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
           return newIndex;
         });
       } else if (event.key === 'Enter') {
-        setSelectedCharacter(characters[selected]);
-        setActiveScreen(SCREENS.TOURNAMENT);
+        if (characters[selected].locked) {
+          // show a tooltip or some indication that the character is locked
+          alert('This character is locked. Play the game to unlock it.');
+        } else {
+          setSelectedCharacter(characters[selected]);
+          setActiveScreen(SCREENS.LEVEL);
+        }
       }
     };
     // Add event listener when the component mounts
@@ -89,7 +94,11 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
                   selectedStyle={visualIndex === 0}
                 />
                 <div style={{fontSize: 16, width: 200, margin: 'auto'}}>
-                  {visualIndex === 0 && (<p className='text--blinking'>press Enter to confirm</p>)}
+                  {visualIndex === 0 && (<p className='text--blinking'>
+                    {
+                      character.locked ? 'Locked' : 'Press Enter to confirm'
+                    }
+                  </p>)}
                   {visualIndex === -1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&lt;</div>}
                   {visualIndex === 1 && <div style={{textAlign: 'center', fontSize: 16, marginTop: 10}}>&gt;</div>}
                 </div>
@@ -103,6 +112,7 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
 }
 
 const CharacterCard = React.forwardRef(({character, setActiveScreen, setSelectedCharacter, selectedStyle = false}, ref) => {
+  const locked = character.locked;
   const actor = character.basicInfo;
   const background = selectedStyle ? actor.renderer.background : 'var(--color-accent)';
   const color = selectedStyle ? actor.renderer.color : 'var(--color-main)';
@@ -112,98 +122,125 @@ const CharacterCard = React.forwardRef(({character, setActiveScreen, setSelected
   const margin = selectedStyle ? '1rem' : '0.5rem';
 
   return (
-    <button
-      className='hidden-leaf-character-card'
-      style={{
-        '--character-background-color': background,
-        '--character-color': color,
-        backgroundColor: background,
-        color: color,
-        borderColor: borderColor,
-        fontFamily: 'player-start-2p',
-        fontSize: 12,
-        width: width,
-        height: height,
-        margin: margin,
-      }}
-      onClick={() => {
-        setSelectedCharacter(character);
-        setActiveScreen(SCREENS.TOURNAMENT);
-      }}
-      ref={ref}
-    >
-      {/* a small, bordered character portrait */}
-      <div>
-        <img
-          src={actor.portrait}
-          alt={actor.name}
-          style={{
-            height: '100%',
-            width: '100%',
-          }}
-        />
-      </div>
-      {/* the character's name */}
-      <div>
-        {actor.name}
-      </div>
-      {/* the character's description */}
-      <div>
-        {actor.description}
-      </div>
-      <div style={{display: 'flex', marginTop: 10, fontSize: 10}}> {/* bottom half of card  */}
-      <div>
-          {/* stats */}
-          <div style={{textAlign: 'left',}}>
-            <b style={{minWidth: 70, marginRight: 5}}>Speed</b>
-            <ProgressBar 
-                attributePath='speedRating'
+    <div style={{ position: 'relative' }}>
+      <button
+        className='hidden-leaf-character-card'
+        style={{
+          '--character-background-color': background,
+          '--character-color': color,
+          backgroundColor: background,
+          color: color,
+          borderColor: borderColor,
+          fontFamily: 'player-start-2p',
+          fontSize: 12,
+          width: width,
+          height: height,
+          margin: margin,
+          position: 'relative',
+          zIndex: 1,
+        }}
+        onClick={() => {
+          if (character.locked) {
+            // show a tooltip or some indication that the character is locked
+            alert('This character is locked. Play the game to unlock it.');
+          } else {
+            setSelectedCharacter(character);
+            setActiveScreen(SCREENS.LEVEL);
+          }
+        }}
+        ref={ref}
+        disabled={locked}
+      >
+        {/* a small, bordered character portrait */}
+        <div>
+          <img
+            src={actor.portrait}
+            alt={actor.name}
+            style={{
+              height: '100%',
+              width: '100%',
+            }}
+          />
+        </div>
+        {/* the character's name */}
+        <div>
+          {actor.name}
+        </div>
+        {/* the character's description */}
+        <div>
+          {actor.description}
+        </div>
+        <div style={{display: 'flex', marginTop: 10, fontSize: 10}}> {/* bottom half of card  */}
+        <div>
+            {/* stats */}
+            <div style={{textAlign: 'left',}}>
+              <b style={{minWidth: 70, marginRight: 5}}>Speed</b>
+              <ProgressBar 
+                  attributePath='speedRating'
+                  attributeValueMax={3}
+                  colorFilled='#ff9926'
+                  unit={100}
+                  actor={actor} 
+                />
+            </div>
+            <div style={{textAlign: 'left',}}>
+              <b style={{minWidth: 70, marginRight: 5}}>Defense</b>
+              <ProgressBar 
+                attributePath='durabilityRating'
                 attributeValueMax={3}
-                colorFilled='#ff9926'
-                unit={100}
+                colorFilled='#dc322f'
+                unit={1}
                 actor={actor} 
               />
+            </div>
+            <div style={{textAlign: 'left',}}>
+              <b style={{minWidth: 70, marginRight: 5}}>Chakra</b>
+              <ProgressBar 
+                attributePath='chakraRating'
+                attributeValueMax={3}
+                colorFilled='#3e7dc9'
+                unit={1}
+                actor={actor} 
+              />
+            </div>
+          </div>        
+          <div style={{flex: 1, textAlign: 'left'}}>
+            {/* summary of charactet's special abilities */}
+            <div><b>Jutsus</b></div>
+            {actor.abilities.map((ability, index) => {
+              return (
+                <Tooltip 
+                  key={index}
+                  title={ability.name}
+                  text={ability.description}
+                >
+                  <div style={{border: '1px solid', borderRadius: 5, padding: 5, marginRight: 10, marginBottom: 10}}>
+                    {ability.name}
+                  </div>
+                </Tooltip>
+              )
+            })}
           </div>
-          <div style={{textAlign: 'left',}}>
-            <b style={{minWidth: 70, marginRight: 5}}>Defense</b>
-            <ProgressBar 
-              attributePath='durabilityRating'
-              attributeValueMax={3}
-              colorFilled='#dc322f'
-              unit={1}
-              actor={actor} 
-            />
-          </div>
-          <div style={{textAlign: 'left',}}>
-            <b style={{minWidth: 70, marginRight: 5}}>Chakra</b>
-            <ProgressBar 
-              attributePath='chakraRating'
-              attributeValueMax={3}
-              colorFilled='#3e7dc9'
-              unit={1}
-              actor={actor} 
-            />
-          </div>
-        </div>        
-        <div style={{flex: 1, textAlign: 'left'}}>
-          {/* summary of charactet's special abilities */}
-          <div><b>Jutsus</b></div>
-          {actor.abilities.map((ability, index) => {
-            return (
-              <Tooltip 
-                key={index}
-                title={ability.name}
-                text={ability.description}
-              >
-                <div style={{border: '1px solid', borderRadius: 5, padding: 5, marginRight: 10, marginBottom: 10}}>
-                  {ability.name}
-                </div>
-              </Tooltip>
-            )
-          })}
         </div>
-      </div>
-    </button>
+      </button>
+      {locked && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          color: 'white',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 2,
+        }}>
+          Locked
+        </div>
+      )}
+    </div>
   )
 });
 

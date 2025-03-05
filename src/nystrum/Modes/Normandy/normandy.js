@@ -10,8 +10,10 @@ import { MESSAGE_TYPE } from '../../message';
 import { Mode } from '../default';
 import SOUNDS from '../../sounds';
 import * as _ from 'lodash';
-import { TILE_KEY } from './theme';
+import { COLORS, TILE_KEY } from './theme';
 import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
+import { destroyEntity } from '../../Entities/helper';
+import { SCREENS } from './Screen/constants';
 
 export class Normandy extends Mode {
   constructor({ ...args }) {
@@ -25,20 +27,15 @@ export class Normandy extends Mode {
     this.dataByLevel = [
       {
         enemies: Array(1).fill('Bandit'),
+        unlocks: ['TheMedic']
         // enemies: Array(10).fill('Bandit'),
       },
-      {
-        enemies: Array(1).fill('Bandit'),
-      },
+      // {
+      //   enemies: Array(1).fill('Bandit'),
+      // },
     ]
 
     this.game.fovActive = true
-  }
-
-  getTournamentOpponent () {
-    const tournament = this.meta().tournament;
-    const opponent = tournament.opponents[tournament.active]
-    return opponent;
   }
 
   initialize (meta) {
@@ -47,6 +44,9 @@ export class Normandy extends Mode {
     this.createEmptyLevel();
     this.game.initializeMapTiles();
     this.setWaveData();
+
+    console.log(meta());
+    
 
     // add a random number of blobs of random size of GROUND
     // using addTileZone
@@ -149,10 +149,6 @@ export class Normandy extends Mode {
     return this.game.engine.actors.filter((actor) => actor.entityTypes.includes('PLAYING'))
   }
 
-  getOpponentActor() {
-    return this.game.engine.actors.find((actor) => actor.name === this.getTournamentOpponent().name)
-  }
-
   updateUI() {
     _.each(this.getPlayers(), (player, index) => {
       const currentBlips = Math.floor(player.energy / 100);
@@ -166,17 +162,39 @@ export class Normandy extends Mode {
     })
   }
 
+  checkAndUunlockCharacters() {
+    const unlocks = this.dataByLevel[this.getMetaLevel()]?.unlocks || []
+    const currentUnlocks = this.meta().unlocks || []
+    const newUnlocks = unlocks.filter((unlock) => !currentUnlocks.includes(unlock))
+    if (newUnlocks.length) {
+      this.meta({
+        ...this.meta(),
+        unlocks: [...currentUnlocks, ...newUnlocks],
+      })
+      this.createOrUpdateInfoBlock('unlocks', {text: `You have unlocked: ${newUnlocks.join(', ')}`})
+      this.addSingleCelebratoryDebris()
+    }
+  }
+
   update () {
     super.update();
-    // this.updateUI();
+    this.updateUI();
     if (this.hasLost()) {
       this.onLose()
     } else if (this.hasWon()) {
       this.onWin()
     } else if (this.levelComplete()) {
+      // this.checkAndUunlockCharacters();
       this.nextLevel();
       this.setWaveData();
-      this.game.initializeGameData();
+      this.game.setActiveScreen(SCREENS.TOURNAMENT);
+      // this.game.entityLog.getAllEntities().forEach((entity) => {
+      //   if (!entity.entityTypes.includes('PLAYING')) {
+      //     destroyEntity(entity);
+      //   }
+      // });
+      // this.initialize(this.meta);
+      // this.game.initializeGameData();
     }
   }
 
@@ -186,7 +204,7 @@ export class Normandy extends Mode {
       // this.game.toLose();
       // this.reset();
       // this.game.initializeGameData();
-      this.createOrUpdateInfoBlock('hasLost', {text: `${this.meta().tournament.player.name} is down! Good luck next year.`})
+      this.createOrUpdateInfoBlock('hasLost', {text: 'Down goes the hero, on goes the war.'})
       this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to Play Again'})
       this.addOnEnterListener();
     }
@@ -197,7 +215,7 @@ export class Normandy extends Mode {
     // this.game.toWin()
     if (!this.data['hasWon']) {
       this.addFireWorks();
-      this.createOrUpdateInfoBlock('hasWon', {text: `${this.game.getFirstPlayer().name} has won the Chunin Tournament!`})
+      this.createOrUpdateInfoBlock('hasWon', {text: `War never ends, but ${this.game.getFirstPlayer().name}'s battle is over. Good job soldier.`})
       this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to Play Again'})
       this.addOnEnterListener();
     }
@@ -207,8 +225,9 @@ export class Normandy extends Mode {
   addOnEnterListener() {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
-        this.game.backToTitle()
+        this.setLevel(0);
         this.meta({})
+        this.game.backToTitle()
         // TODO (reset data)
         window.removeEventListener('keydown', handleKeyPress);
       }
@@ -222,6 +241,15 @@ export class Normandy extends Mode {
     this.addCelebratoryDebris(position);
   }
 
+  getRandomFireworkColors () {
+    const colors = [
+      [COLORS.white, COLORS.red_0, COLORS.red_1],
+      [COLORS.white, COLORS.blue_2, COLORS.blue_1],
+      [COLORS.white, COLORS.sand_2, COLORS.sand_1],
+    ];
+    return Helper.getRandomInArray(colors);
+  }
+
   addCelebratoryDebris (position) {
     SpatterEmitter({
       game: this.game,
@@ -229,7 +257,7 @@ export class Normandy extends Mode {
       spatterAmount: .3,
       spatterRadius: 10,
       transfersBackground: false,
-      spatterColors: ['#e9d679', '#673ab7', '#3fc072', '#e16264', '#67a1d7'],
+      spatterColors: this.getRandomFireworkColors(),
     }).start()
   }
 
@@ -248,32 +276,33 @@ export class Normandy extends Mode {
   //Extras
   setLevel (level) {
     this.data.turnCount = 0;
-    this.setMetaTournamentLevel(level)
+    this.setMetaLevel(level)
   }
 
   nextLevel () {
-    const level = this.getMetaTournamentLevel() + 1
+    const level = this.getMetaLevel() + 1
     this.setLevel(level);
-    this.game.setActiveScreen('Tournament');
   }
 
-  setMetaTournamentLevel(level) {
+  setMetaLevel(level) {
     const metaData = this.meta()
-    metaData.tournament.active = level;
+    metaData.level = level;
+    console.log(metaData);
+    
     this.meta(metaData)
   }
 
-  getMetaTournamentLevel() {
-    return this.meta().tournament.active;
+  getMetaLevel() {
+    return this.meta().level;
   }
 
   reset () {
     this.setLevel(0);
-    this.initialize();
+    this.initialize(this.meta);
   }
 
   setWaveData () {
-    const nextLevelData = this.dataByLevel[0];
+    const nextLevelData = this.dataByLevel[this.getMetaLevel()];
     this.data = {...this.data, ...nextLevelData}
   }
 
@@ -282,8 +311,8 @@ export class Normandy extends Mode {
   }
 
   hasWon () {
-    const level = this.getMetaTournamentLevel()
-    const maxLevel = this.meta().tournament.opponents.length - 1;
+    const level = this.getMetaLevel()
+    const maxLevel = this.dataByLevel.length - 1;
     return this.levelComplete() && (level >= maxLevel);
   }
 
@@ -296,53 +325,6 @@ export class Normandy extends Mode {
       }
     }
     return false;
-  }
-
-  addDebris (pos, name = 'box', character = '%', durability = 5, explosivity = 0, pushable = true, draggable = true, background = Constant.THEMES.SOLARIZED.base01) {
-    let sprite = Helper.getRandomInArray(['', '', '', '', '', '']);
-    switch (character) {
-      case '%':
-        sprite = Helper.getRandomInArray(['', '']);
-        break;
-      case 'm':
-        sprite = Helper.getRandomInArray(['', '']);
-        break;
-      case 'H':
-        sprite = Helper.getRandomInArray(['', '']);
-        break;
-      case 'Xs':
-        sprite = ''
-        break;
-      case 'X':
-        sprite = ''
-        break;
-      case 'XL':
-        sprite = ''
-        break;
-      default:
-        sprite = '';
-        break;
-    }
-
-    let box = new Debris({
-      pos,
-      renderer: {
-        character,
-        sprite,
-        color: Constant.THEMES.SOLARIZED.base2,
-        background,
-      },
-      name,
-      game: this.game,
-      durability,
-      explosivity,
-      flammability: 0,
-      draggable,
-      pushable,
-    })
-
-    this.game.placeActorOnMap(box)
-    // this.game.draw();
   }
 
   getBanditStats () {
@@ -439,15 +421,7 @@ export class Normandy extends Mode {
     let players = this.getPlayers()
     let targetEntity = players[0]
     // tournament opponent stats
-    let stats = null;
-
-    // TODO: fix, this.meta() is not a function error
-    try {
-      stats = this.getTournamentOpponent().basicInfo;
-    } catch (error) {
-      console.log(error);
-      stats = this.getBanditStats();
-    }
+    let stats = this.getBanditStats();
     // let entity = new stats.entityClass({
     // let entity = new Bandit({
     let entity = new JacintoAI({
@@ -464,16 +438,27 @@ export class Normandy extends Mode {
       faction: 'OPPONENT',
       enemyFactions: ['PLAYER'],
       behaviors: stats?.behaviors || [
+        // new Behaviors.MoveTowardsEnemy({
+        //   repeat: stats.speed/Constant.ENERGY_THRESHOLD,
+        //   maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+        //   chainOnFail: true
+        // }),
+        // new Behaviors.MoveAwayFromEnemy({
+        //   repeat: stats.speed/Constant.ENERGY_THRESHOLD,
+        //   maintainDistanceOf: 4, // causes to move and attack in same turn if close enough
+        //   // chainOnFail: fals
+        // }),
         new Behaviors.MoveTowardsEnemy({
           repeat: stats.speed/Constant.ENERGY_THRESHOLD,
           maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
           chainOnFail: true
         }),
-        new Behaviors.MoveAwayFromEnemy({
-          repeat: stats.speed/Constant.ENERGY_THRESHOLD,
-          maintainDistanceOf: 4, // causes to move and attack in same turn if close enough
-          // chainOnFail: fals
+        new Behaviors.Telegraph({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true
         }),
+        new Behaviors.ExecuteAttack({repeat: 1}),
       ],
       // directional projectile destruction breaks engine
       getProjectile: ({ pos, targetPos, direction, range }) => Item.directionalKunai(this.game.engine, { ...pos }, direction, range)

@@ -8,16 +8,20 @@ import Level from '../Modes/Normandy/Screen/Level';
 import CharacterSelect from '../Modes/Normandy/Screen/CharacterSelect';
 import Tournament from '../Modes/Normandy/Screen/Tournament';
 import { SCREENS } from '../Modes/Normandy/Screen/constants';
-import SomeoneInTheTallGrass from '../Modes/Normandy/Characters/SomeoneInTheTallGrass';
-import AnotherInTheTallGrass from '../Modes/Normandy/Characters/AnotherInTheTallGrass';
+import TheRifleman from '../Modes/Normandy/Characters/TheRifleman';
+import TheMedic from '../Modes/Normandy/Characters/TheMedic';
+import TheEngineer from '../Modes/Normandy/Characters/TheEngineer';
+import TheMachineGunner from '../Modes/Normandy/Characters/TheMachineGunner';
 
 export const normandyCart = () => {
   return (
     createCartridge({
       modes: { The_War: Modes.Normandy, },
       characters: {
-        SomeoneInTheTallGrass: SomeoneInTheTallGrass(),
-        AnotherInTheTallGrass: AnotherInTheTallGrass(),
+        TheRifleman: TheRifleman(),
+        TheMedic: TheMedic(),
+        TheEngineer: TheEngineer(),
+        TheMachineGunner: TheMachineGunner(),
       },
       theme: COLORS,
       screens: {

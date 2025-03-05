@@ -59,10 +59,9 @@ class Level extends React.Component {
   getPlayer(meta) {
     let player = this.state.game.getFirstPlayer()
     if (!player) {
-      player = meta.tournament.player.basicInfo
+      player = meta.player.basicInfo
       player['getKeymap'] = () => ({})
     }
-
     return player
   }
 

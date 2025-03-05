@@ -71,7 +71,15 @@ const SimpleEquipmentCard = ({game, player, data}) => {
           {amount && (<span className="EquipmentCard__item__label__amount">
             {amount}&nbsp;
           </span>)}
-          <span>{item.name}&nbsp;</span>
+          <span style={{
+            backgroundColor: item.renderer.background,
+            color: item.renderer.color,
+            borderColor: item.renderer.color,
+            border: '1px solid',
+            padding: 2,
+          }}>
+            {item.name}&nbsp;
+          </span>
           <span style={{color: '#6d7886'}}>{needsReload && '(reload)'}</span>
           <div className="EquipmentCard__item__stats" style={{marginLeft: 10}}>
             {

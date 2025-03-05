@@ -39,12 +39,12 @@ import { GlowStick, SuperGlowStick } from '../Items/Pickups/GlowSticks';
 import { Grenade } from '../Items/Weapons/Grenade';
 
 
-const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
+const portrait =  `${window.PUBLIC_URL}/hidden_leaf/white.png`;
 const basicInfo = {
-  name: 'Someone',
-  description: 'Wolf Pack!',
+  name: 'The Engineer',
+  description: 'always another job to do.',
   renderer: {
-    character: 'K',
+    character: '@',
     color: TALL_GRASS_CONSTANT.COLORS.accent,
     background: TALL_GRASS_CONSTANT.COLORS.main,
     portrait,
@@ -53,16 +53,8 @@ const basicInfo = {
   },
   abilities: [
     {
-      name: 'Fang Over Fang',
-      description: 'A technique where the user spins rapidly to attack their opponent.',
-    },
-    {
-      name: 'Wolf Speed',
-      description: 'Tapping into the power of the wolf.',
-    },
-    {
-      name: 'Summon Akamaru',
-      description: 'Summoning his trusty companion.',
+      name: '',
+      description: '',
     },
   ],
   speedRating: 2,
@@ -300,8 +292,8 @@ function initialize(engine) {
     equipment: Constant.EQUIPMENT_LAYOUTS.human(),
     game: engine.game,
     presentingUI: true,
-    faction: 'PEOPLE',
-    enemyFactions: ['MONSTER'],
+    faction: 'PLAYER',
+    enemyFactions: ['OPPONENT'],
     maxFearPoints: 10,
     initializeKeymap: keymap,
   })
@@ -309,7 +301,7 @@ function initialize(engine) {
   // add default items to container
   const primary = Revolver(engine, actor.getPosition());
   const lantern = Lantern({engine, lightRange: 6})
-  const ammo = Helper.duplicate(1, () => Ammo(engine))
+  const ammo = Helper.duplicate(4, () => Ammo(engine))
   const grenades = Array(1).fill('').map(() => Grenade(engine, actor.getPosition()));
   const glowSticks = Array(1).fill('').map(() => GlowStick(engine, actor.getPosition()))
   // const glowSticks = Array(1).fill('').map(() => SuperGlowStick(engine, actor.getPosition()))

@@ -39,12 +39,12 @@ import { GlowStick, SuperGlowStick } from '../Items/Pickups/GlowSticks';
 import { Grenade } from '../Items/Weapons/Grenade';
 
 
-const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
+const portrait =  `${window.PUBLIC_URL}/hidden_leaf/white.png`;
 const basicInfo = {
-  name: 'Another',
-  description: 'Wolf Pack!',
+  name: 'The Machine Gunner',
+  description: 'keep the barrel hot and the ammo dry.',
   renderer: {
-    character: 'K',
+    character: '@',
     color: TALL_GRASS_CONSTANT.COLORS.accent,
     background: TALL_GRASS_CONSTANT.COLORS.main,
     portrait,
@@ -53,16 +53,8 @@ const basicInfo = {
   },
   abilities: [
     {
-      name: 'Fang Over Fang',
-      description: 'A technique where the user spins rapidly to attack their opponent.',
-    },
-    {
-      name: 'Wolf Speed',
-      description: 'Tapping into the power of the wolf.',
-    },
-    {
-      name: 'Summon Akamaru',
-      description: 'Summoning his trusty companion.',
+      name: '',
+      description: '',
     },
   ],
   speedRating: 2,
@@ -300,8 +292,8 @@ function initialize(engine) {
     equipment: Constant.EQUIPMENT_LAYOUTS.human(),
     game: engine.game,
     presentingUI: true,
-    faction: 'PEOPLE',
-    enemyFactions: ['MONSTER'],
+    faction: 'PLAYER',
+    enemyFactions: ['OPPONENT'],
     maxFearPoints: 10,
     initializeKeymap: keymap,
   })
