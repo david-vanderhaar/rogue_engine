@@ -25,11 +25,18 @@ export let GAME = null
 // const MAP_HEIGHT = 32;
 // const MAP_WIDTH = 44;
 // const MAP_HEIGHT = 32;
-const MAP_WIDTH = 35;
-const MAP_HEIGHT = 26;
 
-const CAMERA_WIDTH = MAP_WIDTH;
-const CAMERA_HEIGHT = MAP_HEIGHT;
+// const MAP_WIDTH = 35;
+// const MAP_HEIGHT = 26;
+
+// const CAMERA_WIDTH = MAP_WIDTH;
+// const CAMERA_HEIGHT = MAP_HEIGHT;
+
+const MAP_WIDTH = 35*4;
+const MAP_HEIGHT = 26*4;
+
+const CAMERA_WIDTH = 35;
+const CAMERA_HEIGHT = 26;
 // const CAMERA_WIDTH = Math.floor(MAP_WIDTH / 2);
 // const CAMERA_HEIGHT = Math.floor(MAP_HEIGHT / 2);
 
@@ -472,12 +479,12 @@ export class Game {
   draw () {
     this.processTileMap((key, x, y, character, foreground, background) => {
       this.display.updateTile(this.tileMap[key], character, foreground, background);
-    });
+    }, true);
 
     if (this.fovActive) {
       this.processTileMapWithFov((key, x, y, character, foreground, background) => {
         this.display.updateTile(this.tileMap[key], character, foreground, background);
-      });
+      }, true);
     }
     this.display.draw();
   }
