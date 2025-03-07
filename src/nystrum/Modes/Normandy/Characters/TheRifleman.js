@@ -37,6 +37,7 @@ import { Battery } from '../Items/Pickups/Battery';
 import { LayGrass } from '../StatusEffects/LayGrass';
 import { GlowStick, SuperGlowStick } from '../Items/Pickups/GlowSticks';
 import { Grenade } from '../Items/Weapons/Grenade';
+import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
 
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/white.png`;
@@ -238,9 +239,16 @@ function initialize(engine) {
         game: engine.game,
         actor,
       }),
-      t: () => new PrepareDirectionalThrow({ // add glow stick throwable?
+      t: () => new PrepareDirectionalThrow({
         label: 'Grenade',
         projectileType: 'grenade',
+        game: engine.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      }),
+      y: () => new PrepareDirectionalThrow({
+        label: 'Smoke Grenade',
+        projectileType: 'Smoke Grenade',
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
@@ -303,9 +311,7 @@ function initialize(engine) {
   const lantern = Lantern({engine, lightRange: 6})
   const ammo = Helper.duplicate(1, () => Ammo(engine))
   const grenades = Array(1).fill('').map(() => Grenade(engine, actor.getPosition()));
-  const glowSticks = Array(1).fill('').map(() => GlowStick(engine, actor.getPosition()))
-  // const glowSticks = Array(1).fill('').map(() => SuperGlowStick(engine, actor.getPosition()))
-  const batteries = Array(1).fill('').map(() => Battery());
+  const smokes = Array(4).fill('').map(() => SmokeGrenade(engine, 2));
   actor.container = [
     new ContainerSlot({
       itemType: ammo[0].name,
@@ -316,12 +322,8 @@ function initialize(engine) {
       items: grenades,
     }),
     new ContainerSlot({
-      itemType: batteries[0].name,
-      items: batteries,
-    }),
-    new ContainerSlot({
-      itemType: glowSticks[0].name,
-      items: glowSticks,
+      itemType: smokes[0].name,
+      items: smokes,
     }),
   ]
 

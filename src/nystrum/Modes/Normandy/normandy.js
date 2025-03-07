@@ -28,7 +28,7 @@ export class Normandy extends Mode {
     };
     this.dataByLevel = [
       {
-        enemies: Array(1).fill('Bandit'),
+        enemies: Array(10).fill('Bandit'),
         unlocks: ['TheMedic'],
         levelBuilder: beach,
       },
@@ -80,9 +80,18 @@ export class Normandy extends Mode {
     }
   }
 
+  checkCoverAnimations() {
+    this.game.engine.actors.forEach((actor) => {
+      if (actor.entityTypes.includes('USES_COVER')) {
+        if (actor.resetCoverAnimations());
+      }
+    })
+  }
+
   update () {
     super.update();
     this.updateUI();
+    this.checkCoverAnimations();
     if (this.hasLost()) {
       this.onLose()
     } else if (this.hasWon()) {

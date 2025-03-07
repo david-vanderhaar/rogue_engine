@@ -49,6 +49,7 @@ import { HasPickupEffects } from './HasPickupEffects';
 import { Illuminating } from './Illuminating';
 import { Fearful } from './Fearful';
 import { DeterioratesOnAttack } from './DeterioratesOnAttack';
+import { HasBloodSpatter } from './HasBloodSpatter';
 
 export const UI_Actor = pipe(
   Acting,
@@ -145,6 +146,7 @@ export const JacintoAI = pipe(
   UsesCover,
   HasTargetingCursor,
   CyclesBehaviors,
+  HasBloodSpatter,
 )(Entity);
 
 export const Bandit = pipe(
@@ -193,6 +195,7 @@ export const Player = pipe(
   UsesCover,
   HasInnerGates,
   Fearful,
+  HasBloodSpatter,
 )(Entity);
 
 export const Weapon = pipe(

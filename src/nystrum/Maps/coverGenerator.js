@@ -4,37 +4,66 @@ import * as MapHelper from '../Maps/helper';
 import { CoverWall } from '../Entities/index';
 import {COLORS} from '../Modes/Jacinto/theme';
 import {COLORS as HIDDEN_LEAF_COLORS} from '../Modes/HiddenLeaf/theme'
+import {COLORS as NORMANDY_COLORS} from '../Modes/Normandy/theme';
 import Map from 'rot-js/lib/map/map';
 
 export const generateCoverBlock = (
+  pos,
+  game,
+  name = 'box',
+  character = '%',
+  durability = 5,
+  background = COLORS.base02,
+  color = COLORS.base01,
+  sprite = null,
+) => {
+  let randomSprite = Helper.getRandomInArray(['', '', '']);
+
+  let box = new CoverWall({
     pos,
+    renderer: {
+      character,
+      sprite: sprite || randomSprite,
+      color,
+      background,
+    },
+    name,
     game,
-    name = 'box',
-    character = '%',
-    durability = 5,
-    background = COLORS.base02,
-    color = COLORS.base01,
-    sprite = null,
-  ) => {
-    let randomSprite = Helper.getRandomInArray(['', '', '']);
+    durability,
+    accuracyModifer: -0.3,
+    damageModifer: 0,
+  })
 
-    let box = new CoverWall({
-      pos,
-      renderer: {
-        character,
-        sprite: sprite || randomSprite,
-        color,
-        background,
-      },
-      name,
-      game,
-      durability,
-      accuracyModifer: -0.3,
-      damageModifer: 0,
-    })
+  game.placeActorOnMap(box)
+}
 
-    game.placeActorOnMap(box)
-  }
+export const generateBeachCoverBlock = (
+  pos,
+  game,
+  name = 'box',
+  character = '%',
+  durability = 5,
+  background = NORMANDY_COLORS.sand_00,
+  color = NORMANDY_COLORS.sand_0,
+  sprite = null,
+) => {
+  let box = new CoverWall({
+    pos,
+    renderer: {
+      character: Helper.getRandomInArray(['%', '#', 'x']),
+      sprite: '%',
+      color,
+      background,
+    },
+    name,
+    game,
+    durability,
+    accuracyModifer: -0.3,
+    damageModifer: 0,
+  })
+
+  game.placeActorOnMap(box)
+}
 
 const generateTrunkBlock = (...args) => {
   generateCoverBlock(...args,
@@ -188,13 +217,13 @@ const shapeChanceTable = [
   ...Array(1).fill('northEastHorizontalL'),
 ];
 
-export const generate = (pos, game, shape) => {
+export const generate = (pos, game, shape, coverGenerator) => {
   const positions = Helper.getPositionsFromStructure(shape, pos);
   positions.forEach((position) => {
     let tile = game.map[Helper.coordsToString(position)];
     if (!tile) return false;
     if (MapHelper.tileHasTag({tile, tag: 'PROVIDING_COVER'})) {
-      generateCoverBlock(position, game);
+      coverGenerator(position, game);
     }
   });
 }
@@ -203,9 +232,9 @@ export const generateSingle = (pos, game) => generate(pos, game, SHAPES.point);
 export const generateTwoVertically = (pos, game) => generate(pos, game, SHAPES.verticalLine);
 export const generateTwoHorizontally = (pos, game) => generate(pos, game, SHAPES.horizontalLine);
 export const generateSquare = (pos, game) => generate(pos, game, SHAPES.smallSquare);
-export const generateRandom = (pos, game) => {
+export const generateRandom = (pos, game, coverGenerator = generateCoverBlock) => {
   const shape = SHAPES[Helper.getRandomInArray(shapeChanceTable)];
-  generate(pos, game, shape);
+  generate(pos, game, shape, coverGenerator);
 };
 
 // generate tree, first a 2x2 trunk, then two layers of leaves around it

@@ -102,7 +102,9 @@ class Level extends React.Component {
             <hr></hr>
             <ActionMenu keymap={player.getKeymap()} game={this.state.game} />
             <hr></hr>
-            <Messages messages={this.state.game.messages.slice(-20).reverse()} />
+            <div style={{fontSize: 12}}>
+              <Messages messages={this.state.game.messages.slice(-20).reverse()} />
+            </div>
           </div>
           <Instructions 
             game={this.state.game}

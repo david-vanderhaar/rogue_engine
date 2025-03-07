@@ -1,7 +1,6 @@
 import { destroyActor } from './helper';
 import * as Helper from '../../helper';
 import { ANIMATION_TYPES } from '../Display/konvaCustom';
-import spatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import { MESSAGE_TYPE } from '../message';
 
 export const Destructable = superclass => class extends superclass {
@@ -35,19 +34,20 @@ export const Destructable = superclass => class extends superclass {
       this.destroy();
     }
   }
+
   decreaseDurability(value) {
     const current = this.durability;
     const defense = this.getDefense()
     const decreaseBy = value - defense
     const newDurability = current - decreaseBy;
     this.durability = Math.min(current, newDurability);
-    this.addDurabilityChangeAnimation(-decreaseBy)
-    this.addDefenseAppliedAnimation(defense)
+    // this.addDurabilityChangeAnimation(-decreaseBy)
+    // this.addDefenseAppliedAnimation(defense)
     this.addDecreaseDurabilityMessage(decreaseBy, defense)
     this.updateActorRenderer();
     this.portraitFlash()
     // this.shakePlayer()
-    if (this.entityTypes.includes('PLAYING')) this.bloodSpatter(value)
+    if (this.entityTypes.includes('HAS_BLOOD_SPATTER')) this.bloodSpatter(value)
     if (this.durability <= 0) {
       this.destroy();
     }
@@ -56,18 +56,6 @@ export const Destructable = superclass => class extends superclass {
   addDecreaseDurabilityMessage(decreaseBy, defendFor) {
     if (defendFor <= 0) return;
     this.game.addMessage(`${this.name} blocks ${defendFor} of ${decreaseBy} damage`, MESSAGE_TYPE.INFORMATION);
-  }
-
-  bloodSpatter(value) {
-    spatterEmitter({
-      game: this.game,
-      fromPosition: this.getPosition(),
-      spatterAmount: .2 * value,
-      spatterRadius: 3,
-      // spatterDirection: Helper.getDirectionFromOrigin(this.actor.getPosition(), this.targetPos),
-      transfersBackground: true,
-      spatterColors: ['#833139', '#aa2123'],
-    }).start()
   }
 
   portraitFlash() {
