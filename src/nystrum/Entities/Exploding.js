@@ -64,13 +64,13 @@ export const Exploding = superclass => class extends superclass {
         tile.type = 'BURNT';
         tile.currentFrame = Helper.getRandomInt(0, tileAnimationLength)
         let targets = Helper.getDestructableEntities(tile.entities.filter(
-          (entity) => entity.id !== this.id
+          (entity) => (entity.id !== this.id)
         ));
         if (targets.length > 0) {
           // let target = targets[0];
           targets.forEach((target) => {
             let damage = this['attackDamage'] ? this.attackDamage : this.explosivity;
-            this.game.addMessage(`${this.name} does ${damage} to ${target.name}`, MESSAGE_TYPE.DANGER);
+            // this.game.addMessage(`${this.name} does ${damage} to ${target.name}`, MESSAGE_TYPE.DANGER);
             target.decreaseDurability(damage);
           })
         }

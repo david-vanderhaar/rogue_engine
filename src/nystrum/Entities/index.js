@@ -84,6 +84,15 @@ export const Speaker = pipe(
   Helpless,
 )(Entity);
 
+export const TelegraphedExploder = pipe(
+  Rendering,
+  Destructable,
+  Attacking,
+  TimeBombing,
+  Exploding,
+  HasTargetingCursor,
+)(Entity);
+
 export const Wall = pipe(
   Rendering,
   Destructable,

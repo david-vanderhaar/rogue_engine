@@ -16,6 +16,7 @@ import { destroyEntity } from '../../Entities/helper';
 import { SCREENS } from './Screen/constants';
 import { testLevelBuilder } from './MapBuilders/testLevel';
 import { beach } from './MapBuilders/beach';
+import { MortarStrike } from './Items/Weapons/MortarStrike';
 
 export class Normandy extends Mode {
   constructor({ ...args }) {
@@ -28,7 +29,7 @@ export class Normandy extends Mode {
     };
     this.dataByLevel = [
       {
-        enemies: Array(10).fill('Bandit'),
+        enemies: Array(1).fill('Bandit'),
         unlocks: ['TheMedic'],
         levelBuilder: beach,
       },
@@ -66,7 +67,7 @@ export class Normandy extends Mode {
     })
   }
 
-  checkAndUunlockCharacters() {
+  checkAndUnlockCharacters() {
     const unlocks = this.dataByLevel[this.getMetaLevel()]?.unlocks || []
     const currentUnlocks = this.meta().unlocks || []
     const newUnlocks = unlocks.filter((unlock) => !currentUnlocks.includes(unlock))
@@ -88,16 +89,56 @@ export class Normandy extends Mode {
     })
   }
 
+  createMortarStrike_v1(pos) {
+    return new FireSpread({
+      name: 'Mortar Strike',
+      game: this.game,
+      pos,
+      renderer: {
+        character: '',
+        color: COLORS.red_0,
+        background: 'black',
+      },
+    })
+  }
+  
+  createMortarStrike(pos) {
+    return MortarStrike(this.game.engine, pos)
+  }
+
+  spawnMortarStrike() {
+    // increase strikes as turn count increases
+    // strikes hit in a random area within a 16 tile radius from the player
+    // strike hit closer and closer to player as turn count increases
+    const maxInterval = 40;
+    const intervalDecrease = 2;
+    const interval = Math.max(10, maxInterval - Math.floor(this.data.turnCount / intervalDecrease));
+
+    if (this.data.turnCount % interval === 0) {
+      const player = this.getPlayers()[0];
+      const playerPos = player.pos;
+      const strikes = Math.min(Math.floor(this.data.turnCount / interval), 5);
+      const radius = Math.max(12 - Math.floor(this.data.turnCount / interval), 2);
+      for (let i = 0; i < strikes; i++) {
+        const pointsInRange = Helper.getPointsWithinRadius(playerPos, radius);
+        const strikePos = Helper.getRandomInArray(pointsInRange);
+        const strike = this.createMortarStrike(strikePos);
+        this.game.addActor(strike);
+      }
+    }
+  }
+
   update () {
     super.update();
     this.updateUI();
     this.checkCoverAnimations();
+    this.spawnMortarStrike();
     if (this.hasLost()) {
       this.onLose()
     } else if (this.hasWon()) {
       this.onWin()
     } else if (this.levelComplete()) {
-      // this.checkAndUunlockCharacters();
+      // this.checkAndUnlockCharacters();
       this.nextLevel();
       this.setWaveData();
       this.game.setActiveScreen(SCREENS.TOURNAMENT);
@@ -109,6 +150,7 @@ export class Normandy extends Mode {
       // this.initialize(this.meta);
       // this.game.initializeGameData();
     }
+    this.data.turnCount++;
   }
 
   onLose() {
