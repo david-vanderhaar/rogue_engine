@@ -2,8 +2,9 @@ import * as Constant from '../../../../constants';
 import {CoverWall, ThrowableSpawner, TelegraphedExploder} from '../../../../Entities/index';
 import {COLORS} from '../../theme';
 import { JACINTO_SOUNDS } from '../../../Jacinto/sounds';
+import { getPointsWithinRadius } from '../../../../../helper';
 
-export const MortarStrike = (engine, pos) => new ThrowableSpawner({
+export const MortarStrike = (engine, pos, size = 2) => new ThrowableSpawner({
   game: engine.game,
   name: 'Morar Strike',
   passable: true,
@@ -18,7 +19,7 @@ export const MortarStrike = (engine, pos) => new ThrowableSpawner({
   attackDamage: 0,
   speed: Constant.ENERGY_THRESHOLD,
   energy: 0,
-  spawnStructure: Constant.CLONE_PATTERNS.square,
+  spawnPoints: getPointsWithinRadius(pos, size),
   spawnedEntityClass: TelegraphedExploder,
   spawnedEntityOptions: {
     passable: true,

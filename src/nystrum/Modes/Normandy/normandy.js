@@ -102,23 +102,41 @@ export class Normandy extends Mode {
     })
   }
   
-  createMortarStrike(pos) {
-    return MortarStrike(this.game.engine, pos)
+  createMortarStrike(pos, size = 2) {
+    return MortarStrike(this.game.engine, pos, size)
   }
 
   spawnMortarStrike() {
-    // increase strikes as turn count increases
-    // strikes hit in a random area within a 16 tile radius from the player
-    // strike hit closer and closer to player as turn count increases
-    const maxInterval = 40;
-    const intervalDecrease = 2;
-    const interval = Math.max(10, maxInterval - Math.floor(this.data.turnCount / intervalDecrease));
+    // Use sine wave to create cyclical intensity of strikes
+    const cycle = 200; // Length of a complete cycle in turns
+    const cyclePosition = this.data.turnCount % cycle;
+    // Convert cycle position to a value between 0 and 1
+    const normalizedPosition = cyclePosition / cycle;
+    // Use sine wave to create value between 0 and 1
+    const intensity = (Math.sin(normalizedPosition * Math.PI * 2) + 1) / 2;
+    
+    // Define constants for min/max values
+    const maxInterval = 200;
+    const minInterval = 20;
 
+    const minStrikes = 1;
+    const maxStrikes = 5;
+    const minRadius = 8;
+    const maxRadius = 20;
+    
+    // Base interval that changes with intensity
+    const interval = Math.floor(minInterval + (maxInterval - minInterval) * (1 - intensity));
+    
     if (this.data.turnCount % interval === 0) {
       const player = this.getPlayers()[0];
       const playerPos = player.pos;
-      const strikes = Math.min(Math.floor(this.data.turnCount / interval), 5);
-      const radius = Math.max(12 - Math.floor(this.data.turnCount / interval), 2);
+      
+      // Number of strikes based on intensity, between min and max
+      const strikes = Math.max(minStrikes, Math.floor(intensity * maxStrikes));
+      
+      // Radius decreases with intensity, between min and max
+      const radius = Math.max(minRadius, Math.floor(maxRadius - intensity * (maxRadius - minRadius)));
+      
       for (let i = 0; i < strikes; i++) {
         const pointsInRange = Helper.getPointsWithinRadius(playerPos, radius);
         const strikePos = Helper.getRandomInArray(pointsInRange);
