@@ -2,6 +2,7 @@ import * as ROT from 'rot-js';
 import * as Helper from '../../../../helper';
 import * as MapHelper from '../../../Maps/helper';
 import * as CoverGenerator from '../../../Maps/coverGenerator';
+import { Foxhole } from '../Items/Environment/Foxhole';
 // import * as Constant from '../../../constants';
 // import * as Item from '../../../items';
 // import { generate as generateBuilding } from '../../../Maps/generator';
@@ -128,36 +129,15 @@ function createEmptySand(mode) {
 function generateFoxholes(mode, number) {
   for (let i = 0; i < number; i++) {
     generateFoxhole(mode);
+    // generateFoxhole_v1(mode);
   }
 }
 
 function generateFoxhole(mode) {
-  // add a random number of blobs of random size of GROUND
-  // using addTileZone
-  let size = Helper.getRandomInt(2, 3);
-  let x = Helper.getRandomInt(0, mode.game.mapWidth);
-  let y = Helper.getRandomInt(0, mode.game.mapHeight);
-  // GROUND_SAND_HOLE of size 1 or 2
-  // surround with GROUND_SAND_DARK
-  MapHelper.addTileZoneFilledCircle(
-    { x, y },
-    size + 1,
-    'GROUND_SAND_HOLE_EDGE',
+  const pos = Helper.getRandomPos(mode.game.map).coordinates
+  Foxhole(
+    pos,
+    mode.game,
+    Helper.getRandomInt(1, 3),
   );
-  MapHelper.addTileZoneFilledCircle(
-    { x, y },
-    size,
-    'GROUND_SAND_HOLE',
-  );
-  
-  // MapHelper.addTileZone(
-  //   mode.game.tileKey,
-  //   { x, y },
-  //   size,
-  //   size,
-  //   'GROUND_SAND_DARK',
-  //   mode.game.map,
-  //   mode.game.mapHeight,
-  //   mode.game.mapWidth,
-  // );
 }

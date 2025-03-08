@@ -477,14 +477,15 @@ export class Game {
   }
   
   draw () {
+    const shouldAnimate = false
     this.processTileMap((key, x, y, character, foreground, background) => {
       this.display.updateTile(this.tileMap[key], character, foreground, background);
-    }, true);
+    }, shouldAnimate);
 
     if (this.fovActive) {
       this.processTileMapWithFov((key, x, y, character, foreground, background) => {
         this.display.updateTile(this.tileMap[key], character, foreground, background);
-      }, true);
+      }, shouldAnimate);
     }
     this.display.draw();
   }
@@ -592,7 +593,7 @@ export class Game {
     }
     // end hack
 
-    // this.startTileAnimator()
+    this.startTileAnimator()
   }
 
   startTileAnimator() {

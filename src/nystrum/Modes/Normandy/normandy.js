@@ -89,22 +89,10 @@ export class Normandy extends Mode {
     })
   }
 
-  createMortarStrike_v1(pos) {
-    return new FireSpread({
-      name: 'Mortar Strike',
-      game: this.game,
-      pos,
-      renderer: {
-        character: '',
-        color: COLORS.red_0,
-        background: 'black',
-      },
-    })
-  }
-  
   createMortarStrike(pos, size = 2) {
     return MortarStrike(this.game.engine, pos, size)
   }
+
 
   spawnMortarStrike() {
     // Use sine wave to create cyclical intensity of strikes
