@@ -43,8 +43,8 @@ export const generateBeachCoverBlock = (
   name = 'box',
   character = '%',
   durability = 5,
-  background = NORMANDY_COLORS.sand_00,
-  color = NORMANDY_COLORS.sand_0,
+  background = NORMANDY_COLORS.sand_0,
+  color = NORMANDY_COLORS.sand_1,
   sprite = null,
 ) => {
   let box = new CoverWall({
@@ -228,7 +228,7 @@ export const generate = (pos, game, shape, coverGenerator) => {
   });
 }
 
-export const generateSingle = (pos, game) => generate(pos, game, SHAPES.point);
+export const generateSingle = (pos, game, coverGenerator = generateCoverBlock) => generate(pos, game, SHAPES.point, coverGenerator);
 export const generateTwoVertically = (pos, game) => generate(pos, game, SHAPES.verticalLine);
 export const generateTwoHorizontally = (pos, game) => generate(pos, game, SHAPES.horizontalLine);
 export const generateSquare = (pos, game) => generate(pos, game, SHAPES.smallSquare);

@@ -130,6 +130,22 @@ const BEACH_TILE_KEY = {
     passable: true,
     tags: ['PROVIDING_COVER', 'BURNABLE'],
   },
+  'TRENCH_WALL': {
+    background: COLORS.sand_0,
+    foreground: COLORS.sand_1,
+    character: '',
+    sprite: '',
+    passable: true,
+    tags: ['PROVIDING_COVER', 'BURNABLE'],
+  },
+  'TRENCH_GROUND': {
+    background: COLORS.sand_00,
+    foreground: COLORS.sand_0,
+    character: '',
+    sprite: '',
+    passable: true,
+    tags: ['PROVIDING_COVER', 'BURNABLE'],
+  },
   'DEEP_WATER': {
     background: COLORS.blue_0,
     foreground: COLORS.blue_0,

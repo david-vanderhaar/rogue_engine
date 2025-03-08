@@ -97,8 +97,8 @@ export class Game {
     });
     this.spriteMode = spriteMode;
     this.fovActive = fovActive;
-    this.FOV = new ROT.FOV.PreciseShadowcasting((x, y) => this.fovLightPasses(x, y));
-    // this.FOV = new ROT.FOV.RecursiveShadowcasting((x, y) => this.fovLightPasses(x, y));
+    // this.FOV = new ROT.FOV.PreciseShadowcasting((x, y) => this.fovLightPasses(x, y));
+    this.FOV = new ROT.FOV.RecursiveShadowcasting((x, y) => this.fovLightPasses(x, y));
     this.mode = new mode({game: this});
     this.tileKey = this.mode.tileKey || tileKey;
     this.messages = messages;
@@ -353,13 +353,39 @@ export class Game {
       let foreground = nextFrame.foreground;
       let background = tile?.overriddenBackground || nextFrame.background;
       if (this.fovActive) {
-        foreground = 'transparent'
-        background = 'transparent'
+        if (!tile['seen']) {
+          foreground = 'transparent'
+          background = 'transparent'
+        } else {
+          foreground = Helper.interpolateHexColor(foreground, '#222326', 0.6)
+          background = Helper.interpolateHexColor(background, '#222326', 0.6)
+        }
       }
       
       const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
 
-      renderedEntities.forEach((entity) => entity['isInFov'] = false)
+      renderedEntities.forEach((entity) => {
+        entity['isInFov'] = false
+        // entity['seen'] = false
+      })
+
+      // if (this.fovActive) {
+      //   if (renderedEntities.length > 0) {
+      //     let entity = renderedEntities[renderedEntities.length - 1]
+      //     if (entity['seen']) {
+      //       nextFrame = this.animateEntity(entity);
+    
+      //       character = nextFrame.character
+      //       foreground = nextFrame.foreground
+      //       if (nextFrame.background) {
+      //         background = nextFrame.background
+      //       }
+
+      //       foreground = Helper.interpolateHexColor(foreground, '#222326', 0.6)
+      //       background = Helper.interpolateHexColor(background, '#222326', 0.6)
+      //     }
+      //   }
+      // }
 
       if (!this.fovActive) {
         if (renderedEntities.length > 0) {
@@ -402,14 +428,19 @@ export class Game {
         let foreground = nextFrame.foreground;
         let background = tile?.overriddenBackground || nextFrame.background;
 
-        const percentageByVisibility = Math.min(visibility, 0.4)
-        const percentageByRange = (1 - (range / light.lightRange))
-        const percentage = percentageByVisibility * percentageByRange
-
-        background = Helper.interpolateHexColor(background, light.lightColor, percentage)
+        // const percentageByVisibility = Math.min(visibility, 0.4)
+        // const percentageByRange = (1 - (range / light.lightRange))
+        // const percentage = percentageByVisibility * percentageByRange
+  
+        // // background = Helper.interpolateHexColor(background, light.lightColor, percentage)
+        // background = Helper.interpolateHexColor(background, '#e1d8cb', percentage)
+        tile['seen'] = true
   
         const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
-        renderedEntities.forEach((entity) => entity['isInFov'] = true)
+        renderedEntities.forEach((entity) => {
+          entity['isInFov'] = true
+          // entity['seen'] = true
+        })
         if (renderedEntities.length > 0) {
           let entity = renderedEntities[renderedEntities.length - 1]
           nextFrame = this.animateEntity(entity);
@@ -593,7 +624,7 @@ export class Game {
     }
     // end hack
 
-    this.startTileAnimator()
+    // this.startTileAnimator()
   }
 
   startTileAnimator() {

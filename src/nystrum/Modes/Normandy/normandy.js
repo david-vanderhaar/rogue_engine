@@ -39,7 +39,7 @@ export class Normandy extends Mode {
       // },
     ]
 
-    // this.game.fovActive = true
+    this.game.fovActive = true
   }
 
   initialize (meta) {
@@ -138,7 +138,6 @@ export class Normandy extends Mode {
     super.update();
     this.updateUI();
     this.checkCoverAnimations();
-    this.spawnMortarStrike();
     if (this.hasLost()) {
       this.onLose()
     } else if (this.hasWon()) {
@@ -156,7 +155,10 @@ export class Normandy extends Mode {
       // this.initialize(this.meta);
       // this.game.initializeGameData();
     }
+
+    // start a new turn on current level
     this.data.turnCount++;
+    this.spawnMortarStrike();
   }
 
   onLose() {

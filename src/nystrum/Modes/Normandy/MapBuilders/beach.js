@@ -13,10 +13,88 @@ export function beach(mode) {
   generateFoxholes(mode, 10);
   generateCoverBlocks(mode, 30);
   generateShoreline(mode);
-  placeEnemies(mode);
+
+  placeTrenches(mode, 20);
+  // placeTrench(mode, {x: 14, y: mode.game.mapHeight - 16}, 30);
+  placeEnemies(mode); 
+  
+  // place allies
   createPlayerSafeZone(mode);
   mode.placePlayersInSafeZone();
 } // END
+
+function placeTrenches(mode, count) {
+  // tiles in top half of map
+  const topHalfTiles = MapHelper.getPositionsInTileZone(
+    mode.game.mapHeight,
+    mode.game.mapWidth,
+    { x: 3, y: 3 },
+    mode.game.mapHeight - (mode.game.mapHeight / 4),
+    mode.game.mapWidth - 6,
+  );
+
+  for (let i = 0; i < count; i++) {
+    let startPos = Helper.getRandomInArray(topHalfTiles);
+    let length = Helper.getRandomInt(30, 100);
+    placeTrench(mode, startPos, length);
+  }
+}
+
+function placeTrench(mode, startPos, length) {
+  // Create a narrow trench using IceyMaze algorithm
+  // const trenchWidth = 7; // Width of the trench (height in ROT terms)
+  const trenchWidth = 5; // Width of the trench (height in ROT terms)
+  const maze = new ROT.Map.IceyMaze(length, trenchWidth, 1);
+  
+  // Generate the trench
+  maze.create((x, y, value) => {
+    // Calculate the actual position on the map
+    const mapX = startPos.x + x;
+    const mapY = startPos.y + y;
+    
+    // Check if the position is within map bounds
+    if (mapX < 0 || mapX >= mode.game.mapWidth || mapY < 0 || mapY >= mode.game.mapHeight) {
+      return;
+    }
+    
+    const key = `${mapX},${mapY}`;
+    let tileType;
+    
+    // When value is 1, it's a path/hole; when 0, it's an edge/wall
+    if (value === 1) {
+      tileType = 'TRENCH_WALL';
+    } else {
+      tileType = 'TRENCH_GROUND';
+    }
+    
+    // Update the map with the new tile
+    MapHelper.addTileToMap({
+      map: mode.game.map, 
+      key, 
+      tileKey: mode.game.tileKey, 
+      tileType
+    });
+
+    // if the value is 1, place a cover block
+    if (value === 1) {
+      // // 10% chance to place a cover block
+      // if (Math.random() < 0.1) {
+      //   generateCoverSingleBlock(mode, { x: mapX, y: mapY });
+      // }
+      // 10% chance to place a GROUND_SAND_HOLE
+      if (Math.random() < 0.2) {
+        MapHelper.addTileToMap({
+          map: mode.game.map, 
+          key: `${mapX},${mapY}`, 
+          tileKey: mode.game.tileKey, 
+          tileType: 'TRENCH_GROUND'
+        });
+      } else {
+        generateCoverSingleBlock(mode, { x: mapX, y: mapY });
+      }
+    }
+  });
+}
 
 function placeEnemies(mode) {
   let groundTiles = Object.keys(mode.game.map).filter((key) => mode.game.map[key].type === 'GROUND_SAND');
@@ -32,7 +110,7 @@ function createPlayerSafeZone(mode) {
   MapHelper.addTileZone(
     mode.game.tileKey,
     { x: 14, y: mode.game.mapHeight - 7 },
-    7,
+    4,
     3,
     'SAFE',
     mode.game.map,
@@ -44,7 +122,7 @@ function createPlayerSafeZone(mode) {
   MapHelper.addTileZoneRectUnfilled(
     mode.game.tileKey,
     { x: 14, y: mode.game.mapHeight - 7 },
-    7,
+    4,
     3,
     'WALL',
     mode.game.map,
@@ -98,12 +176,16 @@ function generateCoverBlocks(mode, number) {
 
   for (let i = 0; i < number; i++) {
     let pos = Helper.getRandomInArray(edgeTiles);
-    generateCoverBlock(mode, pos)
+    generateCoverRandomBlock(mode, pos)
   }
 }
 
-function generateCoverBlock(mode, pos) {
+function generateCoverRandomBlock(mode, pos) {
   CoverGenerator.generateRandom(pos, mode.game, CoverGenerator.generateBeachCoverBlock);
+}
+
+function generateCoverSingleBlock(mode, pos) {
+  CoverGenerator.generateSingle(pos, mode.game, CoverGenerator.generateBeachCoverBlock);
 }
 
 
