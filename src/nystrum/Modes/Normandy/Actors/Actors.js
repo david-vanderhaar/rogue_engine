@@ -13,6 +13,7 @@ import { SandSkin } from '../../../StatusEffects/SandSkin';
 import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 import { JACINTO_SOUNDS } from '../../Jacinto/sounds';
 import { SpitterSac } from '../Items/Weapons/Spitter';
+import { Karabiner, Rifle } from '../Items/Weapons/Revolver';
 
 export function addRandomEnemy (mode, pos) {
   addRandomBasicGrubToMap(mode, pos, AXIS_STATS)
@@ -38,17 +39,17 @@ const AXIS_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
         new Behaviors.TelegraphRangedAttack({repeat: 1}),
-        new Behaviors.ExecuteRangedAttack({repeat: 1}),
+        new Behaviors.ExecuteRangedAttack({repeat: 2}),
         new Behaviors.MoveTowardsEntityInRangeByAttr({
           repeat: 3,
           range: 5,
           attribute: 'name',
           attributeValue: 'trench wall',
         }),
-        new Behaviors.Wait({repeat: 3}),
+        // new Behaviors.Wait({repeat: 3}),
       ],
       loadout: {
-        equipmentCreators: [HammerBurst],
+        equipmentCreators: [Karabiner],
         inventoryCreators: [{amount: 1000, creator: Ammo}]
       },
     }
@@ -86,7 +87,7 @@ const ALLY_STATS = {
       faction: 'ALLIES',
       enemyFactions: ['AXIS'],
       loadout: {
-        equipmentCreators: [HammerBurst],
+        equipmentCreators: [Rifle],
         inventoryCreators: [{amount: 1000, creator: Ammo}]
       },
     }

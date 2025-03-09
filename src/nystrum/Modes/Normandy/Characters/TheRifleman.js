@@ -32,7 +32,7 @@ import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../../../Actions/MoveTowards';
 import { GoToPreviousKeymap } from '../../../Actions/GoToPreviousKeymap';
 import { Lantern } from '../../../Items/Environment/Lantern';
-import { Revolver } from '../Items/Weapons/Revolver';
+import { Revolver, Rifle } from '../Items/Weapons/Revolver';
 import { Battery } from '../Items/Pickups/Battery';
 import { LayGrass } from '../StatusEffects/LayGrass';
 import { GlowStick, SuperGlowStick } from '../Items/Pickups/GlowSticks';
@@ -298,9 +298,9 @@ function initialize(engine) {
   })
 
   // add default items to container
-  const primary = Revolver(engine, actor.getPosition());
-  const ammo = Helper.duplicate(1, () => Ammo(engine))
-  const grenades = Array(1).fill('').map(() => Grenade(engine, actor.getPosition()));
+  const primary = Rifle(engine, actor.getPosition());
+  const ammo = Helper.duplicate(10, () => Ammo(engine))
+  const grenades = Array(2).fill('').map(() => Grenade(engine, actor.getPosition()));
   const smokes = Array(4).fill('').map(() => SmokeGrenade(engine, 2));
   actor.container = [
     new ContainerSlot({

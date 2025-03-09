@@ -120,8 +120,8 @@ export class Normandy extends Mode {
     const intensity = (Math.sin(normalizedPosition * Math.PI * 2) + 1) / 2;
     
     // Define constants for min/max values
-    const maxInterval = 100;
-    const minInterval = 10;
+    const maxInterval = 140;
+    const minInterval = 20;
 
     const minStrikes = 1;
     const maxStrikes = 5;
