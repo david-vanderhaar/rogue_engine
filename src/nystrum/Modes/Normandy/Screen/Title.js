@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { CARTRIDGE } from '../../../Nystrum';
 import { SCREENS } from '../../../Screen/constants';
+import HelpContent from '../UI/HelpContent';
+import { JACINTO_SOUND_MANAGER } from '../../Jacinto/sounds';
 
 function Title(props) {
   function nextScreen () {
@@ -24,18 +26,21 @@ function Title(props) {
   return (
     <div className="Title">
       <div className="Title__content">
-        <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>Normandy</h2>
+        <h3 style={{color: CARTRIDGE.theme.text, marginBottom: 6}}>Iron and Sand</h3>
+        <p style={{color: CARTRIDGE.theme.text, marginBottom: 30}}>A Beach Landing, 1944</p>
+        <div style={{width: '75%'}}>
+          <HelpContent />
+        </div>
         <button
-          className='btn btn-main btn-themed'
+          className='btn btn-themed'
           onClick={() => {
             // props.setSelectedCharacter(props.characters[0])
             props.setActiveScreen(SCREENS.CHARACTER_SELECT)
           }}
         >
-          Hell on the beach.
+          press enter to start
         </button>
-        <br/>
-        <span>press enter to start</span>
+        <span className='text--blinking' style={{color: CARTRIDGE.theme.text}}>sound on for immersion</span>
       </div>
     </div>
   );

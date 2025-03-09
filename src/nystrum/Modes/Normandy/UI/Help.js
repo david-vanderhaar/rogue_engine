@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
 import HelpContent from './HelpContent';
+import { JACINTO_SOUND_MANAGER } from '../../Jacinto/sounds';
+
+// let masterVolume = 10
+let masterVolume = JACINTO_SOUND_MANAGER.getVolume() * 100
 
 function Help(props) {
   let elems = []
@@ -32,9 +36,31 @@ function Help(props) {
   return (
     <div id={props.id} className="modal">
       <HelpContent />
+      <VolumeControl />
       <div className="modal-footer">
         <a href="#!" className="modal-close waves-effect waves-green btn-flat">Close</a>
       </div>
+    </div>
+  )
+}
+
+function VolumeControl() {
+  return (
+    <div className="range-field">
+      <input
+        id='volume'
+        type="range"
+        min="0"
+        max="100"
+        defaultValue={masterVolume}
+        step="1"
+        onChange={(event) => {
+          const volume = event.target.value
+          masterVolume = volume
+          JACINTO_SOUND_MANAGER.setVolume(volume / 100)
+        }}
+      />
+      <label htmlFor="volume">Master Volume</label>
     </div>
   )
 }

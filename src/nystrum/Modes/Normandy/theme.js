@@ -1,7 +1,8 @@
 export const THEME_COLORS = {
   main: '#222326',
+  secondary: '#c3b197',
   accent: '#82998f',
-  text: '#e1d8cb',
+  text: '#c3b197',
   white: '#e1d8cb',
   sand_2: '#c3b197',
   sand_1: '#a68a64',

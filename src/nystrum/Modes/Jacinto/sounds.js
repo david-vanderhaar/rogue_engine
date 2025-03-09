@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 
 const createSoundFromSource = (relativePath, howlerOptions = {}) => {
   return new Howl({
@@ -11,15 +11,16 @@ const createSoundFromSource = (relativePath, howlerOptions = {}) => {
 
 export const JACINTO_SOUND_MANAGER = {
   setVolume: (volume) => {
-    Object.entries(JACINTO_SOUNDS).forEach(([key, sound]) => {
-      sound.volume(volume)
-    })
+    Howler.volume(volume)
+  },
+  getVolume: () => {
+    return Howler.volume()
   },
   stopAll: () => {
     Object.entries(JACINTO_SOUNDS).forEach(([key, sound]) => {
       sound.stop()
     })
-  }
+  },
 }
 
 export const JACINTO_SOUNDS = {

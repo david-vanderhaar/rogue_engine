@@ -28,6 +28,8 @@ const updateCssVars = (theme) => {
   const root = document.documentElement
   root.style.setProperty('--color-main', theme.main)
   root.style.setProperty('--color-accent', theme.accent)
+  root.style.setProperty('--color-secondary', theme.secondary)
+  root.style.setProperty('--color-text', theme.text)
 }
 
 const getScreens = (screensFromData = {}) => ({...defaultScreens, ...screensFromData})
