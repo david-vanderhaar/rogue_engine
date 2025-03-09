@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
+import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
 import { CARTRIDGE } from '../../../Nystrum';
-import { SCREENS } from '../../../Screen/constants';
 
-function Lose(props) {
+export default function Lose(props) {
   function nextScreen () {
-    props.setActiveScreen(SCREENS.CHARACTER_SELECT)
+    props.setActiveScreen(SCREENS.TITLE)
   }
 
   useEffect(() => {
@@ -24,20 +24,29 @@ function Lose(props) {
   return (
     <div className="Title">
       <div className="Title__content">
-        <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>Down goes the hero. On goes the war.</h2>
+        <h3 style={{color: CARTRIDGE.theme.text, marginBottom: 6}}>Down goes the hero.</h3>
+        <p style={{color: CARTRIDGE.theme.text, marginBottom: 30}}>On goes the war.</p>
+        <div
+          style={{
+            height: '400px',
+            backgroundImage: `url("${window.PUBLIC_URL}/normandy/cross_grave.png")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundPositionY: '-112px',
+            width: '50%',
+            marginBottom: 36,
+          }}
+        />
         <button
-          className='btn btn-main btn-themed'
+          className='btn btn-themed'
           onClick={() => {
-            props.setActiveScreen(SCREENS.CHARACTER_SELECT)
+            nextScreen()
           }}
         >
-          Hell on the beach.
+          press enter
         </button>
-        <br/>
-        <span>press enter to start</span>
+        <span className='text--blinking' style={{color: CARTRIDGE.theme.text}}>sound on for immersion</span>
       </div>
     </div>
   );
 }
-
-export default Lose;

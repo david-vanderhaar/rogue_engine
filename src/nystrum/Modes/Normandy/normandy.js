@@ -30,16 +30,16 @@ export class Normandy extends Mode {
     };
     this.dataByLevel = [
       {
-        enemyCount: 6,
+        enemyCount: 0,
         allyCount: 1,
         unlocks: ['TheMedic'],
         levelBuilder: beach,
       },
-      // {
-      //   enemyCount: 5,
-      //   allyCount: 1,
-      //   levelBuilder: beach,
-      // },
+      {
+        enemyCount: 5,
+        allyCount: 1,
+        levelBuilder: beach,
+      },
     ]
 
     this.game.fovActive = true

@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
+import { CARTRIDGE } from '../../../Nystrum';
 
 export default function Tournament(props) {
-  function gotToLevel () {
+  function nextScreen () {
     props.setActiveScreen(SCREENS.LEVEL)
   }
 
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
-        gotToLevel()
+        nextScreen()
       }
     };
     // Add event listener when the component mounts
@@ -23,15 +24,28 @@ export default function Tournament(props) {
   return (
     <div className="Title">
       <div className="Title__content">
-        <h1>A moment of rest...</h1>
+        <h3 style={{color: CARTRIDGE.theme.text, marginBottom: 6}}>a moment of rest...</h3>
+        <p style={{color: CARTRIDGE.theme.text, marginBottom: 30}}>gather your courage.</p>
+        <div
+          style={{
+            height: '400px',
+            backgroundImage: `url("${window.PUBLIC_URL}/normandy/war_poster_0.png")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            width: '50%',
+            marginBottom: 36,
+            backgroundPositionY: 'top',
+          }}
+        />
         <button
-          className='btn btn-main btn-themed'
-          onClick={gotToLevel}
+          className='btn btn-themed'
+          onClick={() => {
+            nextScreen()
+          }}
         >
-          Onward!
+          press enter to continue
         </button>
-        <br/>
-        <span>press enter to start</span>
+        <span className='text--blinking' style={{color: CARTRIDGE.theme.text}}>sound on for immersion</span>
       </div>
     </div>
   );
