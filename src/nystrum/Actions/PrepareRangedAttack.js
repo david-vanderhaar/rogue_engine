@@ -118,7 +118,7 @@ export class PrepareRangedAttack extends Base {
         // const validTargets = Helper.getDestructableEntities(tile.entities);
         const validTargets = tile.entities
           .filter((actor) => {
-            if (this.game.fovIsActive) {
+            if (this.game.fovActive) {
               return this.actor.isEnemy(actor) && actor['isInFov']
             } else {
               return this.actor.isEnemy(actor)

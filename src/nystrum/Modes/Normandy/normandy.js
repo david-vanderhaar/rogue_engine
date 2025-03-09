@@ -163,13 +163,13 @@ export class Normandy extends Mode {
 
   onLose() {
     if (!this.data['hasLost']) {
-      // SOUNDS.lose.play();
-      // this.game.toLose();
+      SOUNDS.lose.play();
+      this.game.toLose();
       // this.reset();
       // this.game.initializeGameData();
-      this.createOrUpdateInfoBlock('hasLost', {text: 'Down goes the hero, on goes the war.'})
-      this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to Play Again'})
-      this.addOnEnterListener();
+      // this.createOrUpdateInfoBlock('hasLost', {text: 'Down goes the hero, on goes the war.'})
+      // this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to Play Again'})
+      // this.addOnEnterListener();
     }
     this.data['hasLost'] = true;
   }

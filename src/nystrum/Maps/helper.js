@@ -116,3 +116,18 @@ export const tileHasAnyTags = ({tile, tags}) => {
 }
 
 export const getTileFromMap = ({map, position}) => map[Helper.coordsToString(position)];
+
+export function getEmptyTileKeys (map) {
+  const keys = Object.keys(map)
+  return keys.filter((key) => !!!map[key].entities.length)
+}
+
+export function getEmptyTileKeysByTags (tags, map) {
+  return getEmptyTileKeys(map)
+    .filter((key) => tileHasAnyTags({tile: map[key], tags}))
+}
+
+export function getEmptyTileCoordsByTags (tags, map) {
+  return getEmptyTileKeysByTags(tags, map)
+    .map((key) => Helper.stringToCoords(key))
+}

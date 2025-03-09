@@ -3,6 +3,8 @@ import * as Helper from '../../../../helper';
 import * as MapHelper from '../../../Maps/helper';
 import * as CoverGenerator from '../../../Maps/coverGenerator';
 import { Foxhole } from '../Items/Environment/Foxhole';
+import * as Actors from '../Actors/Actors';
+
 // import * as Constant from '../../../constants';
 // import * as Item from '../../../items';
 // import { generate as generateBuilding } from '../../../Maps/generator';
@@ -14,9 +16,9 @@ export function beach(mode) {
   generateCoverBlocks(mode, 30);
   generateShoreline(mode);
 
-  placeTrenches(mode, 20);
-  // placeTrench(mode, {x: 14, y: mode.game.mapHeight - 16}, 30);
-  placeEnemies(mode); 
+  // placeTrenches(mode, 6);
+  placeTrench(mode, {x: 14, y: mode.game.mapHeight - 16}, 30);
+  placeEnemies(mode, 20); 
   
   // place allies
   createPlayerSafeZone(mode);
@@ -96,12 +98,20 @@ function placeTrench(mode, startPos, length) {
   });
 }
 
-function placeEnemies(mode) {
+function placeEnemies_v1(mode) {
   let groundTiles = Object.keys(mode.game.map).filter((key) => mode.game.map[key].type === 'GROUND_SAND');
   mode.data.enemies.forEach((enemyName) => {
     let pos = Helper.getRandomInArray(groundTiles);
     let posXY = pos.split(',').map((coord) => parseInt(coord));
     mode[`add${enemyName}`]({ x: posXY[0], y: posXY[1] });
+  });
+}
+
+function placeEnemies(mode, count = 1) {
+  const availableCoords = MapHelper.getEmptyTileCoordsByTags(['ENEMY_SPAWN'], mode.game.map);
+  Helper.range(count).forEach(() => {
+    let pos = Helper.getRandomInArray(availableCoords);
+    Actors.addRandom(mode, pos)
   });
 }
 
@@ -211,7 +221,6 @@ function createEmptySand(mode) {
 function generateFoxholes(mode, number) {
   for (let i = 0; i < number; i++) {
     generateFoxhole(mode);
-    // generateFoxhole_v1(mode);
   }
 }
 

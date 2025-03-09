@@ -32,6 +32,7 @@ export let GAME = null
 // const CAMERA_WIDTH = MAP_WIDTH;
 // const CAMERA_HEIGHT = MAP_HEIGHT;
 
+// const MAP_WIDTH = 35;
 const MAP_WIDTH = 35*4;
 const MAP_HEIGHT = 26*4;
 
@@ -328,8 +329,8 @@ export class Game {
     return result
   }
 
-  processTileMap (callback, shouldAnimate = false) {
-    const map = this.getRenderMap(this.map);
+  processTileMap (callback, shouldAnimate = false, renderMap = null) {
+    const map = renderMap || this.getRenderMap(this.map);
     for (let key in map) {
       let parts = key.split(",");
       let x = parseInt(parts[0]);
@@ -403,8 +404,8 @@ export class Game {
     }
   }
 
-  processTileMapWithFov(callback, shouldAnimate = false) {
-    const map = this.getRenderMap(this.map);
+  processTileMapWithFov(callback, shouldAnimate = false, renderMap = null) {
+    const map = renderMap || this.getRenderMap(this.map);
     const lights = Helper.filterEntitiesByType(this.entityLog.getAllEntities(), 'ILLUMINATING')
       .filter((entity) => entity.lightRange > 0)
 
@@ -496,8 +497,12 @@ export class Game {
   }
 
   getFirstPlayer () {
+    if (this['PLAYER_REFERENCE']) return this['PLAYER_REFERENCE']
     const players = this.getPlayers();
-    if (players.length) return players[0]
+    if (players.length) { 
+      this['PLAYER_REFERENCE'] = players[0];
+      return players[0]
+    }
     return null
   }
 
@@ -509,14 +514,15 @@ export class Game {
   
   draw () {
     const shouldAnimate = false
+    const renderMap = this.getRenderMap(this.map);
     this.processTileMap((key, x, y, character, foreground, background) => {
       this.display.updateTile(this.tileMap[key], character, foreground, background);
-    }, shouldAnimate);
+    }, shouldAnimate, renderMap);
 
     if (this.fovActive) {
       this.processTileMapWithFov((key, x, y, character, foreground, background) => {
         this.display.updateTile(this.tileMap[key], character, foreground, background);
-      }, shouldAnimate);
+      }, shouldAnimate, renderMap);
     }
     this.display.draw();
   }

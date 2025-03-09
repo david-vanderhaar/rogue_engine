@@ -35,6 +35,7 @@ export const UsesCover = superclass => class extends superclass {
   setCoverAnimations () {
     // check neigbors
     if (!this.showCoverAnimations) return;
+    if (this.game.fovActive && !this['isInFov']) return;
     const tiles = Helper.getNeighboringTiles(this.game.map, this.getPosition());
     let coverAnimated = false;
     tiles.forEach((tile) => {

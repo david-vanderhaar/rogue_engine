@@ -40,7 +40,7 @@ export const generateCoverBlock = (
 export const generateBeachCoverBlock = (
   pos,
   game,
-  name = 'box',
+  name = 'trench wall',
   character = '%',
   durability = 5,
   background = NORMANDY_COLORS.sand_0,

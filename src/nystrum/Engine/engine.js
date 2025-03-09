@@ -45,6 +45,13 @@ export class Engine {
 
     while (acting) {
       if (!actor) return false;
+      if (this.currentActorIsPlayer()) {
+        this.game.mode.removeInfoBlock('AI_turn');
+        this.game.updateReact(this.game);
+      } else {
+        this.game.mode.createOrUpdateInfoBlock(`AI_turn`, { text: 'AI is thinking...' });
+        this.game.updateReact(this.game);
+      }
       // if (!actor.active) return false;
       if (!actor.active) break;
       // let timePassed = 0;

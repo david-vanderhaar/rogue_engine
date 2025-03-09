@@ -264,12 +264,16 @@ export const RangedAttacking = superclass => class extends superclass {
 
   playMissSound() {
     const sound = Helper.getRandomInArray(this.getMissSounds());
-    sound.play();
+    setTimeout(() => {
+      sound.play();
+    }, Helper.getRandomInt(0, 250));
   }
 
   playHitSound() {
     const sound = Helper.getRandomInArray(this.getHitSounds());
-    sound.play();
+    setTimeout(() => {
+      sound.play();
+    }, Helper.getRandomInt(0, 250));
   }
 
   getHitSounds() {

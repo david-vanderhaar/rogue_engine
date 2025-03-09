@@ -144,7 +144,7 @@ const BEACH_TILE_KEY = {
     character: '',
     sprite: '',
     passable: true,
-    tags: ['PROVIDING_COVER', 'BURNABLE'],
+    tags: ['PROVIDING_COVER', 'BURNABLE', 'ENEMY_SPAWN'],
   },
   'DEEP_WATER': {
     background: COLORS.blue_0,

@@ -21,4 +21,8 @@ export class Mode {
   createOrUpdateInfoBlock(id, value) {
     merge(this.infoBlocks, {[id]: value})
   }
+
+  removeInfoBlock(id) {
+    delete this.infoBlocks[id]
+  }
 }
