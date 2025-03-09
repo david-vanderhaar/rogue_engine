@@ -114,17 +114,6 @@ function initialize(engine) {
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      e: () => new Say({
-        label: 'Lantern Light +',
-        message: 'you use the hand crank. the light burns brighter.',
-        game: engine.game,
-        actor,
-        energyCost: Math.ceil(actor.speed / 100 / 2) * Constant.ENERGY_THRESHOLD,
-        // energyCost: Constant.ENERGY_THRESHOLD * ,
-        onSuccess: () => {
-          lantern.incrementLightRange()
-        },
-      }),
       q: () => new AddStatusEffect({
         label: 'Steady Nerves',
         game: engine.game,
@@ -290,6 +279,8 @@ function initialize(engine) {
       background: TALL_GRASS_CONSTANT.COLORS.brown_sugar,
     },
     lightPassable: true,
+    lightRange: 10,
+    lightDrain: false,
     name: 'pvt. sheol',
     baseDescription: 'puts his rifle to his shoulder, takes a deep breath, and fires.',
     speed: Constant.ENERGY_THRESHOLD * 3,
@@ -308,7 +299,6 @@ function initialize(engine) {
 
   // add default items to container
   const primary = Revolver(engine, actor.getPosition());
-  const lantern = Lantern({engine, lightRange: 6})
   const ammo = Helper.duplicate(1, () => Ammo(engine))
   const grenades = Array(1).fill('').map(() => Grenade(engine, actor.getPosition()));
   const smokes = Array(4).fill('').map(() => SmokeGrenade(engine, 2));
@@ -328,7 +318,6 @@ function initialize(engine) {
   ]
 
   actor.equip(primary.equipmentType, primary);
-  actor.equip(lantern.equipmentType, lantern);
 
   return actor;
 }

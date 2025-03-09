@@ -17,8 +17,8 @@ export function beach(mode) {
   generateShoreline(mode);
 
   const middleX = Math.floor(mode.game.mapWidth / 2);
-  placeTrenches(mode, 6);
-  // placeTrench(mode, {x: middleX, y: mode.game.mapHeight - 16}, 30);
+  // placeTrenches(mode, 6);
+  placeTrench(mode, {x: middleX, y: mode.game.mapHeight - 16}, 30);
   placeEnemies(mode, mode.data.enemyCount); 
   
   createPlayerSafeZone(mode, { x: middleX, y: mode.game.mapHeight - 6 });

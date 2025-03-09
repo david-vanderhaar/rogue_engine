@@ -60,6 +60,7 @@ export const generateBeachCoverBlock = (
     durability,
     accuracyModifer: -0.3,
     damageModifer: 0,
+    lightPassable: Math.random() > 0.5,
   })
 
   game.placeActorOnMap(box)

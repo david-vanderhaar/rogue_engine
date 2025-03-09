@@ -29,7 +29,7 @@ export class Normandy extends Mode {
     };
     this.dataByLevel = [
       {
-        enemyCount: 1,
+        enemyCount: 2,
         allyCount: 5,
         unlocks: ['TheMedic'],
         levelBuilder: beach,
@@ -57,16 +57,31 @@ export class Normandy extends Mode {
   }
 
   updateUI() {
-    _.each(this.getPlayers(), (player, index) => {
-      const currentBlips = Math.floor(player.energy / 100);
-      const maxBlips = Math.floor(player.speed / 100);
-      const arr = [
-        ...Array(currentBlips).fill(''),
-        ...Array(maxBlips - currentBlips).fill('_'),
-      ];
-      this.createOrUpdateInfoBlock(`playerSpeed${player.id}`, { text: `${player.name} | AP: ${arr.join(' ')}` })
-      // this.createOrUpdateInfoBlock(`playerSpeed`, { text: `AP: ${player.energy}/${player.speed}` })
-    })
+    this.updateUIPlayerStats();
+    this.updateUIEnemiesRemaining();
+  }
+
+  updateUIPlayerStats() {
+    const player = this.game.getFirstPlayer();
+    const currentBlips = Math.floor(player.energy / 100);
+    const maxBlips = Math.floor(player.speed / 100);
+    const arr = [
+      ...Array(currentBlips).fill(''),
+      ...Array(maxBlips - currentBlips).fill('_'),
+    ];
+    this.createOrUpdateInfoBlock(`playerSpeed${player.id}`, { text: `${player.name} | AP: ${arr.join(' ')}` })
+    // this.createOrUpdateInfoBlock(`playerSpeed`, { text: `AP: ${player.energy}/${player.speed}` })
+  }
+
+  updateUIEnemiesRemaining() {
+    const enemies = this.game.getFirstPlayer().getEnemies().length;
+    const maxEnemies = this.data.enemyCount;
+    const arr = [
+      ...Array(enemies).fill(''),
+      ...Array(maxEnemies - enemies).fill('_'),
+    ];
+    this.createOrUpdateInfoBlock(`goalMessage`, { text: 'Destroy the enemy defensive positions.' }) 
+    this.createOrUpdateInfoBlock(`enemiesRemaining`, { text: `Enemies Remaining: ${arr.join(' ')}` }) 
   }
 
   checkAndUnlockCharacters() {
@@ -94,7 +109,6 @@ export class Normandy extends Mode {
   createMortarStrike(pos, size = 2) {
     return MortarStrike(this.game.engine, pos, size)
   }
-
 
   spawnMortarStrike() {
     // Use sine wave to create cyclical intensity of strikes

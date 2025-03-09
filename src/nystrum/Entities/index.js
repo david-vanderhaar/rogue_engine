@@ -184,6 +184,7 @@ export const RangedBandit = pipe(
 export const Player = pipe(
   Acting,
   Rendering,
+  Illuminating,
   PresentingUI,
   HasTargetingCursor,
   HasKeymap,

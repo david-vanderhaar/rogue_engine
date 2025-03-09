@@ -4,6 +4,8 @@ import * as Constant from '../constants';
 import * as Helper from '../../helper';
 import {MESSAGE_TYPE} from '../message';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
+import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
+import {COLORS as NORMANDY_COLORS} from '../Modes/Normandy/theme';
 
 export const Exploding = superclass => class extends superclass {
   constructor({ 
@@ -82,13 +84,35 @@ export const Exploding = superclass => class extends superclass {
       }
     // this.game.draw(); //may not need draw here
   }
-  animateExplosion () {
+
+  animateExplosion_v1 () {
     GradientRadialEmitter({
       game: this.game,
       fromPosition: this.getPosition(),
       radius: this.explosivity,
     }).start()
   }
+
+  getAnimationColors () {
+    const colors = [
+      [NORMANDY_COLORS.white, NORMANDY_COLORS.red_0, NORMANDY_COLORS.red_1],
+      [NORMANDY_COLORS.white, NORMANDY_COLORS.sand_2, NORMANDY_COLORS.sand_1],
+      [NORMANDY_COLORS.white, NORMANDY_COLORS.red_0, NORMANDY_COLORS.red_1, NORMANDY_COLORS.sand_2, NORMANDY_COLORS.sand_1],
+    ];
+    return Helper.getRandomInArray(colors);
+  }
+
+  animateExplosion (position) {
+    SpatterEmitter({
+      game: this.game,
+      fromPosition: this.getPosition(),
+      spatterAmount: .6,
+      spatterRadius: this.explosivity * 2,
+      transfersBackground: false,
+      spatterColors: this.getAnimationColors(),
+    }).start()
+  }
+
   destroy() {
     super.destroy();
     this.explode();
