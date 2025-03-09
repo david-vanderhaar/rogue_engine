@@ -30,8 +30,8 @@ export class Normandy extends Mode {
     };
     this.dataByLevel = [
       {
-        enemyCount: 2,
-        allyCount: 5,
+        enemyCount: 6,
+        allyCount: 1,
         unlocks: ['TheMedic'],
         levelBuilder: beach,
       },
@@ -67,6 +67,7 @@ export class Normandy extends Mode {
 
   updateUIPlayerStats() {
     const player = this.game.getFirstPlayer();
+    if (!player) return;
     const currentBlips = Math.floor(player.energy / 100);
     const maxBlips = Math.floor(player.speed / 100);
     const arr = [
@@ -78,7 +79,9 @@ export class Normandy extends Mode {
   }
 
   updateUIEnemiesRemaining() {
-    const enemies = this.game.getFirstPlayer().getEnemies().length;
+    const player = this.game.getFirstPlayer();
+    if (!player) return;
+    const enemies = player.getEnemies().length;
     const maxEnemies = this.data.enemyCount;
     const arr = [
       ...Array(enemies).fill(''),
@@ -167,6 +170,7 @@ export class Normandy extends Mode {
       // this.checkAndUnlockCharacters();
       this.nextLevel();
       this.setWaveData();
+      if (!JACINTO_SOUNDS.level_done_00.playing()) JACINTO_SOUNDS.level_done_00.play();
       this.game.setActiveScreen(SCREENS.TOURNAMENT);
       // this.game.entityLog.getAllEntities().forEach((entity) => {
       //   if (!entity.entityTypes.includes('PLAYING')) {
@@ -184,7 +188,7 @@ export class Normandy extends Mode {
 
   onLose() {
     if (!this.data['hasLost']) {
-      SOUNDS.lose.play();
+      if (!JACINTO_SOUNDS.lose_00.playing()) JACINTO_SOUNDS.lose_00.play();
       this.game.toLose();
       // this.reset();
       // this.game.initializeGameData();
@@ -198,10 +202,12 @@ export class Normandy extends Mode {
   onWin() {
     // this.game.toWin()
     if (!this.data['hasWon']) {
+      if (!JACINTO_SOUNDS.win_band_00.playing()) JACINTO_SOUNDS.win_band_00.play();
       this.addFireWorks();
       this.createOrUpdateInfoBlock('hasWon', {text: `War never ends, but ${this.game.getFirstPlayer().name}'s battle is over. Good job soldier.`})
       this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to Play Again'})
       this.addOnEnterListener();
+
     }
     this.data['hasWon'] = true;
   }

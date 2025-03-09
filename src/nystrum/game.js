@@ -306,6 +306,7 @@ export class Game {
   }
 
   getReferencePosition () { return this.getPlayerPosition() }
+  getReferencePosition_v2 () { return this.getPlayerOrAimCursosPosition() }
 
   getRenderMap(fullMap) { 
     // create an object with only tile keys that should be rendered (around player)
@@ -509,6 +510,16 @@ export class Game {
   getPlayerPosition () {
     const player = this.getFirstPlayer();
     if (player) return player.getPosition();
+    return null
+  }
+  
+  getPlayerOrAimCursosPosition () {
+    const player = this.getFirstPlayer();
+    if (player) {
+      const cursorPos = player.getCursorPositions().at(0);
+      if (cursorPos) return cursorPos;
+      return player.getPosition();
+    }
     return null
   }
   

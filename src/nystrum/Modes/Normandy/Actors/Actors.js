@@ -34,7 +34,7 @@ const AXIS_STATS = {
         background: COLORS.blue_1,
         sprite: 'w',
       },
-      durability: 1,
+      durability: 3,
       attackDamage: 1,
       behaviors: [
         new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
@@ -47,6 +47,14 @@ const AXIS_STATS = {
           attributeValue: 'trench wall',
         }),
         // new Behaviors.Wait({repeat: 3}),
+      ],
+      onDamageSounds: [
+        JACINTO_SOUNDS.hurt_04,
+        JACINTO_SOUNDS.hurt_05,
+        JACINTO_SOUNDS.hurt_06,
+      ],
+      onDestroySounds: [
+        JACINTO_SOUNDS.headshot_00,
       ],
       loadout: {
         equipmentCreators: [Karabiner],
@@ -86,6 +94,12 @@ const ALLY_STATS = {
       ],
       faction: 'ALLIES',
       enemyFactions: ['AXIS'],
+      onDamageSounds: [
+        JACINTO_SOUNDS.hurt_00,
+        JACINTO_SOUNDS.hurt_01,
+        JACINTO_SOUNDS.hurt_02,
+        JACINTO_SOUNDS.hurt_03,
+      ],
       loadout: {
         equipmentCreators: [Rifle],
         inventoryCreators: [{amount: 1000, creator: Ammo}]

@@ -4,13 +4,15 @@ import { ANIMATION_TYPES } from '../Display/konvaCustom';
 import { MESSAGE_TYPE } from '../message';
 
 export const Destructable = superclass => class extends superclass {
-  constructor({ durability = 1, defense = 0, onDestroy = () => null, ...args }) {
+  constructor({ durability = 1, defense = 0, onDestroy = () => null, onDamageSounds = [], onDestroySounds = [], ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('DESTRUCTABLE');
     this.durability = durability;
     this.durabilityMax = durability;
     this.defense = defense;
     this.onDestroy = onDestroy;
+    this.onDamageSounds = onDamageSounds;
+    this.onDestroySounds = onDestroySounds;
     this.actorSprite = this.renderer.sprite
     this.actorCharacter = this.renderer.character
   }
@@ -46,6 +48,7 @@ export const Destructable = superclass => class extends superclass {
     this.addDecreaseDurabilityMessage(decreaseBy, defense)
     this.updateActorRenderer();
     this.portraitFlash()
+    this.playHurtSound();
     // this.shakePlayer()
     if (this.entityTypes.includes('HAS_BLOOD_SPATTER')) this.bloodSpatter(value)
     if (this.durability <= 0) {
@@ -141,7 +144,20 @@ export const Destructable = superclass => class extends superclass {
     );
   }
 
+  playHurtSound() {
+    if (!this.onDamageSounds.length) return;
+    const sound = Helper.getRandomInArray(this.onDamageSounds);
+    if (!sound.playing()) sound.play()
+  }
+
+  playDestroySound() {
+    if (!this.onDestroySounds.length) return;
+    const sound = Helper.getRandomInArray(this.onDestroySounds);
+    if (!sound.playing()) sound.play()
+  }
+
   destroy() {
+    this.playDestroySound();
     this.onDestroy(this);
     destroyActor(this);
   }

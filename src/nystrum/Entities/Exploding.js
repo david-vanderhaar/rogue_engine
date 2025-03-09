@@ -68,6 +68,8 @@ export const Exploding = superclass => class extends superclass {
         let targets = Helper.getDestructableEntities(tile.entities.filter(
           (entity) => (entity.id !== this.id)
         ));
+        console.log('targets', targets);
+        
         if (targets.length > 0) {
           // let target = targets[0];
           targets.forEach((target) => {

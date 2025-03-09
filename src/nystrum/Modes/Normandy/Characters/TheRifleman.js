@@ -306,6 +306,12 @@ function initialize(engine) {
     faction: 'ALLIES',
     enemyFactions: ['AXIS'],
     maxFearPoints: 10,
+    onDamageSounds: [
+      JACINTO_SOUNDS.hurt_00,
+      JACINTO_SOUNDS.hurt_01,
+      JACINTO_SOUNDS.hurt_02,
+      JACINTO_SOUNDS.hurt_03,
+    ],
     initializeKeymap: keymap,
   })
 
