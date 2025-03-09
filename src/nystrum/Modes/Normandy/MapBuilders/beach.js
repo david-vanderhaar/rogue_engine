@@ -16,8 +16,8 @@ export function beach(mode) {
   generateCoverBlocks(mode, 30);
   generateShoreline(mode);
 
-  // placeTrenches(mode, 6);
-  placeTrench(mode, {x: 14, y: mode.game.mapHeight - 16}, 30);
+  placeTrenches(mode, 6);
+  // placeTrench(mode, {x: 14, y: mode.game.mapHeight - 16}, 30);
   placeEnemies(mode, 20); 
   
   // place allies

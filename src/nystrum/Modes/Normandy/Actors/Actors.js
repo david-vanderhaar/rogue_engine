@@ -32,7 +32,7 @@ const GRUB_STATS = {
       durability: 1,
       attackDamage: 1,
       behaviors: [
-        new Behaviors.MoveTowardsEnemy({repeat: 2, maintainDistanceOf: 4}),
+        new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
         new Behaviors.TelegraphRangedAttack({repeat: 1}),
         new Behaviors.ExecuteRangedAttack({repeat: 1}),
         new Behaviors.MoveTowardsEntityInRangeByAttr({
