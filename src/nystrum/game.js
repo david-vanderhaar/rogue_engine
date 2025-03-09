@@ -406,8 +406,8 @@ export class Game {
 
   processTileMapWithFov(callback, shouldAnimate = false, renderMap = null) {
     const map = renderMap || this.getRenderMap(this.map);
-    const lights = Helper.filterEntitiesByType(this.entityLog.getAllEntities(), 'ILLUMINATING')
-      .filter((entity) => entity.lightRange > 0)
+    // const lights = Helper.filterEntitiesByType(this.entityLog.getAllEntities(), 'ILLUMINATING')
+    const lights = [this.getFirstPlayer()]
 
     const renderOffsetX = this.getRenderOffsetX()
     const renderOffsetY = this.getRenderOffsetY()
@@ -417,7 +417,8 @@ export class Game {
       const renderedX = pos.x + renderOffsetX
       const renderedY = pos.y + renderOffsetY
 
-      this.FOV.compute(renderedX, renderedY, light.lightRange, (x, y, range, visibility) => {
+      this.FOV.compute(renderedX, renderedY, 10, (x, y, range, visibility) => {
+      // this.FOV.compute(renderedX, renderedY, light.lightRange, (x, y, range, visibility) => {
       // this.FOV.compute90(renderedX, renderedY, light.lightRange, 0, (x, y, range, visibility) => {
         // console.log(range, visibility);
         const key = Helper.coordsToString({x, y})

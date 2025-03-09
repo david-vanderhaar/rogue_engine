@@ -299,6 +299,7 @@ export const TILE_KEY = {
     character: '',
     sprite: '',
     passable: true,
+    tags: ['ALLY_SPAWN'],
   },
   'LOCKED_EXIT': {
     background: COLORS.bg_override || COLORS.base04,

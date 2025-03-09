@@ -9,7 +9,8 @@ export default class MoveTowardsPlayer extends Behavior {
   }
 
   isValid () {
-    return !this.enemiesExist();
+    return true
+    // return !this.enemiesExist();
   }
 
   enemiesExist () {

@@ -30,7 +30,7 @@ export class OpenEquipment extends Base {
         item: slot.item,
         game: this.game,
         actor: this.actor,
-        label: `Unequip ${slot.item.name}`,
+        label: `Unequip ${slot?.item?.name}`,
         onSuccess: () => {
           this.game.visibleEquipment = null
           this.actor.setNextAction(goToPreviousKeymap);

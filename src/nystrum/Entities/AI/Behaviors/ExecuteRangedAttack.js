@@ -16,7 +16,7 @@ export default class ExecuteRangedAttack extends Behavior {
       {
         targetPositions: this.actor.getCursorPositions(),
         onAfter: () => {
-          this.actor.removeAnimations()
+          this.actor.deactivateCursor()
           this.actor.reload()
         }
       }

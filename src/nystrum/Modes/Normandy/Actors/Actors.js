@@ -14,20 +14,24 @@ import { MeleeDamage } from '../../../StatusEffects/MeleeDamage';
 import { JACINTO_SOUNDS } from '../../Jacinto/sounds';
 import { SpitterSac } from '../Items/Weapons/Spitter';
 
-export function addRandom (mode, pos) {
-  addRandomBasicGrubToMap(mode, pos)
+export function addRandomEnemy (mode, pos) {
+  addRandomBasicGrubToMap(mode, pos, AXIS_STATS)
 }
 
-const GRUB_STATS = {
+export function addRandomAlly (mode, pos) {
+  addRandomBasicGrubToMap(mode, pos, ALLY_STATS)
+}
+
+const AXIS_STATS = {
   rifleman: () => {
     return {
       name: 'Wermacht Rifleman',
       baseDescription: 'a German soldier in field gray uniform, aiming carefully.',
       renderer: {
-        character: 'r',
+        character: 'w',
         color: COLORS.white,
         background: COLORS.blue_1,
-        sprite: 'r',
+        sprite: 'w',
       },
       durability: 1,
       attackDamage: 1,
@@ -51,6 +55,44 @@ const GRUB_STATS = {
   },
 };
 
+const ALLY_STATS = {
+  rifleman: () => {
+    const distanceFromPlayer = Helper.getRandomInt(2, 4);
+    return {
+      name: 'Rifleman',
+      baseDescription: 'an American soldier in olive drab uniform, running forward.',
+      renderer: {
+        character: 'a',
+        color: COLORS.white,
+        background: COLORS.green_1,
+        sprite: 'a',
+      },
+      durability: 1,
+      attackDamage: 1,
+      behaviors: [
+        new Behaviors.MoveTowardsPlayer({repeat: 6, maintainDistanceOf: distanceFromPlayer}),
+        new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
+        new Behaviors.TelegraphRangedAttack({repeat: 1}),
+        new Behaviors.ExecuteRangedAttack({repeat: 1}),
+
+        // new Behaviors.MoveTowardsEntityInRangeByAttr({
+        //   repeat: 3,
+        //   range: 5,
+        //   attribute: 'name',
+        //   attributeValue: 'trench wall',
+        // }),
+        // new Behaviors.Wait({repeat: 3}),
+      ],
+      faction: 'ALLIES',
+      enemyFactions: ['AXIS'],
+      loadout: {
+        equipmentCreators: [HammerBurst],
+        inventoryCreators: [{amount: 1000, creator: Ammo}]
+      },
+    }
+  },
+};
+
 const createBaseGrubStats = (mode, pos) => {
   return {
     pos,
@@ -61,11 +103,11 @@ const createBaseGrubStats = (mode, pos) => {
   }
 }
 
-export function createRandomBasic(mode, pos) {
+export function createRandomBasic(mode, pos, stats = AXIS_STATS) {
   const createStats = Helper.getRandomInArray(
     Object
-    .keys(GRUB_STATS)
-    .map((key) => GRUB_STATS[key])
+    .keys(stats)
+    .map((key) => stats[key])
   )
   return createNewJacintoAIEntity({
     ...createBaseGrubStats(mode, pos),
@@ -108,8 +150,8 @@ function createInventorySlot (engine, amount, creator) {
   });
 } 
 
-function addRandomBasicGrubToMap (mode, pos) {
-  const entityCreator = () => createRandomBasic(mode, pos)
+function addRandomBasicGrubToMap (mode, pos, stats) {
+  const entityCreator = () => createRandomBasic(mode, pos, stats)
   addEntityToMapWithStatsUsingCreator(mode, entityCreator)
 }
 

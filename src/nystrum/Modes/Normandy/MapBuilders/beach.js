@@ -16,13 +16,16 @@ export function beach(mode) {
   generateCoverBlocks(mode, 30);
   generateShoreline(mode);
 
+  const middleX = Math.floor(mode.game.mapWidth / 2);
   placeTrenches(mode, 6);
-  // placeTrench(mode, {x: 14, y: mode.game.mapHeight - 16}, 30);
-  placeEnemies(mode, 20); 
+  // placeTrench(mode, {x: middleX, y: mode.game.mapHeight - 16}, 30);
+  placeEnemies(mode, mode.data.enemyCount); 
   
-  // place allies
-  createPlayerSafeZone(mode);
+  createPlayerSafeZone(mode, { x: middleX, y: mode.game.mapHeight - 6 });
   mode.placePlayersInSafeZone();
+  createPlayerSafeZone(mode, { x: middleX - 5, y: mode.game.mapHeight - 7 });
+  createPlayerSafeZone(mode, { x: middleX + 5, y: mode.game.mapHeight - 9 });
+  placeAllies(mode, mode.data.allyCount); 
 } // END
 
 function placeTrenches(mode, count) {
@@ -98,30 +101,32 @@ function placeTrench(mode, startPos, length) {
   });
 }
 
-function placeEnemies_v1(mode) {
-  let groundTiles = Object.keys(mode.game.map).filter((key) => mode.game.map[key].type === 'GROUND_SAND');
-  mode.data.enemies.forEach((enemyName) => {
-    let pos = Helper.getRandomInArray(groundTiles);
-    let posXY = pos.split(',').map((coord) => parseInt(coord));
-    mode[`add${enemyName}`]({ x: posXY[0], y: posXY[1] });
-  });
-}
-
 function placeEnemies(mode, count = 1) {
   const availableCoords = MapHelper.getEmptyTileCoordsByTags(['ENEMY_SPAWN'], mode.game.map);
   Helper.range(count).forEach(() => {
     let pos = Helper.getRandomInArray(availableCoords);
-    Actors.addRandom(mode, pos)
+    Actors.addRandomEnemy(mode, pos)
   });
 }
 
-function createPlayerSafeZone(mode) {
-  // create boat
+function placeAllies(mode, count = 1) {
+  const availableCoords = MapHelper.getEmptyTileCoordsByTags(['ALLY_SPAWN'], mode.game.map);
+  Helper.range(count).forEach(() => {
+    let pos = Helper.getRandomInArray(availableCoords);
+    Actors.addRandomAlly(mode, pos)
+  });
+}
+
+function createPlayerSafeZone(mode, position = { x: 14, y: mode.game.mapHeight - 7 }) {
+  const boatWidth = 4;
+  const boatHeight = 3;
+  
+  // create boat safe zone
   MapHelper.addTileZone(
     mode.game.tileKey,
-    { x: 14, y: mode.game.mapHeight - 7 },
-    4,
-    3,
+    position,
+    boatWidth,
+    boatHeight,
     'SAFE',
     mode.game.map,
     mode.game.mapHeight,
@@ -131,15 +136,21 @@ function createPlayerSafeZone(mode) {
   // create safe zone boat walls
   MapHelper.addTileZoneRectUnfilled(
     mode.game.tileKey,
-    { x: 14, y: mode.game.mapHeight - 7 },
-    4,
-    3,
+    position,
+    boatWidth,
+    boatHeight,
     'WALL',
     mode.game.map,
   );
 
-  // leave opening for player to enter
-  MapHelper.addTileToMap({ map: mode.game.map, key: `15,${mode.game.mapHeight - 7}`, tileKey: mode.tileKey, tileType: 'SAFE' });
+  // leave opening for player to enter (centered on top wall)
+  const entranceX = position.x + 1;
+  MapHelper.addTileToMap({ 
+    map: mode.game.map, 
+    key: `${entranceX},${position.y}`, 
+    tileKey: mode.tileKey, 
+    tileType: 'SAFE' 
+  });
 }
 
 function generateShoreline(mode) {

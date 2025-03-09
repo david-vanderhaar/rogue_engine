@@ -29,13 +29,15 @@ export class Normandy extends Mode {
     };
     this.dataByLevel = [
       {
-        enemies: Array(1).fill('Bandit'),
+        enemyCount: 1,
+        allyCount: 5,
         unlocks: ['TheMedic'],
         levelBuilder: beach,
       },
       // {
-      //   enemies: Array(1).fill('Bandit'),
-      //   levelBuilder: testLevelBuilder,
+      //   enemyCount: 5,
+      //   allyCount: 1,
+      //   levelBuilder: beach,
       // },
     ]
 
@@ -104,8 +106,8 @@ export class Normandy extends Mode {
     const intensity = (Math.sin(normalizedPosition * Math.PI * 2) + 1) / 2;
     
     // Define constants for min/max values
-    const maxInterval = 200;
-    const minInterval = 20;
+    const maxInterval = 100;
+    const minInterval = 10;
 
     const minStrikes = 1;
     const maxStrikes = 5;
@@ -138,6 +140,7 @@ export class Normandy extends Mode {
     super.update();
     this.updateUI();
     this.checkCoverAnimations();
+    if (!this.data['hasWon']) this.spawnMortarStrike();
     if (this.hasLost()) {
       this.onLose()
     } else if (this.hasWon()) {
@@ -158,7 +161,7 @@ export class Normandy extends Mode {
 
     // start a new turn on current level
     this.data.turnCount++;
-    this.spawnMortarStrike();
+    // this.spawnMortarStrike();
   }
 
   onLose() {
@@ -227,7 +230,7 @@ export class Normandy extends Mode {
   addFireWorks () {
     // pick a range of random positions
     // then add celebratory debris to each on a timer
-    const positions = Array(30).fill(null).map(() => Helper.getRandomPos(this.game.map).coordinates);
+    const positions = Array(60).fill(null).map(() => Helper.getRandomPos(this.game.map).coordinates);
 
     positions.forEach((position) => {
       setTimeout(() => {
@@ -270,7 +273,8 @@ export class Normandy extends Mode {
   }
 
   levelComplete () {
-    return this.game.engine.actors.length === 1; 
+    return this.game.getFirstPlayer().getEnemies().length === 0;
+    // return this.game.engine.actors.length === 1; 
   }
 
   hasWon () {
