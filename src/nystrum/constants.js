@@ -452,6 +452,22 @@ export const CLONE_PATTERNS = {
       ...Helper.getPointsOnCircumference(0, 0, 4)
     ]
   },
+  small_circle: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 1, y: -1, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+      { x: -1, y: 1, taken: false, },
+      ...Helper.getPointsOnCircumference(0, 0, 2),
+    ]
+  },
 }
 
 export const PARTICLE_TEMPLATES = {

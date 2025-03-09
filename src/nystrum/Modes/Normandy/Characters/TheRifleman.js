@@ -38,6 +38,7 @@ import { LayGrass } from '../StatusEffects/LayGrass';
 import { GlowStick, SuperGlowStick } from '../Items/Pickups/GlowSticks';
 import { Grenade } from '../Items/Weapons/Grenade';
 import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
+import { JACINTO_SOUNDS } from '../../Jacinto/sounds';
 
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/white.png`;
@@ -81,28 +82,39 @@ function initialize(engine) {
       engine.game.entityLog.setLookedAt(targetExcludingSelf)
     }
 
-    function stepOnGrass () {
-      const entities = Helper.getEntitiesByPositionByAttr({
-        game: engine.game,
-        position: actor.getPosition(),
-        attr: 'name',
-        value: 'tall grass', 
-      })
-      
-      
-      entities.forEach((entity) => {
-        const effect = new LayGrass({
-          game: engine.game,
-          actor: entity,
-          lifespan: Constant.ENERGY_THRESHOLD * 3,
-          stepInterval: Constant.ENERGY_THRESHOLD
-        })
-        engine.addStatusEffect(effect);
-      })
+    function stepOnTile () {
+      const tile = Helper.getTileAtPosition(engine.game, actor.getPosition())
+      if (!tile) return;
+      if (tile.type.includes('SAND')) playSandStepSound()
+      if (tile.type.includes('TRENCH')) playMudStepSound()
     }
 
+  function playSandStepSound() {
+    const sound = Helper.getRandomInArray([
+      JACINTO_SOUNDS.sand_00,
+      JACINTO_SOUNDS.sand_01,
+      JACINTO_SOUNDS.sand_02,
+      JACINTO_SOUNDS.sand_03,
+      JACINTO_SOUNDS.sand_04,
+      JACINTO_SOUNDS.sand_05,
+    ])
+
+    sound.play()
+  }
+  
+  function playMudStepSound() {
+    const sound = Helper.getRandomInArray([
+      JACINTO_SOUNDS.mud_00,
+      JACINTO_SOUNDS.mud_01,
+      JACINTO_SOUNDS.mud_02,
+      JACINTO_SOUNDS.mud_03,
+    ])
+
+    sound.play()
+  }
+
     function handleMoveSuccess() {
-      stepOnGrass()
+      stepOnTile()
       updateLookedAt()
     }
 

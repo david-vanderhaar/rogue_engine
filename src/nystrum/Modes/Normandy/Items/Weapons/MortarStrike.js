@@ -2,7 +2,7 @@ import * as Constant from '../../../../constants';
 import {CoverWall, ThrowableSpawner, TelegraphedExploder} from '../../../../Entities/index';
 import {COLORS} from '../../theme';
 import { JACINTO_SOUNDS } from '../../../Jacinto/sounds';
-import { getEntitiesByPositionByAttr, getPointsWithinRadius } from '../../../../../helper';
+import { getEntitiesByPositionByAttr, getPointsWithinRadius, getRandomFloat, getRandomInArray } from '../../../../../helper';
 import * as MapHelper from '../../../../Maps/helper';
 import { Foxhole } from '../Environment/Foxhole';
 
@@ -37,7 +37,7 @@ export const MortarStrike = (engine, pos, size = 2) => new ThrowableSpawner({
     explosivity: 1,
     attackDamage: 4,
     onDestroy: (actor) => {
-      // createFoxhole(actor.getPosition(), size);
+      playExplosionSound();
       const existingBerms = getEntitiesByPositionByAttr({
         game: engine.game,
         position: actor.getPosition(),
@@ -52,21 +52,34 @@ export const MortarStrike = (engine, pos, size = 2) => new ThrowableSpawner({
   },
   range: 1,
   onDestroy: (actor) => {
-    JACINTO_SOUNDS.smoke_grenade_fire.play()
-    // createFoxhole(actor.getPosition(), size);
+    playIncomingSound();
     actor.spawnEntities()
   },
 })
 
-function createFoxhole(pos, size) {
-  MapHelper.addTileZoneFilledCircle(
-    pos,
-    size + 1,
-    'GROUND_SAND_HOLE_EDGE',
-  );
-  // MapHelper.addTileZoneFilledCircle(
-  //   pos,
-  //   size,
-  //   'GROUND_SAND_HOLE',
-  // );
+function playExplosionSound() {
+  const sounds = [
+    JACINTO_SOUNDS.mortar_hit_00,
+    JACINTO_SOUNDS.mortar_hit_01,
+    JACINTO_SOUNDS.mortar_hit_02,
+    JACINTO_SOUNDS.mortar_hit_03,
+    JACINTO_SOUNDS.mortar_hit_04,
+  ]
+  const sound = getRandomInArray(sounds);
+  if (!sound.playing()) {
+    sound.stop();
+    sound.play();
+  }
+}
+
+function playIncomingSound() {
+  const sounds = [
+    JACINTO_SOUNDS.mortar_incoming_00,
+    JACINTO_SOUNDS.mortar_incoming_01,
+    JACINTO_SOUNDS.mortar_incoming_02,
+  ];
+  const sound = getRandomInArray(sounds);
+  if (!sound.playing()) {
+    sound.play();
+  }
 }

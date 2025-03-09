@@ -14,10 +14,25 @@ export const JACINTO_SOUND_MANAGER = {
     Object.entries(JACINTO_SOUNDS).forEach(([key, sound]) => {
       sound.volume(volume)
     })
+  },
+  stopAll: () => {
+    Object.entries(JACINTO_SOUNDS).forEach(([key, sound]) => {
+      sound.stop()
+    })
   }
 }
 
 export const JACINTO_SOUNDS = {
+  beach_wind_loop: createSoundFromSource('/sounds/tall_grass/wind_loop.mp3', {loop: true, rate: 0.75, volume: 0.5}),
+  distant_gunfight: createSoundFromSource('/sounds/normandy/ww2_ambience.mp3', {loop: true, rate: 0.75, volume: 0.3}),
+  mortar_hit_00: createSoundFromSource('/sounds/normandy/mortar.mp3'),
+  mortar_hit_01: createSoundFromSource('/sounds/normandy/mortar.mp3', {rate: 0.4}),
+  mortar_hit_02: createSoundFromSource('/sounds/normandy/mortar.mp3', {rate: 2}),
+  mortar_hit_03: createSoundFromSource('/sounds/normandy/mortar.mp3', {rate: 2.8}),
+  mortar_hit_04: createSoundFromSource('/sounds/normandy/mortar.mp3', {rate: 0.2}),
+  mortar_incoming_00: createSoundFromSource('/sounds/normandy/incoming-mortar-0.mp3'),
+  mortar_incoming_01: createSoundFromSource('/sounds/normandy/incoming-mortar-1.mp3'),
+  mortar_incoming_02: createSoundFromSource('/sounds/normandy/incoming-mortar-2.mp3'),
   ambient_howling: createSoundFromSource('/sounds/tall_grass/ambient_loop_howls.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   wind_loop: createSoundFromSource('/sounds/tall_grass/wind_loop.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   sac_01: createSoundFromSource('/sounds/tall_grass/monster/sac_01.ogg'),
@@ -32,6 +47,16 @@ export const JACINTO_SOUNDS = {
   grass_03: createSoundFromSource('/sounds/tall_grass/rustle/grass_03.mp3'),
   grass_04: createSoundFromSource('/sounds/tall_grass/rustle/grass_04.mp3'),
   grass_05: createSoundFromSource('/sounds/tall_grass/rustle/grass_05.mp3'),
+  sand_00: createSoundFromSource('/sounds/tall_grass/rustle/grass_00.mp3', {rate: 3}),
+  sand_01: createSoundFromSource('/sounds/tall_grass/rustle/grass_01.mp3', {rate: 3}),
+  sand_02: createSoundFromSource('/sounds/tall_grass/rustle/grass_02.mp3', {rate: 3}),
+  sand_03: createSoundFromSource('/sounds/tall_grass/rustle/grass_03.mp3', {rate: 3}),
+  sand_04: createSoundFromSource('/sounds/tall_grass/rustle/grass_04.mp3', {rate: 3}),
+  sand_05: createSoundFromSource('/sounds/tall_grass/rustle/grass_05.mp3', {rate: 3}),
+  mud_00: createSoundFromSource('/sounds/normandy/mud_step_0.mp3', {rate: 1}),
+  mud_01: createSoundFromSource('/sounds/normandy/mud_step_1.mp3', {rate: 1}),
+  mud_02: createSoundFromSource('/sounds/normandy/mud_step_2.mp3', {rate: 1}),
+  mud_03: createSoundFromSource('/sounds/normandy/mud_step_3.mp3', {rate: 1}),
   light_up: createSoundFromSource('/sounds/tall_grass/light_up.mp3'),
   light_drain: createSoundFromSource('/sounds/tall_grass/light_drain.mp3', {volume: 0.2}),
   emergence_01: createSoundFromSource('/sounds/jacinto/EarthDebrisSmallClose01.ogg'),

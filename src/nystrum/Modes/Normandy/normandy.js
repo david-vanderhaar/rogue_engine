@@ -17,6 +17,7 @@ import { SCREENS } from './Screen/constants';
 import { testLevelBuilder } from './MapBuilders/testLevel';
 import { beach } from './MapBuilders/beach';
 import { MortarStrike } from './Items/Weapons/MortarStrike';
+import { JACINTO_SOUND_MANAGER, JACINTO_SOUNDS } from '../Jacinto/sounds';
 
 export class Normandy extends Mode {
   constructor({ ...args }) {
@@ -50,6 +51,9 @@ export class Normandy extends Mode {
     this.setWaveData();
     this.data.levelBuilder(this)
     this.game.initializeMapTiles();
+    JACINTO_SOUND_MANAGER.stopAll();
+    JACINTO_SOUNDS.beach_wind_loop.play()
+    JACINTO_SOUNDS.distant_gunfight.play()
   }
 
   getPlayers () {
@@ -123,7 +127,7 @@ export class Normandy extends Mode {
     const maxInterval = 140;
     const minInterval = 20;
 
-    const minStrikes = 1;
+    const minStrikes = 5;
     const maxStrikes = 5;
     const minRadius = 8;
     const maxRadius = 20;
