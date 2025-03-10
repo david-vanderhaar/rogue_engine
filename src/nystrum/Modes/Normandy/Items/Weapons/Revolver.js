@@ -128,6 +128,36 @@ export const Karabiner = (engine, position = {x: 1, y: 1}) => new RangedWeapon({
   ]
 });
 
+export const MachineGun = (engine, position = {x: 1, y: 1}) => new RangedWeapon({
+  game: engine.game,
+  name: 'MG 42',
+  baseDescription: 'a German machine gun.',
+  passable: true,
+  lightPassable: true,
+  attackRange: 8,
+  magazineSize: 10,
+  baseRangedAccuracy: 0.4,
+  baseRangedDamage: 1,
+  attackDamage: 0,
+  pos: position,
+  shapePattern: Constant.CLONE_PATTERNS.triple_point,
+  equipmentType: Constant.EQUIPMENT_TYPES.HAND,
+  renderer: {
+    character: 'm',
+    color: COLORS.base3,
+    background: TALL_GRASS_COLORS.ebony,
+  },
+  rangedHitSounds: [
+    JACINTO_SOUNDS.mg_fire_01,
+    JACINTO_SOUNDS.mg_fire_02,
+  ],
+  rangedMissSounds: [
+    JACINTO_SOUNDS.bullet_miss_01,
+    JACINTO_SOUNDS.bullet_miss_02,
+    JACINTO_SOUNDS.bullet_miss_03,
+  ]
+});
+
 export const Shotgun = (engine, position = {x: 1, y: 1}) => new RangedWeapon({
   game: engine.game,
   name: 'shotgun',

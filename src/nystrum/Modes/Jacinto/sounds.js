@@ -40,6 +40,8 @@ export const JACINTO_SOUNDS = {
   win_band_00: createSoundFromSource('/sounds/normandy/win_band_00.mp3'),
   win_violin_00: createSoundFromSource('/sounds/normandy/win_violin.mp3'),
   m1_garand_fire_00: createSoundFromSource('/sounds/normandy/m1_garand_rifle_00.mp3'),
+  mg_fire_01: createSoundFromSource('/sounds/jacinto/weapons/LocustRifleFire01.ogg', {rate: 3}),
+  mg_fire_02: createSoundFromSource('/sounds/jacinto/weapons/LocustRifleFire03.ogg', {rate: 3}),
   hurt_00: createSoundFromSource('/sounds/normandy/male_hurt6.ogg'),
   hurt_01: createSoundFromSource('/sounds/normandy/male_hurt7.ogg'),
   hurt_02: createSoundFromSource('/sounds/normandy/male_hurt8.ogg'),

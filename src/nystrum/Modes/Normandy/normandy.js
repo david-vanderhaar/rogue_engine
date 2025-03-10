@@ -30,11 +30,11 @@ export class Normandy extends Mode {
       enemyCount: 0,
       allyCount: 0,
       lootCacheCount: 0,
-      lootCount: 20,
+      lootCount: 2
     };
     this.dataByLevel = [
       {
-        enemyCount: 1,
+        enemyCount: 3,
         allyCount: 1,
         unlocks: ['TheMedic'],
         levelBuilder: beach,
