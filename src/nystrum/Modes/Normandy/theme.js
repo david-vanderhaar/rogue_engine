@@ -107,6 +107,14 @@ const BEACH_TILE_KEY = {
     passable: true,
     tags: ['ALLY_SPAWN', 'LOOT'],
   },
+  'SAFE_TRENCH_GROUND': {
+    background: COLORS.sand_00,
+    foreground: COLORS.sand_0,
+    character: '',
+    sprite: '',
+    passable: true,
+    tags: ['ALLY_SPAWN', 'LOOT'],
+  },
   'GROUND_SAND': {
     background: COLORS.sand_2,
     foreground: COLORS.sand_1,
@@ -137,7 +145,7 @@ const BEACH_TILE_KEY = {
     character: '',
     sprite: '',
     passable: true,
-    tags: ['PROVIDING_COVER', 'BURNABLE'],
+    tags: ['PROVIDING_COVER', 'BURNABLE', 'ENEMY_SPAWN'],
   },
   'TRENCH_WALL': {
     background: COLORS.sand_0,

@@ -6,7 +6,7 @@ import { Foxhole } from '../Items/Environment/Foxhole';
 import * as Actors from '../Actors/Actors';
 import { Ammo } from '../../../Items/Pickups/Ammo';
 import { Knife } from '../Items/Weapons/Melee';
-import { Karabiner, Pistol, Revolver, Shotgun } from '../Items/Weapons/Revolver';
+import { Karabiner, MachineGun, Pistol, Revolver, Shotgun } from '../Items/Weapons/Revolver';
 import { Grenade } from '../Items/Weapons/Grenade';
 import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
 
@@ -19,21 +19,19 @@ export function beach(mode) {
   createEmptySand(mode);
   generateFoxholes(mode, 10);
   generateCoverBlocks(mode, 30);
-  generateShoreline(mode);
+  if (mode.data.isFirstLevel) generateShoreline(mode);
 
   const middleX = Math.floor(mode.game.mapWidth / 2);
-  // placeTrenches(mode, 6);
-  placeTrench(mode, {x: middleX, y: mode.game.mapHeight - 16}, 30);
+  placeTrenches(mode, 6);
+  // placeTrench(mode, {x: middleX, y: mode.game.mapHeight - 16}, 30);
   
-  addLootCaches(mode, mode.data.lootCacheCount) // Helper.getRandomIntInclusive(...mode.data.lootCachesPerLevel)
+  // addLootCaches(mode, mode.data.lootCacheCount) // Helper.getRandomIntInclusive(...mode.data.lootCachesPerLevel)
   addLoot(mode, mode.data.lootCount) // Helper.getRandomIntInclusive(...mode.data.lootPerLevel)
   
   placeEnemies(mode, mode.data.enemyCount);
   
-  createPlayerSafeZone(mode, { x: middleX, y: mode.game.mapHeight - 6 });
+  creatPlayerSafeZone(mode, { x: middleX, y: mode.game.mapHeight - 6 });
   mode.placePlayersInSafeZone();
-  createPlayerSafeZone(mode, { x: middleX - 5, y: mode.game.mapHeight - 7 });
-  createPlayerSafeZone(mode, { x: middleX + 5, y: mode.game.mapHeight - 9 });
   placeAllies(mode, mode.data.allyCount); 
 } // END
 
@@ -48,6 +46,36 @@ const LOOT_LIST = [
   Ammo,
   Ammo,
   Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
   Knife,
   Knife,
   Revolver,
@@ -64,7 +92,7 @@ const LOOT_LIST = [
   Grenade,
   SmokeGrenade,
   SmokeGrenade,
-  SmokeGrenade,
+  MachineGun,
 ]
 
 function addLootCaches(mode, amount) {
@@ -103,7 +131,7 @@ function placeTrenches(mode, count) {
   }
 }
 
-function placeTrench(mode, startPos, length) {
+function placeTrench(mode, startPos, length, trenchGroundType = 'TRENCH_GROUND') {
   // Create a narrow trench using IceyMaze algorithm
   // const trenchWidth = 7; // Width of the trench (height in ROT terms)
   const trenchWidth = 5; // Width of the trench (height in ROT terms)
@@ -127,7 +155,7 @@ function placeTrench(mode, startPos, length) {
     if (value === 1) {
       tileType = 'TRENCH_WALL';
     } else {
-      tileType = 'TRENCH_GROUND';
+      tileType = trenchGroundType;
     }
     
     // Update the map with the new tile
@@ -150,7 +178,7 @@ function placeTrench(mode, startPos, length) {
           map: mode.game.map, 
           key: `${mapX},${mapY}`, 
           tileKey: mode.game.tileKey, 
-          tileType: 'TRENCH_GROUND'
+          tileType: trenchGroundType
         });
       } else {
         generateCoverSingleBlock(mode, { x: mapX, y: mapY });
@@ -175,7 +203,23 @@ function placeAllies(mode, count = 1) {
   });
 }
 
-function createPlayerSafeZone(mode, position = { x: 14, y: mode.game.mapHeight - 7 }) {
+function creatPlayerSafeZone(mode, position = { x: 14, y: mode.game.mapHeight - 7 }) {
+  if (mode.data.isFirstLevel) {
+    createPlayerSafeZoneBoat(mode, position);
+    createPlayerSafeZoneBoat(mode, { x: position.x + 5, y: position.y - 2 });
+    createPlayerSafeZoneBoat(mode, { x: position.x - 5, y: position.y - 1 });
+    // creatPlayerSafeZone(mode, { x: middleX - 5, y: mode.game.mapHeight - 7 });
+    // creatPlayerSafeZone(mode, { x: middleX + 5, y: mode.game.mapHeight - 9 });
+  } else {
+    createPlayerSafeZoneTrench(mode, position);
+  }
+}
+
+function createPlayerSafeZoneTrench(mode, position = { x: 14, y: mode.game.mapHeight - 7 }) {
+  placeTrench(mode, position, 30, 'SAFE_TRENCH_GROUND');
+}
+
+function createPlayerSafeZoneBoat(mode, position = { x: 14, y: mode.game.mapHeight - 7 }) {
   const boatWidth = 4;
   const boatHeight = 3;
   

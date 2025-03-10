@@ -30,17 +30,29 @@ export class Normandy extends Mode {
       enemyCount: 0,
       allyCount: 0,
       lootCacheCount: 0,
-      lootCount: 2
+      lootCount: 10,
     };
     this.dataByLevel = [
       {
-        enemyCount: 3,
-        allyCount: 1,
-        unlocks: ['TheMedic'],
+        enemyCount: 0,
+        // enemyCount: 6,
+        allyCount: 4,
+        levelBuilder: beach,
+        isFirstLevel: true,
+        // unlocks: ['TheMedic'],
+      },
+      {
+        enemyCount: 6,
+        allyCount: 2,
         levelBuilder: beach,
       },
       {
-        enemyCount: 5,
+        enemyCount: 8,
+        allyCount: 2,
+        levelBuilder: beach,
+      },
+      {
+        enemyCount: 10,
         allyCount: 1,
         levelBuilder: beach,
       },
@@ -134,7 +146,7 @@ export class Normandy extends Mode {
     const maxInterval = 140;
     const minInterval = 20;
 
-    const minStrikes = 5;
+    const minStrikes = 1;
     const maxStrikes = 5;
     const minRadius = 8;
     const maxRadius = 20;
@@ -467,7 +479,7 @@ export class Normandy extends Mode {
 
   placePlayersInSafeZone () {
     let players = this.getPlayers()
-    const keys = Object.keys(this.game.map).filter((key) => this.game.map[key].type == 'SAFE');
+    const keys = Object.keys(this.game.map).filter((key) => this.game.map[key].type == 'SAFE' || this.game.map[key].type == 'SAFE_TRENCH_GROUND');
     players.forEach((player) => {
       const key = keys.shift();
       if (key) {

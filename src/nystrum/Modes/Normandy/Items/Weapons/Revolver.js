@@ -134,7 +134,7 @@ export const MachineGun = (engine, position = {x: 1, y: 1}) => new RangedWeapon(
   baseDescription: 'a German machine gun.',
   passable: true,
   lightPassable: true,
-  attackRange: 8,
+  attackRange: 6,
   magazineSize: 10,
   baseRangedAccuracy: 0.4,
   baseRangedDamage: 1,

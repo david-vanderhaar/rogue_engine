@@ -25,115 +25,115 @@ export function addRandomAlly (mode, pos) {
 }
 
 const AXIS_STATS = {
-  // rifleman: () => {
-  //   return {
-  //     name: 'Wermacht Rifleman',
-  //     baseDescription: 'a German soldier in field gray uniform, aiming carefully.',
-  //     renderer: {
-  //       character: 'W',
-  //       color: COLORS.white,
-  //       background: COLORS.blue_2,
-  //       sprite: 'W',
-  //     },
-  //     durability: 3,
-  //     attackDamage: 1,
-  //     behaviors: [
-  //       new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
-  //       new Behaviors.TelegraphRangedAttack({repeat: 1}),
-  //       new Behaviors.ExecuteRangedAttack({repeat: 2}),
-  //       new Behaviors.MoveTowardsEntityInRangeByAttr({
-  //         repeat: 3,
-  //         range: 5,
-  //         attribute: 'name',
-  //         attributeValue: 'trench wall',
-  //       }),
-  //       // new Behaviors.Wait({repeat: 3}),
-  //     ],
-  //     onDamageSounds: [
-  //       JACINTO_SOUNDS.hurt_04,
-  //       JACINTO_SOUNDS.hurt_05,
-  //       JACINTO_SOUNDS.hurt_06,
-  //     ],
-  //     onDestroySounds: [
-  //       JACINTO_SOUNDS.headshot_00,
-  //     ],
-  //     loadout: {
-  //       equipmentCreators: [Karabiner],
-  //       inventoryCreators: [{amount: 1000, creator: Ammo}]
-  //     },
-  //   }
-  // },
-  // crazed_rifleman: () => {
-  //   return {
-  //     name: 'Crazed Rifleman',
-  //     baseDescription: 'a German soldier, running madly with a knife.',
-  //     renderer: {
-  //       character: 'C',
-  //       color: COLORS.red_0,
-  //       background: COLORS.blue_2,
-  //       sprite: 'C',
-  //     },
-  //     durability: 3,
-  //     attackDamage: 1,
-  //     behaviors: [
-  //       new Behaviors.MoveTowardsEnemyInRange({repeat: 5, maintainDistanceOf: -1, range: 8, chainOnFail: true}),
-  //       new Behaviors.Telegraph({
-  //         repeat: 1,
-  //         attackPattern: Constant.CLONE_PATTERNS.clover,
-  //         chainOnSuccess: true
-  //       }),
-  //       new Behaviors.ExecuteAttack({repeat: 1}),
-  //       new Behaviors.MoveTowardsEntityInRangeByAttr({
-  //         repeat: 2,
-  //         range: 5,
-  //         attribute: 'name',
-  //         attributeValue: 'trench wall',
-  //       }),
-  //       // new Behaviors.Wait({repeat: 3}),
-  //     ],
-  //     onDamageSounds: [
-  //       JACINTO_SOUNDS.hurt_04,
-  //       JACINTO_SOUNDS.hurt_05,
-  //       JACINTO_SOUNDS.hurt_06,
-  //     ],
-  //     onDestroySounds: [
-  //       JACINTO_SOUNDS.headshot_00,
-  //     ],
-  //     loadout: {
-  //       equipmentCreators: [Knife],
-  //       inventoryCreators: [{amount: 1000, creator: Ammo}]
-  //     },
-  //   }
-  // },
-  // grenadier: () => {
-  //   return {
-  //     name: 'W. Grenadier',
-  //     baseDescription: 'a German soldier with tons of grenades.',
-  //     renderer: {
-  //       character: 'G',
-  //       color: COLORS.white,
-  //       background: COLORS.blue_2,
-  //       sprite: 'G',
-  //     },
-  //     durability: 1,
-  //     attackDamage: 1,
-  //     behaviors: [
-  //       new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
-  //       new Behaviors.TelegraphRangedAttackThroughCover({repeat: 1}),
-  //       new Behaviors.ExecuteRangedAttack({repeat: 1}),
-  //       new Behaviors.MoveTowardsEntityInRangeByAttr({
-  //         repeat: 3,
-  //         range: 5,
-  //         attribute: 'name',
-  //         attributeValue: 'trench wall',
-  //       }),
-  //     ],
-  //     loadout: {
-  //       equipmentCreators: [GrenadeThrower],
-  //       inventoryCreators: [{amount: 10, creator: ExplodingAmmo}]
-  //     },
-  //   }
-  // },
+  rifleman: () => {
+    return {
+      name: 'Wermacht Rifleman',
+      baseDescription: 'a German soldier in field gray uniform, aiming carefully.',
+      renderer: {
+        character: 'W',
+        color: COLORS.white,
+        background: COLORS.blue_2,
+        sprite: 'W',
+      },
+      durability: 3,
+      attackDamage: 1,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
+        new Behaviors.TelegraphRangedAttack({repeat: 1}),
+        new Behaviors.ExecuteRangedAttack({repeat: 2}),
+        new Behaviors.MoveTowardsEntityInRangeByAttr({
+          repeat: 3,
+          range: 5,
+          attribute: 'name',
+          attributeValue: 'trench wall',
+        }),
+        // new Behaviors.Wait({repeat: 3}),
+      ],
+      onDamageSounds: [
+        JACINTO_SOUNDS.hurt_04,
+        JACINTO_SOUNDS.hurt_05,
+        JACINTO_SOUNDS.hurt_06,
+      ],
+      onDestroySounds: [
+        JACINTO_SOUNDS.headshot_00,
+      ],
+      loadout: {
+        equipmentCreators: [Karabiner],
+        inventoryCreators: [{amount: 1000, creator: Ammo}]
+      },
+    }
+  },
+  crazed_rifleman: () => {
+    return {
+      name: 'Crazed Rifleman',
+      baseDescription: 'a German soldier, running madly with a knife.',
+      renderer: {
+        character: 'C',
+        color: COLORS.red_0,
+        background: COLORS.blue_2,
+        sprite: 'C',
+      },
+      durability: 3,
+      attackDamage: 1,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemyInRange({repeat: 5, maintainDistanceOf: -1, range: 8, chainOnFail: true}),
+        new Behaviors.Telegraph({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true
+        }),
+        new Behaviors.ExecuteAttack({repeat: 1}),
+        new Behaviors.MoveTowardsEntityInRangeByAttr({
+          repeat: 2,
+          range: 5,
+          attribute: 'name',
+          attributeValue: 'trench wall',
+        }),
+        // new Behaviors.Wait({repeat: 3}),
+      ],
+      onDamageSounds: [
+        JACINTO_SOUNDS.hurt_04,
+        JACINTO_SOUNDS.hurt_05,
+        JACINTO_SOUNDS.hurt_06,
+      ],
+      onDestroySounds: [
+        JACINTO_SOUNDS.headshot_00,
+      ],
+      loadout: {
+        equipmentCreators: [Knife],
+        inventoryCreators: [{amount: 1000, creator: Ammo}]
+      },
+    }
+  },
+  grenadier: () => {
+    return {
+      name: 'W. Grenadier',
+      baseDescription: 'a German soldier with tons of grenades.',
+      renderer: {
+        character: 'G',
+        color: COLORS.white,
+        background: COLORS.blue_2,
+        sprite: 'G',
+      },
+      durability: 1,
+      attackDamage: 1,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemyInRange({repeat: 2, maintainDistanceOf: 4, range: 5}),
+        new Behaviors.TelegraphRangedAttackThroughCover({repeat: 1}),
+        new Behaviors.ExecuteRangedAttack({repeat: 1}),
+        new Behaviors.MoveTowardsEntityInRangeByAttr({
+          repeat: 3,
+          range: 5,
+          attribute: 'name',
+          attributeValue: 'trench wall',
+        }),
+      ],
+      loadout: {
+        equipmentCreators: [GrenadeThrower],
+        inventoryCreators: [{amount: 10, creator: ExplodingAmmo}]
+      },
+    }
+  },
   machine_gunner: () => {
     return {
       name: 'Wermacht MG',
