@@ -22,7 +22,7 @@ export function beach(mode) {
   if (mode.data.isFirstLevel) generateShoreline(mode);
 
   const middleX = Math.floor(mode.game.mapWidth / 2);
-  placeTrenches(mode, 6);
+  placeTrenches(mode, 3);
   // placeTrench(mode, {x: middleX, y: mode.game.mapHeight - 16}, 30);
   
   // addLootCaches(mode, mode.data.lootCacheCount) // Helper.getRandomIntInclusive(...mode.data.lootCachesPerLevel)

@@ -55,7 +55,7 @@ function Title(props) {
   return (
     <div className="Title">
       <div className="Title__content">
-        <h3 style={{color: CARTRIDGE.theme.text, marginBottom: 6}}>Iron and Sand</h3>
+        <h3 style={{color: CARTRIDGE.theme.text, marginBottom: 6}}>Iron & Sand</h3>
         <p style={{color: CARTRIDGE.theme.text, marginBottom: 30}}>A Beach Landing, 1944</p>
         <div style={{width: '75%'}}>
           <HelpContent />

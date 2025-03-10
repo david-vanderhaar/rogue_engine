@@ -34,25 +34,24 @@ export class Normandy extends Mode {
     };
     this.dataByLevel = [
       {
-        enemyCount: 0,
-        // enemyCount: 6,
-        allyCount: 4,
+        enemyCount: 4,
+        allyCount: 2,
         levelBuilder: beach,
         isFirstLevel: true,
         // unlocks: ['TheMedic'],
       },
       {
-        enemyCount: 6,
+        enemyCount: 5,
+        allyCount: 2,
+        levelBuilder: beach,
+      },
+      {
+        enemyCount: 7,
         allyCount: 2,
         levelBuilder: beach,
       },
       {
         enemyCount: 8,
-        allyCount: 2,
-        levelBuilder: beach,
-      },
-      {
-        enemyCount: 10,
         allyCount: 1,
         levelBuilder: beach,
       },
@@ -143,13 +142,13 @@ export class Normandy extends Mode {
     const intensity = (Math.sin(normalizedPosition * Math.PI * 2) + 1) / 2;
     
     // Define constants for min/max values
-    const maxInterval = 140;
-    const minInterval = 20;
+    const maxInterval = 200;
+    const minInterval = 40;
 
     const minStrikes = 1;
-    const maxStrikes = 5;
+    const maxStrikes = 3;
     const minRadius = 8;
-    const maxRadius = 20;
+    const maxRadius = 16;
     
     // Base interval that changes with intensity
     const interval = Math.floor(minInterval + (maxInterval - minInterval) * (1 - intensity));

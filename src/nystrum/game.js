@@ -34,7 +34,7 @@ export let GAME = null
 
 const MAP_WIDTH = 35;
 // const MAP_WIDTH = 35*4;
-const MAP_HEIGHT = 26*4;
+const MAP_HEIGHT = 26*3;
 
 const CAMERA_WIDTH = 35;
 const CAMERA_HEIGHT = 26;
