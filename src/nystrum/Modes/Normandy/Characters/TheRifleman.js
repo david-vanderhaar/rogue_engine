@@ -133,7 +133,7 @@ function initialize(engine) {
         energyCost: Constant.ENERGY_THRESHOLD * 2,
         onSuccess: () => actor.setFear(0),
         effect: new TakeAim({
-          buffValue: 10,
+          buffValue: 0.2,
           game: engine.game,
           actor,
         }),
@@ -210,13 +210,13 @@ function initialize(engine) {
         game: engine.game,
         actor,
       }),
-      l: () => new PrepareLooking({
-        label: 'Look',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [],
-      }),
+      // l: () => new PrepareLooking({
+      //   label: 'Look',
+      //   game: engine.game,
+      //   actor,
+      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      //   passThroughRequiredResources: [],
+      // }),
       f: () => new PrepareRangedAttack({
         label: 'Fire Weapon',
         game: engine.game,
@@ -317,7 +317,7 @@ function initialize(engine) {
 
   // add default items to container
   const primary = Rifle(engine, actor.getPosition());
-  const ammo = Helper.duplicate(10, () => Ammo(engine))
+  const ammo = Helper.duplicate(20, () => Ammo(engine))
   const grenades = Array(2).fill('').map(() => Grenade(engine, actor.getPosition()));
   const smokes = Array(4).fill('').map(() => SmokeGrenade(engine, 2));
   actor.container = [

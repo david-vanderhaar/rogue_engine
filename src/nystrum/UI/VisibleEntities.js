@@ -81,7 +81,7 @@ const EntityIcon = ({renderer}) => {
       padding: 2,
       marginRight: 5,
     }}>
-      {renderer.sprite || renderer.character}
+      {renderer.character}
     </span>
   )
 }

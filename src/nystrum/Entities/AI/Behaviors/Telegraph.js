@@ -49,7 +49,7 @@ export default class Telegraph extends Behavior {
     return [
       Say,
       {
-        message: 'I am telegraphing my next attack',
+        message: '*gathers themself*',
         processDelay: 500,
       }
     ]

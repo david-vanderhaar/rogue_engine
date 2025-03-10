@@ -35,6 +35,19 @@ export const RangedAttacking = superclass => class extends superclass {
     this.afterFireSuccess = afterFireSuccess ? afterFireSuccess.bind(this) : this.defaultAfterFireSuccess.bind(this);
   }
 
+  getAmmoCount() {
+    return this.containsCount('Ammo')
+  }
+
+  getAmmoCountAvailable() {
+    // full ammo count minus ammo in magazines
+    let ammoCount = this.getAmmoCount();
+    this.getEquipedWeapons().forEach((weapon) => {
+      ammoCount -= weapon.magazine;
+    });
+    return ammoCount;
+  }
+
   getRangedAttackChance(targetPos = null) {
     const weaponAccuracy = this.getRangedWeaponAccuracy();
     const coverDebuff = targetPos ? this.getRangedAttackCoverDebuff(targetPos) : 0;

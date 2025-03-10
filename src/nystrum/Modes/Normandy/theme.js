@@ -99,6 +99,14 @@ export const COLORS = {
 COLORS.bg_override = COLORS.sand_00
 
 const BEACH_TILE_KEY = {
+  'SAFE': {
+    background: COLORS.black || COLORS.base1,
+    foreground: COLORS.base02,
+    character: '',
+    sprite: '',
+    passable: true,
+    tags: ['ALLY_SPAWN', 'LOOT'],
+  },
   'GROUND_SAND': {
     background: COLORS.sand_2,
     foreground: COLORS.sand_1,
@@ -145,7 +153,7 @@ const BEACH_TILE_KEY = {
     character: '',
     sprite: '',
     passable: true,
-    tags: ['PROVIDING_COVER', 'BURNABLE', 'ENEMY_SPAWN'],
+    tags: ['PROVIDING_COVER', 'BURNABLE', 'ENEMY_SPAWN', 'LOOT'],
   },
   'DEEP_WATER': {
     background: COLORS.blue_0,
@@ -293,14 +301,6 @@ export const TILE_KEY = {
     sprite: '',
     passable: true,
     tags: ['BURNABLE'],
-  },
-  'SAFE': {
-    background: COLORS.black || COLORS.base1,
-    foreground: COLORS.base02,
-    character: '',
-    sprite: '',
-    passable: true,
-    tags: ['ALLY_SPAWN'],
   },
   'LOCKED_EXIT': {
     background: COLORS.bg_override || COLORS.base04,

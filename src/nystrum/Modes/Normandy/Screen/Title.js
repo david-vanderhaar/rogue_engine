@@ -26,7 +26,6 @@ function setSelectedCharacter (props, character) {
 }
 
 function Title(props) {
-  console.log('Title', props);
   const unlocks = getUnlocks(props)
   
   function nextScreen () {

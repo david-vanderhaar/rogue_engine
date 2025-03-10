@@ -4,7 +4,7 @@ function Tooltip ({title = 'Effect', text = '', children}) {
   return (
     <div className="Tooltip">
       {children}
-      <div className="top">
+      <div className="bottom">
         <strong>{title}</strong>
         {
           text != '' && (

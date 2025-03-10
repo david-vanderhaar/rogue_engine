@@ -3,18 +3,20 @@ import {CoverWall, ThrowableSpawner, SmokeParticle} from '../../../../Entities/i
 import {COLORS} from '../../theme';
 import { JACINTO_SOUNDS } from '../../../../Modes/Jacinto/sounds';
 
-export const SmokeGrenade = (engine, range) => new ThrowableSpawner({
+const RANGE = 2;
+export const SmokeGrenade = (engine, position) => new ThrowableSpawner({
   game: engine.game,
   name: 'Smoke Grenade',
+  pos: position,
   passable: true,
   renderer: {
     character: 'o',
     sprite: '',
-    color: COLORS.red,
-    background: COLORS.base02,
+    color: COLORS.green_1,
+    background: COLORS.white,
   },
   attackDamage: 0,
-  speed: Constant.ENERGY_THRESHOLD * range,
+  speed: Constant.ENERGY_THRESHOLD * RANGE,
   energy: 0,
   spawnStructure: Constant.CLONE_PATTERNS.small_circle,
   spawnedEntityClass: SmokeParticle,
@@ -55,7 +57,7 @@ export const SmokeGrenade = (engine, range) => new ThrowableSpawner({
     accuracyModifer: -0.3,
     damageModifer: 0,
   },
-  range,
+  RANGE,
   onDestroy: (actor) => {
     JACINTO_SOUNDS.smoke_grenade_fire.play()
     actor.spawnEntities()

@@ -38,22 +38,11 @@ function Instructions(props) {
     <div
       style={{
         position: 'relative',
-        top: 701,
-        right: 198,
-        height: 'fit-content'
+        bottom: 70,
       }}
     >
       <div style={{width: 'max-content'}}>
         <Button onClick={restart}>Restart</Button>
-        {/* <Button onClick={props.toggleSpriteMode}>
-          {
-            props.spriteMode ? (
-              'Text mode'
-            ) : (
-              'Sprite mode'
-            )
-          }
-        </Button> */}
         <Button triggerModal="help-modal">
           Help (?)
         </Button>

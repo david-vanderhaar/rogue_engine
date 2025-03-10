@@ -27,10 +27,14 @@ export class Normandy extends Mode {
       level: 0,
       highestLevel: null,
       turnCount: 0,
+      enemyCount: 0,
+      allyCount: 0,
+      lootCacheCount: 0,
+      lootCount: 20,
     };
     this.dataByLevel = [
       {
-        enemyCount: 0,
+        enemyCount: 1,
         allyCount: 1,
         unlocks: ['TheMedic'],
         levelBuilder: beach,
@@ -61,7 +65,7 @@ export class Normandy extends Mode {
   }
 
   updateUI() {
-    this.updateUIPlayerStats();
+    // this.updateUIPlayerStats();
     this.updateUIEnemiesRemaining();
   }
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import HelpContent from './HelpContent';
 import { JACINTO_SOUND_MANAGER } from '../../Jacinto/sounds';
+import { GAME } from '../../../game';
 
 // let masterVolume = 10
 let masterVolume = JACINTO_SOUND_MANAGER.getVolume() * 100
@@ -10,6 +11,10 @@ function Help(props) {
   React.useLayoutEffect(() => {
     elems = document.querySelectorAll(`#${props.id}`);
     window.M.Modal.init(elems)
+    elems.forEach((elem) => {
+      const instance = window.M.Modal.getInstance(elem);
+      instance.options.onCloseEnd = GAME.refocus;
+    })
   })
 
   function triggerHelpModal() {

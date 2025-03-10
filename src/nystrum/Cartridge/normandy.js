@@ -19,9 +19,9 @@ export const normandyCart = () => {
       modes: { The_War: Modes.Normandy, },
       characters: {
         TheRifleman: TheRifleman(),
-        TheMedic: TheMedic(),
-        TheEngineer: TheEngineer(),
-        TheMachineGunner: TheMachineGunner(),
+        // TheMedic: TheMedic(),
+        // TheEngineer: TheEngineer(),
+        // TheMachineGunner: TheMachineGunner(),
       },
       theme: COLORS,
       screens: {

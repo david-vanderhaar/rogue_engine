@@ -17,7 +17,7 @@ function placeBerms(game, pos, size) {
       pos: point,
       passable: true,
       renderer: {
-        character: Helper.getRandomInArray(['', '', '~']),
+        character: Helper.getRandomInArray([' ', '', '~']),
         sprite: '',
         color: COLORS.sand_2,
         background: COLORS.sand_1,

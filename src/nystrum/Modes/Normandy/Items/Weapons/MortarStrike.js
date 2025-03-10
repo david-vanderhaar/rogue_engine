@@ -13,10 +13,10 @@ export const MortarStrike = (engine, pos, size = 2) => new ThrowableSpawner({
   lightPassable: true,
   pos: pos,
   renderer: {
-    character: 'o',
+    character: 'x',
     sprite: '',
-    color: COLORS.red,
-    background: COLORS.base02,
+    color: COLORS.red_0,
+    background: COLORS.red_1,
   },
   attackDamage: 0,
   speed: Constant.ENERGY_THRESHOLD,

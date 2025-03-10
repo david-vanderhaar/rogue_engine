@@ -33,7 +33,8 @@ export const SpawningWithStructure = superclass => class extends superclass {
         ...options,
         pos: {...position},
         game: this.game,
-        name: `${options.name} ${index}`,
+        // name: `${options.name} ${index}`,
+        name: options.name,
       })
     })
   }

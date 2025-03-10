@@ -32,7 +32,7 @@ export const CyclesBehaviors = superclass => class extends superclass {
 
   getDefaultAction() {
     return new Say({
-      message: '*whistles*',
+      message: null,
       game: this.game,
       actor: this,
       interrupt: true,

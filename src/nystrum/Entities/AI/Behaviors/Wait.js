@@ -13,7 +13,7 @@ export default class Wait extends Behavior {
   constructActionClassAndParams () {
     return [
       Say,
-      {message: '*breathes*'}
+      {message: null}
     ]
   }
 }

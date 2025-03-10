@@ -8,7 +8,9 @@ export class Say extends Base {
     this.processDelay = processDelay;
   }
   perform() {
-    this.game.addMessage(`${this.actor.name} says "${this.message}"`, this.messageType);
+    if (this.message) {
+      this.game.addMessage(`${this.actor.name} "${this.message}"`, this.messageType);
+    }
     return {
       success: true,
       alternative: null,

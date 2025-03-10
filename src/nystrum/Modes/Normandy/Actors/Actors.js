@@ -68,7 +68,7 @@ const ALLY_STATS = {
   rifleman: () => {
     const distanceFromPlayer = Helper.getRandomInt(2, 4);
     return {
-      name: 'Rifleman',
+      name: 'U.S. Rifleman',
       baseDescription: 'an American soldier in olive drab uniform, running forward.',
       renderer: {
         character: 'a',

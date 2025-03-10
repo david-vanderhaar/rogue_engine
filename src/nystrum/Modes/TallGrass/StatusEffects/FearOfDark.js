@@ -5,7 +5,7 @@ export class FearOfDark extends Base {
   constructor({...args}) {
     super({ ...args });
     this.name = 'fear of the dark';
-    this.description = "your hands cramp and shake, you can't hold steady. you\'re losing you\'re mind. where is the light?"
+    this.description = "your hands cramp and shake, you can't hold steady."
     this.allowDuplicates = false
     this.processOnlyOnActorTurn = true
     this.lifespan = -1

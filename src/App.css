@@ -5,7 +5,8 @@
   --color-secondary: #ec9c5d;
   --color-accent: #f9d091;
   --color-text: #f9d091;
-  --overflow: visible;
+  /* --overflow: visible; */
+  --overflow: hidden;
   --font-main: 'player-start-2p'
 }
 
@@ -168,6 +169,51 @@ html {
     background-color:#EEEEEE;
     box-shadow:0 1px 8px rgba(0,0,0,0.5);
 }
+
+
+.Tooltip .bottom {
+  min-width:200px; 
+  bottom:-20px;
+  left:50%;
+  transform:translate(0%, 100%);
+  padding:10px 20px;
+  color:#444444;
+  background-color:#EEEEEE;
+  font-weight:normal;
+  font-size:13px;
+  border-radius:8px;
+  position:absolute;
+  z-index:99999999;
+  box-sizing:border-box;
+  box-shadow:0 1px 8px rgba(0,0,0,0.5);
+  display:none;
+}
+
+.Tooltip:hover .bottom {
+  display:block;
+}
+
+.Tooltip .bottom i {
+  position:absolute;
+  top:100%;
+  left:50%;
+  margin-left:-12px;
+  width:24px;
+  height:12px;
+  overflow:hidden;
+}
+
+.Tooltip .bottom i::after {
+  content:'';
+  position:absolute;
+  width:12px;
+  height:12px;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(45deg);
+  background-color:#EEEEEE;
+  box-shadow:0 1px 8px rgba(0,0,0,0.5);
+}
+
 
 .CharacterCard_Container {
   display: flex;

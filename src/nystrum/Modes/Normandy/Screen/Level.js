@@ -4,7 +4,7 @@ import * as Engine from '../../../Engine/engine';
 import * as Game from '../../../game';
 import Instructions from '../UI/Instructions';
 import PlayerInformation from '../UI/Entity/PlayerInformation';
-import Messages from '../../../UI/Messages';
+import Messages from '../UI/Messages';
 import InfoBlocks from '../UI/InfoBlocks';
 import Equipment from '../UI/Entity/Equipment';
 import { Portrait, StatusEffects } from '../UI/Entity/CharacterCard';
@@ -76,9 +76,9 @@ class Level extends React.Component {
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
               <InfoBlocks game={this.state.game} />
             </div>
-            {/* <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -52, height: 92, position: 'relative'}}>
+            <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.main, top: -52, height: 92, position: 'relative'}}>
               <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntitiesInFov()} showDescription={false} />
-            </div> */}
+            </div>
           </div>
           <div style={{flex: 2, padding: 12, paddingLeft: 28, }}>
             <div className="NamePlate" style={{textAlign: 'left'}}>
@@ -106,13 +106,13 @@ class Level extends React.Component {
               <Messages messages={this.state.game.messages.slice(-20).reverse()} />
             </div>
           </div>
-          <Instructions 
-            game={this.state.game}
-            spriteMode={this.state.game.spriteMode}
-            setActiveScreen={this.props.setActiveScreen}
-            toggleSpriteMode={this.toggleSpriteMode.bind(this)}
-          />
         </div>
+        <Instructions 
+          game={this.state.game}
+          spriteMode={this.state.game.spriteMode}
+          setActiveScreen={this.props.setActiveScreen}
+          toggleSpriteMode={this.toggleSpriteMode.bind(this)}
+        />
       </div>
     );
   }

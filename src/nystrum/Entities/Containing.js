@@ -34,6 +34,11 @@ export const Containing = superclass => class extends superclass {
     });
     this.container.push(slot);
   }
+  containsCount(itemType) {
+    let container = this.container;
+    let slots = container.filter((slot) => slot.itemType === itemType);
+    return slots.length > 0 ? slots.flatMap((slot) => slot.items).length : 0;
+  }
   contains(itemType) {
     let container = this.container;
     let slots = container.filter((slot) => slot.itemType === itemType);

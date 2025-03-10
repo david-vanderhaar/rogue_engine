@@ -1,6 +1,6 @@
-import { COLORS } from '../../../Jacinto/theme';
 import * as Constant from '../../../../constants';
 import {Grenade as GrenadeEntity} from '../../../../Entities/index';
+import { COLORS } from '../../theme';
 
 export const Grenade = (engine, position) => new GrenadeEntity({
   game: engine.game,
@@ -9,10 +9,10 @@ export const Grenade = (engine, position) => new GrenadeEntity({
   lightPassable: true,
   pos: position,
   renderer: {
-    character: 'x',
+    character: 'o',
     sprite: '',
-    color: COLORS.red,
-    background: COLORS.base02,
+    color: COLORS.green_3,
+    background: COLORS.green_1,
   },
   flammability: 0,
   explosivity: 2,

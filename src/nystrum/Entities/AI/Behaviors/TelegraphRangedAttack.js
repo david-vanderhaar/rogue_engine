@@ -66,7 +66,7 @@ export default class TelegraphRangedAttack extends MoveTowardsEnemy {
     return [
       Say,
       {
-        message: 'I am telegraphing my next attack',
+        message: '*breaths*',
         processDelay: 500,
       }
     ]

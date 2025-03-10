@@ -4,6 +4,11 @@ import * as MapHelper from '../../../Maps/helper';
 import * as CoverGenerator from '../../../Maps/coverGenerator';
 import { Foxhole } from '../Items/Environment/Foxhole';
 import * as Actors from '../Actors/Actors';
+import { Ammo } from '../../../Items/Pickups/Ammo';
+import { Knife } from '../Items/Weapons/Melee';
+import { Karabiner, Pistol, Revolver, Shotgun } from '../Items/Weapons/Revolver';
+import { Grenade } from '../Items/Weapons/Grenade';
+import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
 
 // import * as Constant from '../../../constants';
 // import * as Item from '../../../items';
@@ -19,7 +24,11 @@ export function beach(mode) {
   const middleX = Math.floor(mode.game.mapWidth / 2);
   // placeTrenches(mode, 6);
   placeTrench(mode, {x: middleX, y: mode.game.mapHeight - 16}, 30);
-  placeEnemies(mode, mode.data.enemyCount); 
+  
+  addLootCaches(mode, mode.data.lootCacheCount) // Helper.getRandomIntInclusive(...mode.data.lootCachesPerLevel)
+  addLoot(mode, mode.data.lootCount) // Helper.getRandomIntInclusive(...mode.data.lootPerLevel)
+  
+  placeEnemies(mode, mode.data.enemyCount);
   
   createPlayerSafeZone(mode, { x: middleX, y: mode.game.mapHeight - 6 });
   mode.placePlayersInSafeZone();
@@ -27,6 +36,55 @@ export function beach(mode) {
   createPlayerSafeZone(mode, { x: middleX + 5, y: mode.game.mapHeight - 9 });
   placeAllies(mode, mode.data.allyCount); 
 } // END
+
+const LOOT_LIST = [
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Ammo,
+  Knife,
+  Knife,
+  Revolver,
+  Revolver,
+  Karabiner,
+  Karabiner,
+  Karabiner,
+  Karabiner,
+  Pistol,
+  Pistol,
+  Shotgun,
+  Shotgun,
+  Grenade,
+  Grenade,
+  SmokeGrenade,
+  SmokeGrenade,
+  SmokeGrenade,
+]
+
+function addLootCaches(mode, amount) {
+  return
+}
+
+function addLoot(mode, amount = 1) {
+  const points = MapHelper.getEmptyTileCoordsByTags(['LOOT'], mode.game.map)
+  Helper.range(amount).forEach(() => {
+    const itemCreator = Helper.getRandomInArray(LOOT_LIST)
+    const randomSelection = Helper.getRandomInArray(points)
+    placeLootItem(mode, randomSelection, itemCreator)
+  })
+}
+
+function placeLootItem(mode, position, itemCreator = Ammo) {
+  const item = itemCreator(mode.game.engine)
+  item.setPosition(position)
+  mode.game.placeActorOnMap(item)
+}
 
 function placeTrenches(mode, count) {
   // tiles in top half of map
