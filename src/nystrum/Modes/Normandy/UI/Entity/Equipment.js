@@ -117,6 +117,43 @@ const SimpleEquipmentCard = ({game, player, data}) => {
   )
 }
 
+const AmmoBlock = ({ammoCount}) => {
+  if (!!!ammoCount || ammoCount <= 0) return (
+    <div style={{flex: 1}}>
+      <span className="EquipmentCard__item__label__amount">
+        no ammo&nbsp;
+      </span>
+      <div>
+        <span style={{color: '#6d7886'}}>
+          (find ammo)
+        </span>
+      </div>
+    </div>
+  );
+  return (
+    <div style={{flex: 1}}>
+      <span className="EquipmentCard__item__label__amount">
+        ammo&nbsp;
+      </span>
+      <div>
+        {
+          [...Array(ammoCount).fill('')].reduce((acc, pip, index) => {
+            if (index % 5 === 0) acc.push([]);
+            acc[acc.length - 1].push(pip);
+            return acc;
+          }, [])
+          .sort((a, b) => a.length - b.length) // Sort arrays by length
+          .map((group, index) => (
+            <div key={index}>
+              {group.join(' ')}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  )
+}
+
 class Equipment extends React.Component {
   render() {
     if (!this.props.player) return null;
@@ -176,26 +213,7 @@ class Equipment extends React.Component {
                 })
               }
             </div>
-            <div style={{flex: 1}}>
-              <span className="EquipmentCard__item__label__amount">
-                ammo&nbsp;
-              </span>
-              <div>
-                {
-                  [...Array(ammoCount).fill('')].reduce((acc, pip, index) => {
-                    if (index % 5 === 0) acc.push([]);
-                    acc[acc.length - 1].push(pip);
-                    return acc;
-                  }, [])
-                  .sort((a, b) => a.length - b.length) // Sort arrays by length
-                  .map((group, index) => (
-                    <div key={index}>
-                      {group.join(' ')}
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
+              <AmmoBlock ammoCount={ammoCount} />
           </div>
         }
       </div>

@@ -175,13 +175,20 @@ export const RangedAttacking = superclass => class extends superclass {
 
   reload () {
     let reloaded = false;
+    let ammoCount =  this.containsCount('Ammo');
+    if (ammoCount <= 0) {
+      return false;
+    }
+
     if (this.entityTypes.includes('CONTAINING')) {
       this.getEquipedWeapons().forEach((weapon) => {
-        const amount = weapon.magazineSize - weapon.magazine;
+        const amount = weapon.magazineSize - weapon.magazine
         for (let i = 0; i < amount; i++) {
-          let ammo = this.contains('Ammo');
-          if (ammo) {
+          // let ammo = this.contains('Ammo');
+          // if (ammo) {
+          if (ammoCount > 0) {
             weapon.magazine += 1;
+            ammoCount -= 1;
             reloaded = true;
           }
         }
