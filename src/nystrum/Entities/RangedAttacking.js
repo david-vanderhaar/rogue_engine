@@ -261,8 +261,8 @@ export const RangedAttacking = superclass => class extends superclass {
       game: this.game,
       fromPosition: this.getPosition(),
       targetPositions: hits,
-      backgroundColorGradient: [THEMES.SOLARIZED.green, THEMES.SOLARIZED.cyan],
-      colorGradient: [THEMES.SOLARIZED.base3, THEMES.SOLARIZED.base3],
+      backgroundColorGradient: [THEMES.SOLARIZED.base3, THEMES.SOLARIZED.base1],
+      colorGradient: [THEMES.SOLARIZED.base1, THEMES.SOLARIZED.base1],
     })
 
     misses.forEach((targetPos) => {

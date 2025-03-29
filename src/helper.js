@@ -2,8 +2,9 @@ import * as ROT from 'rot-js';
 
 export const delay = (timeDelayed = 100) => {
   // return;
-  if (timeDelayed <= 0) return;
-  return new Promise(resolve => setTimeout(resolve, timeDelayed));
+  return new Promise(resolve => setTimeout(resolve, 5));
+  // if (timeDelayed <= 0) return;
+  // return new Promise(resolve => setTimeout(resolve, timeDelayed));
 }
 
 export const range = (number) => [...Array(number).keys()]
