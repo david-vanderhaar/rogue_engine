@@ -769,3 +769,81 @@ f9d091var(--color-secondary) */
     color: var(--color-main);
   }
 }
+
+
+/* HIDDEN LEAF TITLE ANIMATIONS */
+.Title__heading {
+  animation: glideFadeIn 1.5s ease-out forwards;
+  transform: translateY(-50px);
+  opacity: 0;
+  /* border text thick */
+  /* -webkit-text-stroke: 2px var(--color-main); */
+  text-shadow: 
+    6px 6px 0 var(--color-main),
+    -6px -6px 0 var(--color-main),
+    6px -6px 0 var(--color-main),
+    -6px 6px 0 var(--color-main);
+}
+
+.Title__character {
+  position: absolute;
+  opacity: 0;
+  animation: fadeInSlide 1.5s ease-out forwards;
+  z-index: 2;
+}
+
+.Title__character--left {
+  animation-delay: 0.5s;
+}
+
+.Title__character--right {
+  animation-delay: 0.7s;
+}
+
+.Title__button {
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 1s;
+}
+
+.Title__hint {
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 1.5s;
+}
+
+.fadeIn__image {
+  position: absolute;
+  opacity: 0;
+  animation: fadeIn-partial 1s ease-out forwards;
+  animation-delay: 0.9s;
+}
+
+@keyframes glideFadeIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInSlide {
+  to {
+    transform: translateX(0);
+    /* opacity: 0.8; */
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn-partial {
+  to {
+    opacity: 0.6;
+  }
+}

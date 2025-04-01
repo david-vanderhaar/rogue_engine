@@ -24,12 +24,13 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
   // allow number key events and arrow keys to select character
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (event.key === 'ArrowLeft') {
+      // left arrow or "a" key
+      if (event.key === 'ArrowLeft' || event.key === 'a') {
         setSelected((prev) => {
           const newIndex = prev > 0 ? prev - 1 : characters.length - 1;
           return newIndex;
         });
-      } else if (event.key === 'ArrowRight') {
+      } else if (event.key === 'ArrowRight'|| event.key === 'd') {
         setSelected((prev) => {
           const newIndex = prev < characters.length - 1 ? prev + 1 : 0;
           return newIndex;
