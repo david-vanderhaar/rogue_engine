@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
+import { SOUNDS } from '../sounds'
 import { CARTRIDGE } from '../../../Nystrum';
 import { SCREENS } from '../../../Screen/constants';
 
 function Title(props) {
   function nextScreen () {
     props.setActiveScreen(SCREENS.CHARACTER_SELECT)
+  }
+
+  // Function to play button sound
+  const playButtonSound = () => {
+    SOUNDS.wood_button.play();
   }
 
   useEffect(() => {
@@ -22,19 +28,19 @@ function Title(props) {
   }, []);
 
   return (
-    <div className="Title" style={{height: 720}}>
-      <div className="Title__content" style={{height: 720}}>
+    <div className="Title" style={{height: 720, width: 1280, position: 'relative', overflow: 'visible'}}>
+      <div className="Title__content" style={{height: '100%', width: '100%', position: 'relative', overflow: 'visible', maxHeight: 720, maxWidth: 1280}}>
         <h2 className="Title__heading" style={{color: CARTRIDGE.theme.accent, zIndex: 100}}>The Chunin Exams</h2>
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/rock_lee.png'}
           alt="Rock Lee"
-          style={{left: 156, top: 136}}
+          style={{left: -130, top: 30}}
           className="Title__character Title__character--left"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/gaara.png'}
           alt="Gaara"
-          style={{right: 196, bottom: 192}}
+          style={{right: -134, bottom: 40}}
           className="Title__character Title__character--right"
         />
         <img
@@ -70,24 +76,24 @@ function Title(props) {
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_5.png'}
           alt="Exclaim 5"
-          style={{right: 210, top: 224}}
+          style={{right: 266, bottom: 62}}
           className="fadeIn__image"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_5.png'}
           alt="Exclaim 5"
-          style={{right: 574, bottom: 190}}
+          style={{left: 400, top: 144}}
           className="fadeIn__image"
         />
         <button
           className="btn btn-main btn-themed Title__button"
           onClick={() => {
             props.setActiveScreen(SCREENS.CHARACTER_SELECT)
+            playButtonSound()
           }}
         >
           New Game
         </button>
-        <br/>
         <span className="Title__hint">press enter to start</span>
       </div>
     </div>
