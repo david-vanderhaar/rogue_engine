@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 
 const createSoundFromSource = (relativePath, howlerOptions = {}) => {
   return new Howl({
@@ -10,15 +10,18 @@ const createSoundFromSource = (relativePath, howlerOptions = {}) => {
 }
 
 export const SOUND_MANAGER = {
+  master_track_fade_time: 3000, // in milliseconds
+  setMasterVolume: (volume) => Howler.volume(volume),
   setVolume: (volume) => {
     Object.entries(SOUNDS).forEach(([key, sound]) => {
       sound.volume(volume)
     })
-  }
+  },
 }
 
 export const SOUNDS = {
   wood_button: createSoundFromSource('/sounds/hidden_leaf/wood_block.mp3'),
+  theme: createSoundFromSource('/sounds/hidden_leaf/title_theme.mp3', {loop: true}),
   ambient_howling: createSoundFromSource('/sounds/tall_grass/ambient_loop_howls.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   wind_loop: createSoundFromSource('/sounds/tall_grass/wind_loop.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   sac_01: createSoundFromSource('/sounds/tall_grass/monster/sac_01.ogg'),
