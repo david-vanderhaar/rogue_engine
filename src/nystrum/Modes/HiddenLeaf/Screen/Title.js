@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { SOUNDS, SOUND_MANAGER } from '../sounds'
+import { SOUNDS } from '../sounds'
 import { CARTRIDGE } from '../../../Nystrum';
 import { SCREENS } from '../../../Screen/constants';
+import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 
 function Title(props) {
   function nextScreen () {
@@ -12,7 +13,7 @@ function Title(props) {
   const playButtonSound = () => {
     SOUNDS.wood_button.play();
   }
-
+  useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
@@ -22,13 +23,9 @@ function Title(props) {
     // Add event listener when the component mounts
     window.addEventListener('keydown', handleKeyPress);
 
-    SOUNDS.theme.play()
-    SOUNDS.theme.fade(0, 0.6, SOUND_MANAGER.master_track_fade_time) 
     // Clean up by removing the event listener when the component unmounts
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
-      // SOUNDS.theme.stop();
-      SOUNDS.theme.fade(0.6, 0, SOUND_MANAGER.master_track_fade_time);
     };
   }, []);
 

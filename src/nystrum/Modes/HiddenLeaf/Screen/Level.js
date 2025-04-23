@@ -11,6 +11,16 @@ import { ImagePortrait } from '../UI/Entity/CharacterCard';
 import { NamePlate } from '../../../UI/Entity/CharacterCard';
 import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntities';
 import { COLORS } from '../theme';
+import {SOUNDS, SOUND_MANAGER} from '.././sounds'
+
+function fadeThemeIn() {
+  SOUNDS.battle_theme_0.play()
+  SOUNDS.battle_theme_0.fade(0, 0.2, SOUND_MANAGER.master_track_fade_time) 
+}
+
+function fadeThemeOut() {
+  SOUNDS.battle_theme_0.fade(0.2, 0, SOUND_MANAGER.master_track_fade_time / 4); 
+}
 
 class Level extends React.Component {
   constructor(props) {
@@ -30,7 +40,12 @@ class Level extends React.Component {
     this.presserRef = React.createRef();
   }
 
+  async componentWillUnmount() {
+    fadeThemeOut()
+  }
+
   async componentDidMount() {
+    fadeThemeIn()
     this.state.game.initialize(this.presserRef, document)
     this.state.game['setActiveScreen'] = (activeScreen) => this.props.setActiveScreen(activeScreen)
     this.state.game['backToTitle'] = () => this.props.setActiveScreen(SCREENS.TITLE);

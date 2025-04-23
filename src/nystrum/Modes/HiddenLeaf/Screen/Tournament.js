@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
+import { SOUNDS } from '../sounds'
+import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
 
 function getTournament (props) {
@@ -25,6 +27,7 @@ function shuffle(array) {
 export default function Tournament(props) {
   const tournament = getTournament(props)
 
+  useEffect(fadeMusicInOut(SOUNDS.tournament_theme), [])
   useEffect(() => {
     // set the meta data in a global state
     props.meta({tournament})
