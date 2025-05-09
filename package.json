@@ -66,8 +66,8 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
-    "electron": "^18.2.0",
-    "electron-builder": "^22.6.0",
+    "electron": "^22.0.2",
+    "electron-builder": "^23.6.0",
     "electron-is-dev": "^1.2.0",
     "gh-pages": "^2.1.1",
     "react-addons-css-transition-group": "^15.6.2",
