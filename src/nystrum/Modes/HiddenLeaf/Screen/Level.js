@@ -13,13 +13,21 @@ import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntit
 import { COLORS } from '../theme';
 import {SOUNDS, SOUND_MANAGER} from '.././sounds'
 
+function fadeSoundIn(sound, volume = 0.2) {
+  sound.play()
+  sound.fade(0, volume, SOUND_MANAGER.master_track_fade_time) 
+}
+
+function fadeSoundOut(sound, volume = 0.2) {
+  sound.fade(volume, 0, SOUND_MANAGER.master_track_fade_time / 4); 
+}
+
 function fadeThemeIn() {
-  SOUNDS.battle_theme_0.play()
-  SOUNDS.battle_theme_0.fade(0, 0.2, SOUND_MANAGER.master_track_fade_time) 
+  fadeSoundIn(SOUNDS.battle_theme_0)
 }
 
 function fadeThemeOut() {
-  SOUNDS.battle_theme_0.fade(0.2, 0, SOUND_MANAGER.master_track_fade_time / 4); 
+  fadeSoundOut(SOUNDS.battle_theme_0)
 }
 
 class Level extends React.Component {
@@ -54,6 +62,14 @@ class Level extends React.Component {
     };
     this.state.game['toWin'] = () => {
       this.props.setActiveScreen(SCREENS.WIN)
+    };
+    this.state.game['onLose'] = () => {
+      fadeThemeOut()
+      fadeSoundIn(SOUNDS.lose_theme)
+    };
+    this.state.game['onWin'] = () => {
+      fadeThemeOut()
+      fadeSoundIn(SOUNDS.win_theme)
     };
     this.state.game['refocus'] = () => this.refocus();
     this.state.game.updateReact = (newGameState) => { this.setState({game: newGameState}) }

@@ -25,6 +25,8 @@ export const SOUNDS = {
   character_select_theme: createSoundFromSource('/sounds/hidden_leaf/character_select_theme.mp3', {loop: true}),
   tournament_theme: createSoundFromSource('/sounds/hidden_leaf/tournament_theme.mp3', {loop: true}),
   battle_theme_0: createSoundFromSource('/sounds/hidden_leaf/battle_theme_0.mp3', {loop: true}),
+  win_theme: createSoundFromSource('/sounds/hidden_leaf/win_theme.mp3'),
+  lose_theme: createSoundFromSource('/sounds/hidden_leaf/lose_theme.mp3'),
   ambient_howling: createSoundFromSource('/sounds/tall_grass/ambient_loop_howls.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   wind_loop: createSoundFromSource('/sounds/tall_grass/wind_loop.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   sac_01: createSoundFromSource('/sounds/tall_grass/monster/sac_01.ogg'),

@@ -180,10 +180,10 @@ export class Chunin extends Mode {
 
   onLose() {
     if (!this.data['hasLost']) {
-      // SOUNDS.lose.play();
       // this.game.toLose();
       // this.reset();
       // this.game.initializeGameData();
+      this.game.onLose();
       this.createOrUpdateInfoBlock('hasLost', {text: `${this.meta().tournament.player.name} is down! Good luck next year.`})
       this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to Play Again'})
       this.addOnEnterListener();
@@ -194,6 +194,7 @@ export class Chunin extends Mode {
   onWin() {
     // this.game.toWin()
     if (!this.data['hasWon']) {
+      this.game.onWin();
       this.addFireWorks();
       this.createOrUpdateInfoBlock('hasWon', {text: `${this.game.getFirstPlayer().name} has won the Chunin Tournament!`})
       this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to Play Again'})
