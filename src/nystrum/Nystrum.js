@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { SCREENS } from './Screen/constants';
-import Screens from './Screen/index';
 import Cartridges from './Cartridge/index'
+import SplashScreen from './Screen/Splash';
 
 // export const CARTRIDGE = Cartridges.defaultCart()
 // export const CARTRIDGE = Cartridges.somethingInTheTallGrassCart()
@@ -11,6 +10,11 @@ import Cartridges from './Cartridge/index'
 // export const CARTRIDGE = Cartridges.toTheWallsCart()
 // export const CARTRIDGE = Cartridges.flumeCart()
 export const CARTRIDGE = Cartridges.hiddenLeafCart()
+
+// insert common splash screen for all carts
+CARTRIDGE.screens['Splash'] = {component: SplashScreen}
+
+console.log(CARTRIDGE);
 
 
 class Nystrum extends React.Component {
@@ -34,7 +38,8 @@ class Nystrum extends React.Component {
     });
 
     this.state = {
-      activeScreen: Object.keys(CARTRIDGE.screens)[0],
+      activeScreen: 'Splash',
+      // activeScreen: Object.keys(CARTRIDGE.screens)[0],
       characters,
       modes,
       selectedCharacter: null,
