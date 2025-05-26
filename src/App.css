@@ -861,6 +861,13 @@ f9d091var(--color-secondary) */
   animation-delay: 0.9s;
 }
 
+.Splash--logo {
+  position: absolute;
+  opacity: 0;
+  animation-delay: 3.2s;
+  animation: fadeInUp 1s ease-out forwards
+}
+
 @keyframes glideFadeIn {
   to {
     transform: translateY(0);
@@ -878,6 +885,15 @@ f9d091var(--color-secondary) */
 
 @keyframes fadeIn {
   to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    top: 500px
+  }
+  100% {
     opacity: 1;
   }
 }

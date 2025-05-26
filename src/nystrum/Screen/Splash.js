@@ -1,9 +1,17 @@
 import React, { useEffect } from 'react';
 import { CARTRIDGE } from '../Nystrum';
 import { SCREENS } from './constants';
+import { SOUNDS } from '../Modes/HiddenLeaf/sounds';
+import { delay } from '../../helper';
 
 export default function Splash(props) {
-  function nextScreen () {
+  function playButtonSound () {
+    SOUNDS.lose_theme.play();
+  }
+
+  async function nextScreen () {
+    playButtonSound()
+    await delay(2500)
     props.setActiveScreen(SCREENS.TITLE)
   }
 
@@ -21,10 +29,10 @@ export default function Splash(props) {
     <div className="Title" style={{height: 720, width: 1280, backgroundColor: 'var(--color-console-background)'}}>
       <div className="Title__content">
         <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_0.png'}
-          alt="Exclaim 0"
-          style={{left: 446, top: 96}}
-          className="fadeIn__image"
+          src={window.PUBLIC_URL + '/mean_mug_logo.png'}
+          alt="mean mug logo"
+          style={{top: 96}}
+          className="Splash--logo"
         />
         <div
           className='btn btn-main btn-themed-outline Splash__button'
