@@ -21,7 +21,7 @@ const keymapFlyingLotus = (engine, initiatedBy, previousKeymap) => {
   const additionalAttackDamage = stepCount;
   const goToPreviousKeymap = () => initiatedBy.keymap = previousKeymap;
   return {
-    Escape: {
+    Backspace: {
       activate: goToPreviousKeymap,
       label: 'Close',
     },

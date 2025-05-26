@@ -18,7 +18,7 @@ export class OpenAvailableStatusEffects extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
     };
 
     this.actor.getAvailableStatusEffects().forEach((effectClass, index) => {

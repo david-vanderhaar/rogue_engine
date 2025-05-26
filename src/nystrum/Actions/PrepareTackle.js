@@ -44,7 +44,7 @@ export class PrepareTackle extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       'w,ArrowUp': () => { 
         return new Tackle({

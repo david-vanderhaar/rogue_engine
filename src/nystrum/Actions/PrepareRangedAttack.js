@@ -156,7 +156,7 @@ export class PrepareRangedAttack extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       e: () => { 
         return new MoveRangedAttackCursor({

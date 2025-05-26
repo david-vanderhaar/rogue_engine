@@ -70,7 +70,7 @@ export class PrepareDirectionalAction extends Base {
     });
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       'w,ArrowUp': () => new this.actionClass(actionParams(DIRECTIONS.N, 'N')),
       'd,ArrowRight': () => new this.actionClass(actionParams(DIRECTIONS.E, 'E')),
       's,ArrowDown': () => new this.actionClass(actionParams(DIRECTIONS.S, 'S')),

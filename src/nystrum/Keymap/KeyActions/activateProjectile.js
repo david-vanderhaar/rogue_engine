@@ -34,7 +34,7 @@ const keymap = (engine, initiatedBy, previousKeymap, radius) => {
     
   };
   return {
-    Escape: {
+    Backspace: {
       activate: goToPreviousKeymap,
       label: 'Close',
     },

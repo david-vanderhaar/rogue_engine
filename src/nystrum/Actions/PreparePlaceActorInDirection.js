@@ -57,7 +57,7 @@ export class PreparePlaceActorInDirection extends Base {
     const entity = new this.actorClass({game: this.game, ...this.actorParameters})
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       'w,ArrowUp': () => { 
         return new PlaceActor({

@@ -20,7 +20,7 @@ export class OpenDropInventory extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
     };
 
     this.actor.container.filter((containerSlot) => !containerSlot.hidden).forEach((slot, index) => {

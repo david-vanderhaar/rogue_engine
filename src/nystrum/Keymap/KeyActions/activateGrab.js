@@ -29,7 +29,7 @@ const keymapCursorToGrabEntity = (engine, initiatedBy, initialKeymap, animations
     // end
   }
   return {
-    Escape: {
+    Backspace: {
       activate: goToPreviousKeymap,
       label: 'Cancel Grab',
     },

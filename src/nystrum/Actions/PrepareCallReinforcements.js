@@ -38,7 +38,7 @@ export class PrepareCallReinforcements extends Base {
     const podEntity = Cogs.createCogPod(this.game.mode, this.getReinforcementCount())
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       'w,ArrowUp': () => { 
         return new PlaceActor({

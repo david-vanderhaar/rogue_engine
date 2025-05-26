@@ -19,7 +19,7 @@ export class OpenUpgrades extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
     };
 
     this.actor.upgrade_tree.forEach((upgrade, index) => {

@@ -80,7 +80,7 @@ export default function (engine) {
     }
 
     return {
-      Escape: () => new Say({
+      Backspace: () => new Say({
         label: 'Stay',
         message: 'standing still...',
         game: engine.game,

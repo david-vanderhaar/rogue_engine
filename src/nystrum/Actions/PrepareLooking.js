@@ -67,7 +67,7 @@ export class PrepareLooking extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       e: () => { 
         return new MoveTargetingCursor({

@@ -40,7 +40,7 @@ const keymap = (engine, initiatedBy, previousKeymap) => {
     engine.game.removeActor(cursor);
   };
   return {
-    Escape: {
+    Backspace: {
       activate: goToPreviousKeymap,
       label: 'Close',
     },

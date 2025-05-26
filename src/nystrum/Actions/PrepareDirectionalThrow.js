@@ -30,7 +30,7 @@ export class PrepareDirectionalThrow extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       'w,ArrowUp': () => new PrepareDirectionalThrowInDirection({
         label: `throw N?`,
         projectileType: this.projectileType,

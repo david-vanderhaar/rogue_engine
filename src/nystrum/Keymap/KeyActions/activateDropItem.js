@@ -5,7 +5,7 @@ import { addAlphabeticallyToKeymap, deactivateUIKeymap } from '../helper';
 
 const keymapDropFromInventory = (engine, initiatedBy) => {
   let keymap = {
-    Escape: {
+    Backspace: {
       // g: {
       activate: () => deactivateUIKeymap(engine, 'visibleInventory'),
       label: 'Close',

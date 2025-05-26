@@ -28,7 +28,7 @@ export default function (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      Escape: () => new Say({
+      Backspace: () => new Say({
         label: 'Stay',
         message: 'standing still...',
         game: engine.game,

@@ -22,7 +22,7 @@ export default function (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      Escape: () => new Say({
+      Backspace: () => new Say({
         label: 'Pass',
         message: 'pass turn...',
         game: engine.game,

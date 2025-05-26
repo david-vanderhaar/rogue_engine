@@ -124,7 +124,7 @@ function initialize (engine) {
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      Escape: () => new Say({
+      Backspace: () => new Say({
         label: 'Pass',
         message: 'pass turn...',
         game: engine.game,

@@ -42,7 +42,7 @@ const triggerSandPulse = (direction, actor, engine) => {
 const keymapSandPulse = (engine, initiatedBy, previousKeymap) => {
   const goToPreviousKeymap = () => initiatedBy.keymap = previousKeymap;
   return {
-    Escape: {
+    Backspace: {
       activate: goToPreviousKeymap,
       label: 'Close',
     },

@@ -21,7 +21,7 @@ export class OpenEquipment extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
     };
 
     this.actor.equipment.filter((slot) => slot.item).forEach((slot, index) => {

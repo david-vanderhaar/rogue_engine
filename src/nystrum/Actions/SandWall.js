@@ -126,7 +126,7 @@ export class PrepareSandWall extends Base {
       game: this.game,
     })
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       'w,ArrowUp': () => new SandWall({
         targetPositions: getTargetPositions(DIRECTIONS.N, this.actor),
         actor: this.actor,

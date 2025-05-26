@@ -35,7 +35,7 @@ export class PrepareMelee extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       'w,ArrowUp': () => { 
         return new Attack({

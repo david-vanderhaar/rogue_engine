@@ -94,7 +94,7 @@ export class PrepareDirectionalThrowInDirection extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       [this.activateKey]: () => { 
         return new PlaceActor({

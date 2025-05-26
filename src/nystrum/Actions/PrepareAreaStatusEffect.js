@@ -93,7 +93,7 @@ export class PrepareAreaStatusEffect extends Base {
     })
 
     let keymap = {
-      Escape: () => this.createGoToPreviousKeymapAction(),
+      Backspace: () => this.createGoToPreviousKeymapAction(),
       b: () => this.createAddStatusEffectsAction(),
     };
     this.actor.setKeymap(keymap);

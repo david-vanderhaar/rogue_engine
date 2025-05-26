@@ -13,7 +13,7 @@ const keyMapChop = (engine, initiatedBy, previousKeymap, animations) => {
     // end
   }
   return {
-    Escape: {
+    Backspace: {
       activate: goToPreviousKeymap,
       label: 'Cancel Chop',
     },
