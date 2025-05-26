@@ -23,10 +23,18 @@ function Help(props) {
     })
   }
 
+  function closeHelpModal() {
+    elems.forEach((elem) => {
+      window.M.Modal.getInstance(elem).close()
+    })
+  }
+
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === '?') {
         triggerHelpModal()
+      } else if (event.key === 'Backspace') {
+        closeHelpModal()
       }
     };
 
