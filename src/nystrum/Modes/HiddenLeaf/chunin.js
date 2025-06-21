@@ -35,7 +35,12 @@ export class Chunin extends Mode {
 
   getTournamentOpponent () {
     const tournament = this.meta().tournament;
-    const opponent = tournament.opponents[tournament.active]
+    console.log('tournament', tournament);
+    
+    // const opponent = tournament.opponents[tournament.active]
+    const opponent = tournament.getCurrentOpponent();
+    console.log('opponent', opponent);
+    
     return opponent;
   }
 

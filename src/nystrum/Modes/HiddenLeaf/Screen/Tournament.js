@@ -1,90 +1,89 @@
-import React, {useEffect} from 'react';
-import { SOUNDS } from '../sounds'
+import React, {useEffect, useState} from 'react';
+import { SOUNDS } from '../sounds';
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
-
-function getTournament (props) {
-  return props.meta()?.tournament || createTournament(props)
-}
-
-function createTournament ({characters, selectedCharacter: player}) {
-  // filter characters that match the player's name
-  const opponents = characters.filter((character) => character.name !== player.name)
-  const shuffledOpponents = shuffle(opponents)
-
-  return {
-    opponents: [shuffledOpponents.at(0)],
-    // opponents: shuffledOpponents,
-    player: player,
-    active: 0,
-  }
-}
-
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
+import { createTournament, advanceTournamentOneRound } from './Tournament/bracketUtils';
+import { Bracket } from './Tournament/Bracket';
 
 export default function Tournament(props) {
-  const tournament = getTournament(props)
+  // DEBUG: set these to override current round/match for style debugging
+  const DEBUG_ROUND = null; // e.g., 0 or 1
+  const DEBUG_MATCH = null; // e.g., 0 or 1
 
-  useEffect(fadeMusicInOut(SOUNDS.tournament_theme), [])
-  useEffect(() => {
-    // set the meta data in a global state
-    props.meta({tournament})
-  }, []);
+  // Use React state for tournament so we can update on hotkey
+  const [tournament, setTournament] = useState(() => createTournament(props));
 
-  function gotToLevel () {
-    props.setActiveScreen(SCREENS.LEVEL)
+  // Helper to reset tournament
+  function resetTournament() {
+    setTournament(createTournament(props));
   }
 
+  // Helper to advance tournament
+  function advanceTournament() {
+    setTournament(prev => advanceTournamentOneRound(prev));
+  }
+
+  // Hotkey handler for left/right arrows
   useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === 'Enter') {
-        gotToLevel()
+    const handleKeyDown = (event) => {
+      if (event.key === 'ArrowRight') {
+        advanceTournament();
+      } else if (event.key === 'ArrowLeft') {
+        resetTournament();
+      } else if (event.key === 'Enter') {
+        gotToLevel();
       }
     };
-    // Add event listener when the component mounts
-    window.addEventListener('keydown', handleKeyPress);
-    // Clean up by removing the event listener when the component unmounts
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
+  let { bracket, currentRound, currentMatch, player, defeated } = tournament;
+
+  // Debug override
+  if (DEBUG_ROUND !== null) currentRound = DEBUG_ROUND;
+  if (DEBUG_MATCH !== null) currentMatch = DEBUG_MATCH;
+
+  useEffect(fadeMusicInOut(SOUNDS.tournament_theme), []);
+  useEffect(() => {
+    // set the meta data in a global state
+    props.meta({tournament});
+  }, [tournament]);
+
+  function gotToLevel () {
+    props.setActiveScreen(SCREENS.LEVEL);
+  }
+
+  // Helper to determine if a character is the player
+  const isPlayer = (character) => character && character.name === player.name;
+
+  // Helper to determine if a match is the current match
+  function isCurrentMatch(roundIdx, matchIdx) {
+    return roundIdx === currentRound && matchIdx === currentMatch;
+  }
+
+  // Helper to determine if a match is defeated
+  function isDefeated(roundIdx, matchIdx) {
+    // If winner is set and not the player, it's defeated
+    const match = bracket[roundIdx][matchIdx];
+    return match.winner && !isPlayer(match.winner);
+  }
+
+  // Render the bracket as a grid/tree
   return (
     <div className="Title">
       <div className="Title__content">
-        <h1>Tournament</h1>
-        <Lineup active={tournament.active}>
-          {
-            tournament.opponents.map((character, index) => {
-              return (
-                <div
-                  key={index}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <OpponentCard 
-                    character={character.basicInfo}
-                    animated={index === tournament.active}
-                  />
-                  {(index === tournament.active) && (
-                    <div>
-                      <h2>VS</h2>
-                      <div style={{padding: 8, marginLeft: 50, marginRight: 50}}>
-                        <PlayerCard character={tournament.player.basicInfo} />
-                      </div>
-                    </div>
-                  )}
-
-                </div>
-              )
-            })
-          }
-        </Lineup>
+        <h1>Tournament Bracket</h1>
+        <Bracket
+          bracket={bracket}
+          currentRound={currentRound}
+          currentMatch={currentMatch}
+          player={player}
+          isCurrentMatch={isCurrentMatch}
+          isDefeated={isDefeated}
+        />
         <button
           className='btn btn-main btn-themed'
           onClick={gotToLevel}
@@ -92,124 +91,9 @@ export default function Tournament(props) {
           Fight!
         </button>
         <br/>
-        <span>press enter to start</span>
+        <span>press enter to start | → advance | ← reset</span>
       </div>
     </div>
   );
 }
 
-// a lineup of components with a active index
-function Lineup({active, children}) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        overflow: 'hidden',
-        marginBottom: 24,
-      }}
-    >
-        {
-          children.map((child, index) => {
-            // if index is less than active, render the child with opacity 0.5 and grayscale
-            // if index is greater than active, render the child with opacity 0.5
-            let style = {opacity: 1}
-            if (index < active) {
-              style = {
-                opacity: 0.9,
-                filter: 'grayscale(100%)',
-              }
-            } else if (index > active) {
-              style = {
-                opacity: 0.6,
-              }
-            }
-
-            return (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '100%',
-                  height: '100%',
-                  ...style,
-                }}
-              >
-                {child}
-              </div>
-            )
-          })
-        }
-      </div>
-  )
-    
-}
-
-export function OpponentCard({character, animated}) {
-  return (
-    <div
-      className={`opponent-card ${animated ? 'animated-border' : '' }`}
-      style={{
-        border: '3px solid ',
-        borderRadius: 5,
-        borderColor: character.renderer.color,
-        margin: 5,
-        '--character-background-color': character.renderer.background,
-        '--character-color': character.renderer.color,
-      }}
-    >
-      <img
-        src={character.portrait}
-        alt={character.name}
-        style={{
-          width: '242px',
-        }}
-      />
-      <div
-        className='opponent-card__name'
-        style={{
-          color: character.renderer.color,
-          backgroundColor: character.renderer.background,
-        }}
-      >
-        {character.name}
-      </div>
-    </div>
-  )
-}
-
-function PlayerCard({character}) {
-  return (
-    <div
-      className='player-card'
-      style={{
-        border: '5px solid ',
-        borderRadius: 5,
-        borderColor: character.renderer.background,
-      }}
-    >
-      <img
-        src={character.portrait}
-        alt={character.name}
-        style={{
-          width: '342px',
-        }}
-      />
-      <div
-        className='player-card__name'
-        style={{
-          color: character.renderer.color,
-          backgroundColor: character.renderer.background,
-        }}
-      >
-        {character.name}
-      </div>
-    </div>
-  )
-}

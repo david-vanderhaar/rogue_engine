@@ -11,7 +11,7 @@ export default function Splash(props) {
 
   async function nextScreen () {
     playButtonSound()
-    await delay(2500)
+    // await delay(2500)
     props.setActiveScreen(SCREENS.TITLE)
   }
 
