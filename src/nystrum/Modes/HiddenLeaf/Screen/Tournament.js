@@ -2,8 +2,14 @@ import React, {useEffect, useState} from 'react';
 import { SOUNDS } from '../sounds';
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { SCREENS } from '../../../Modes/HiddenLeaf/Screen/constants';
-import { createTournament, advanceTournamentOneRound } from './Tournament/bracketUtils';
+import { createTournament, advanceOneRound } from './Tournament/bracketUtils';
 import { Bracket } from './Tournament/Bracket';
+
+
+function getTournament (props) {
+  debugger;
+  return props.meta()?.tournament || createTournament(props)
+}
 
 export default function Tournament(props) {
   // DEBUG: set these to override current round/match for style debugging
@@ -11,16 +17,20 @@ export default function Tournament(props) {
   const DEBUG_MATCH = null; // e.g., 0 or 1
 
   // Use React state for tournament so we can update on hotkey
-  const [tournament, setTournament] = useState(() => createTournament(props));
-
+  // const [tournament, setTournament] = useState(() => getTournament(props));
+  // console.log('tournament', tournament);
+  debugger;
+  const tournament = getTournament(props);
+  
+  
   // Helper to reset tournament
   function resetTournament() {
-    setTournament(createTournament(props));
+    // setTournament(createTournament(props));
   }
 
   // Helper to advance tournament
   function advanceTournament() {
-    setTournament(prev => advanceTournamentOneRound(prev));
+    // setTournament(prev => advanceOneRound(prev));
   }
 
   // Hotkey handler for left/right arrows
@@ -50,7 +60,7 @@ export default function Tournament(props) {
   useEffect(() => {
     // set the meta data in a global state
     props.meta({tournament});
-  }, [tournament]);
+  }, []);
 
   function gotToLevel () {
     props.setActiveScreen(SCREENS.LEVEL);

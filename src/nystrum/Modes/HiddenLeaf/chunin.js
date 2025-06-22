@@ -35,12 +35,8 @@ export class Chunin extends Mode {
 
   getTournamentOpponent () {
     const tournament = this.meta().tournament;
-    console.log('tournament', tournament);
-    
-    // const opponent = tournament.opponents[tournament.active]
     const opponent = tournament.getCurrentOpponent();
-    console.log('opponent', opponent);
-    
+
     return opponent;
   }
 
@@ -250,30 +246,18 @@ export class Chunin extends Mode {
   }
   
   //Extras
-  setLevel (level) {
-    this.data.turnCount = 0;
-    this.setMetaTournamentLevel(level)
-  }
-
   nextLevel () {
-    const level = this.getMetaTournamentLevel() + 1
-    this.setLevel(level);
+    const metaData = this.meta()
+    const tournament = metaData.tournament;
+    const updatedTournament = tournament.advanceOneRound()
+    metaData.tournament = updatedTournament;
+
+    this.meta(metaData)
     this.game.setActiveScreen('Tournament');
   }
 
-  setMetaTournamentLevel(level) {
-    const metaData = this.meta()
-    metaData.tournament.active = level;
-    this.meta(metaData)
-  }
-
   getMetaTournamentLevel() {
-    return this.meta().tournament.active;
-  }
-
-  reset () {
-    this.setLevel(0);
-    this.initialize();
+    return this.meta().tournament.currentRound;
   }
 
   setWaveData () {
@@ -287,7 +271,7 @@ export class Chunin extends Mode {
 
   hasWon () {
     const level = this.getMetaTournamentLevel()
-    const maxLevel = this.meta().tournament.opponents.length - 1;
+    const maxLevel = this.meta().tournament.bracket.length - 1;
     return this.levelComplete() && (level >= maxLevel);
   }
 

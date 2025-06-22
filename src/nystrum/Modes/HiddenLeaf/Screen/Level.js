@@ -95,9 +95,8 @@ class Level extends React.Component {
   }
 
   getOpponent(meta) {
-    debugger;
     let opponent = this.state.game.mode.getOpponentActor()
-    if (!opponent) opponent = meta.tournament.opponents[meta.tournament.active].basicInfo
+    if (!opponent) opponent = meta.tournament.opponents[0].basicInfo
 
     return opponent
   }

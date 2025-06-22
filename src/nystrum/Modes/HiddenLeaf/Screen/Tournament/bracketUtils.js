@@ -43,7 +43,6 @@ export function shuffle(array) {
 
 // Get the opponent for the player in the current match
 export function getCurrentOpponent({ bracket, currentRound, currentMatch, player }) {
-  debugger;
   const match = bracket[currentRound][currentMatch];
   if (!match) return null;
   if (match.player1 && match.player1.name === player.name) return match.player2;
@@ -59,7 +58,8 @@ function findPlayerMatchIndex(round, player) {
 }
 
 // Advance the tournament state by one round (returns new state)
-export function advanceTournamentOneRound(state) {
+export function advanceOneRound(state) {
+  let newState;
   const { bracket, currentRound, currentMatch, player } = state;
   const newBracket = bracket.map(round => round.map(match => ({ ...match })));
   newBracket[currentRound][currentMatch].winner = player;
@@ -85,18 +85,25 @@ export function advanceTournamentOneRound(state) {
     }
     // Always set currentMatch to the player's match in the next round
     const nextMatch = findPlayerMatchIndex(newBracket[nextRound], player);
-    return {
+    newState = {
       ...state,
       bracket: newBracket,
       currentRound: nextRound,
       currentMatch: nextMatch !== -1 ? nextMatch : 0,
     };
+  } else {
+    // If no next round, return updated bracket/state
+    newState = {
+      ...state,
+      bracket: newBracket,
+    };
   }
-  // If no next round, return updated bracket/state
+
   return {
-    ...state,
-    bracket: newBracket,
-  };
+    ...newState,
+    getCurrentOpponent: () => getCurrentOpponent(newState),
+    advanceOneRound: () => advanceOneRound(newState),
+  }
 }
 
 // Main tournament creation function
@@ -122,6 +129,6 @@ export function createTournament({ characters, selectedCharacter: player }) {
   return {
     ...state,
     getCurrentOpponent: () => getCurrentOpponent(state),
-    advanceTournamentOneRound: () => advanceTournamentOneRound(state),
+    advanceOneRound: () => advanceOneRound(state),
   };
 }
