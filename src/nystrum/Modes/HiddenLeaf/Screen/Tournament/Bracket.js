@@ -34,18 +34,11 @@ function BracketMatch({ match, roundIdx, matchIdx, player, isCurrent, isDefeated
     opacity: character ? 1 : 0.3,
     filter: isDefeated ? 'grayscale(100%)' : isCurrent ? 'none' : 'grayscale(60%)',
     margin: 2,
-    minWidth: 120,
-    minHeight: 60,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     background: character && character.renderer ? character.renderer.background : '#222',
     color: character && character.renderer ? character.renderer.color : '#eee',
     border: isCurrent ? '3px solid var(--color-secondary)' : isDefeated ? '2px dashed #888' : '2px solid #444',
     borderRadius: 5,
-    fontWeight: isCurrent ? 'bold' : 'normal',
     boxShadow: isCurrent ? '0 0 8px var(--color-secondary)' : 'none',
-    position: 'relative',
     transition: 'all 0.2s',
   });
   return (

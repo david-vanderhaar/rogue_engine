@@ -17,7 +17,7 @@ export function OpponentCard({character, animated}) {
         src={character.portrait}
         alt={character.name}
         style={{
-          width: '242px',
+          width: '140px',
         }}
       />
       <div
