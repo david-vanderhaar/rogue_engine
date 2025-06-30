@@ -12,29 +12,13 @@ function getTournament (props) {
 
 export default function Tournament(props) {
   // Use React state for tournament so we can update on hotkey
-  const [tournament, setTournament] = useState(() => getTournament(props));
-  // console.log('tournament', tournament);
-  // const tournament = getTournament(props);
+  const [tournament] = useState(() => getTournament(props));
   
   
-  // Helper to reset tournament
-  function resetTournament() {
-    setTournament(createTournament(props));
-  }
-
-  // Helper to advance tournament
-  function advanceTournament() {
-    setTournament(prev => advanceOneRound(prev));
-  }
-
   // Hotkey handler for left/right arrows
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'ArrowRight') {
-        advanceTournament();
-      } else if (event.key === 'ArrowLeft') {
-        resetTournament();
-      } else if (event.key === 'Enter') {
+     if (event.key === 'Enter') {
         gotToLevel();
       }
     };
@@ -99,7 +83,7 @@ export default function Tournament(props) {
           Fight!
         </button>
         <br/>
-        <span>press enter to start | → advance | ← reset</span>
+        <span>press enter to start</span>
       </div>
     </div>
   );

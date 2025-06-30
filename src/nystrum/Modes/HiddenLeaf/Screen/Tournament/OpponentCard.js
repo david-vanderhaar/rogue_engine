@@ -3,7 +3,7 @@ import React from 'react';
 export function OpponentCard({character, animated}) {
   return (
     <div
-      className={`opponent-card ${animated ? 'animated-border' : '' }`}
+      className={`opponent-card ${animated ? 'animated-border' : '' } fadeIn`}
       style={{
         border: '3px solid ',
         borderRadius: 5,

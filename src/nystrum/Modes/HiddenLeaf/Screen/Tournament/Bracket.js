@@ -29,78 +29,83 @@ export function Bracket({ bracket, currentRound, currentMatch, player, isCurrent
   // Calculate lines after render
   useLayoutEffect(() => {
     if (!containerRef.current) return;
-    // Use scrollWidth/scrollHeight to cover all content, not just visible area
-    const width = containerRef.current.scrollWidth;
-    const height = containerRef.current.scrollHeight;
-    setContainerSize({ width, height });
-    // Get all match card rects relative to container
-    const rects = bracket.map((round, roundIdx) =>
-      round.map((_, matchIdx) => {
-        const ref = matchRefs.current?.[`${roundIdx}-${matchIdx}`];
-        return getElementRectRelative(ref, containerRef.current);
-      })
-    );
-    // Build bracket lines
-    const newLines = [];
-    for (let roundIdx = 0; roundIdx < bracket.length - 1; roundIdx++) {
-      const round = bracket[roundIdx];
-      const nextRound = bracket[roundIdx + 1];
-      for (let matchIdx = 0; matchIdx < round.length; matchIdx++) {
-        const match = round[matchIdx];
-        const winner = getWinner(match);
-        const rect = rects[roundIdx][matchIdx];
-        if (!rect) continue;
-        const y1 = rect.top + rect.height / 4;
-        const y2 = rect.top + (3 * rect.height) / 4;
-        const xStart = rect.left + rect.width;
-        const xJoin = xStart + 24;
-        const yJoin = (y1 + y2) / 2;
-        let xNext = null, yNext = null;
-        let winnerColor = null;
-        if (winner) {
-          const winnerIdx = nextRound.findIndex(
-            m => (m.player1 && m.player1.name === winner.name) || (m.player2 && m.player2.name === winner.name)
-          );
-          if (winnerIdx !== -1) {
-            const nextRect = rects[roundIdx + 1][winnerIdx];
-            if (nextRect) {
-              xNext = nextRect.left;
-              yNext = nextRect.top + nextRect.height / 2;
-            }
-          }
+    setTimeout(() => {
 
-          // Use winner's custom color if available
-          winnerColor = winner.basicInfo.renderer?.background || 'var(--color-secondary)';
-        }
-        // Style for winner/loser
-        let color = winnerColor || 'var(--color-accent)';
-        let opacity = 0.3;
-        if (winner && xNext !== null && yNext !== null) {
-          color = winnerColor;
-          opacity = 1;
-        }
-        // Horizontal from player1 card to join
-        newLines.push({ x1: xStart, y1: y1, x2: xJoin, y2: y1, color, opacity });
-        // Horizontal from player2 card to join
-        newLines.push({ x1: xStart, y1: y2, x2: xJoin, y2: y2, color, opacity });
-        // Vertical join
-        newLines.push({ x1: xJoin, y1: y1, x2: xJoin, y2: y2, color, opacity });
-        // Now, for the winner, draw a polyline with two 90-degree turns:
-        // 1. From join point, horizontal to a midX (between join and next card)
-        // 2. Vertical to yNext
-        // 3. Horizontal to xNext (left edge of winner's card)
-        if (xNext !== null && yNext !== null) {
-          const midX = xJoin + (xNext - xJoin) * 0.5;
-          // Horizontal from join to midX at yJoin
-          newLines.push({ x1: xJoin, y1: yJoin, x2: midX, y2: yJoin, color, opacity });
-          // Vertical from (midX, yJoin) to (midX, yNext)
-          newLines.push({ x1: midX, y1: yJoin, x2: midX, y2: yNext, color, opacity });
-          // Horizontal from (midX, yNext) to (xNext, yNext)
-          newLines.push({ x1: midX, y1: yNext, x2: xNext, y2: yNext, color, opacity });
+      // Use scrollWidth/scrollHeight to cover all content, not just visible area
+      const width = containerRef.current.scrollWidth;
+      const height = containerRef.current.scrollHeight;
+      setContainerSize({ width, height });
+      // Get all match card rects relative to container
+      const rects = bracket.map((round, roundIdx) =>
+        round.map((_, matchIdx) => {
+          const ref = matchRefs.current?.[`${roundIdx}-${matchIdx}`];
+          return getElementRectRelative(ref, containerRef.current);
+        })
+      );
+      // Build bracket lines
+      const newLines = [];
+      for (let roundIdx = 0; roundIdx < bracket.length - 1; roundIdx++) {
+        const round = bracket[roundIdx];
+        const nextRound = bracket[roundIdx + 1];
+        for (let matchIdx = 0; matchIdx < round.length; matchIdx++) {
+          const match = round[matchIdx];
+          const winner = getWinner(match);
+          const rect = rects[roundIdx][matchIdx];
+          if (!rect) continue;
+          const y1 = rect.top + rect.height / 4;
+          const y2 = rect.top + (3 * rect.height) / 4;
+          const xStart = rect.left + rect.width;
+          const xJoin = xStart + 24;
+          const yJoin = (y1 + y2) / 2;
+          let xNext = null, yNext = null;
+          let winnerColor = null;
+          if (winner) {
+            const winnerIdx = nextRound.findIndex(
+              m => (m.player1 && m.player1.name === winner.name) || (m.player2 && m.player2.name === winner.name)
+            );
+            if (winnerIdx !== -1) {
+              const nextRect = rects[roundIdx + 1][winnerIdx];
+              if (nextRect) {
+                xNext = nextRect.left;
+                yNext = nextRect.top + nextRect.height / 2;
+              }
+            }
+
+            // Use winner's custom color if available
+            winnerColor = winner.basicInfo.renderer?.background || 'var(--color-secondary)';
+          }
+          // Style for winner/loser
+          let color = winnerColor || 'var(--color-accent)';
+          let opacity = 0.3;
+          if (winner && xNext !== null && yNext !== null) {
+            color = winnerColor;
+            opacity = 1;
+          }
+          // Horizontal from player1 card to join
+          newLines.push({ x1: xStart, y1: y1, x2: xJoin, y2: y1, color, opacity });
+          // Horizontal from player2 card to join
+          newLines.push({ x1: xStart, y1: y2, x2: xJoin, y2: y2, color, opacity });
+          // Vertical join
+          newLines.push({ x1: xJoin, y1: y1, x2: xJoin, y2: y2, color, opacity });
+          // Now, for the winner, draw a polyline with two 90-degree turns:
+          // 1. From join point, horizontal to a midX (between join and next card)
+          // 2. Vertical to yNext
+          // 3. Horizontal to xNext (left edge of winner's card)
+          if (xNext !== null && yNext !== null) {
+            const midX = xJoin + (xNext - xJoin) * 0.5;
+            // Horizontal from join to midX at yJoin
+            newLines.push({ x1: xJoin, y1: yJoin, x2: midX, y2: yJoin, color, opacity });
+            // Vertical from (midX, yJoin) to (midX, yNext)
+            newLines.push({ x1: midX, y1: yJoin, x2: midX, y2: yNext, color, opacity });
+            // Horizontal from (midX, yNext) to (xNext, yNext)
+            newLines.push({ x1: midX, y1: yNext, x2: xNext, y2: yNext, color, opacity });
+          }
         }
       }
-    }
-    setLines(newLines);
+
+      setLines([...newLines]);
+    }, 1000);
+    // setLines(newLines);
   }, [bracket]);
 
   // Render SVG lines behind the bracket grid, sized to the scrollable container

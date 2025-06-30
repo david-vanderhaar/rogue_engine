@@ -114,6 +114,7 @@ export function createTournament({ characters, selectedCharacter: player }) {
   const participants = [...shuffledOpponents];
   participants.splice(insertAt, 0, player);
   const bracket = buildBracket(participants);
+  
   // Always set currentMatch to the player's match in the first round
   const currentRound = 0;
   const currentMatch = findPlayerMatchIndex(bracket[0], player);

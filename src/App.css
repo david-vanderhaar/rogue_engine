@@ -861,6 +861,12 @@ f9d091var(--color-secondary) */
   animation-delay: 0.9s;
 }
 
+.fadeIn {
+  opacity: 0;
+  animation: fadeInSlide 1s ease-out forwards;
+  animation-delay: 0.9s;
+}
+
 .Splash--logo {
   position: absolute;
   opacity: 0;
