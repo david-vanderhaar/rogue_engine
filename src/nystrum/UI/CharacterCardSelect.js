@@ -2,8 +2,19 @@ import React, { useEffect, useState, useRef } from 'react';
 import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
 import Tooltip from './Tooltip';
 import { ProgressBar } from './Entity/CharacterCard';
+import { SOUNDS } from '../Modes/HiddenLeaf/sounds';
+
 
 const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}) => {
+  const playButtonSound = () => {
+    SOUNDS.wood_button.play();
+  }
+
+  const setActiveScreenWithSound = (screen) => {
+    SOUNDS.lose_theme.play();
+    setActiveScreen(screen);
+  }
+
   const [selected, setSelected] = useState(0);
   const cardRefs = useRef([]);
 
@@ -26,18 +37,20 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
     const handleKeyPress = (event) => {
       // left arrow or "a" key
       if (event.key === 'ArrowLeft' || event.key === 'a') {
+        playButtonSound()
         setSelected((prev) => {
           const newIndex = prev > 0 ? prev - 1 : characters.length - 1;
           return newIndex;
         });
       } else if (event.key === 'ArrowRight'|| event.key === 'd') {
+        playButtonSound()
         setSelected((prev) => {
           const newIndex = prev < characters.length - 1 ? prev + 1 : 0;
           return newIndex;
         });
       } else if (event.key === 'Enter') {
         setSelectedCharacter(characters[selected]);
-        setActiveScreen(SCREENS.TOURNAMENT);
+        setActiveScreenWithSound(SCREENS.TOURNAMENT);
       }
     };
     // Add event listener when the component mounts
@@ -84,7 +97,7 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
                 <CharacterCard 
                   character={character}
                   setSelectedCharacter={setSelectedCharacter}
-                  setActiveScreen={setActiveScreen}
+                  setActiveScreen={setActiveScreenWithSound}
                   index={characters.indexOf(character)} // Use original index for reference
                   ref={(el) => cardRefs.current[characters.indexOf(character)] = el}
                   selectedStyle={visualIndex === 0}
