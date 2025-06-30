@@ -5,14 +5,15 @@ import { SCREENS } from '../../../Screen/constants';
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 
 function Title(props) {
-  function nextScreen () {
-    props.setActiveScreen(SCREENS.CHARACTER_SELECT)
-  }
-
-  // Function to play button sound
   const playButtonSound = () => {
     SOUNDS.wood_button.play();
   }
+
+  function nextScreen () {
+    props.setActiveScreen(SCREENS.CHARACTER_SELECT)
+    playButtonSound()
+  }
+
   useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -89,10 +90,7 @@ function Title(props) {
         />
         <button
           className="btn btn-main btn-themed Title__button"
-          onClick={() => {
-            props.setActiveScreen(SCREENS.CHARACTER_SELECT)
-            playButtonSound()
-          }}
+          onClick={nextScreen}
         >
           New Game
         </button>
