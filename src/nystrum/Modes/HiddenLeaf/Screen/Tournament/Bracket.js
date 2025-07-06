@@ -28,9 +28,9 @@ export function Bracket({ bracket, currentRound, currentMatch, player, isCurrent
 
   // Calculate lines after render
   useLayoutEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef?.current) return;
     setTimeout(() => {
-
+      if (!containerRef?.current) return;
       // Use scrollWidth/scrollHeight to cover all content, not just visible area
       const width = containerRef.current.scrollWidth;
       const height = containerRef.current.scrollHeight;

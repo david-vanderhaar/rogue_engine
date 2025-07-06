@@ -181,35 +181,31 @@ export class Chunin extends Mode {
 
   onLose() {
     if (!this.data['hasLost']) {
-      // this.game.toLose();
-      // this.reset();
-      // this.game.initializeGameData();
       this.game.onLose();
       this.createOrUpdateInfoBlock('hasLost', {text: `${this.meta().tournament.player.name} is down! Good luck next year.`})
-      this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to Play Again'})
-      this.addOnEnterListener();
+      this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to see your final score.'})
+      this.addOnEnterListener(this.game.toLose);
     }
     this.data['hasLost'] = true;
   }
 
   onWin() {
-    // this.game.toWin()
     if (!this.data['hasWon']) {
       this.game.onWin();
       this.addFireWorks();
       this.createOrUpdateInfoBlock('hasWon', {text: `${this.game.getFirstPlayer().name} has won the Chunin Tournament!`})
-      this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to Play Again'})
-      this.addOnEnterListener();
+      this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to see your final score.'})
+      this.addOnEnterListener(this.game.toWin);
     }
     this.data['hasWon'] = true;
   }
 
-  addOnEnterListener() {
+  addOnEnterListener(callback) {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
-        this.game.backToTitle()
+        // this.game.backToTitle()
+        callback && callback();
         this.meta({})
-        // TODO (reset data)
         window.removeEventListener('keydown', handleKeyPress);
       }
     };

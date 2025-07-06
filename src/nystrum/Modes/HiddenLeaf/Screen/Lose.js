@@ -1,31 +1,36 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { CARTRIDGE } from '../../../Nystrum';
 import { SCREENS } from '../../../Screen/constants';
 
-class Lose extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+export default function Lose(props) {
+  function gotToTitle () {
+    props.setActiveScreen(SCREENS.TITLE);
   }
 
-  render() {
-    return (
-      <div className="Title">
-        <div className="Title__content">
-          <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>You'll get 'em next year.</h2>
-          <button
-            className='btn btn-main btn-themed'
-            onClick={() => {
-              // this.props.setSelectedCharacter(this.props.characters[0])
-              this.props.setActiveScreen(SCREENS.CHARACTER_SELECT)
-            }}
-          >
-            It's my ninja way!
-          </button>
-        </div>
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        gotToTitle();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  return (
+    <div className="Title">
+      <div className="Title__content">
+        <h2 style={{color: CARTRIDGE.theme.accent, marginBottom: 70}}>You'll get 'em next year.</h2>
+        <button
+          className='btn btn-main btn-themed'
+          onClick={gotToTitle}
+        >
+          It's my ninja way!
+        </button>
+        <span>press enter to play again</span>
       </div>
-    );
-  }
+    </div>
+  )
 }
-
-export default Lose;
