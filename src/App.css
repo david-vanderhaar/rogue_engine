@@ -854,7 +854,7 @@ f9d091var(--color-secondary) */
   border: 1px solid var(--color-console-background);
 }
 
-.fadeIn__image {
+.fadeInPartial__image {
   position: absolute;
   opacity: 0;
   animation: fadeIn-partial 1s ease-out forwards;

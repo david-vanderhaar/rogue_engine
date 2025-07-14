@@ -50,43 +50,43 @@ function Title(props) {
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_0.png'}
           alt="Exclaim 0"
           style={{left: 446, top: 96}}
-          className="fadeIn__image"
+          className="fadeInPartial__image"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_1.png'}
           alt="Exclaim 1"
           style={{left: 854, top: 100}}
-          className="fadeIn__image"
+          className="fadeInPartial__image"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_2.png'}
           alt="Exclaim 2"
           style={{left: 150, bottom: 250}}
-          className="fadeIn__image"
+          className="fadeInPartial__image"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_3.png'}
           alt="Exclaim 3"
           style={{left: 200, bottom: 200}}
-          className="fadeIn__image"
+          className="fadeInPartial__image"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_4.png'}
           alt="Exclaim 4"
           style={{left: 854, top: 250}}
-          className="fadeIn__image"
+          className="fadeInPartial__image"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_5.png'}
           alt="Exclaim 5"
           style={{right: 266, bottom: 62}}
-          className="fadeIn__image"
+          className="fadeInPartial__image"
         />
         <img
           src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_5.png'}
           alt="Exclaim 5"
           style={{left: 400, top: 144}}
-          className="fadeIn__image"
+          className="fadeInPartial__image"
         />
         <button
           className="btn btn-main btn-themed Title__button"
