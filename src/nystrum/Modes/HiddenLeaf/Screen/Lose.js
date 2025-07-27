@@ -35,7 +35,8 @@ export default function Lose(props) {
           style={{color: CARTRIDGE.theme.accent, marginBottom: 40, width: '50%', animationDelay: '0.3s'}}
           className="fadeIn"
         >
-          "People's lives don't end when they die, It ends when they lose faith."
+          {/* "People's lives don't end when they die, It ends when they lose faith." */}
+          "Somebody told me I'm a failure, I'll prove them wrong." - Naruto Uzumaki
         </h6>
         <div style={{color: CARTRIDGE.theme.accent, marginBottom: 80, animationDelay: '0.6s'}} className="fadeIn">
           Statistics

@@ -272,7 +272,6 @@ export class Chunin extends Mode {
   }
 
   hasLost () {
-    return true
     let players = this.getPlayers()
     if (!players.length) return true;
     else if (players.length) {
