@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Howler } from 'howler';
 
 export default function SoundControl() {
@@ -25,6 +25,11 @@ export default function SoundControl() {
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, [muted]);
+
+  // Set initial mute state on component mount
+  useEffect(() => {
+    Howler.mute(muted);
+  }, []);
 
   return (
     <span onClick={toggleSound}>

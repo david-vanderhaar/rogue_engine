@@ -22,6 +22,7 @@ import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../Actions/MoveTowards';
 import { checkIsWalkingOnFire } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import * as Behaviors from '../Entities/AI/Behaviors';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
 
@@ -274,6 +275,7 @@ function initialize (engine) {
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,
+    onDecreaseDurability: () => HIDDEN_LEAF_SOUNDS.take_melee_hit.play(),
     charge: basicInfo.charge,
     game: engine.game,
     presentingUI: true,
@@ -297,6 +299,7 @@ function initialize (engine) {
   return actor
 }
 
+// a mock for AI behaviors
 const behaviors = [
   new Behaviors.MoveTowardsEnemy({
     repeat: basicInfo.speed/Constant.ENERGY_THRESHOLD,

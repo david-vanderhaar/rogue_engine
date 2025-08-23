@@ -21,6 +21,7 @@ import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -233,6 +234,7 @@ function initialize (engine) {
     actions: [],
     speed: basicInfo.speed,
     durability: basicInfo.durability,
+    onDecreaseDurability: () => HIDDEN_LEAF_SOUNDS.take_melee_hit.play(),
     charge: basicInfo.charge,
     game: engine.game,
     presentingUI: true,

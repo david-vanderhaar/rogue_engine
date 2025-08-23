@@ -5,13 +5,20 @@ import spatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import { MESSAGE_TYPE } from '../message';
 
 export const Destructable = superclass => class extends superclass {
-  constructor({ durability = 1, defense = 0, onDestroy = () => null, ...args }) {
+  constructor({
+    durability = 1,
+    defense = 0,
+    onDestroy = () => null,
+    onDecreaseDurability = () => null,
+    ...args
+  }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('DESTRUCTABLE');
     this.durability = durability;
     this.durabilityMax = durability;
     this.defense = defense;
     this.onDestroy = onDestroy;
+    this.onDecreaseDurability = onDecreaseDurability;
     this.actorSprite = this.renderer.sprite
     this.actorCharacter = this.renderer.character
   }
@@ -33,6 +40,8 @@ export const Destructable = superclass => class extends superclass {
     this.durability -= value;
     if (this.durability <= 0) {
       this.destroy();
+    } else {
+      this.onDecreaseDurability()
     }
   }
   decreaseDurability(value) {
@@ -50,6 +59,8 @@ export const Destructable = superclass => class extends superclass {
     if (this.entityTypes.includes('PLAYING')) this.bloodSpatter(value)
     if (this.durability <= 0) {
       this.destroy();
+    } else {
+      this.onDecreaseDurability()
     }
   }
 

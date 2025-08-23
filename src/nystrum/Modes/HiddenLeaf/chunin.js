@@ -9,6 +9,7 @@ import * as Behaviors from '../../Entities/AI/Behaviors';
 import { MESSAGE_TYPE } from '../../message';
 import { Mode } from '../default';
 import SOUNDS from '../../sounds';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from './sounds';
 import * as _ from 'lodash';
 import { TILE_KEY } from './theme';
 import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
@@ -447,6 +448,7 @@ export class Chunin extends Mode {
       charge: 20,
       faction: 'OPPONENT',
       enemyFactions: ['PLAYER'],
+      onDecreaseDurability: () => HIDDEN_LEAF_SOUNDS.take_melee_hit.play(),
       behaviors: stats?.behaviors || [
         new Behaviors.MoveTowardsEnemy({
           repeat: stats.speed/Constant.ENERGY_THRESHOLD,
