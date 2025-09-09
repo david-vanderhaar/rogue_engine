@@ -29,6 +29,8 @@ export const SOUNDS = {
   lose_theme: createSoundFromSource('/sounds/hidden_leaf/lose_theme.mp3'),
   ambient_howling: createSoundFromSource('/sounds/tall_grass/ambient_loop_howls.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   wind_loop: createSoundFromSource('/sounds/tall_grass/wind_loop.mp3', {loop: true, rate: 0.75, volume: 0.1}),
+  wind_loop_2: createSoundFromSource('/sounds/hidden_leaf/Wind.wav', {loop: true}),
+  taiko_drum_loop: createSoundFromSource('/sounds/hidden_leaf/taiko_drum_loop.mp3'),
   take_melee_hit: createSoundFromSource('/sounds/tall_grass/monster/sac_01.ogg'),
   sac_01: createSoundFromSource('/sounds/tall_grass/monster/sac_01.ogg'),
   sac_02: createSoundFromSource('/sounds/tall_grass/monster/sac_02.ogg'),

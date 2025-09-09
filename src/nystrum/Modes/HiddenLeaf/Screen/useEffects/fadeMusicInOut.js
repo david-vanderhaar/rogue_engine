@@ -1,6 +1,11 @@
 import { SOUND_MANAGER } from '../../sounds'
 
 export function fadeMusicInOut(sound) {
+  // // temp silence
+  // return () => {
+  //   return () => null
+  // }
+
   return () => {
     sound.play()
     sound.fade(0, 0.6, SOUND_MANAGER.master_track_fade_time) 

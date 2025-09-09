@@ -30,7 +30,7 @@ export default function Tournament(props) {
 
   let { bracket, currentRound, currentMatch, player, defeated } = tournament;
 
-  useEffect(fadeMusicInOut(SOUNDS.tournament_theme), []);
+  // useEffect(fadeMusicInOut(SOUNDS.tournament_theme), []);
   useEffect(() => {
     // set the meta data in a global state
     props.meta({tournament});

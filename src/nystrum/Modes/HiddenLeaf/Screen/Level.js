@@ -23,11 +23,13 @@ function fadeSoundOut(sound, volume = 0.2) {
 }
 
 function fadeThemeIn() {
-  fadeSoundIn(SOUNDS.battle_theme_0)
+  fadeSoundIn(SOUNDS.wind_loop_2)
+  fadeSoundIn(SOUNDS.taiko_drum_loop)
 }
 
 function fadeThemeOut() {
-  fadeSoundOut(SOUNDS.battle_theme_0)
+  fadeSoundOut(SOUNDS.wind_loop_2)
+  fadeSoundOut(SOUNDS.taiko_drum_loop)
 }
 
 class Level extends React.Component {

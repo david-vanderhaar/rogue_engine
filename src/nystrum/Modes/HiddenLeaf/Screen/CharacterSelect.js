@@ -5,7 +5,7 @@ import { CARTRIDGE } from '../../../Nystrum';
 import CharacterSelect from '../../../UI/CharacterCardSelect';
 
 function CharacterSelectScreen(props) {
-  useEffect(fadeMusicInOut(SOUNDS.character_select_theme), [])
+  // useEffect(fadeMusicInOut(SOUNDS.character_select_theme), [])
   
   return (
     <div className="Title">

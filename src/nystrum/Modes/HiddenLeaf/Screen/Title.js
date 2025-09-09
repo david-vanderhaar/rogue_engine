@@ -14,7 +14,7 @@ function Title(props) {
     playButtonSound()
   }
 
-  useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
+  // useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
