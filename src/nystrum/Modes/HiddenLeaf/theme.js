@@ -244,6 +244,17 @@ export const TILE_KEY = {
     forceAnimate: true,
   },
 }
+
+export const TILE_STEP_SOUNDS = {
+  'GROUND': [
+    'grass_00',
+    'grass_01',
+    'grass_02',
+    'grass_03',
+    'grass_04',
+    'grass_05',
+  ],
+}
 // export const TILE_KEY = {
 //   'GROUND': {
 //     background: COLORS.grass0,

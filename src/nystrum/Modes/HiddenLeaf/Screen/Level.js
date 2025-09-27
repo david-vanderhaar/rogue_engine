@@ -55,7 +55,7 @@ class Level extends React.Component {
   }
 
   async componentDidMount() {
-    fadeThemeIn()
+    // fadeThemeIn()
     this.state.game.initialize(this.presserRef, document)
     this.state.game['setActiveScreen'] = (activeScreen) => this.props.setActiveScreen(activeScreen)
     this.state.game['backToTitle'] = () => this.props.setActiveScreen(SCREENS.TITLE);

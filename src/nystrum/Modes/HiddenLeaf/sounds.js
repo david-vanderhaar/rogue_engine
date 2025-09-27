@@ -38,12 +38,17 @@ export const SOUNDS = {
   screech_01: createSoundFromSource('/sounds/tall_grass/monster/screech_01.ogg'),
   screech_02: createSoundFromSource('/sounds/tall_grass/monster/screech_02.ogg'),
   screech_03: createSoundFromSource('/sounds/tall_grass/monster/screech_03.ogg'),
+  // steps
+  // water
+  // hard GROUND
+  // grass GROUND
   grass_00: createSoundFromSource('/sounds/tall_grass/rustle/grass_00.mp3'),
   grass_01: createSoundFromSource('/sounds/tall_grass/rustle/grass_01.mp3'),
   grass_02: createSoundFromSource('/sounds/tall_grass/rustle/grass_02.mp3'),
   grass_03: createSoundFromSource('/sounds/tall_grass/rustle/grass_03.mp3'),
   grass_04: createSoundFromSource('/sounds/tall_grass/rustle/grass_04.mp3'),
   grass_05: createSoundFromSource('/sounds/tall_grass/rustle/grass_05.mp3'),
+  // end steps
   light_up: createSoundFromSource('/sounds/tall_grass/light_up.mp3'),
   light_drain: createSoundFromSource('/sounds/tall_grass/light_drain.mp3', {volume: 0.2}),
   emergence_01: createSoundFromSource('/sounds/jacinto/EarthDebrisSmallClose01.ogg'),

@@ -6,7 +6,7 @@ import { Player } from '../Entities/index';
 import { ContainerSlot } from '../Entities/Containing';
 import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
 import {Say} from '../Actions/Say';
-import {MoveOrAttack} from '../Actions/MoveOrAttack';
+import {MoveOrAttackWithTileSound} from '../Actions/MoveOrAttackWithTileSound';
 import {OpenInventory} from '../Actions/OpenInventory';
 import {OpenEquipment} from '../Actions/OpenEquipment';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
@@ -16,7 +16,7 @@ import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 import { getPositionInDirection, getPositionsFromStructure } from '../../helper';
 import { Attack } from '../Actions/Attack';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, playStepSoundByTile } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { SpawnKikaichu } from '../Actions/SpawnKikaichu';
 import { StatLeechAttack } from '../Actions/StatLeechAttack';
 import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
@@ -72,56 +72,52 @@ function initialize (engine) {
         const direction = Constant.DIRECTIONS.N;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
-        return new MoveOrAttack({
+        return new MoveOrAttackWithTileSound({
           hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
-          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       's,ArrowDown': () => {
         const direction = Constant.DIRECTIONS.S;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
-        return new MoveOrAttack({
+        return new MoveOrAttackWithTileSound({
           hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
-          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'a,ArrowLeft': () => {
         const direction = Constant.DIRECTIONS.W;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
-        return new MoveOrAttack({
+        return new MoveOrAttackWithTileSound({
           hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
-          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'd,ArrowRight': () => {
         const direction = Constant.DIRECTIONS.E;
         let newX = actor.pos.x + direction[0];
         let newY = actor.pos.y + direction[1];
-        return new MoveOrAttack({
+        return new MoveOrAttackWithTileSound({
           hidden: true,
           targetPos: { x: newX, y: newY },
           game: engine.game,
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
-          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       p: () => new Say({

@@ -35,24 +35,3 @@ export function checkIsWalkingOnFire (engine, actor) {
     engine.addStatusEffect(effect);
   }
 }
-
-export function playStepSoundByTile (actor) {
-  const tile = getTileAtPosition(actor.game, actor.getPosition())
-  if (!tile) return;
-  if (tile.type === 'GROUND') {
-    playRustleSound()
-  }
-}
-
-function playRustleSound() {
-  const sound = getRandomInArray([
-    HIDDEN_LEAF_SOUNDS.grass_00,
-    HIDDEN_LEAF_SOUNDS.grass_01,
-    HIDDEN_LEAF_SOUNDS.grass_02,
-    HIDDEN_LEAF_SOUNDS.grass_03,
-    HIDDEN_LEAF_SOUNDS.grass_04,
-    HIDDEN_LEAF_SOUNDS.grass_05,
-  ])
-
-  sound.play()
-}
