@@ -1,7 +1,8 @@
-import { getTileAtPosition } from "../../../../helper";
+import { getTileAtPosition, getRandomInArray } from "../../../../helper";
 import { ENERGY_THRESHOLD } from "../../../constants";
 import { WalkingOnWater } from "./WalkingOnWater";
 import { Burning } from "./Burning";
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from "../../HiddenLeaf/sounds";
 
 export function checkIsWalkingOnWater (engine, actor) {
   if (engine.actorHasStatusEffect(actor.id, 'walking on water')) return;
@@ -33,4 +34,25 @@ export function checkIsWalkingOnFire (engine, actor) {
     })
     engine.addStatusEffect(effect);
   }
+}
+
+export function playStepSoundByTile (actor) {
+  const tile = getTileAtPosition(actor.game, actor.getPosition())
+  if (!tile) return;
+  if (tile.type === 'GROUND') {
+    playRustleSound()
+  }
+}
+
+function playRustleSound() {
+  const sound = getRandomInArray([
+    HIDDEN_LEAF_SOUNDS.grass_00,
+    HIDDEN_LEAF_SOUNDS.grass_01,
+    HIDDEN_LEAF_SOUNDS.grass_02,
+    HIDDEN_LEAF_SOUNDS.grass_03,
+    HIDDEN_LEAF_SOUNDS.grass_04,
+    HIDDEN_LEAF_SOUNDS.grass_05,
+  ])
+
+  sound.play()
 }

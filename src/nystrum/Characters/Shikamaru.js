@@ -10,7 +10,7 @@ import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
 import {OpenInventory} from '../Actions/OpenInventory';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { checkIsWalkingOnWater, checkIsWalkingOnFire } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, playStepSoundByTile } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
 import { PrepareRangedAction } from '../Actions/PrepareRangedAction';
@@ -74,6 +74,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       's,ArrowDown': () => {
@@ -87,6 +88,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -100,6 +102,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'd,ArrowRight': () => {
@@ -113,6 +116,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       p: () => new Say({

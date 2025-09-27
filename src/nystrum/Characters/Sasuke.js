@@ -20,7 +20,7 @@ import { getPositionInDirection } from '../../helper';
 import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
 import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, playStepSoundByTile } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
@@ -77,6 +77,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       's,ArrowDown': () => {
@@ -90,6 +91,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -103,6 +105,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'd,ArrowRight': () => {
@@ -116,6 +119,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       p: () => new Say({

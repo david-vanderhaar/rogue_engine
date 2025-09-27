@@ -16,7 +16,7 @@ import {OpenEquipment} from '../Actions/OpenEquipment';
 import {OpenDropInventory} from '../Actions/OpenDropInventory';
 import {CloneSelf} from '../Actions/CloneSelf';
 import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, playStepSoundByTile } from '../Modes/HiddenLeaf/StatusEffects/helper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`;
 
@@ -75,6 +75,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       's,ArrowDown': () => {
@@ -88,6 +89,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -101,6 +103,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'd,ArrowRight': () => {
@@ -114,6 +117,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       p: () => new Say({

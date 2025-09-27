@@ -16,7 +16,7 @@ import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 import { getPositionInDirection, getPositionsFromStructure } from '../../helper';
 import { Attack } from '../Actions/Attack';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, playStepSoundByTile } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { SpawnKikaichu } from '../Actions/SpawnKikaichu';
 import { StatLeechAttack } from '../Actions/StatLeechAttack';
 import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
@@ -79,6 +79,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       's,ArrowDown': () => {
@@ -92,6 +93,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -105,6 +107,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'd,ArrowRight': () => {
@@ -118,6 +121,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       p: () => new Say({

@@ -17,7 +17,7 @@ import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
 import * as Helper from '../../helper';
-import { checkIsWalkingOnWater, checkIsWalkingOnFire } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, playStepSoundByTile } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { PiercingKunai } from '../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
 import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
@@ -102,6 +102,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       's,ArrowDown': () => {
@@ -115,6 +116,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -128,6 +130,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'd,ArrowRight': () => {
@@ -141,6 +144,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => onAfterMoveOrAttack(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       p: () => new Say({

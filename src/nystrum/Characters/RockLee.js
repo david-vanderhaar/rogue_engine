@@ -20,7 +20,7 @@ import { DrunkenFist } from '../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
 import { GoToPreviousKeymap } from '../Actions/GoToPreviousKeymap';
 import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
 import { MoveTowards } from '../Actions/MoveTowards';
-import { checkIsWalkingOnFire } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, playStepSoundByTile } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import * as Behaviors from '../Entities/AI/Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
@@ -77,6 +77,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => checkIsWalkingOnFire(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       's,ArrowDown': () => {
@@ -90,6 +91,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => checkIsWalkingOnFire(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'a,ArrowLeft': () => {
@@ -103,6 +105,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => checkIsWalkingOnFire(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       'd,ArrowRight': () => {
@@ -116,6 +119,7 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           onAfter: () => checkIsWalkingOnFire(engine, actor),
+          onSuccess: () => playStepSoundByTile(actor),
         });
       },
       p: () => new Say({
