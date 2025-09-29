@@ -253,6 +253,28 @@ export const TILE_STEP_SOUNDS = {
     'grass_03',
     'grass_04',
     'grass_05',
+    // 'grass_06',
+    // 'grass_07',
+  ],
+  'GROUND_ALT': [
+    'hard_ground_01',
+    'hard_ground_02',
+    'hard_ground_03',
+    'hard_ground_04',
+  ],
+  'FLOOR': [
+    'hard_ground_01',
+    'hard_ground_02',
+    'hard_ground_03',
+    'hard_ground_04',
+  ],
+  'WATER': [
+    'water_01',
+    'water_02',
+    'water_03',
+    'water_04',
+    'water_05',
+    'water_06',
   ],
 }
 // export const TILE_KEY = {

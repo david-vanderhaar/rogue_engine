@@ -40,7 +40,17 @@ export const SOUNDS = {
   screech_03: createSoundFromSource('/sounds/tall_grass/monster/screech_03.ogg'),
   // steps
   // water
+  water_01: createSoundFromSource('/sounds/hidden_leaf/water-01.mp3'),
+  water_02: createSoundFromSource('/sounds/hidden_leaf/water-02.mp3'),
+  water_03: createSoundFromSource('/sounds/hidden_leaf/water-03.mp3'),
+  water_04: createSoundFromSource('/sounds/hidden_leaf/water-04.mp3'),
+  water_05: createSoundFromSource('/sounds/hidden_leaf/water-05.mp3'),
+  water_06: createSoundFromSource('/sounds/hidden_leaf/water-06.mp3'),
   // hard GROUND
+  hard_ground_01: createSoundFromSource('/sounds/hidden_leaf/hard_ground-01.mp3'),
+  hard_ground_02: createSoundFromSource('/sounds/hidden_leaf/hard_ground-02.mp3'),
+  hard_ground_03: createSoundFromSource('/sounds/hidden_leaf/hard_ground-03.mp3'),
+  hard_ground_04: createSoundFromSource('/sounds/hidden_leaf/hard_ground-04.mp3'),
   // grass GROUND
   grass_00: createSoundFromSource('/sounds/tall_grass/rustle/grass_00.mp3'),
   grass_01: createSoundFromSource('/sounds/tall_grass/rustle/grass_01.mp3'),
@@ -48,6 +58,8 @@ export const SOUNDS = {
   grass_03: createSoundFromSource('/sounds/tall_grass/rustle/grass_03.mp3'),
   grass_04: createSoundFromSource('/sounds/tall_grass/rustle/grass_04.mp3'),
   grass_05: createSoundFromSource('/sounds/tall_grass/rustle/grass_05.mp3'),
+  grass_06: createSoundFromSource('/sounds/hidden_leaf/grass_06.mp3'),
+  grass_07: createSoundFromSource('/sounds/hidden_leaf/grass_07.mp3'),
   // end steps
   light_up: createSoundFromSource('/sounds/tall_grass/light_up.mp3'),
   light_drain: createSoundFromSource('/sounds/tall_grass/light_drain.mp3', {volume: 0.2}),
