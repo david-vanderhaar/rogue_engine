@@ -22,6 +22,7 @@ import { TackleByRange } from '../Actions/TackleByRange';
 import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
+import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -223,22 +224,7 @@ function initialize (engine) {
   }
   // instantiate class
   let actor = new Player({
-    pos: { x: 23, y: 7 },
-    renderer: basicInfo.renderer,
-    name: 'Sasuke',
-    faction: 'SASUKE',
-    // enemyFactions: ['ALL'],
-    enemyFactions: ['OPPONENT'],
-    faction: 'PLAYER',
-    traversableTiles: ['WATER'],
-    actions: [],
-    speed: basicInfo.speed,
-    durability: basicInfo.durability,
-    onDecreaseDurability: () => HIDDEN_LEAF_SOUNDS.take_melee_hit.play(),
-    charge: basicInfo.charge,
-    game: engine.game,
-    presentingUI: true,
-    initializeKeymap: keymap,
+    ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
 
   // add default items to container

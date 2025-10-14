@@ -22,6 +22,7 @@ import { PreparePlaceActorInDirection } from '../Actions/PreparePlaceActorInDire
 import * as Behaviors from '../Entities/AI/Behaviors/index';
 import { Attack } from '../Actions/Attack';
 import { Move } from '../Actions/Move';
+import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
 const basicInfo = {
@@ -279,21 +280,7 @@ function initialize (engine) {
   }
   // instantiate class
   let actor = new Player({
-    pos: { x: 23, y: 7 },
-    renderer: basicInfo.renderer,
-    name: 'Kiba',
-    faction: 'KIBA',
-    // enemyFactions: ['ALL'],
-    enemyFactions: ['OPPONENT'],
-    faction: 'PLAYER',
-    traversableTiles: ['WATER'],
-    actions: [],
-    speed: basicInfo.speed,
-    durability: 100||basicInfo.durability,
-    charge: 100||basicInfo.charge,
-    game: engine.game,
-    presentingUI: true,
-    initializeKeymap: keymap,
+    ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
 
   // add default items to container

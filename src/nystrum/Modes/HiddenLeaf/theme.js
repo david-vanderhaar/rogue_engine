@@ -260,7 +260,7 @@ export const TILE_STEP_SOUNDS = {
     'hard_ground_01',
     'hard_ground_02',
     'hard_ground_03',
-    'hard_ground_04',
+    // 'hard_ground_04',
   ],
   'FLOOR': [
     'hard_ground_01',

@@ -27,6 +27,7 @@ import { WindPush } from '../Modes/HiddenLeaf/Items/Weapons/WindPush';
 import { WindSlice } from '../Modes/HiddenLeaf/Items/Weapons/WindSlice';
 import { AddStatusEffect } from '../Actions/AddStatusEffect';
 import { WindBursts } from '../Modes/HiddenLeaf/StatusEffects/WindBursts';
+import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -218,21 +219,7 @@ function initialize (engine) {
   }
   // instantiate class
   let actor = new Player({
-    pos: { x: 23, y: 7 },
-    renderer: basicInfo.renderer,
-    name: 'Tenten',
-    faction: 'TENTEN',
-    // enemyFactions: ['ALL'],
-    enemyFactions: ['OPPONENT'],
-    faction: 'PLAYER',
-    traversableTiles: ['WATER'],
-    actions: [],
-    speed: basicInfo.speed,
-    durability: basicInfo.durability,
-    charge: basicInfo.charge,
-    game: engine.game,
-    presentingUI: true,
-    initializeKeymap: keymap,
+    ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
 
   const windPushes = Array(100).fill('').map(() => WindPush(engine, { ...actor.pos }));

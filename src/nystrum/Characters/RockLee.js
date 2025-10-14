@@ -23,6 +23,7 @@ import { MoveTowards } from '../Actions/MoveTowards';
 import { checkIsWalkingOnFire, } from '../Modes/HiddenLeaf/StatusEffects/helper';
 import * as Behaviors from '../Entities/AI/Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
+import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
 
@@ -264,23 +265,13 @@ function initialize (engine) {
       },
     };
   }
+
   // instantiate class
   let actor = new Player({
-    pos: { x: 23, y: 7 },
-    renderer: basicInfo.renderer,
-    name: basicInfo.name,
-    // enemyFactions: ['ALL'],
-    enemyFactions: ['OPPONENT'],
-    faction: 'PLAYER',
-    actions: [],
-    speed: basicInfo.speed,
-    durability: basicInfo.durability,
-    onDecreaseDurability: () => HIDDEN_LEAF_SOUNDS.take_melee_hit.play(),
-    charge: basicInfo.charge,
-    game: engine.game,
-    presentingUI: true,
-    initializeKeymap: keymap,
+    ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
+
+  actor.traversableTiles = [];
 
   // add default items to container
   // const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));

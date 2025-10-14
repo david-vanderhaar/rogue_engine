@@ -23,6 +23,7 @@ import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
 import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
 import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
 import { ShinoBugCage } from '../Modes/HiddenLeaf/Items/Weapons/ShinoBugCage';
+import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shino.png`;
 const basicInfo = {
@@ -188,21 +189,7 @@ function initialize (engine) {
   }
   // instantiate class
   let actor = new Player({
-    pos: { x: 23, y: 7 },
-    renderer: basicInfo.renderer,
-    name: 'Shino',
-    faction: 'SHINO',
-    // enemyFactions: ['ALL'],
-    enemyFactions: ['OPPONENT'],
-    faction: 'PLAYER',
-    traversableTiles: ['WATER'],
-    actions: [],
-    speed: basicInfo.speed,
-    durability: basicInfo.durability,
-    charge: basicInfo.charge,
-    game: engine.game,
-    presentingUI: true,
-    initializeKeymap: keymap,
+    ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
 
   // add default items to container

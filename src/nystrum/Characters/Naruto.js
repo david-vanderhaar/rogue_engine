@@ -25,6 +25,7 @@ import { SpawnShadowClones } from '../Actions/SpawnShadowClones';
 import { DurabilityResource } from '../Actions/ActionResources/DurabilityResource';
 import { UzumakiBarrage } from '../Modes/HiddenLeaf/Items/Weapons/UzumakiBarrage';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
+import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
 const basicInfo = {
@@ -192,21 +193,7 @@ function initialize (engine) {
   }
   // instantiate class
   let actor = new Player({
-    pos: { x: 23, y: 7 },
-    renderer: basicInfo.renderer,
-    name: 'Naruto',
-    faction: 'NARUTO',
-    // enemyFactions: ['ALL'],
-    enemyFactions: ['OPPONENT'],
-    faction: 'PLAYER',
-    traversableTiles: ['WATER'],
-    actions: [],
-    speed: basicInfo.speed,
-    durability: basicInfo.durability,
-    charge: basicInfo.charge,
-    game: engine.game,
-    presentingUI: true,
-    initializeKeymap: keymap,
+    ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
 
   // add default items to container

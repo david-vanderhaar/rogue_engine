@@ -86,6 +86,11 @@ export function ProgressBar ({
   attributeValue,
   unit,
 }) {
+  // console.log(actor);
+  // console.log(actor.name);
+  // console.log(attributePath);
+  // console.log( _.get(actor, attributePath, 0));
+  
   const valueMax = attributeValueMax || _.get(actor, attributePathMax, 0) / unit;
   const valueCurrent = attributeValue || _.get(actor, attributePath, 0) / unit;
   return (

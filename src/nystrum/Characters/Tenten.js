@@ -29,6 +29,7 @@ import { PlaceItem } from '../Actions/PlaceItem';
 import * as TentenSummons from '../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
 import { destroyEntity } from '../Entities/helper';
 import { SpawnAndPlaceItem } from '../Actions/SpawnAndPlaceItem';
+import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/tenten.png`;
 const basicInfo = {
@@ -233,21 +234,7 @@ function initialize (engine) {
   }
   // instantiate class
   let actor = new Player({
-    pos: { x: 23, y: 7 },
-    renderer: basicInfo.renderer,
-    name: 'Tenten',
-    faction: 'TENTEN',
-    // enemyFactions: ['ALL'],
-    enemyFactions: ['OPPONENT'],
-    faction: 'PLAYER',
-    traversableTiles: ['WATER'],
-    actions: [],
-    speed: basicInfo.speed,
-    durability: basicInfo.durability,
-    charge: basicInfo.charge,
-    game: engine.game,
-    presentingUI: true,
-    initializeKeymap: keymap,
+    ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
 
   // add default items to container

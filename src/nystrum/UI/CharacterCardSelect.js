@@ -87,7 +87,7 @@ const CharacterCardSelect = ({characters, setActiveScreen, setSelectedCharacter}
             
             return (
               <div 
-                key={character.basicInfo.name}
+                key={character.basicInfo.name.split(' ').join('_')}
                 style={{ 
                   opacity,
                   // width: 210,
@@ -127,6 +127,9 @@ const CharacterCard = React.forwardRef(({character, setActiveScreen, setSelected
 
   return (
     <button
+      // snake_case the character name for the key
+      // index={actor.name.split(' ').join('_').toLowerCase()}
+      // key={actor.name.split(' ').join('_').toLowerCase()}
       className='hidden-leaf-character-card'
       style={{
         '--character-background-color': background,
