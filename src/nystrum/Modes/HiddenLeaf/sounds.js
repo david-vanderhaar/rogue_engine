@@ -38,6 +38,16 @@ export const SOUNDS = {
   screech_01: createSoundFromSource('/sounds/tall_grass/monster/screech_01.ogg'),
   screech_02: createSoundFromSource('/sounds/tall_grass/monster/screech_02.ogg'),
   screech_03: createSoundFromSource('/sounds/tall_grass/monster/screech_03.ogg'),
+  // melee hits
+  punch_01: createSoundFromSource('/sounds/hidden_leaf/punch--01.mp3'),
+  punch_02: createSoundFromSource('/sounds/hidden_leaf/punch--02.mp3'),
+  punch_03: createSoundFromSource('/sounds/hidden_leaf/punch--03.mp3'),
+  punch_04: createSoundFromSource('/sounds/hidden_leaf/punch--04.mp3'),
+  punch_05: createSoundFromSource('/sounds/hidden_leaf/punch--05.mp3'),
+  punch_06: createSoundFromSource('/sounds/hidden_leaf/punch--06.mp3'),
+  punch_07: createSoundFromSource('/sounds/hidden_leaf/punch--07.mp3'),
+  punch_08: createSoundFromSource('/sounds/hidden_leaf/punch--08.mp3'),
+  // end
   // steps
   // water
   water_01: createSoundFromSource('/sounds/hidden_leaf/water-01.mp3'),

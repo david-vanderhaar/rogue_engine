@@ -29,8 +29,7 @@ export class Attack extends Base {
     }
     success = this.actor.attack(this.targetPos, this.additionalDamage);
     if (success) {
-      const sound = Helper.getRandomInArray([SOUNDS.chop_0, SOUNDS.chop_1]);
-      sound.play();
+      this.playAttackSound()
       this.addParticle(1, { ...this.targetPos }, { x: 0, y: 0 });
       SpatterEmitter({
         game: this.game,
@@ -46,5 +45,10 @@ export class Attack extends Base {
       alternative,
     };
   }
-}
-;
+
+  playAttackSound() {
+    const sounds = this.actor?.meleeSounds || [SOUNDS.chop_0, SOUNDS.chop_1]
+    const sound = Helper.getRandomInArray(sounds);
+    sound.play();
+  }
+};

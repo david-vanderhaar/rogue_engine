@@ -13,6 +13,7 @@ import { SOUNDS as HIDDEN_LEAF_SOUNDS } from './sounds';
 import * as _ from 'lodash';
 import { TILE_KEY } from './theme';
 import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
+import { onDecreaseDurabilitySound } from './Characters/Utilities/characterHelper';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
@@ -448,7 +449,7 @@ export class Chunin extends Mode {
       charge: 20,
       faction: 'OPPONENT',
       enemyFactions: ['PLAYER'],
-      onDecreaseDurability: () => HIDDEN_LEAF_SOUNDS.take_melee_hit.play(),
+      onDecreaseDurability: () => onDecreaseDurabilitySound(),
       behaviors: stats?.behaviors || [
         new Behaviors.MoveTowardsEnemy({
           repeat: stats.speed/Constant.ENERGY_THRESHOLD,

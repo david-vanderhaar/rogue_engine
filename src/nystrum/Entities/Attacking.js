@@ -2,10 +2,11 @@ import { MESSAGE_TYPE } from '../message';
 import * as Helper from '../../helper';
 
 export const Attacking = superclass => class extends superclass {
-  constructor({ attackDamage = 2, ...args }) {
+  constructor({ attackDamage = 2, meleeSounds = null, ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('ATTACKING');
     this.attackDamage = attackDamage;
+    this.meleeSounds = meleeSounds;
   }
 
   getAttackDamage(additional = 0) {
