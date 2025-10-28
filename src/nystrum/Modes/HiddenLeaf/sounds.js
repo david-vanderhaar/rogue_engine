@@ -48,7 +48,19 @@ export const SOUNDS = {
   punch_07: createSoundFromSource('/sounds/hidden_leaf/punch--07.mp3'),
   punch_08: createSoundFromSource('/sounds/hidden_leaf/punch--08.mp3'),
   // end
-  // steps
+  // take damage
+  take_damage_01: createSoundFromSource('/sounds/hidden_leaf/take-damage-01.mp3', {volume: 0.4}),
+  take_damage_02: createSoundFromSource('/sounds/hidden_leaf/take-damage-02.mp3', {volume: 0.4}),
+  take_damage_03: createSoundFromSource('/sounds/hidden_leaf/take-damage-03.mp3', {volume: 0.4}),
+  take_damage_04: createSoundFromSource('/sounds/hidden_leaf/take-damage-04.mp3', {volume: 0.4}),
+  take_damage_05: createSoundFromSource('/sounds/hidden_leaf/take-damage-05.mp3', {volume: 0.4}),
+  take_damage_06: createSoundFromSource('/sounds/hidden_leaf/take-damage-06.mp3', {volume: 0.4}),
+  take_damage_07: createSoundFromSource('/sounds/hidden_leaf/take-damage-07.mp3', {volume: 0.4}),
+  take_damage_08: createSoundFromSource('/sounds/hidden_leaf/take-damage-08.mp3', {volume: 0.4}),
+  take_damage_09: createSoundFromSource('/sounds/hidden_leaf/take-damage-09.mp3', {volume: 0.4}),
+  take_damage_10: createSoundFromSource('/sounds/hidden_leaf/take-damage-10.mp3', {volume: 0.4}),
+  take_damage_11: createSoundFromSource('/sounds/hidden_leaf/take-damage-11.mp3', {volume: 0.4}),
+  // end
   // water
   water_01: createSoundFromSource('/sounds/hidden_leaf/water-01.mp3'),
   water_02: createSoundFromSource('/sounds/hidden_leaf/water-02.mp3'),

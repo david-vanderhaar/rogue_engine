@@ -53,6 +53,11 @@ const basicInfo = {
   durability: 10,
   charge: 6,
   portrait,
+  soundOptions: {
+    onDecreaseDurability: {
+      rate: 0.8,
+    },
+  }
 }
 
 function initialize (engine) {
