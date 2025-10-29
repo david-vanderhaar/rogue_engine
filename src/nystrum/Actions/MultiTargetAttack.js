@@ -1,6 +1,8 @@
 import { Base } from './Base';
 import { Say } from './Say';
 import * as Constant from '../constants';
+import * as Helper from '../../helper';
+import SOUNDS from '../sounds';
 
 export class MultiTargetAttack extends Base {
   constructor({ targetPositions, processDelay = 25, ...args }) {
@@ -32,11 +34,17 @@ export class MultiTargetAttack extends Base {
     this.addParticle(particlePath.length + 1, particlePos, null, renderer, Constant.PARTICLE_TYPE.path, particlePath);
     if (success) {
       this.actor.energy -= this.energyCost;
+      this.playAttackSound()
     }
     return {
       success,
       alternative,
     };
   }
-}
-;
+
+  playAttackSound() {
+    const sounds = this.actor?.meleeSounds || [SOUNDS.chop_0, SOUNDS.chop_1]
+    const sound = Helper.getRandomInArray(sounds);
+    sound.play();
+  }
+};

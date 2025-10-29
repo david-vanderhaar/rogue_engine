@@ -22,7 +22,8 @@ import { PreparePlaceActorInDirection } from '../Actions/PreparePlaceActorInDire
 import * as Behaviors from '../Entities/AI/Behaviors/index';
 import { Attack } from '../Actions/Attack';
 import { Move } from '../Actions/Move';
-import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
 const basicInfo = {
@@ -251,6 +252,16 @@ function initialize (engine) {
             durability: 4,
             attackDamage: 1,
             // speed: Constant.ENERGY_THRESHOLD * 6,
+            onDecreaseDurability: () => {
+              playRandomSoundFromArray([
+                'wretch_melee_01',
+              ], {rate: 1.6});
+            },
+            meleeSounds: [
+              HIDDEN_LEAF_SOUNDS.wretch_melee_01,
+              HIDDEN_LEAF_SOUNDS.wretch_melee_02,
+              HIDDEN_LEAF_SOUNDS.wretch_melee_03,
+            ],
             behaviors: [
               // new Behaviors.MoveTowardsEnemy({repeat: 6, maintainDistanceOf: 0, chainOnSuccess: true}),
               new Behaviors.MoveTowardsEnemy({repeat: 6, maintainDistanceOf: 0, chainOnFail: true}),
