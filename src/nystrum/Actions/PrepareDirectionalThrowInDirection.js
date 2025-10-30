@@ -4,6 +4,7 @@ import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { TYPE } from '../items';
 import { DIRECTIONS, ENERGY_THRESHOLD, THEMES } from '../constants';
 import * as Helper from '../../helper';
+import { playRandomSoundFromArray } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 export class PrepareDirectionalThrowInDirection extends Base {
   constructor({ 
@@ -114,6 +115,7 @@ export class PrepareDirectionalThrowInDirection extends Base {
             this.actor.removeFromContainer(projectile);
             this.actor.setNextAction(goToPreviousKeymap);
             this.passThroughOnSuccess({direction: DIRECTIONS[this.directionToPrepareThrow]});
+            playRandomSoundFromArray(['kunai_throw_01', 'kunai_throw_02'], {rate: 0.8});
           },
         })
       },
@@ -125,3 +127,5 @@ export class PrepareDirectionalThrowInDirection extends Base {
     };
   }
 };
+
+
