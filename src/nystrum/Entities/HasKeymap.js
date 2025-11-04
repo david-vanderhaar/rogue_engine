@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {SOUNDS as HIDDEN_LEAF_SOUNDS} from '../Modes/HiddenLeaf/sounds'
 
 export const HasKeymap = superclass => class extends superclass {
   constructor({ initializeKeymap, ...args }) {
@@ -31,11 +32,16 @@ export const HasKeymap = superclass => class extends superclass {
 
   setKeymap (newKeymap) {
     this.addKeymap(newKeymap);
+    this.playSetKeymapSound();
     return this.getKeymap;
   }
 
   goToPreviousKeymap () {
     if (this.keymapStack.length > 1) this.removeKeymap();
     return this.getKeymap();
+  }
+
+  playSetKeymapSound() {
+    HIDDEN_LEAF_SOUNDS.basic_jutsu_cast.play();
   }
 };

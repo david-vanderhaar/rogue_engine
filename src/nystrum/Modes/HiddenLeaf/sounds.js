@@ -38,6 +38,8 @@ export const SOUNDS = {
   screech_01: createSoundFromSource('/sounds/tall_grass/monster/screech_01.ogg'),
   screech_02: createSoundFromSource('/sounds/tall_grass/monster/screech_02.ogg'),
   screech_03: createSoundFromSource('/sounds/tall_grass/monster/screech_03.ogg'),
+  // jutsus
+  basic_jutsu_cast: createSoundFromSource('/sounds/hidden_leaf/hand_sign_activation.wav', {volume: 1}),
   // kunai throw
   kunai_throw_01: createSoundFromSource('/sounds/hidden_leaf/kunai_throw.wav'),
   kunai_throw_02: createSoundFromSource('/sounds/hidden_leaf/kunai_throw_2.wav'),
