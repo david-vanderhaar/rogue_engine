@@ -20,6 +20,7 @@ export const SOUND_MANAGER = {
 }
 
 export const SOUNDS = {
+  pass_turn: createSoundFromSource('/sounds/hidden_leaf/pass_turn.mp3'),
   wood_button: createSoundFromSource('/sounds/hidden_leaf/wood_block.mp3'),
   title_theme: createSoundFromSource('/sounds/hidden_leaf/title_theme.mp3', {loop: true}),
   character_select_theme: createSoundFromSource('/sounds/hidden_leaf/character_select_theme.mp3', {loop: true}),

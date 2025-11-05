@@ -1,33 +1,33 @@
 // import deps
-import * as Item from '../items';
-import * as Constant from '../constants';
-import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
-import { Player } from '../Entities/index';
-import { ContainerSlot } from '../Entities/Containing';
-import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
-import {Say} from '../Actions/Say';
-import {MoveOrAttackWithTileSound} from '../Actions/MoveOrAttackWithTileSound';
-import {PrepareRangedAttack} from '../Actions/PrepareRangedAttack';
-import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
-import {OpenInventory} from '../Actions/OpenInventory';
-import {OpenEquipment} from '../Actions/OpenEquipment';
-import {OpenDropInventory} from '../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
-import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import * as Helper from '../../helper';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
-import { PiercingKunai } from '../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
-import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
-import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
-import * as TentenSummons from '../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
-import { SpawnAndPlaceItem } from '../Actions/SpawnAndPlaceItem';
-import { WindPush } from '../Modes/HiddenLeaf/Items/Weapons/WindPush';
-import { WindSlice } from '../Modes/HiddenLeaf/Items/Weapons/WindSlice';
-import { AddStatusEffect } from '../Actions/AddStatusEffect';
-import { WindBursts } from '../Modes/HiddenLeaf/StatusEffects/WindBursts';
-import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import * as Item from '../../../items';
+import * as Constant from '../../../constants';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
+import { Player } from '../../../Entities/index';
+import { ContainerSlot } from '../../../Entities/Containing';
+import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
+import {StandStill} from '../../../Actions/StandStill';
+import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
+import {PrepareRangedAttack} from '../../../Actions/PrepareRangedAttack';
+import {PrepareDirectionalThrow} from '../../../Actions/PrepareDirectionalThrow';
+import {OpenInventory} from '../../../Actions/OpenInventory';
+import {OpenEquipment} from '../../../Actions/OpenEquipment';
+import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
+import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
+import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
+import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
+import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
+import * as Helper from '../../../../helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
+import { PiercingKunai } from '../../../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
+import { ExplodingTag } from '../../../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
+import { PrepareSubstitution } from '../../../Actions/PrepareSubstitution';
+import * as TentenSummons from '../../../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
+import { SpawnAndPlaceItem } from '../../../Actions/SpawnAndPlaceItem';
+import { WindPush } from '../../../Modes/HiddenLeaf/Items/Weapons/WindPush';
+import { WindSlice } from '../../../Modes/HiddenLeaf/Items/Weapons/WindSlice';
+import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
+import { WindBursts } from '../../../Modes/HiddenLeaf/StatusEffects/WindBursts';
+import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -144,16 +144,15 @@ function initialize (engine) {
           onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
-      p: () => new Say({
+      p: () => new StandStill({
         label: 'Stay',
-        message: 'standing still...',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      Escape: () => new Say({
-        label: 'Pass',
-        message: 'pass turn...',
+      Escape: () => new StandStill({
+        label: 'Pass turn',
+        message: '...',
         game: engine.game,
         actor,
         energyCost: actor.energy,

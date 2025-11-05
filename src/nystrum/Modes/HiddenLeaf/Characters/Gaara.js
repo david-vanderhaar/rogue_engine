@@ -1,57 +1,63 @@
 // import deps
-import * as Constant from '../constants';
-import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
-import { Player } from '../Entities/index';
-import { ContainerSlot } from '../Entities/Containing';
-import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
-import {Say} from '../Actions/Say';
-import {MoveOrAttackWithTileSound} from '../Actions/MoveOrAttackWithTileSound';
-import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
-import {OpenInventory} from '../Actions/OpenInventory';
-import {OpenDropInventory} from '../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
-import { ExplodingTag } from '../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
-import { PrepareSubstitution } from '../Actions/PrepareSubstitution';
-import { PrepareRangedAction } from '../Actions/PrepareRangedAction';
-import { AddStatusEffectAtPosition } from '../Actions/AddStatusEffectAtPosition';
-import GradientPathEmitter from '../Engine/Particle/Emitters/gradientPathEmitter';
-import ShadowHold from '../StatusEffects/ShadowHold';
-import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import * as Item from '../../../items'
+import * as Constant from '../../../constants';
+import { Player } from '../../../Entities/index';
+import { ContainerSlot } from '../../../Entities/Containing';
+import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
+import {StandStill} from '../../../Actions/StandStill';
+import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
+import {PrepareSandWall} from '../../../Actions/SandWall';
+import {PrepareDirectionalThrow} from '../../../Actions/PrepareDirectionalThrow';
+import {PrepareSubstitution} from '../../../Actions/PrepareSubstitution';
+import {SandPulse} from '../../../Actions/SandPulse';
+import {AddSandSkinStatusEffect} from '../../../Actions/AddSandSkinStatusEffect';
+import {OpenInventory} from '../../../Actions/OpenInventory';
+import {OpenEquipment} from '../../../Actions/OpenEquipment';
+import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
+import {CloneSelf} from '../../../Actions/CloneSelf';
+import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
+import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
-const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shikamaru.png`;
+const portrait =  `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`;
+
 const basicInfo = {
-  name: 'Shikamaru',
-  description: 'The master strategist',
+  name: 'Gaara',
+  description: 'Some say he is a demon.',
   renderer: {
-    character: 'S',
-    color: HIDDEN_LEAF_COLORS.shikamaru_alt,
-    background: HIDDEN_LEAF_COLORS.shikamaru,
+    character: 'G',
+    color: Constant.THEMES.SOLARIZED.base2,
+    background: Constant.THEMES.NARUTO.gaara,
     portrait,
     basePortrait: portrait,
     damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,
   },
   abilities: [
     {
-      name: 'Sub. Jutsu',
-      description: 'You were never there.',
+      name: 'Sand Wall',
+      description: 'A technique where the user creates a wall of sand to protect themselves.',
     },
     {
-      name: 'Exploding Tags',
-      description: 'Throws an exploding tag in the direction of the target.',
+      name: 'Sand Pulse',
+      description: 'A technique where the user sends a wave of sand out in all directions.',
     },
     {
-      name: 'Shadow Hold',
-      description: 'Bind your opponent with the Nara Clan\'s jutsu.',
+      name: 'Sand Skin',
+      description: 'A technique where the user covers themselves in sand to protect themselves.',
     },
   ],
-  speedRating: 2,
-  durabilityRating: 1,
+  speedRating: 1,
+  durabilityRating: 3,
   chakraRating: 2,
-  speed: 500,
-  durability: 4,
-  charge: 7,
+  speed: 300,
+  durability: 10,
+  charge: 6,
   portrait,
+  soundOptions: {
+    onDecreaseDurability: {
+      rate: 0.8,
+    },
+  }
 }
 
 function initialize (engine) {
@@ -116,53 +122,24 @@ function initialize (engine) {
           onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
-      p: () => new Say({
+      p: () => new StandStill({
         label: 'Stay',
-        message: 'standing still...',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      Escape: () => new Say({
-        label: 'Pass',
-        message: 'pass turn...',
+      Escape: () => new StandStill({
+        label: 'Pass turn',
+        message: '...',
         game: engine.game,
         actor,
         energyCost: actor.energy,
       }),
-      l: () => new PrepareRangedAction({
-        label: 'Shadow Hold',
+      l: () => new PrepareSandWall({
+        label: 'Sand Wall',
         game: engine.game,
         actor,
-        range: 5,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [],
-        keymapTriggerString: 'l',
-        // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
-        actionClass: AddStatusEffectAtPosition,
-        actionParams: {
-          effect: new ShadowHold({ game: engine.game, turnsStunned: 3 }),
-          label: 'Shadow Hold',
-          onSuccess: () => {
-            GradientPathEmitter({
-              game: engine.game,
-              fromPosition: actor.getPosition(),
-              targetPositions: actor.getCursorPositions(),
-              animationTimeStep: 0.8,
-              // animationTimeStep: 0.1,
-              // transfersBackground: true,
-              backgroundColorGradient: [HIDDEN_LEAF_COLORS.black, HIDDEN_LEAF_COLORS.black],
-              character: '',
-            }).start()
-          }
-        }
-      }),
-      f: () => new PrepareDirectionalThrow({
-        label: 'Exploding Tag',
-        projectileType: 'exploding tag',
-        game: engine.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        sandWallRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
       }),
       r: () => new PrepareSubstitution({
         label: 'Substitution',
@@ -170,6 +147,37 @@ function initialize (engine) {
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
+      }),
+      k: () => new SandPulse({
+        label: 'Sand Pulse',
+        game: engine.game,
+        actor,
+      }),
+      h: () => new AddSandSkinStatusEffect({
+        label: 'Sand Skin',
+        game: engine.game,
+        actor,
+        requiredResources: [
+          new ChakraResource({ getResourceCost: () => 2 }),
+        ],
+      }),
+      c: () => new CloneSelf({
+        label: 'Sand Clone',
+        game: engine.game,
+        actor,
+        cloneArgs: [
+          {
+            attribute: 'renderer',
+            value: { ...actor.renderer, background: '#A89078' }
+          },
+          {
+            attribute: 'ignoredKeys',
+            value: ['g'],
+          },
+        ],
+        requiredResources: [
+          new ChakraResource({ getResourceCost: () => 4 }),
+        ],
       }),
       i: () => new OpenInventory({
         label: 'Inventory',
@@ -190,9 +198,13 @@ function initialize (engine) {
         label: 'Pickup',
         game: engine.game,
         actor,
-        attemptEquip: true,
       }),
-      // h: () => null,
+      // t: () => new PrepareDirectionalThrow({
+      //   label: 'Throw',
+      //   game: engine.game,
+      //   actor,
+      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      // })
     };
   }
   // instantiate class
@@ -201,14 +213,18 @@ function initialize (engine) {
   })
 
   // add default items to container
+  // const kunais = Array(100).fill('').map(() => Item.directionalKunai(engine, { ...actor.pos }, null, 10));
   // const swords = Array(2).fill('').map(() => Item.sword(engine));
-  const tags = Array(2).fill('').map(() => ExplodingTag(engine, { ...actor.pos }));
-  actor.container = [
-    new ContainerSlot({
-      itemType: tags[0].name,
-      items: tags,
-    }),
-  ]
+  // actor.container = [
+  //   new ContainerSlot({
+  //     itemType: kunais[0].name,
+  //     items: kunais,
+  //   }),
+  //   new ContainerSlot({
+  //     itemType: swords[0].name,
+  //     items: swords,
+  //   }),
+  // ]
 
   return actor;
 }

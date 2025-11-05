@@ -8,16 +8,16 @@ import Level from '../Modes/HiddenLeaf/Screen/Level';
 import CharacterSelect from '../Modes/HiddenLeaf/Screen/CharacterSelect';
 import Tournament from '../Modes/HiddenLeaf/Screen/Tournament';
 import { SCREENS } from '../Modes/HiddenLeaf/Screen/constants';
-import RockLee from '../Characters/RockLee';
-import Gaara from '../Characters/Gaara';
-import Sasuke from '../Characters/Sasuke';
-import Naruto from '../Characters/Naruto';
-import Tenten from '../Characters/Tenten';
-import Temari from '../Characters/Temari';
-import Shino from '../Characters/Shino';
-import Kiba from '../Characters/Kiba';
-import Neji from '../Characters/Neji';
-import Shikamaru from '../Characters/Shikamaru';
+import RockLee from '../Modes/HiddenLeaf/Characters/RockLee';
+import Gaara from '../Modes/HiddenLeaf/Characters/Gaara';
+import Sasuke from '../Modes/HiddenLeaf/Characters/Sasuke';
+import Naruto from '../Modes/HiddenLeaf/Characters/Naruto';
+import Tenten from '../Modes/HiddenLeaf/Characters/Tenten';
+import Temari from '../Modes/HiddenLeaf/Characters/Temari';
+import Shino from '../Modes/HiddenLeaf/Characters/Shino';
+import Kiba from '../Modes/HiddenLeaf/Characters/Kiba';
+import Neji from '../Modes/HiddenLeaf/Characters/Neji';
+import Shikamaru from '../Modes/HiddenLeaf/Characters/Shikamaru';
 
 export const hiddenLeafCart = () => {
   return (

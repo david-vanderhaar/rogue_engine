@@ -1,29 +1,29 @@
 // import deps
-import * as Item from '../items';
-import * as Constant from '../constants';
-import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
-import { Player } from '../Entities/index';
-import { ContainerSlot } from '../Entities/Containing';
-import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
-import {Say} from '../Actions/Say';
-import {MoveOrAttackWithTileSound} from '../Actions/MoveOrAttackWithTileSound';
-import {OpenInventory} from '../Actions/OpenInventory';
-import {OpenEquipment} from '../Actions/OpenEquipment';
-import {OpenDropInventory} from '../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
-import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { getPositionInDirection } from '../../helper';
-import { Attack } from '../Actions/Attack';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
-import { SpawnKikaichu } from '../Actions/SpawnKikaichu';
-import { StatLeechAttack } from '../Actions/StatLeechAttack';
-import { StatChakraLeechAttack } from '../Actions/StatChakraLeechAttack';
-import { SmokeGrenade } from '../Items/Weapons/SmokeGrenade';
-import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
-import { ShinoBugCage } from '../Modes/HiddenLeaf/Items/Weapons/ShinoBugCage';
-import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import * as Item from '../../../items';
+import * as Constant from '../../../constants';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
+import { Player } from '../../../Entities/index';
+import { ContainerSlot } from '../../../Entities/Containing';
+import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
+import {StandStill} from '../../../Actions/StandStill';
+import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
+import {OpenInventory} from '../../../Actions/OpenInventory';
+import {OpenEquipment} from '../../../Actions/OpenEquipment';
+import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
+import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
+import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
+import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
+import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
+import { getPositionInDirection } from '../../../../helper';
+import { Attack } from '../../../Actions/Attack';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
+import { SpawnKikaichu } from '../../../Actions/SpawnKikaichu';
+import { StatLeechAttack } from '../../../Actions/StatLeechAttack';
+import { StatChakraLeechAttack } from '../../../Actions/StatChakraLeechAttack';
+import { SmokeGrenade } from '../../../Items/Weapons/SmokeGrenade';
+import { PrepareDirectionalThrow } from '../../../Actions/PrepareDirectionalThrow';
+import { ShinoBugCage } from '../../../Modes/HiddenLeaf/Items/Weapons/ShinoBugCage';
+import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shino.png`;
 const basicInfo = {
@@ -121,16 +121,15 @@ function initialize (engine) {
           onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
-      p: () => new Say({
+      p: () => new StandStill({
         label: 'Stay',
-        message: 'standing still...',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      Escape: () => new Say({
-        label: 'Pass',
-        message: 'pass turn...',
+      Escape: () => new StandStill({
+        label: 'Pass turn',
+        message: '...',
         game: engine.game,
         actor,
         energyCost: actor.energy,

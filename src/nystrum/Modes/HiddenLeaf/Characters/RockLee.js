@@ -1,29 +1,30 @@
 // import deps
-import * as Item from '../items';
-import * as Constant from '../constants';
-import { Player } from '../Entities/index';
-import { ContainerSlot } from '../Entities/Containing';
-import { ChakraResource } from '../Actions/ActionResources/ChakraResource';
-import { Say } from '../Actions/Say';
-import { MoveOrAttackWithTileSound } from '../Actions/MoveOrAttackWithTileSound';
-import { MultiTargetAttack } from '../Actions/MultiTargetAttack';
-import { OpenInventory } from '../Actions/OpenInventory';
-import { OpenEquipment } from '../Actions/OpenEquipment';
-import { OpenDropInventory } from '../Actions/OpenDropInventory';
-import { PickupRandomItem } from '../Actions/PickupRandomItem';
-import { PrepareDirectionalThrow } from '../Actions/PrepareDirectionalThrow';
-import { PrepareTackle } from '../Actions/PrepareTackle';
-import { AddOpenGatesStatusEffect } from '../Actions/AddOpenGatesStatusEffect';
-import { AddStatusEffect } from '../Actions/AddStatusEffect';
-import { RemoveWeights } from '../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
-import { DrunkenFist } from '../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
-import { GoToPreviousKeymap } from '../Actions/GoToPreviousKeymap';
-import { MoveTargetingCursor } from '../Actions/MoveTargetingCursor';
-import { MoveTowards } from '../Actions/MoveTowards';
-import { checkIsWalkingOnFire, } from '../Modes/HiddenLeaf/StatusEffects/helper';
-import * as Behaviors from '../Entities/AI/Behaviors';
-import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
-import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import * as Item from '../../../items';
+import * as Constant from '../../../constants';
+import { Player } from '../../../Entities/index';
+import { ContainerSlot } from '../../../Entities/Containing';
+import { ChakraResource } from '../../../Actions/ActionResources/ChakraResource';
+import { Say } from '../../../Actions/Say';
+import { MoveOrAttackWithTileSound } from '../../../Actions/MoveOrAttackWithTileSound';
+import { MultiTargetAttack } from '../../../Actions/MultiTargetAttack';
+import { OpenInventory } from '../../../Actions/OpenInventory';
+import { OpenEquipment } from '../../../Actions/OpenEquipment';
+import { OpenDropInventory } from '../../../Actions/OpenDropInventory';
+import { PickupRandomItem } from '../../../Actions/PickupRandomItem';
+import { PrepareDirectionalThrow } from '../../../Actions/PrepareDirectionalThrow';
+import { PrepareTackle } from '../../../Actions/PrepareTackle';
+import { AddOpenGatesStatusEffect } from '../../../Actions/AddOpenGatesStatusEffect';
+import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
+import { RemoveWeights } from '../../../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
+import { DrunkenFist } from '../../../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
+import { GoToPreviousKeymap } from '../../../Actions/GoToPreviousKeymap';
+import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
+import { MoveTowards } from '../../../Actions/MoveTowards';
+import { checkIsWalkingOnFire, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
+import * as Behaviors from '../../../Entities/AI/Behaviors';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
+import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { StandStill } from '../../../Actions/StandStill';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
 
@@ -119,16 +120,15 @@ function initialize (engine) {
           onAfter: () => checkIsWalkingOnFire(engine, actor),
         });
       },
-      p: () => new Say({
+      p: () => new StandStill({
         label: 'Stay',
-        message: 'standing still...',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      Escape: () => new Say({
-        label: 'Pass',
-        message: 'pass turn...',
+      Escape: () => new StandStill({
+        label: 'Pass turn',
+        message: '...',
         game: engine.game,
         actor,
         energyCost: actor.energy,

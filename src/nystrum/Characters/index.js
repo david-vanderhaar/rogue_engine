@@ -2,9 +2,9 @@ import The_Scout from './GearLight';
 import The_Veteran from './GearHeavy';
 import The_Stranded from './GearStranded';
 import The_Commander from './GearCommander';
-import Rock_Lee from './RockLee';
-import Gaara from './Gaara';
-import Naruto from './Naruto';
+import Rock_Lee from '../Modes/HiddenLeaf/Characters/RockLee';
+import Gaara from '../Modes/HiddenLeaf/Characters/Gaara';
+import Naruto from '../Modes/HiddenLeaf/Characters/Naruto';
 import FireFighter from './FireFighter';
 
 export default {

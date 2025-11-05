@@ -1,29 +1,29 @@
 // import deps
-import * as Item from '../items';
-import * as Constant from '../constants';
-import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
-import { JacintoAI, Player } from '../Entities/index';
-import { ContainerSlot } from '../Entities/Containing';
-import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
-import {Say} from '../Actions/Say';
-import {MoveOrAttackWithTileSound} from '../Actions/MoveOrAttackWithTileSound';
-import {OpenInventory} from '../Actions/OpenInventory';
-import {OpenDropInventory} from '../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
-import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { calculateStraightPath, getDirectionFromOrigin, getPositionInDirection } from '../../helper';
-import { TackleByRange } from '../Actions/TackleByRange';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
-import { AddStatusEffect } from '../Actions/AddStatusEffect';
-import { WolfSpeed } from '../Modes/HiddenLeaf/StatusEffects/WolfSpeed';
-import { PreparePlaceActorInDirection } from '../Actions/PreparePlaceActorInDirection';
-import * as Behaviors from '../Entities/AI/Behaviors/index';
-import { Attack } from '../Actions/Attack';
-import { Move } from '../Actions/Move';
-import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
-import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
+import * as Item from '../../../items';
+import * as Constant from '../../../constants';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
+import { JacintoAI, Player } from '../../../Entities/index';
+import { ContainerSlot } from '../../../Entities/Containing';
+import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
+import {StandStill} from '../../../Actions/StandStill';
+import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
+import {OpenInventory} from '../../../Actions/OpenInventory';
+import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
+import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
+import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
+import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
+import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
+import { calculateStraightPath, getDirectionFromOrigin, getPositionInDirection } from '../../../../helper';
+import { TackleByRange } from '../../../Actions/TackleByRange';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
+import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
+import { WolfSpeed } from '../../../Modes/HiddenLeaf/StatusEffects/WolfSpeed';
+import { PreparePlaceActorInDirection } from '../../../Actions/PreparePlaceActorInDirection';
+import * as Behaviors from '../../../Entities/AI/Behaviors/index';
+import { Attack } from '../../../Actions/Attack';
+import { Move } from '../../../Actions/Move';
+import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
 const basicInfo = {
@@ -120,16 +120,15 @@ function initialize (engine) {
           onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
-      p: () => new Say({
+      p: () => new StandStill({
         label: 'Stay',
-        message: 'standing still...',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      Escape: () => new Say({
-        label: 'Pass',
-        message: 'pass turn...',
+      Escape: () => new StandStill({
+        label: 'Pass turn',
+        message: '...',
         game: engine.game,
         actor,
         energyCost: actor.energy,

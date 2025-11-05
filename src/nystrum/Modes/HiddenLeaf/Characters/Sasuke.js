@@ -1,28 +1,28 @@
 // import deps
-import * as Item from '../items';
-import * as Constant from '../constants';
-import { COLORS as HIDDEN_LEAF_COLORS } from '../Modes/HiddenLeaf/theme';
-import { Player } from '../Entities/index';
-import { ContainerSlot } from '../Entities/Containing';
-import {ChakraResource} from '../Actions/ActionResources/ChakraResource';
-import {Say} from '../Actions/Say';
-import {MoveOrAttackWithTileSound} from '../Actions/MoveOrAttackWithTileSound';
-import {PrepareRangedAttack} from '../Actions/PrepareRangedAttack';
-import {PrepareDirectionalThrow} from '../Actions/PrepareDirectionalThrow';
-import {OpenInventory} from '../Actions/OpenInventory';
-import {OpenEquipment} from '../Actions/OpenEquipment';
-import {OpenDropInventory} from '../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../Actions/PrepareDirectionalAction';
-import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../Engine/Particle/Emitters/gradientRadialEmitter';
-import { getPositionInDirection } from '../../helper';
-import { Katon } from '../Modes/HiddenLeaf/Items/Weapons/Katon';
-import { TackleByRange } from '../Actions/TackleByRange';
-import { AddSharinganStatusEffect } from '../Actions/AddSharinganStatusEffect';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../Modes/HiddenLeaf/StatusEffects/helper';
-import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
-import { generatePlayerCharacterOptions } from '../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import * as Item from '../../../items';
+import * as Constant from '../../../constants';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
+import { Player } from '../../../Entities/index';
+import { ContainerSlot } from '../../../Entities/Containing';
+import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
+import {StandStill} from '../../../Actions/StandStill';
+import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
+import {PrepareRangedAttack} from '../../../Actions/PrepareRangedAttack';
+import {PrepareDirectionalThrow} from '../../../Actions/PrepareDirectionalThrow';
+import {OpenInventory} from '../../../Actions/OpenInventory';
+import {OpenEquipment} from '../../../Actions/OpenEquipment';
+import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
+import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
+import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
+import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
+import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
+import { getPositionInDirection } from '../../../../helper';
+import { Katon } from '../../../Modes/HiddenLeaf/Items/Weapons/Katon';
+import { TackleByRange } from '../../../Actions/TackleByRange';
+import { AddSharinganStatusEffect } from '../../../Actions/AddSharinganStatusEffect';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
+import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/sasuke.png`;
 const basicInfo = {
@@ -119,16 +119,15 @@ function initialize (engine) {
           onAfter: () => onAfterMoveOrAttack(engine, actor),
         });
       },
-      p: () => new Say({
+      p: () => new StandStill({
         label: 'Stay',
-        message: 'standing still...',
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
       }),
-      Escape: () => new Say({
-        label: 'Pass',
-        message: 'pass turn...',
+      Escape: () => new StandStill({
+        label: 'Pass turn',
+        message: '...',
         game: engine.game,
         actor,
         energyCost: actor.energy,
