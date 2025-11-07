@@ -4,6 +4,7 @@ import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { Wall } from '../Entities/index';
 import { TYPE } from '../items';
 import { getDirectionKey, DIRECTIONS, ENERGY_THRESHOLD } from '../constants';
+import { SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 
 const createSandWall = (engine, pos) => new Wall({
@@ -30,7 +31,9 @@ export class SandWall extends PlaceItems {
       actor: this.actor,
       game: this.game,
     }))
-    return super.perform();
+    const result = super.perform();
+    if (result.success) SOUNDS.sand_wall_01.play();
+    return result;
   }
 };
 

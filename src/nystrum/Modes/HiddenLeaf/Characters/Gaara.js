@@ -18,6 +18,7 @@ import {CloneSelf} from '../../../Actions/CloneSelf';
 import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
 import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`;
 
@@ -178,6 +179,7 @@ function initialize (engine) {
         requiredResources: [
           new ChakraResource({ getResourceCost: () => 4 }),
         ],
+        onSuccess: () => SOUNDS.sand_clone_01.play(),
       }),
       i: () => new OpenInventory({
         label: 'Inventory',

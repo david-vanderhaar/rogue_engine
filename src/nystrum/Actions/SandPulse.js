@@ -3,6 +3,7 @@ import { MovingWall } from '../Entities/index';
 import { TYPE } from '../items';
 import { DIRECTIONS } from '../constants';
 import * as Helper from '../../helper';
+import { SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 
 
@@ -41,6 +42,8 @@ export class SandPulse extends Base {
       tile.entities.push(entity);
       this.game.engine.addActorAsPrevious(entity);
     });
+
+    SOUNDS.sand_wall_01.play();
 
     return {
       success: true,
