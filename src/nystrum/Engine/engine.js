@@ -1,6 +1,7 @@
 import * as Helper from '../../helper';
 import { Particle } from '../Entities/index';
 import { PARTICLE_TEMPLATES } from '../constants';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 export class Engine {
   constructor({
@@ -196,6 +197,7 @@ export class Engine {
     // newEffect.onStart();
     newEffect.start();
     this.statusEffects.push(newEffect)
+    HIDDEN_LEAF_SOUNDS.status_effect_applied.play();
     return true;
   }
 

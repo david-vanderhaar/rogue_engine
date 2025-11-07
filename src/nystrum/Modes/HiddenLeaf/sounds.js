@@ -21,6 +21,13 @@ export const SOUND_MANAGER = {
 
 export const SOUNDS = {
   pass_turn: createSoundFromSource('/sounds/hidden_leaf/pass_turn.mp3'),
+  status_effect_applied: createSoundFromSource('/sounds/hidden_leaf/status_effect_applied.mp3'),
+  not_allowed: createSoundFromSource('/sounds/hidden_leaf/not_allowed.mp3'),
+  speed_up: createSoundFromSource('/sounds/hidden_leaf/speed_up.mp3'),
+
+  hidden_gate_0: createSoundFromSource('/sounds/hidden_leaf/hidden_gate_0.wav'),
+  hidden_gate_1: createSoundFromSource('/sounds/hidden_leaf/hidden_gate_1.wav'),
+  
   wood_button: createSoundFromSource('/sounds/hidden_leaf/wood_block.mp3'),
   title_theme: createSoundFromSource('/sounds/hidden_leaf/title_theme.mp3', {loop: true}),
   character_select_theme: createSoundFromSource('/sounds/hidden_leaf/character_select_theme.mp3', {loop: true}),

@@ -23,7 +23,7 @@ import { MoveTowards } from '../../../Actions/MoveTowards';
 import { checkIsWalkingOnFire, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
 import * as Behaviors from '../../../Entities/AI/Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
-import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { StandStill } from '../../../Actions/StandStill';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
@@ -236,6 +236,11 @@ function initialize (engine) {
         label: 'Open Inner Gate',
         game: engine.game,
         actor,
+        onSuccess: () => {
+          playRandomSoundFromArray([
+            'speed_up',
+          ]);
+        },
         // requiredResources: [
         //   new ChakraResource({ getResourceCost: () => 2 }),
         // ],
