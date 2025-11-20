@@ -10,20 +10,14 @@ import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSo
 import {OpenInventory} from '../../../Actions/OpenInventory';
 import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
 import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
-import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
-import { calculateStraightPath, getDirectionFromOrigin, getPositionInDirection } from '../../../../helper';
-import { TackleByRange } from '../../../Actions/TackleByRange';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { WolfSpeed } from '../../../Modes/HiddenLeaf/StatusEffects/WolfSpeed';
 import { PreparePlaceActorInDirection } from '../../../Actions/PreparePlaceActorInDirection';
 import * as Behaviors from '../../../Entities/AI/Behaviors/index';
-import { Attack } from '../../../Actions/Attack';
-import { Move } from '../../../Actions/Move';
 import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
+import { FangOverFang } from '../../../Actions/FangOverFang';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
 const basicInfo = {
@@ -133,90 +127,13 @@ function initialize (engine) {
         actor,
         energyCost: actor.energy,
       }),
-      l: () => new PrepareDirectionalAction({
-        label: 'Fang Over Fang',
+      l: () => new FangOverFang({
         game: engine.game,
         actor,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD * (basicInfo.speed/100),
-        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 6 })],
-        actionLabel: 'Fang Over Fang',
-        actionClass: TackleByRange,
-        positionsByDirection: (actor, direction) => {
-          const pos = actor.getPosition();
-          return Array(10).fill('').map((none, distance) => {
-            if (distance > 0) {
-              return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
-            } else {
-              return null;
-            }
-          }).filter((pos) => pos !== null);
-        },
-        actionParams: {
-          additionalDamage: 3,
-          range: 8,
-          onAfter: () => {
-            if (actor.energy <= 0) {
-              GradientRadialEmitter({
-                game: engine.game,
-                fromPosition: actor.getPosition(),
-                radius: 2,
-                // wolf gray, white, and kiba red
-                colorGradient: [HIDDEN_LEAF_COLORS.kiba, HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
-                backgroundColorGradient: [HIDDEN_LEAF_COLORS.white, HIDDEN_LEAF_COLORS.kiba, HIDDEN_LEAF_COLORS.kiba_alt],
-              }).start()
-            }
-            SpatterEmitter({
-              game: engine.game,
-              fromPosition: actor.getPosition(),
-              spatterAmount: 0.1,
-              spatterRadius: 2,
-              animationTimeStep: 0.6,
-              transfersBackground: false,
-              spatterColors: [HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
-            }).start()
-
-            // find Akamaru in engine.actors
-            // if found, move Akamaru to actor's position
-            const akamaru = engine.game.engine.actors.find((actor) => actor.name === 'Akamaru');
-            // find closest enemy to actor
-            const closestEnemy = engine.game.engine.actors.filter((actor) => actor.faction === 'OPPONENT').sort((a, b) => {
-              return a.distanceTo(actor) - b.distanceTo(actor)
-            })[0];
-
-            if (akamaru && closestEnemy) {
-              const path = calculateStraightPath(closestEnemy.getPosition(), akamaru.getPosition());
-              const targetPos = path.at(-1);
-
-              const move = new Move({
-                targetPos,
-                game: engine.game,
-                actor: akamaru,
-                energyCost: 0,
-              })
-
-              move.perform()
-
-              const attack = new Attack({
-                targetPos,
-                game: engine.game,
-                actor: akamaru,
-                energyCost: 0,
-              })
-
-              attack.perform()
-
-              SpatterEmitter({
-                game: engine.game,
-                fromPosition: akamaru.getPosition(),
-                spatterAmount: 0.1,
-                spatterRadius: 2,
-                animationTimeStep: 0.6,
-                transfersBackground: false,
-                spatterColors: [HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
-              }).start()
-            }
-          }
-        }
+        passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
+        additionalFangDamage: 3,
+        fangRange: 8,
       }),
       k: () => new AddStatusEffect({
         label: 'Wolf Speed',
@@ -238,7 +155,7 @@ function initialize (engine) {
           actor,
           passThroughEnergyCost: Constant.ENERGY_THRESHOLD * 1,
           passThroughRequiredResources: [
-            new ChakraResource({ getResourceCost: () => 4 }),
+            new ChakraResource({ getResourceCost: () => 1 }),
           ],
           actorClass: JacintoAI,
           actorParameters: {
