@@ -23,7 +23,8 @@ export class PreparePlaceActorInDirection extends Base {
     },
     // actorParameters = {},
     passThroughEnergyCost = ENERGY_THRESHOLD, 
-    passThroughRequiredResources = [], 
+    passThroughRequiredResources = [],
+    passThroughOnSuccess = () => null,
     ...args 
   }) {
     super({ ...args });
@@ -34,6 +35,7 @@ export class PreparePlaceActorInDirection extends Base {
     this.entityCreator = entityCreator;
     this.actorClass = actorClass;
     this.actorParameters = actorParameters;
+    this.passThroughOnSuccess = passThroughOnSuccess;
   }
 
   perform() {
@@ -72,6 +74,7 @@ export class PreparePlaceActorInDirection extends Base {
           onSuccess: () => {
             this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
+            this.passThroughOnSuccess();
           },
         })
       },
@@ -88,6 +91,7 @@ export class PreparePlaceActorInDirection extends Base {
           onSuccess: () => {
             this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
+            this.passThroughOnSuccess();
           },
         })
       },
@@ -104,6 +108,7 @@ export class PreparePlaceActorInDirection extends Base {
           onSuccess: () => {
             this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
+            this.passThroughOnSuccess();
           },
         })
       },
@@ -120,6 +125,7 @@ export class PreparePlaceActorInDirection extends Base {
           onSuccess: () => {
             this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
+            this.passThroughOnSuccess();
           },
         })
       },

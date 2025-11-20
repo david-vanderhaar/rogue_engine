@@ -6,6 +6,7 @@ import { PrepareDirectionalAction } from "./PrepareDirectionalAction";
 import { TackleByRange } from "./TackleByRange";
 import { COLORS as HIDDEN_LEAF_COLORS } from "../Modes/HiddenLeaf/theme";
 import gradientRadialEmitter from "../Engine/Particle/Emitters/gradientRadialEmitter";
+import { SOUNDS } from "../Modes/HiddenLeaf/sounds";
 
 
 export class FangOverFang extends PrepareDirectionalAction {
@@ -39,7 +40,13 @@ export class FangOverFang extends PrepareDirectionalAction {
     return {
       additionalDamage: this.additionalFangDamage,
       range: this.fangRange,
+      // onBefore: () => {
+      //   SOUNDS.swift_move.play();
+      // },
       onAfter: () => {
+        // if (this.actor.energy === this.passThroughEnergyCost) {
+        //   SOUNDS.swift_move.play();
+        // }
         if (this.actor.energy <= 0) {
           gradientRadialEmitter({
             game: this.game,
@@ -60,6 +67,9 @@ export class FangOverFang extends PrepareDirectionalAction {
           transfersBackground: false,
           spatterColors: [HIDDEN_LEAF_COLORS.kiba_alt, HIDDEN_LEAF_COLORS.white],
         }).start()
+
+        const sound = SOUNDS.swift_move;
+        if (!sound.playing()) sound.play();
 
         // find Akamaru in engine.actors
         // if found, move Akamaru to actor's position

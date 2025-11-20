@@ -27,6 +27,11 @@ export const SOUNDS = {
 
   hidden_gate_0: createSoundFromSource('/sounds/hidden_leaf/hidden_gate_0.wav'),
   hidden_gate_1: createSoundFromSource('/sounds/hidden_leaf/hidden_gate_1.wav'),
+
+  summon_1: createSoundFromSource('/sounds/hidden_leaf/summon_1.wav'),
+  summon_2: createSoundFromSource('/sounds/hidden_leaf/summon_2.wav'),
+
+  sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
   
   wood_button: createSoundFromSource('/sounds/hidden_leaf/wood_block.mp3'),
   title_theme: createSoundFromSource('/sounds/hidden_leaf/title_theme.mp3', {loop: true}),
@@ -50,6 +55,8 @@ export const SOUNDS = {
   basic_jutsu_cast: createSoundFromSource('/sounds/hidden_leaf/hand_sign_activation.wav', {volume: 1}),
   sand_wall_01: createSoundFromSource('/sounds/hidden_leaf/sand_wall.wav', {volume: 1}),
   sand_clone_01: createSoundFromSource('/sounds/hidden_leaf/sand_clone.wav', {volume: 1}),
+  swift_move: createSoundFromSource('/sounds/hidden_leaf/swift-move.wav', {volume: 1}),
+  scratch_attack: createSoundFromSource('/sounds/hidden_leaf/scratch-attack.wav', {volume: 1}),
   // kunai throw
   kunai_throw_01: createSoundFromSource('/sounds/hidden_leaf/kunai_throw.wav'),
   kunai_throw_02: createSoundFromSource('/sounds/hidden_leaf/kunai_throw_2.wav'),

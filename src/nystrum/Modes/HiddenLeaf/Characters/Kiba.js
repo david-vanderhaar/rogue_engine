@@ -157,6 +157,7 @@ function initialize (engine) {
           passThroughRequiredResources: [
             new ChakraResource({ getResourceCost: () => 1 }),
           ],
+          passThroughOnSuccess: () => HIDDEN_LEAF_SOUNDS.summon_1.play(),
           actorClass: JacintoAI,
           actorParameters: {
             name: 'Akamaru',
