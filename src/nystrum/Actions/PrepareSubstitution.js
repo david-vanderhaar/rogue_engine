@@ -5,6 +5,7 @@ import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { TYPE } from '../items';
 import { Wall } from '../Entities/index';
 import { DIRECTIONS, ENERGY_THRESHOLD, THEMES } from '../constants';
+import { SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 const createSandWall = (engine, pos) => new Wall({
   game: engine.game,
@@ -94,6 +95,7 @@ export class PrepareSubstitution extends Base {
           onSuccess: () => {
             this.actor.deactivateCursor();
             this.actor.setNextAction(goToPreviousKeymap);
+            SOUNDS.sand_clone_01.play();
           }
         })
       },
