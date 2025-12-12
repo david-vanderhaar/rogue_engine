@@ -26,6 +26,7 @@ import { DurabilityResource } from '../../../Actions/ActionResources/DurabilityR
 import { UzumakiBarrage } from '../../../Modes/HiddenLeaf/Items/Weapons/UzumakiBarrage';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
 import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
 const basicInfo = {
@@ -164,6 +165,7 @@ function initialize (engine) {
         requiredResources: [
           new ChakraResource({ getResourceCost: () => 9 }),
         ],
+        onSuccess: () => HIDDEN_LEAF_SOUNDS.summon_1.play(),
       }),
       h: () => new AddNineTailsStatusEffect({
         label: 'Tailed Beast',

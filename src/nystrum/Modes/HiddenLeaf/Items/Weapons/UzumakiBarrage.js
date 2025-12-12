@@ -1,7 +1,8 @@
 import * as Constant from '../../../../constants';
 import {RangedWeapon} from '../../../../Entities/index';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../../HiddenLeaf/theme';
-import SOUNDS from '../../../../sounds';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../sounds';
+
 import gradientPathEmitter from '../../../../Engine/Particle/Emitters/gradientPathEmitter';
 import SpatterEmitter from '../../../../Engine/Particle/Emitters/spatterEmitter';
 import * as Helper from '../../../../../helper';
@@ -9,6 +10,8 @@ import { ANIMATION_TYPES } from '../../../../Display/konvaCustom';
 
 export function UzumakiBarrage(engine, pos) {
   async function afterFireSuccess({fromPosition, targetPositions, hits, misses}) {
+
+    HIDDEN_LEAF_SOUNDS.swift_move.play();
 
     // pick five positions to around target position at same distance
     // u - zu - ma - ki - barrage!
@@ -38,6 +41,7 @@ export function UzumakiBarrage(engine, pos) {
     // apply each emitter in sequence
     for (let i = 0; i < emitters.length; i++) {
       await emitters[i].start()
+      HIDDEN_LEAF_SOUNDS.punch_01.play();
       engine.game.display.addAnimation(
         ANIMATION_TYPES.TEXT_FLOAT,
         {
@@ -96,7 +100,17 @@ export function UzumakiBarrage(engine, pos) {
       color: HIDDEN_LEAF_COLORS.black,
       background: HIDDEN_LEAF_COLORS.orange,
     },
-    // rangedHitSounds: [SOUNDS.explosion_0],
+    rangedHitSounds: [
+      HIDDEN_LEAF_SOUNDS.swift_move,
+      HIDDEN_LEAF_SOUNDS.punch_01,
+      HIDDEN_LEAF_SOUNDS.punch_02,
+      // HIDDEN_LEAF_SOUNDS.punch_03,
+      // HIDDEN_LEAF_SOUNDS.punch_04,
+      // HIDDEN_LEAF_SOUNDS.punch_05,
+      // HIDDEN_LEAF_SOUNDS.punch_06,
+      // HIDDEN_LEAF_SOUNDS.punch_07,
+      // HIDDEN_LEAF_SOUNDS.punch_08,
+    ],
     // rangedMissSounds: [SOUNDS.explosion_0],
     afterFireSuccess: afterFireSuccess,
   });

@@ -247,12 +247,15 @@ export const TILE_KEY = {
 
 export const TILE_STEP_SOUNDS = {
   'GROUND': [
+    'hard_ground_01',
+    'hard_ground_02',
+    'hard_ground_03',
     'grass_00',
-    'grass_01',
-    'grass_02',
-    'grass_03',
-    'grass_04',
-    'grass_05',
+    // 'grass_01',
+    // 'grass_02',
+    // 'grass_03',
+    // 'grass_04',
+    // 'grass_05',
     // 'grass_06',
     // 'grass_07',
   ],
