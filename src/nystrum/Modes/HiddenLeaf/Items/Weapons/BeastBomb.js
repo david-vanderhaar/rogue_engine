@@ -1,7 +1,7 @@
 import * as Constant from '../../../../constants';
 import {RangedWeapon} from '../../../../Entities/index';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../theme';
-import SOUNDS from '../../../../sounds';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../sounds';
 import gradientPathEmitter from '../../../../Engine/Particle/Emitters/gradientPathEmitter';
 import SpatterEmitter from '../../../../Engine/Particle/Emitters/spatterEmitter';
 import * as Helper from '../../../../../helper';
@@ -68,7 +68,7 @@ export function BeastBomb(engine, pos) {
       color: HIDDEN_LEAF_COLORS.black,
       background: HIDDEN_LEAF_COLORS.orange,
     },
-    // rangedHitSounds: [SOUNDS.explosion_0],
+    rangedHitSounds: [HIDDEN_LEAF_SOUNDS.beast_bomb],
     // rangedMissSounds: [SOUNDS.explosion_0],
     afterFireSuccess: afterFireSuccess,
   });

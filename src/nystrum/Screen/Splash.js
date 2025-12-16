@@ -25,6 +25,21 @@ export default function Splash(props) {
     };
   }, []);
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+        nextScreen()
+      }
+    };
+    // Add event listener when the component mounts
+    window.addEventListener('keydown', handleKeyPress);
+
+    // Clean up by removing the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
   return (
     <div className="Title" style={{height: 720, width: 1280, backgroundColor: 'var(--color-console-background)'}}>
       <div className="Title__content">

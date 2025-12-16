@@ -32,6 +32,8 @@ export const SOUNDS = {
   summon_2: createSoundFromSource('/sounds/hidden_leaf/summon_2.wav'),
 
   sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
+
+  beast_bomb: createSoundFromSource('/sounds/hidden_leaf/beast_bomb.mp3', {rate: 4, volume: .6}),
   
   wood_button: createSoundFromSource('/sounds/hidden_leaf/wood_block.mp3'),
   title_theme: createSoundFromSource('/sounds/hidden_leaf/title_theme.mp3', {loop: true}),

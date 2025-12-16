@@ -11,8 +11,6 @@ import { ANIMATION_TYPES } from '../../../../Display/konvaCustom';
 export function UzumakiBarrage(engine, pos) {
   async function afterFireSuccess({fromPosition, targetPositions, hits, misses}) {
 
-    HIDDEN_LEAF_SOUNDS.swift_move.play();
-
     // pick five positions to around target position at same distance
     // u - zu - ma - ki - barrage!
     // create a gradient path emitter from the fromPosition to the targetPositions
@@ -100,17 +98,7 @@ export function UzumakiBarrage(engine, pos) {
       color: HIDDEN_LEAF_COLORS.black,
       background: HIDDEN_LEAF_COLORS.orange,
     },
-    rangedHitSounds: [
-      HIDDEN_LEAF_SOUNDS.swift_move,
-      HIDDEN_LEAF_SOUNDS.punch_01,
-      HIDDEN_LEAF_SOUNDS.punch_02,
-      // HIDDEN_LEAF_SOUNDS.punch_03,
-      // HIDDEN_LEAF_SOUNDS.punch_04,
-      // HIDDEN_LEAF_SOUNDS.punch_05,
-      // HIDDEN_LEAF_SOUNDS.punch_06,
-      // HIDDEN_LEAF_SOUNDS.punch_07,
-      // HIDDEN_LEAF_SOUNDS.punch_08,
-    ],
+    // rangedHitSounds: [],
     // rangedMissSounds: [SOUNDS.explosion_0],
     afterFireSuccess: afterFireSuccess,
   });

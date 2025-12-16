@@ -175,6 +175,7 @@ function initialize (engine) {
         requiredResources: [
           new DurabilityResource({ getResourceCost: () => 2 }),
         ],
+        onSuccess: () => HIDDEN_LEAF_SOUNDS.scion_melee_01.play(),
       }),
       // t: () => new PrepareDirectionalThrow({
       //   label: 'Throw',

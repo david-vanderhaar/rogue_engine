@@ -77,10 +77,11 @@ export class NineTailsBeastMode extends Base {
 
       clearInterval(this['particle_interval'])
 
+      removeBeastBombs(this.actor)
+      restorePlayerEquipment(this.actor, this['actor_equipment'])
       this.actor.initializeKeymap = this['actor_inialize_keymap']
       this.actor.reinitializeKeymap()
 
-      removeBeastBombs(this.actor)
     }
 
     this.onStep = (timePassed) => {
@@ -100,7 +101,10 @@ function addBeastBombs (engine, actor) {
 
 function removeBeastBombs (actor) {
   actor.removeEquipmentSlot('Beast Bomb')
-  actor.equipment = actor['actor_equipment']
+}
+
+function restorePlayerEquipment (actor, previousEquipment) {
+  actor.equipment = previousEquipment
 }
 
 const nineTailsKeymap = (engine, actor) => {
