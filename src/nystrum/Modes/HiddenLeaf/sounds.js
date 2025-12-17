@@ -56,7 +56,7 @@ export const SOUNDS = {
   screech_03: createSoundFromSource('/sounds/tall_grass/monster/screech_03.ogg'),
   // jutsus
   basic_jutsu_cast: createSoundFromSource('/sounds/hidden_leaf/hand_sign_activation.wav', {volume: 1}),
-  sand_wall_01: createSoundFromSource('/sounds/hidden_leaf/sand_wall.wav', {volume: 1}),
+  sand_wall_01: createSoundFromSource('/sounds/hidden_leaf/sand_wall.wav', {volume: 0.6}),
   sand_clone_01: createSoundFromSource('/sounds/hidden_leaf/sand_clone.wav', {volume: 1}),
   swift_move: createSoundFromSource('/sounds/hidden_leaf/swift-move.wav', {volume: 1}),
   scratch_attack: createSoundFromSource('/sounds/hidden_leaf/scratch-attack.wav', {volume: 1}),

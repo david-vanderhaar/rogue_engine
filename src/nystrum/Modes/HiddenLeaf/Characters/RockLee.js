@@ -25,6 +25,9 @@ import * as Behaviors from '../../../Entities/AI/Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { StandStill } from '../../../Actions/StandStill';
+import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
+import * as Helper from '../../../../helper';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
 
@@ -177,6 +180,18 @@ function initialize (engine) {
           game: engine.game,
           actor,
         }),
+        onSuccess: () => {
+          HIDDEN_LEAF_SOUNDS.sand_wall_01.play()
+          GradientRadialEmitter({
+            game: engine.game,
+            fromPosition: actor.getPosition(),
+            radius: 3,
+            animationTimeStep: 0.8,
+            easingFunction: Helper.EASING.easeOut,
+            colorGradient: [HIDDEN_LEAF_COLORS.wraps, HIDDEN_LEAF_COLORS.neji_alt],
+            backgroundColorGradient: [HIDDEN_LEAF_COLORS.neji_alt, HIDDEN_LEAF_COLORS.wraps],
+          }).start()
+        }
       }),
       j: () => new AddStatusEffect({
         label: 'Sip Sake',
