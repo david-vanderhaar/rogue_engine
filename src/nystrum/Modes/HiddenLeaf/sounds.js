@@ -30,6 +30,7 @@ export const SOUNDS = {
 
   summon_1: createSoundFromSource('/sounds/hidden_leaf/summon_1.wav'),
   summon_2: createSoundFromSource('/sounds/hidden_leaf/summon_2.wav'),
+  summon_3: createSoundFromSource('/sounds/hidden_leaf/summon_2.wav', {rate: 0.6}),
 
   sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
 

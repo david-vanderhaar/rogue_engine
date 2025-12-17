@@ -24,6 +24,7 @@ import { PrepareDirectionalThrow } from '../../../Actions/PrepareDirectionalThro
 import { MultiTargetAttack } from '../../../Actions/MultiTargetAttack';
 import { MultiTargetAttackAndShove } from '../../../Actions/MultiTargetAttackAndShove';
 import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/neji.png`;
 const basicInfo = {
@@ -162,6 +163,7 @@ function initialize (engine) {
         energyCost: (Constant.ENERGY_THRESHOLD * 1),
         requiredResources: [new ChakraResource({ getResourceCost: () => 2 })],
         onSuccess: () => {
+          HIDDEN_LEAF_SOUNDS.summon_2.play();
           GradientRadialEmitter({
             game: engine.game,
             fromPosition: actor.getPosition(),
@@ -179,6 +181,7 @@ function initialize (engine) {
         energyCost: (Constant.ENERGY_THRESHOLD * 2),
         requiredResources: [new ChakraResource({ getResourceCost: () => 5 })],
         onSuccess: () => {
+          HIDDEN_LEAF_SOUNDS.summon_3.play();
           GradientRadialEmitter({
             game: engine.game,
             fromPosition: actor.getPosition(),
@@ -198,6 +201,12 @@ function initialize (engine) {
         actionClass: StatChakraLeechAttack,
         actionParams: {
           changeByValue: -3,
+          onAfter: () => {
+            HIDDEN_LEAF_SOUNDS.punch_01.play();
+            setTimeout(() => {
+              HIDDEN_LEAF_SOUNDS.punch_02.play();
+            }, 125);
+          }
         }
       }),
     };
