@@ -108,8 +108,8 @@ export function advanceOneRound(state) {
 
 // Main tournament creation function
 export function createTournament({ characters, selectedCharacter: player }) {
-  // const opponents = characters.filter(c => c.name !== player.name);
-  const opponents = characters.filter(c => c.name == 'Rock Lee');
+  const opponents = characters.filter(c => c.name !== player.name);
+  // const opponents = characters.filter(c => c.name == 'Rock Lee');
   const shuffledOpponents = shuffle(opponents);
   const insertAt = Math.floor(Math.random() * (shuffledOpponents.length + 1));
   const participants = [...shuffledOpponents];
