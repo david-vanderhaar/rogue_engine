@@ -205,6 +205,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
         }),
+        onSuccess: () => { HIDDEN_LEAF_SOUNDS.bottle_open.play() }
       }),
       h: () => new MultiTargetAttack({
         label: 'Leaf Whirlwind',
@@ -252,9 +253,10 @@ function initialize (engine) {
         game: engine.game,
         actor,
         onSuccess: () => {
-          playRandomSoundFromArray([
-            'speed_up',
-          ]);
+          playRandomSoundFromArray(
+            ['sand_clone_01'],
+            { rate: 1.4, volume: 0.4 }
+          );
         },
         // requiredResources: [
         //   new ChakraResource({ getResourceCost: () => 2 }),

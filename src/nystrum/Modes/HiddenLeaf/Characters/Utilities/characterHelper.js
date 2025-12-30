@@ -50,6 +50,7 @@ export function onDecreaseDurabilitySound(soundOptions = {}) {
 export function playRandomSoundFromArray(soundArray, soundOptions = {}) {
   const soundKey = getRandomInArray(soundArray)
   const sound = HIDDEN_LEAF_SOUNDS[soundKey]
+  
   if (!sound) return;
 
   const rate = soundOptions?.rate || 1;

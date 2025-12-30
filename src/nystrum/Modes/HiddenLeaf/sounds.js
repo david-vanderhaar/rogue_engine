@@ -36,6 +36,8 @@ export const SOUNDS = {
 
   beast_bomb: createSoundFromSource('/sounds/hidden_leaf/beast_bomb.mp3', {rate: 4, volume: .6}),
   
+  bottle_open: createSoundFromSource('/sounds/hidden_leaf/bottle_open.mp3', {rate: 0.8, volume: .6}),
+
   wood_button: createSoundFromSource('/sounds/hidden_leaf/wood_block.mp3'),
   title_theme: createSoundFromSource('/sounds/hidden_leaf/title_theme.mp3', {loop: true}),
   character_select_theme: createSoundFromSource('/sounds/hidden_leaf/character_select_theme.mp3', {loop: true}),
@@ -74,17 +76,17 @@ export const SOUNDS = {
   punch_08: createSoundFromSource('/sounds/hidden_leaf/punch--08.mp3'),
   // end
   // take damage
-  take_damage_01: createSoundFromSource('/sounds/hidden_leaf/take-damage-01.mp3', {volume: 0.4}),
-  take_damage_02: createSoundFromSource('/sounds/hidden_leaf/take-damage-02.mp3', {volume: 0.4}),
-  take_damage_03: createSoundFromSource('/sounds/hidden_leaf/take-damage-03.mp3', {volume: 0.4}),
-  take_damage_04: createSoundFromSource('/sounds/hidden_leaf/take-damage-04.mp3', {volume: 0.4}),
-  take_damage_05: createSoundFromSource('/sounds/hidden_leaf/take-damage-05.mp3', {volume: 0.4}),
-  take_damage_06: createSoundFromSource('/sounds/hidden_leaf/take-damage-06.mp3', {volume: 0.4}),
-  take_damage_07: createSoundFromSource('/sounds/hidden_leaf/take-damage-07.mp3', {volume: 0.4}),
-  take_damage_08: createSoundFromSource('/sounds/hidden_leaf/take-damage-08.mp3', {volume: 0.4}),
-  take_damage_09: createSoundFromSource('/sounds/hidden_leaf/take-damage-09.mp3', {volume: 0.4}),
-  take_damage_10: createSoundFromSource('/sounds/hidden_leaf/take-damage-10.mp3', {volume: 0.4}),
-  take_damage_11: createSoundFromSource('/sounds/hidden_leaf/take-damage-11.mp3', {volume: 0.4}),
+  take_damage_01: createSoundFromSource('/sounds/hidden_leaf/take-damage-01.mp3', {volume: 0.2}),
+  take_damage_02: createSoundFromSource('/sounds/hidden_leaf/take-damage-02.mp3', {volume: 0.2}),
+  take_damage_03: createSoundFromSource('/sounds/hidden_leaf/take-damage-03.mp3', {volume: 0.2}),
+  take_damage_04: createSoundFromSource('/sounds/hidden_leaf/take-damage-04.mp3', {volume: 0.2}),
+  take_damage_05: createSoundFromSource('/sounds/hidden_leaf/take-damage-05.mp3', {volume: 0.2}),
+  take_damage_06: createSoundFromSource('/sounds/hidden_leaf/take-damage-06.mp3', {volume: 0.2}),
+  take_damage_07: createSoundFromSource('/sounds/hidden_leaf/take-damage-07.mp3', {volume: 0.2}),
+  take_damage_08: createSoundFromSource('/sounds/hidden_leaf/take-damage-08.mp3', {volume: 0.2}),
+  take_damage_09: createSoundFromSource('/sounds/hidden_leaf/take-damage-09.mp3', {volume: 0.2}),
+  take_damage_10: createSoundFromSource('/sounds/hidden_leaf/take-damage-10.mp3', {volume: 0.2}),
+  take_damage_11: createSoundFromSource('/sounds/hidden_leaf/take-damage-11.mp3', {volume: 0.2}),
   // end
   // water
   water_01: createSoundFromSource('/sounds/hidden_leaf/water-01.mp3'),
