@@ -3,6 +3,7 @@ import { Tackle } from './Tackle';
 import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { DIRECTIONS, ENERGY_THRESHOLD, PARTICLE_TEMPLATES } from '../constants';
 import { getPositionInDirection } from '../../helper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from  '../Modes/HiddenLeaf/sounds';
 
 export class PrepareTackle extends Base {
   constructor({ 
@@ -43,6 +44,12 @@ export class PrepareTackle extends Base {
       onAfter: () => this.actor.deactivateCursor(),
     })
 
+    const onSuccess = () => {
+      this.actor.deactivateCursor();
+      this.actor.setNextAction(goToPreviousKeymap);
+      HIDDEN_LEAF_SOUNDS.wind_slice.play()
+    };
+
     let keymap = {
       Escape: () => goToPreviousKeymap,
       
@@ -55,10 +62,7 @@ export class PrepareTackle extends Base {
           label: 'tackle N',
           direction: DIRECTIONS.N,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
+          onSuccess,
         })
       },
       'd,ArrowRight': () => { 
@@ -70,10 +74,7 @@ export class PrepareTackle extends Base {
           label: 'tackle E',
           direction: DIRECTIONS.E,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
+          onSuccess,
         })
       },
       's,ArrowDown': () => { 
@@ -85,10 +86,7 @@ export class PrepareTackle extends Base {
           label: 'tackle S',
           direction: DIRECTIONS.S,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
+          onSuccess,
         })
       },
       'a,ArrowLeft': () => { 
@@ -100,10 +98,7 @@ export class PrepareTackle extends Base {
           label: 'tackle W',
           direction: DIRECTIONS.W,
           particleTemplate: PARTICLE_TEMPLATES.leaf,
-          onSuccess: () => {
-            this.actor.deactivateCursor();
-            this.actor.setNextAction(goToPreviousKeymap);
-          },
+          onSuccess,
         })
       },
     };

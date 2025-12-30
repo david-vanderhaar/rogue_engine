@@ -247,6 +247,7 @@ function initialize (engine) {
         actor,
         energyCost: (Constant.ENERGY_THRESHOLD * 2),
         particleTemplate: Constant.PARTICLE_TEMPLATES.leaf,
+        onSuccess: () => { HIDDEN_LEAF_SOUNDS.wind_slice.play() },
       }),
       g: () => new AddOpenGatesStatusEffect({
         label: 'Open Inner Gate',

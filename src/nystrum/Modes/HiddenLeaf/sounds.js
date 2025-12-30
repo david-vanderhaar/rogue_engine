@@ -62,6 +62,7 @@ export const SOUNDS = {
   sand_clone_01: createSoundFromSource('/sounds/hidden_leaf/sand_clone.wav', {volume: 1}),
   swift_move: createSoundFromSource('/sounds/hidden_leaf/swift-move.wav', {volume: 1}),
   scratch_attack: createSoundFromSource('/sounds/hidden_leaf/scratch-attack.wav', {volume: 1}),
+  wind_slice: createSoundFromSource('/sounds/hidden_leaf/wind_slice.wav', {volume: 0.6}),
   // kunai throw
   kunai_throw_01: createSoundFromSource('/sounds/hidden_leaf/kunai_throw.wav'),
   kunai_throw_02: createSoundFromSource('/sounds/hidden_leaf/kunai_throw_2.wav'),
