@@ -6,6 +6,7 @@ import { COLORS } from '../Modes/HiddenLeaf/theme';
 import { ENERGY_THRESHOLD, CLONE_PATTERNS } from '../constants';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import { ChakraBleed } from '../Modes/HiddenLeaf/StatusEffects/ChakraBleed';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds'
 
 export class SpawnKikaichu extends Base {
   constructor({ cloneCount = 10, ...args }) {
@@ -91,12 +92,21 @@ export class SpawnKikaichu extends Base {
     })
   }
 
+  playBugSounds() {
+    for (let i = 0; i < 4; i++) {
+      setTimeout(() => {
+        HIDDEN_LEAF_SOUNDS[`bug_step_0${i + 1}`].play()
+      }, i * 200);
+    }
+  }
+
   perform() {
     const positions = this.getSpawnPositions()
     const spawner = this.createSpawner(positions)
     this.actor.game.placeActorOnMap(spawner)
     spawner.spawnEntities()
     this.animateSmoke(positions)
+    this.playBugSounds()
     spawner.destroy()
     return {
       success: true,

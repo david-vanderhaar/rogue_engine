@@ -2,6 +2,8 @@ import { Attack } from './Attack';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import DynamicEntityStatChanger from '../Utilities/DynamicEntityStatChanger';
 import * as Helper from '../../helper.js';
+import { SOUNDS } from '../Modes/HiddenLeaf/sounds.js';
+import { COLORS } from '../Modes/HiddenLeaf/theme.js';
 
 export class StatLeechAttack extends Attack {
   constructor({
@@ -31,9 +33,16 @@ export class StatLeechAttack extends Attack {
 
     if (attackResult.success) {
       this.leech()
+      this.playLeechSound()
+      this.playLeechParticleEffect()
     }
 
     return attackResult;
+  }
+
+  playLeechSound() {
+    // override in subclass if needed
+    SOUNDS.chakra_leech.play()
   }
 
   leech() {
@@ -66,17 +75,16 @@ export class StatLeechAttack extends Attack {
     })
   }
 
-  // onAfter() {
-  //   super.onAfter();
-  //   SpatterEmitter({
-  //     game: this.game,
-  //     fromPosition: this.actor.getPosition(),
-  //     spatterAmount: 0.1,
-  //     spatterRadius: 3,
-  //     animationTimeStep: 0.6,
-  //     transfersBackground: false,
-  //     spatterColors: ['#94e0ef', '#d3d3d3', '#495877']
-  //   }).start()
-  // }
+  playLeechParticleEffect() {
+    SpatterEmitter({
+      game: this.game,
+      fromPosition: this.actor.getPosition(),
+      spatterAmount: 0.1,
+      spatterRadius: 4,
+      animationTimeStep: 0.6,
+      transfersBackground: false,
+      spatterColors: [COLORS.chakra, COLORS.shino_alt]
+    }).start()
+  }
 }
 

@@ -35,6 +35,8 @@ export const SOUNDS = {
   jutsu_strike: createSoundFromSource('/sounds/hidden_leaf/jutsu-strike.wav'),
   katon: createSoundFromSource('/sounds/hidden_leaf/katon.wav'),
 
+  chakra_leech: createSoundFromSource('/sounds/hidden_leaf/chakra_leech.wav'),
+
   shadow_move: createSoundFromSource('/sounds/hidden_leaf/shadow-hold.wav'),
 
   sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
@@ -115,6 +117,11 @@ export const SOUNDS = {
   grass_05: createSoundFromSource('/sounds/tall_grass/rustle/grass_05.mp3'),
   grass_06: createSoundFromSource('/sounds/hidden_leaf/grass_06.mp3'),
   grass_07: createSoundFromSource('/sounds/hidden_leaf/grass_07.mp3'),
+  // bug
+  bug_step_01: createSoundFromSource('/sounds/hidden_leaf/bug_step1.wav'),
+  bug_step_02: createSoundFromSource('/sounds/hidden_leaf/bug_step2.wav'),
+  bug_step_03: createSoundFromSource('/sounds/hidden_leaf/bug_step3.wav'),
+  bug_step_04: createSoundFromSource('/sounds/hidden_leaf/bug_step4.wav'),
   // end steps
   light_up: createSoundFromSource('/sounds/tall_grass/light_up.mp3'),
   light_drain: createSoundFromSource('/sounds/tall_grass/light_drain.mp3', {volume: 0.2}),

@@ -1,5 +1,6 @@
 import * as Constant from '../../../../constants';
 import {CoverWall, ThrowableSpawner, SmokeParticle} from '../../../../Entities/index';
+import { SOUNDS } from '../../sounds';
 import {COLORS} from '../../theme';
 
 export const ShinoBugCage = ({engine, range}) => new ThrowableSpawner({
@@ -38,5 +39,14 @@ export const ShinoBugCage = ({engine, range}) => new ThrowableSpawner({
   range,
   onDestroy: (actor) => {
     actor.spawnEntities()
+    playBugSounds()
   },
 })
+
+function playBugSounds() {
+  for (let i = 0; i < 4; i++) {
+    setTimeout(() => {
+      SOUNDS[`bug_step_0${i + 1}`].play()
+    }, i * 200);
+  }
+}
