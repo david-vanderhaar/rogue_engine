@@ -155,6 +155,7 @@ function initialize (engine) {
           range: 5,
           onAfter: () => {
             if (actor.energy <= 0) {
+              HIDDEN_LEAF_SOUNDS.jutsu_strike.play();
               GradientRadialEmitter({
                 game: engine.game,
                 fromPosition: actor.getPosition(),

@@ -1,7 +1,7 @@
 import * as Constant from '../../../../constants';
 import {RangedWeapon} from '../../../../Entities/index';
 import {COLORS} from '../../../Jacinto/theme';
-import SOUNDS from '../../../../sounds';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../sounds';
 import gradientPathEmitter from '../../../../Engine/Particle/Emitters/gradientPathEmitter';
 import SpatterEmitter from '../../../../Engine/Particle/Emitters/spatterEmitter';
 import { getNumberOfItemsInArray, getRandomInArray, EASING } from '../../../../../helper';
@@ -54,6 +54,8 @@ export function Katon(engine, pos) {
       })
       await spatterEmitter.start()
     })
+
+    HIDDEN_LEAF_SOUNDS.jutsu_strike.play()
   }
 
   return new RangedWeapon({
@@ -75,8 +77,10 @@ export function Katon(engine, pos) {
       color: COLORS.red,
       background: COLORS.base02,
     },
-    rangedHitSounds: [SOUNDS.explosion_0],
-    rangedMissSounds: [SOUNDS.explosion_0],
+    // rangedHitSounds: [],
+    rangedMissSounds: [],
+    rangedHitSounds: [HIDDEN_LEAF_SOUNDS.katon],
+    // rangedMissSounds: [HIDDEN_LEAF_SOUNDS.jutsu_strike],
     afterFireSuccess: afterFireSuccess,
   });
 }

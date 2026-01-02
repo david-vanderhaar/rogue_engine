@@ -32,6 +32,9 @@ export const SOUNDS = {
   summon_2: createSoundFromSource('/sounds/hidden_leaf/summon_2.wav'),
   summon_3: createSoundFromSource('/sounds/hidden_leaf/summon_2.wav', {rate: 0.6}),
 
+  jutsu_strike: createSoundFromSource('/sounds/hidden_leaf/jutsu-strike.wav'),
+  katon: createSoundFromSource('/sounds/hidden_leaf/katon.wav'),
+
   sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
 
   beast_bomb: createSoundFromSource('/sounds/hidden_leaf/beast_bomb.mp3', {rate: 4, volume: .6}),
