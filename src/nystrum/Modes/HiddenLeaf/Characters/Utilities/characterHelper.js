@@ -1,5 +1,15 @@
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../sounds';
 import { getRandomInArray } from '../../../../../helper';
+import * as Constant from '../../../../constants';
+import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../../Modes/HiddenLeaf/StatusEffects/helper';
+import { MoveOrAttackWithTileSound } from '../../../../Actions/MoveOrAttackWithTileSound';
+import { StandStill } from '../../../../Actions/StandStill';
+import { OpenInventory } from '../../../../Actions/OpenInventory';
+import { OpenDropInventory } from '../../../../Actions/OpenDropInventory';
+import { PickupRandomItem } from '../../../../Actions/PickupRandomItem';
+import { MoveTowards } from '../../../../Actions/MoveTowards';
+import { GoToPreviousKeymap } from '../../../../Actions/GoToPreviousKeymap';
+
 
 export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
  return {
@@ -56,4 +66,122 @@ export function playRandomSoundFromArray(soundArray, soundOptions = {}) {
   const rate = soundOptions?.rate || 1;
   sound.rate(rate);
   sound.play();
+}
+
+function onAfterMoveOrAttack(engine, actor) {
+  checkIsWalkingOnWater(engine, actor)
+  checkIsWalkingOnFire(engine, actor)
+}
+
+export function generateDefaultKeymapActions(engine, actor) {
+  return {
+    'w,ArrowUp': () => {
+      const direction = Constant.DIRECTIONS.N;
+      let newX = actor.pos.x + direction[0];
+      let newY = actor.pos.y + direction[1];
+      return new MoveOrAttackWithTileSound({
+        hidden: true,
+        targetPos: { x: newX, y: newY },
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        onAfter: () => onAfterMoveOrAttack(engine, actor),
+      });
+    },
+    's,ArrowDown': () => {
+      const direction = Constant.DIRECTIONS.S;
+      let newX = actor.pos.x + direction[0];
+      let newY = actor.pos.y + direction[1];
+      return new MoveOrAttackWithTileSound({
+        hidden: true,
+        targetPos: { x: newX, y: newY },
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        onAfter: () => onAfterMoveOrAttack(engine, actor),
+      });
+    },
+    'a,ArrowLeft': () => {
+      const direction = Constant.DIRECTIONS.W;
+      let newX = actor.pos.x + direction[0];
+      let newY = actor.pos.y + direction[1];
+      return new MoveOrAttackWithTileSound({
+        hidden: true,
+        targetPos: { x: newX, y: newY },
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        onAfter: () => onAfterMoveOrAttack(engine, actor),
+      });
+    },
+    'd,ArrowRight': () => {
+      const direction = Constant.DIRECTIONS.E;
+      let newX = actor.pos.x + direction[0];
+      let newY = actor.pos.y + direction[1];
+      return new MoveOrAttackWithTileSound({
+        hidden: true,
+        targetPos: { x: newX, y: newY },
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        onAfter: () => onAfterMoveOrAttack(engine, actor),
+      });
+    },
+    p: () => new StandStill({
+      label: 'Stay',
+      game: engine.game,
+      actor,
+      energyCost: Constant.ENERGY_THRESHOLD,
+    }),
+    Escape: () => new StandStill({
+      label: 'Pass turn',
+      message: '...',
+      game: engine.game,
+      actor,
+      energyCost: actor.energy,
+    }),
+    i: () => new OpenInventory({
+      label: 'Inventory',
+      game: engine.game,
+      actor,
+    }),
+    // o: () => new OpenEquipment({
+    //   label: 'Equipment',
+    //   game: engine.game,
+    //   actor,
+    // }),
+    u: () => new OpenDropInventory({
+      label: 'Drop Items',
+      game: engine.game,
+      actor,
+    }),
+    g: () => new PickupRandomItem({
+      label: 'Pickup',
+      game: engine.game,
+      actor,
+    }),
+    // mouseOver: (mousePosition) => {
+    //   return new MoveTargetingCursor({
+    //     hidden: true,
+    //     actor: actor,
+    //     game: engine.game,
+    //     targetPos: mousePosition,
+    //   })
+    // },
+    mouseLeftButton: (mousePosition) => {
+      return new MoveTowards({
+        hidden: true,
+        actor,
+        game: engine.game,
+        targetPos: mousePosition,
+      })
+    },
+    mouseRightButton: (mousePosition) => {
+      return new GoToPreviousKeymap({
+        hidden: true,
+        actor,
+        game: engine.game,
+      })
+    },
+  };
 }
