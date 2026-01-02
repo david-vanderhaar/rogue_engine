@@ -18,6 +18,7 @@ import { AddStatusEffectAtPosition } from '../../../Actions/AddStatusEffectAtPos
 import GradientPathEmitter from '../../../Engine/Particle/Emitters/gradientPathEmitter';
 import ShadowHold from '../../../StatusEffects/ShadowHold';
 import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shikamaru.png`;
 const basicInfo = {
@@ -143,6 +144,7 @@ function initialize (engine) {
           effect: new ShadowHold({ game: engine.game, turnsStunned: 3 }),
           label: 'Shadow Hold',
           onSuccess: () => {
+            HIDDEN_LEAF_SOUNDS.shadow_move.play();
             GradientPathEmitter({
               game: engine.game,
               fromPosition: actor.getPosition(),

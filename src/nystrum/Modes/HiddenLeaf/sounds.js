@@ -35,6 +35,8 @@ export const SOUNDS = {
   jutsu_strike: createSoundFromSource('/sounds/hidden_leaf/jutsu-strike.wav'),
   katon: createSoundFromSource('/sounds/hidden_leaf/katon.wav'),
 
+  shadow_move: createSoundFromSource('/sounds/hidden_leaf/shadow-hold.wav'),
+
   sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
 
   beast_bomb: createSoundFromSource('/sounds/hidden_leaf/beast_bomb.mp3', {rate: 4, volume: .6}),
@@ -67,8 +69,8 @@ export const SOUNDS = {
   scratch_attack: createSoundFromSource('/sounds/hidden_leaf/scratch-attack.wav', {volume: 1}),
   wind_slice: createSoundFromSource('/sounds/hidden_leaf/wind_slice.wav', {volume: 0.6}),
   // kunai throw
-  kunai_throw_01: createSoundFromSource('/sounds/hidden_leaf/kunai_throw.wav'),
-  kunai_throw_02: createSoundFromSource('/sounds/hidden_leaf/kunai_throw_2.wav'),
+  kunai_throw_01: createSoundFromSource('/sounds/hidden_leaf/kunai_throw.wav', {volume: 1.8}),
+  kunai_throw_02: createSoundFromSource('/sounds/hidden_leaf/kunai_throw_2.wav', {volume: 1.8}),
   // melee hits
   punch_01: createSoundFromSource('/sounds/hidden_leaf/punch--01.mp3'),
   punch_02: createSoundFromSource('/sounds/hidden_leaf/punch--02.mp3'),

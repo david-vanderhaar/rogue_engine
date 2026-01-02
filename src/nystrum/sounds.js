@@ -46,6 +46,10 @@ export default {
     src: [window.PUBLIC_URL + '/sounds/explosion-00.wav'],
     volume: 0.2,
   }),
+  explosion_1: new Howl({
+    src: [window.PUBLIC_URL + '/sounds/hidden_leaf/jutsu-strike.wav'],
+    volume: 0.2,
+  }),
   save: new Howl({
     src: [window.PUBLIC_URL + '/sounds/save.wav'],
   }),

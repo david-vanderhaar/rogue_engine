@@ -77,7 +77,7 @@ export const Exploding = superclass => class extends superclass {
       }
     });
     if (this.explosivity > 0)
-      SOUNDS.explosion_0.play();
+      SOUNDS.explosion_1.play();
     // this.game.draw(); //may not need draw here
   }
   animateExplosion () {
