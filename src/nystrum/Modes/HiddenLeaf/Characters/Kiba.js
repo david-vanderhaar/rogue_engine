@@ -1,21 +1,13 @@
 // import deps
-import * as Item from '../../../items';
 import * as Constant from '../../../constants';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
 import { JacintoAI, Player } from '../../../Entities/index';
-import { ContainerSlot } from '../../../Entities/Containing';
 import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
-import {StandStill} from '../../../Actions/StandStill';
-import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
-import {OpenInventory} from '../../../Actions/OpenInventory';
-import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { WolfSpeed } from '../../../Modes/HiddenLeaf/StatusEffects/WolfSpeed';
 import { PreparePlaceActorInDirection } from '../../../Actions/PreparePlaceActorInDirection';
 import * as Behaviors from '../../../Entities/AI/Behaviors/index';
-import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { generateDefaultKeymapActions, generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import { FangOverFang } from '../../../Actions/FangOverFang';
 
@@ -55,78 +47,11 @@ const basicInfo = {
 }
 
 function initialize (engine) {
-  function onAfterMoveOrAttack(enginee, actor) {
-    checkIsWalkingOnWater(enginee, actor)
-    checkIsWalkingOnFire(enginee, actor)
-  }
+
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      'w,ArrowUp': () => {
-        const direction = Constant.DIRECTIONS.N;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      's,ArrowDown': () => {
-        const direction = Constant.DIRECTIONS.S;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'a,ArrowLeft': () => {
-        const direction = Constant.DIRECTIONS.W;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'd,ArrowRight': () => {
-        const direction = Constant.DIRECTIONS.E;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      p: () => new StandStill({
-        label: 'Stay',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-      }),
-      Escape: () => new StandStill({
-        label: 'Pass turn',
-        message: '...',
-        game: engine.game,
-        actor,
-        energyCost: actor.energy,
-      }),
+      ...generateDefaultKeymapActions(engine, actor),
       l: () => new FangOverFang({
         game: engine.game,
         actor,
@@ -189,21 +114,6 @@ function initialize (engine) {
             enemyFactions: actor.enemyFactions,
           },
         }),
-      i: () => new OpenInventory({
-        label: 'Inventory',
-        game: engine.game,
-        actor,
-      }),
-      u: () => new OpenDropInventory({
-        label: 'Drop Items',
-        game: engine.game,
-        actor,
-      }),
-      g: () => new PickupRandomItem({
-        label: 'Pickup',
-        game: engine.game,
-        actor,
-      }),
     };
   }
   // instantiate class

@@ -1,30 +1,15 @@
 // import deps
-import * as Item from '../../../items';
 import * as Constant from '../../../constants';
 import { Player } from '../../../Entities/index';
-import { ContainerSlot } from '../../../Entities/Containing';
-import { ChakraResource } from '../../../Actions/ActionResources/ChakraResource';
-import { Say } from '../../../Actions/Say';
-import { MoveOrAttackWithTileSound } from '../../../Actions/MoveOrAttackWithTileSound';
 import { MultiTargetAttack } from '../../../Actions/MultiTargetAttack';
-import { OpenInventory } from '../../../Actions/OpenInventory';
-import { OpenEquipment } from '../../../Actions/OpenEquipment';
-import { OpenDropInventory } from '../../../Actions/OpenDropInventory';
-import { PickupRandomItem } from '../../../Actions/PickupRandomItem';
-import { PrepareDirectionalThrow } from '../../../Actions/PrepareDirectionalThrow';
 import { PrepareTackle } from '../../../Actions/PrepareTackle';
 import { AddOpenGatesStatusEffect } from '../../../Actions/AddOpenGatesStatusEffect';
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { RemoveWeights } from '../../../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
 import { DrunkenFist } from '../../../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
-import { GoToPreviousKeymap } from '../../../Actions/GoToPreviousKeymap';
-import { MoveTargetingCursor } from '../../../Actions/MoveTargetingCursor';
-import { MoveTowards } from '../../../Actions/MoveTowards';
-import { checkIsWalkingOnFire, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
 import * as Behaviors from '../../../Entities/AI/Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
-import { generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
-import { StandStill } from '../../../Actions/StandStill';
+import { generateDefaultKeymapActions, generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
 import * as Helper from '../../../../helper';
@@ -71,97 +56,7 @@ function initialize (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      'w,ArrowUp': () => {
-        const direction = Constant.DIRECTIONS.N;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnFire(engine, actor),
-        });
-      },
-      's,ArrowDown': () => {
-        const direction = Constant.DIRECTIONS.S;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnFire(engine, actor),
-        });
-      },
-      'a,ArrowLeft': () => {
-        const direction = Constant.DIRECTIONS.W;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnFire(engine, actor),
-        });
-      },
-      'd,ArrowRight': () => {
-        const direction = Constant.DIRECTIONS.E;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => checkIsWalkingOnFire(engine, actor),
-        });
-      },
-      p: () => new StandStill({
-        label: 'Stay',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-      }),
-      Escape: () => new StandStill({
-        label: 'Pass turn',
-        message: '...',
-        game: engine.game,
-        actor,
-        energyCost: actor.energy,
-      }),
-      i: () => new OpenInventory({
-        label: 'Inventory',
-        game: engine.game,
-        actor,
-      }),
-      // o: () => new OpenEquipment({
-      //   label: 'Equipment',
-      //   game: engine.game,
-      //   actor,
-      // }),
-      u: () => new OpenDropInventory({
-        label: 'Drop Items',
-        game: engine.game,
-        actor,
-      }),
-      g: () => new PickupRandomItem({
-        label: 'Pickup',
-        game: engine.game,
-        actor,
-      }),
-      // t: () => new PrepareDirectionalThrow({
-      //   label: 'Throw',
-      //   game: engine.game,
-      //   actor,
-      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      // }),
+      ...generateDefaultKeymapActions(engine, actor),
       l: () => new PrepareTackle({
         label: 'Flying Lotus',
         game: engine.game,
@@ -263,29 +158,6 @@ function initialize (engine) {
         //   new ChakraResource({ getResourceCost: () => 2 }),
         // ],
       }),
-      // mouseOver: (mousePosition) => {
-      //   return new MoveTargetingCursor({
-      //     hidden: true,
-      //     actor: actor,
-      //     game: engine.game,
-      //     targetPos: mousePosition,
-      //   })
-      // },
-      mouseLeftButton: (mousePosition) => {
-        return new MoveTowards({
-          hidden: true,
-          actor,
-          game: engine.game,
-          targetPos: mousePosition,
-        })
-      },
-      mouseRightButton: (mousePosition) => {
-        return new GoToPreviousKeymap({
-          hidden: true,
-          actor,
-          game: engine.game,
-        })
-      },
     };
   }
 

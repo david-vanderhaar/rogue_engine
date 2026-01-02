@@ -1,31 +1,15 @@
 // import deps
-import * as Item from '../../../items';
 import * as Constant from '../../../constants';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
 import { Player } from '../../../Entities/index';
-import { ContainerSlot } from '../../../Entities/Containing';
 import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
-import {StandStill} from '../../../Actions/StandStill';
-import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
 import {PrepareRangedAttack} from '../../../Actions/PrepareRangedAttack';
-import {PrepareDirectionalThrow} from '../../../Actions/PrepareDirectionalThrow';
-import {OpenInventory} from '../../../Actions/OpenInventory';
-import {OpenEquipment} from '../../../Actions/OpenEquipment';
-import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
-import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
-import { getPositionInDirection } from '../../../../helper';
-import { Katon } from '../../../Modes/HiddenLeaf/Items/Weapons/Katon';
-import { TackleByRange } from '../../../Actions/TackleByRange';
 import { AddNineTailsStatusEffect } from '../../../Actions/AddNineTailsStatusEffect';
-import { PrepareCallReinforcements } from '../../../Actions/PrepareCallReinforcements';
 import { SpawnShadowClones } from '../../../Actions/SpawnShadowClones';
 import { DurabilityResource } from '../../../Actions/ActionResources/DurabilityResource';
 import { UzumakiBarrage } from '../../../Modes/HiddenLeaf/Items/Weapons/UzumakiBarrage';
 import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
-import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
@@ -72,91 +56,7 @@ function initialize (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      'w,ArrowUp': () => {
-        const direction = Constant.DIRECTIONS.N;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      's,ArrowDown': () => {
-        const direction = Constant.DIRECTIONS.S;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'a,ArrowLeft': () => {
-        const direction = Constant.DIRECTIONS.W;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'd,ArrowRight': () => {
-        const direction = Constant.DIRECTIONS.E;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      p: () => new StandStill({
-        label: 'Stay',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-      }),
-      Escape: () => new StandStill({
-        label: 'Pass turn',
-        message: '...',
-        game: engine.game,
-        actor,
-        energyCost: actor.energy,
-      }),
-      i: () => new OpenInventory({
-        label: 'Inventory',
-        game: engine.game,
-        actor,
-      }),
-      // o: () => new OpenEquipment({
-      //   label: 'Equipment',
-      //   game: engine.game,
-      //   actor,
-      // }),
-      u: () => new OpenDropInventory({
-        label: 'Drop Items',
-        game: engine.game,
-        actor,
-      }),
-      g: () => new PickupRandomItem({
-        label: 'Pickup',
-        game: engine.game,
-        actor,
-      }),
+      ...generateDefaultKeymapActions(engine, actor),
       c: () => new SpawnShadowClones({
         label: 'Shadow Clone Jutsu',
         game: engine.game,

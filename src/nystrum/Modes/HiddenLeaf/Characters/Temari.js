@@ -1,33 +1,16 @@
 // import deps
-import * as Item from '../../../items';
 import * as Constant from '../../../constants';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
 import { Player } from '../../../Entities/index';
 import { ContainerSlot } from '../../../Entities/Containing';
 import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
-import {StandStill} from '../../../Actions/StandStill';
-import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
-import {PrepareRangedAttack} from '../../../Actions/PrepareRangedAttack';
 import {PrepareDirectionalThrow} from '../../../Actions/PrepareDirectionalThrow';
-import {OpenInventory} from '../../../Actions/OpenInventory';
-import {OpenEquipment} from '../../../Actions/OpenEquipment';
-import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
-import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
-import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
-import * as Helper from '../../../../helper';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
-import { PiercingKunai } from '../../../Modes/HiddenLeaf/Items/Weapons/PiercingKunai';
-import { ExplodingTag } from '../../../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
-import { PrepareSubstitution } from '../../../Actions/PrepareSubstitution';
-import * as TentenSummons from '../../../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
-import { SpawnAndPlaceItem } from '../../../Actions/SpawnAndPlaceItem';
 import { WindPush } from '../../../Modes/HiddenLeaf/Items/Weapons/WindPush';
 import { WindSlice } from '../../../Modes/HiddenLeaf/Items/Weapons/WindSlice';
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { WindBursts } from '../../../Modes/HiddenLeaf/StatusEffects/WindBursts';
-import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -66,11 +49,6 @@ const basicInfo = {
 
 function initialize (engine) {
 
-  function onAfterMoveOrAttack(enginee, actor) {
-    checkIsWalkingOnWater(enginee, actor)
-    checkIsWalkingOnFire(enginee, actor)
-  }
-
   async function summonSuccess(position, direction) {
     const spatterEmitter = SpatterEmitter({
       game: engine.game,
@@ -92,71 +70,7 @@ function initialize (engine) {
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      'w,ArrowUp': () => {
-        const direction = Constant.DIRECTIONS.N;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      's,ArrowDown': () => {
-        const direction = Constant.DIRECTIONS.S;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'a,ArrowLeft': () => {
-        const direction = Constant.DIRECTIONS.W;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'd,ArrowRight': () => {
-        const direction = Constant.DIRECTIONS.E;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      p: () => new StandStill({
-        label: 'Stay',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-      }),
-      Escape: () => new StandStill({
-        label: 'Pass turn',
-        message: '...',
-        game: engine.game,
-        actor,
-        energyCost: actor.energy,
-      }),
+      ...generateDefaultKeymapActions(engine, actor),
       t: () => new PrepareDirectionalThrow({
         label: 'Wind Release',
         projectileType: 'wind push',
@@ -185,35 +99,6 @@ function initialize (engine) {
           actor,
         }),
       }),
-      // r: () => new PrepareSubstitution({
-      //   label: 'Substitution',
-      //   game: engine.game,
-      //   actor,
-      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      //   passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
-      // }),
-      i: () => new OpenInventory({
-        label: 'Inventory',
-        game: engine.game,
-        actor,
-      }),
-      // o: () => new OpenEquipment({
-      //   label: 'Equipment',
-      //   game: engine.game,
-      //   actor,
-      // }),
-      u: () => new OpenDropInventory({
-        label: 'Drop Items',
-        game: engine.game,
-        actor,
-      }),
-      g: () => new PickupRandomItem({
-        label: 'Pickup',
-        game: engine.game,
-        actor,
-        attemptEquip: true,
-      }),
-      // h: () => null,
     };
   }
   // instantiate class

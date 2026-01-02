@@ -1,23 +1,13 @@
 // import deps
-import * as Item from '../../../items'
 import * as Constant from '../../../constants';
 import { Player } from '../../../Entities/index';
-import { ContainerSlot } from '../../../Entities/Containing';
 import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
-import {StandStill} from '../../../Actions/StandStill';
-import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
 import {PrepareSandWall} from '../../../Actions/SandWall';
-import {PrepareDirectionalThrow} from '../../../Actions/PrepareDirectionalThrow';
 import {PrepareSubstitution} from '../../../Actions/PrepareSubstitution';
 import {SandPulse} from '../../../Actions/SandPulse';
 import {AddSandSkinStatusEffect} from '../../../Actions/AddSandSkinStatusEffect';
-import {OpenInventory} from '../../../Actions/OpenInventory';
-import {OpenEquipment} from '../../../Actions/OpenEquipment';
-import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
 import {CloneSelf} from '../../../Actions/CloneSelf';
-import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
-import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/gaara_full_01.png`;
@@ -63,79 +53,10 @@ const basicInfo = {
 
 function initialize (engine) {
 
-  function onAfterMoveOrAttack(enginee, actor) {
-    checkIsWalkingOnWater(enginee, actor)
-    checkIsWalkingOnFire(enginee, actor)
-  }
-
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      'w,ArrowUp': () => {
-        const direction = Constant.DIRECTIONS.N;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      's,ArrowDown': () => {
-        const direction = Constant.DIRECTIONS.S;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'a,ArrowLeft': () => {
-        const direction = Constant.DIRECTIONS.W;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'd,ArrowRight': () => {
-        const direction = Constant.DIRECTIONS.E;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      p: () => new StandStill({
-        label: 'Stay',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-      }),
-      Escape: () => new StandStill({
-        label: 'Pass turn',
-        message: '...',
-        game: engine.game,
-        actor,
-        energyCost: actor.energy,
-      }),
+      ...generateDefaultKeymapActions(engine, actor),
       l: () => new PrepareSandWall({
         label: 'Sand Wall',
         game: engine.game,
@@ -181,32 +102,6 @@ function initialize (engine) {
         ],
         onSuccess: () => SOUNDS.sand_clone_01.play(),
       }),
-      i: () => new OpenInventory({
-        label: 'Inventory',
-        game: engine.game,
-        actor,
-      }),
-      // o: () => new OpenEquipment({
-      //   label: 'Equipment',
-      //   game: engine.game,
-      //   actor,
-      // }),
-      u: () => new OpenDropInventory({
-        label: 'Drop Items',
-        game: engine.game,
-        actor,
-      }),
-      g: () => new PickupRandomItem({
-        label: 'Pickup',
-        game: engine.game,
-        actor,
-      }),
-      // t: () => new PrepareDirectionalThrow({
-      //   label: 'Throw',
-      //   game: engine.game,
-      //   actor,
-      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      // })
     };
   }
   // instantiate class

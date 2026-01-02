@@ -4,20 +4,14 @@ import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
 import { Player } from '../../../Entities/index';
 import { ContainerSlot } from '../../../Entities/Containing';
 import {ChakraResource} from '../../../Actions/ActionResources/ChakraResource';
-import {StandStill} from '../../../Actions/StandStill';
-import {MoveOrAttackWithTileSound} from '../../../Actions/MoveOrAttackWithTileSound';
 import {PrepareDirectionalThrow} from '../../../Actions/PrepareDirectionalThrow';
-import {OpenInventory} from '../../../Actions/OpenInventory';
-import {OpenDropInventory} from '../../../Actions/OpenDropInventory';
-import {PickupRandomItem} from '../../../Actions/PickupRandomItem';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../Modes/HiddenLeaf/StatusEffects/helper';
 import { ExplodingTag } from '../../../Modes/HiddenLeaf/Items/Weapons/ExplodingTag';
 import { PrepareSubstitution } from '../../../Actions/PrepareSubstitution';
 import { PrepareRangedAction } from '../../../Actions/PrepareRangedAction';
 import { AddStatusEffectAtPosition } from '../../../Actions/AddStatusEffectAtPosition';
 import GradientPathEmitter from '../../../Engine/Particle/Emitters/gradientPathEmitter';
 import ShadowHold from '../../../StatusEffects/ShadowHold';
-import { generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shikamaru.png`;
@@ -57,79 +51,10 @@ const basicInfo = {
 
 function initialize (engine) {
 
-  function onAfterMoveOrAttack(enginee, actor) {
-    checkIsWalkingOnWater(enginee, actor)
-    checkIsWalkingOnFire(enginee, actor)
-  }
-
   // define keymap
   const keymap = (engine, actor) => {
     return {
-      'w,ArrowUp': () => {
-        const direction = Constant.DIRECTIONS.N;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      's,ArrowDown': () => {
-        const direction = Constant.DIRECTIONS.S;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'a,ArrowLeft': () => {
-        const direction = Constant.DIRECTIONS.W;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      'd,ArrowRight': () => {
-        const direction = Constant.DIRECTIONS.E;
-        let newX = actor.pos.x + direction[0];
-        let newY = actor.pos.y + direction[1];
-        return new MoveOrAttackWithTileSound({
-          hidden: true,
-          targetPos: { x: newX, y: newY },
-          game: engine.game,
-          actor,
-          energyCost: Constant.ENERGY_THRESHOLD,
-          onAfter: () => onAfterMoveOrAttack(engine, actor),
-        });
-      },
-      p: () => new StandStill({
-        label: 'Stay',
-        game: engine.game,
-        actor,
-        energyCost: Constant.ENERGY_THRESHOLD,
-      }),
-      Escape: () => new StandStill({
-        label: 'Pass turn',
-        message: '...',
-        game: engine.game,
-        actor,
-        energyCost: actor.energy,
-      }),
+      ...generateDefaultKeymapActions(engine, actor),
       l: () => new PrepareRangedAction({
         label: 'Shadow Hold',
         game: engine.game,
@@ -172,28 +97,6 @@ function initialize (engine) {
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
       }),
-      i: () => new OpenInventory({
-        label: 'Inventory',
-        game: engine.game,
-        actor,
-      }),
-      // o: () => new OpenEquipment({
-      //   label: 'Equipment',
-      //   game: engine.game,
-      //   actor,
-      // }),
-      u: () => new OpenDropInventory({
-        label: 'Drop Items',
-        game: engine.game,
-        actor,
-      }),
-      g: () => new PickupRandomItem({
-        label: 'Pickup',
-        game: engine.game,
-        actor,
-        attemptEquip: true,
-      }),
-      // h: () => null,
     };
   }
   // instantiate class
