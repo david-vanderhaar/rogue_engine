@@ -6,7 +6,9 @@ import { MoveOrAttack } from '../../../Actions/MoveOrAttack';
 export default class MoveAwayFromEnemy extends Behavior {
   constructor({maintainDistanceOf = 1, ...args }) {
     super({ ...args });
-    this.chainOnFail = true;
+    // When both this chainOnFail and MoveTowardsEnemy's chainOnFail are true,
+    // the AI gets stuck switching between the two behaviors.
+    // this.chainOnFail = true;
     this.maintainDistanceOf = maintainDistanceOf
   }
 

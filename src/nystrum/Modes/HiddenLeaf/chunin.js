@@ -470,7 +470,7 @@ export class Chunin extends Mode {
         new Behaviors.MoveAwayFromEnemy({
           repeat: stats.speed/Constant.ENERGY_THRESHOLD,
           maintainDistanceOf: 4, // causes to move and attack in same turn if close enough
-          // chainOnFail: fals
+          // chainOnFail: false,
         }),
       ],
       // directional projectile destruction breaks engine
