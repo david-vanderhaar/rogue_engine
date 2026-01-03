@@ -14,6 +14,7 @@ import { PrepareSubstitution } from '../../../Actions/PrepareSubstitution';
 import * as TentenSummons from '../../../Modes/HiddenLeaf/Items/Weapons/TentenSummons';
 import { SpawnAndPlaceItem } from '../../../Actions/SpawnAndPlaceItem';
 import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/tenten.png`;
 const basicInfo = {
@@ -105,7 +106,10 @@ function initialize (engine) {
           actor,
           energyCost: Constant.ENERGY_THRESHOLD,
           requiredResources: [new ChakraResource({ getResourceCost: () => 1 })],
-          onSuccess: () => summonSuccess(neigbor),
+          onSuccess: () => {
+            SOUNDS.summon_1.play()
+            summonSuccess(neigbor)
+          },
         });
       },
       f: () => new PrepareDirectionalThrow({

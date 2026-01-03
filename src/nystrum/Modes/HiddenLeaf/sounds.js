@@ -82,6 +82,8 @@ export const SOUNDS = {
   punch_06: createSoundFromSource('/sounds/hidden_leaf/punch--06.mp3'),
   punch_07: createSoundFromSource('/sounds/hidden_leaf/punch--07.mp3'),
   punch_08: createSoundFromSource('/sounds/hidden_leaf/punch--08.mp3'),
+
+  sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
   // end
   // take damage
   take_damage_01: createSoundFromSource('/sounds/hidden_leaf/take-damage-01.mp3', {volume: 0.2}),

@@ -1,5 +1,6 @@
 import { MESSAGE_TYPE } from '../message';
 import * as Helper from '../../helper';
+import SOUNDS from '../sounds'
 
 export const Attacking = superclass => class extends superclass {
   constructor({ attackDamage = 2, meleeSounds = null, ...args }) {
@@ -7,6 +8,10 @@ export const Attacking = superclass => class extends superclass {
     this.entityTypes = this.entityTypes.concat('ATTACKING');
     this.attackDamage = attackDamage;
     this.meleeSounds = meleeSounds;
+  }
+
+  getMeleeSounds() {
+    return this.meleeSounds;
   }
 
   getAttackDamage(additional = 0) {
@@ -97,8 +102,16 @@ export const Attacking = superclass => class extends superclass {
         if (this.entityTypes.includes('PLAYING')) this.game.display.shakeScreen({intensity: 1})
         
         success = true;
+        this.playMeleeSound()
       }
     }
     return success;
+  }
+
+  playMeleeSound() {
+    const sounds = this.getMeleeSounds() || []
+    const sound = Helper.getRandomInArray(sounds);
+    
+    if (sound) sound.play();
   }
 };

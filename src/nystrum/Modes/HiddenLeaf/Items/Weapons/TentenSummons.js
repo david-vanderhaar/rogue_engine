@@ -2,6 +2,7 @@ import { getRandomInArray } from '../../../../../helper';
 import * as Constant from '../../../../constants';
 import {DeterioratingWeapon, Weapon} from '../../../../Entities/index';
 import {COLORS as HIDDEN_LEAF_COLORS} from '../../../HiddenLeaf/theme';
+import { SOUNDS } from '../../sounds';
 
 export const Mace = (engine, position = {x: 1, y: 1}) => new DeterioratingWeapon({
   game: engine.game,
@@ -11,7 +12,7 @@ export const Mace = (engine, position = {x: 1, y: 1}) => new DeterioratingWeapon
   lightPassable: true,
   pos: position,
   attackDamage: 2,
-  durability: 1,
+  durability: 6,
   equipmentType: Constant.EQUIPMENT_TYPES.HAND,
   renderer: {
     character: 'j',
@@ -19,6 +20,7 @@ export const Mace = (engine, position = {x: 1, y: 1}) => new DeterioratingWeapon
     color: HIDDEN_LEAF_COLORS.wraps,
     background: HIDDEN_LEAF_COLORS.dirt00,
   },
+  meleeSounds: [SOUNDS.sword_clang]
 })
 
 export const DaoSword = (engine, position = {x: 1, y: 1}) => new DeterioratingWeapon({
@@ -29,7 +31,7 @@ export const DaoSword = (engine, position = {x: 1, y: 1}) => new DeterioratingWe
   lightPassable: true,
   pos: position,
   attackDamage: 1,
-  durability: 1,
+  durability: 6,
   equipmentType: Constant.EQUIPMENT_TYPES.HAND,
   renderer: {
     character: '/',
@@ -37,6 +39,7 @@ export const DaoSword = (engine, position = {x: 1, y: 1}) => new DeterioratingWe
     color: HIDDEN_LEAF_COLORS.wraps,
     background: HIDDEN_LEAF_COLORS.dirt00,
   },
+  meleeSounds: [SOUNDS.sword_clang]
 })
 
 export const BoStaff = (engine, position = {x: 1, y: 1}) => new DeterioratingWeapon({
@@ -47,7 +50,7 @@ export const BoStaff = (engine, position = {x: 1, y: 1}) => new DeterioratingWea
   lightPassable: true,
   pos: position,
   attackDamage: 1,
-  durability: 2,
+  durability: 6,
   equipmentType: Constant.EQUIPMENT_TYPES.HAND,
   renderer: {
     character: '|',
@@ -55,6 +58,7 @@ export const BoStaff = (engine, position = {x: 1, y: 1}) => new DeterioratingWea
     color: HIDDEN_LEAF_COLORS.wraps,
     background: HIDDEN_LEAF_COLORS.dirt00,
   },
+  meleeSounds: [SOUNDS.sword_clang]
 })
 
 export const getRandomWeapon = (engine, position) => {

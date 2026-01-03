@@ -11,6 +11,7 @@ import { WindSlice } from '../../../Modes/HiddenLeaf/Items/Weapons/WindSlice';
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { WindBursts } from '../../../Modes/HiddenLeaf/StatusEffects/WindBursts';
 import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
+import { SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 const basicInfo = {
@@ -98,6 +99,7 @@ function initialize (engine) {
           game: engine.game,
           actor,
         }),
+        onSuccess: () => SOUNDS.wind_slice.play(),
       }),
     };
   }
