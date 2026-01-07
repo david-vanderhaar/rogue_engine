@@ -9,6 +9,7 @@ import { OpenDropInventory } from '../../../../Actions/OpenDropInventory';
 import { PickupRandomItem } from '../../../../Actions/PickupRandomItem';
 import { MoveTowards } from '../../../../Actions/MoveTowards';
 import { GoToPreviousKeymap } from '../../../../Actions/GoToPreviousKeymap';
+import { StatChangeOnSelf } from '../../../../Actions/StatChangeOnSelf';
 
 
 export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
@@ -144,6 +145,16 @@ export function generateDefaultKeymapActions(engine, actor) {
       label: 'Inventory',
       game: engine.game,
       actor,
+    }),
+    o: () => new StatChangeOnSelf({
+      label: 'Chakra Gain 1',
+      game: engine.game,
+      actor,
+      energyCost: Constant.ENERGY_THRESHOLD,
+      changeByValue: 1,
+      statAttributePath: 'charge',
+      statAttributePathMax: 'chargeMax',
+      statAttributeValueMin: 0,
     }),
     // o: () => new OpenEquipment({
     //   label: 'Equipment',

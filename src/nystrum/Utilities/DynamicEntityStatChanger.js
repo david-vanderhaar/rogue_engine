@@ -60,8 +60,13 @@ export default class DynamicEntityStatChanger {
   
     // change by value, clamped to min/max
     const newValue = Helper.clamp(stat + this.changeByValue, min, max)
-    _.set(this.entity, this.statAttributePath, newValue)
 
+    // nothing changed
+    console.log(newValue, stat);
+    
+    if (newValue === stat) return false
+
+    _.set(this.entity, this.statAttributePath, newValue)
     return true
   }
 }
