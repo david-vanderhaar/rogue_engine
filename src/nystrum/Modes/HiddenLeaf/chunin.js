@@ -13,7 +13,7 @@ import { SOUNDS as HIDDEN_LEAF_SOUNDS } from './sounds';
 import * as _ from 'lodash';
 import { TILE_KEY } from './theme';
 import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
-import { onDecreaseDurabilitySound } from './Characters/Utilities/characterHelper';
+import { buffAICharacterStats, onDecreaseDurabilitySound } from './Characters/Utilities/characterHelper';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
@@ -430,6 +430,7 @@ export class Chunin extends Mode {
     // TODO: fix, this.meta() is not a function error
     try {
       stats = this.getTournamentOpponent().basicInfo;
+      stats = buffAICharacterStats(stats);
     } catch (error) {
       console.log(error);
       stats = this.getBanditStats();
@@ -443,8 +444,8 @@ export class Chunin extends Mode {
       name: stats.name,
       game: this.game,
       actions: [],
-      attackDamage: stats.attackDamage,
-      durability: stats.durability,
+      attackDamage: stats.attackDamage * 2,
+      durability: stats.durability * 2,
       // durability: 100,
       speed: stats.speed,
       charge: 20,

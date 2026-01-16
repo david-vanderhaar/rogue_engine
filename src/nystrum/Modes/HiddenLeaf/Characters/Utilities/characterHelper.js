@@ -24,6 +24,7 @@ export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
   traversableTiles: ['WATER'],
   speed: basicInfo.speed,
   durability: basicInfo.durability,
+  attackDamage: 1,
   onDecreaseDurability: () => onDecreaseDurabilitySound(basicInfo?.soundOptions?.onDecreaseDurability || {}),
   meleeSounds: [
     HIDDEN_LEAF_SOUNDS.punch_01,
@@ -195,4 +196,11 @@ export function generateDefaultKeymapActions(engine, actor) {
       })
     },
   };
+}
+
+export function buffAICharacterStats(stats) {
+  return {
+    ...stats,
+    durability: stats.durability * 2,
+  }
 }

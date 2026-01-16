@@ -7,7 +7,7 @@ import { AddOpenGatesStatusEffect } from '../../../Actions/AddOpenGatesStatusEff
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { RemoveWeights } from '../../../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
 import { DrunkenFist } from '../../../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
-import * as Behaviors from '../../../Entities/AI/Behaviors';
+import BlitzerBehaviors from '../../../Entities/AI/Archetypes/BlitzerBehaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import { generateDefaultKeymapActions, generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
@@ -15,6 +15,10 @@ import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
 import * as Helper from '../../../../helper';
 
 const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
+
+const speedRating = 3;
+const durabilityRating = 2;
+const chakraRating = 0;
 
 const basicInfo = {
   name: 'Rock Lee',
@@ -41,13 +45,13 @@ const basicInfo = {
       description: 'How many gates can you open before you die?',
     },
   ],
-  speedRating: 3,
-  durabilityRating: 2,
-  chakraRating: 0,
-  speed: 600,
-  durability: 6,
-  charge: 0,
-  chargeMax: 10,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
   portrait,
 }
   
@@ -186,24 +190,7 @@ function initialize (engine) {
 }
 
 // a mock for AI behaviors
-const behaviors = [
-  new Behaviors.MoveTowardsEnemy({
-    repeat: basicInfo.speed/Constant.ENERGY_THRESHOLD,
-    maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
-    chainOnFail: true
-  }),
-  new Behaviors.Telegraph({
-    repeat: 1,
-    attackPattern: Constant.CLONE_PATTERNS.clover,
-    chainOnSuccess: true
-  }),
-  new Behaviors.ExecuteAttack({repeat: 1}),
-  new Behaviors.MoveAwayFromEnemy({
-    repeat: basicInfo.speed/Constant.ENERGY_THRESHOLD,
-    maintainDistanceOf: 4, // causes to move and attack in same turn if close enough
-    // chainOnFail: fals
-  }),
-]
+const behaviors = BlitzerBehaviors(basicInfo);
 
 export default function () {
   return {
