@@ -8,6 +8,7 @@ import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { RemoveWeights } from '../../../Modes/HiddenLeaf/StatusEffects/RemoveWeights';
 import { DrunkenFist } from '../../../Modes/HiddenLeaf/StatusEffects/DrunkenFist';
 import BlitzerBehaviors from '../../../Entities/AI/Archetypes/BlitzerBehaviors';
+import * as Behaviors from '../../../Entities/AI/Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import { generateDefaultKeymapActions, generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import GradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
@@ -52,6 +53,7 @@ const basicInfo = {
   durability: durabilityRating * 3,
   charge: chakraRating * 3,
   chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
   

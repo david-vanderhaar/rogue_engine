@@ -12,6 +12,11 @@ import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '..
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/neji.png`;
+
+const speedRating = 2
+const durabilityRating = 1
+const chakraRating = 2
+
 const basicInfo = {
   name: 'Neji',
   description: 'Young master of the Gentle Fist.',
@@ -37,12 +42,14 @@ const basicInfo = {
       description: 'A taijutsu style that targets the body\'s Chakra Pathway System.',
     },
   ],
-  speedRating: 2,
-  durabilityRating: 1,
-  chakraRating: 2,
-  speed: 500,
-  durability: 4,
-  charge: 6,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
 

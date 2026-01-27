@@ -17,6 +17,11 @@ import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '..
 import { SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/tenten.png`;
+
+const speedRating = 1
+const durabilityRating = 2
+const chakraRating = 2
+
 const basicInfo = {
   name: 'Tenten',
   description: 'The weapons specialist',
@@ -42,12 +47,14 @@ const basicInfo = {
       description: 'Summons a random, powerful weapon.',
     },
   ],
-  speedRating: 1,
-  durabilityRating: 2,
-  chakraRating: 2,
-  speed: 300,
-  durability: 5,
-  charge: 7,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
 

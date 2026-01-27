@@ -15,6 +15,11 @@ import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '..
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shikamaru.png`;
+
+const speedRating = 2
+const durabilityRating = 1
+const chakraRating = 2
+
 const basicInfo = {
   name: 'Shikamaru',
   description: 'The master strategist',
@@ -40,12 +45,14 @@ const basicInfo = {
       description: 'Bind your opponent with the Nara Clan\'s jutsu.',
     },
   ],
-  speedRating: 2,
-  durabilityRating: 1,
-  chakraRating: 2,
-  speed: 500,
-  durability: 4,
-  charge: 7,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
 

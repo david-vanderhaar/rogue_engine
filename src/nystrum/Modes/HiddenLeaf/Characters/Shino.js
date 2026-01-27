@@ -12,6 +12,11 @@ import { ShinoBugCage } from '../../../Modes/HiddenLeaf/Items/Weapons/ShinoBugCa
 import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/shino.png`;
+
+const speedRating = 1
+const durabilityRating = 1
+const chakraRating = 3
+
 const basicInfo = {
   name: 'Shino',
   description: 'Bugs are cool.',
@@ -37,12 +42,14 @@ const basicInfo = {
       description: 'Drain the enemy of their chakra.',
     },
   ],
-  speedRating: 1,
-  durabilityRating: 1,
-  chakraRating: 3,
-  speed: 300,
-  durability: 4,
-  charge: 8,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
 

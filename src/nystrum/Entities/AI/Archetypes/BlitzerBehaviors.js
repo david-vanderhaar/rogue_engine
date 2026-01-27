@@ -1,7 +1,7 @@
 import * as Constant from '../../../constants';
 import * as Behaviors from '../Behaviors';
 
-export default function (basicInfo) {
+function BlitzerBehaviors(basicInfo) {
   return [
     new Behaviors.MoveTowardsEnemy({
       repeat: basicInfo.speed/Constant.ENERGY_THRESHOLD,
@@ -16,3 +16,5 @@ export default function (basicInfo) {
     new Behaviors.ExecuteAttack({repeat: 1}),
   ]
 }
+
+export default BlitzerBehaviors;

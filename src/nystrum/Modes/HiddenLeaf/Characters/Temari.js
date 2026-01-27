@@ -14,6 +14,11 @@ import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '..
 import { SOUNDS } from '../sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
+
+const speedRating = 2
+const durabilityRating = 1
+const chakraRating = 2
+
 const basicInfo = {
   name: 'Temari',
   description: 'The Wind Ninja',
@@ -39,12 +44,14 @@ const basicInfo = {
       description: 'Cuts through enemeies at range.',
     },
   ],
-  speedRating: 2,
-  durabilityRating: 1,
-  chakraRating: 2,
-  speed: 500,
-  durability: 4,
-  charge: 6,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
 

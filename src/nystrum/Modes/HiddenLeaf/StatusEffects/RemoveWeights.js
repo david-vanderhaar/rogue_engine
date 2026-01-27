@@ -26,7 +26,7 @@ export class RemoveWeights extends Base {
     
     this.onStop = () => {
       this.actor.speed -= this.speedBuff;
-      this.actor.attackDamage += this.damageBuff;
+      this.actor.attackDamage -= this.damageBuff;
       this.actor.renderer.character = 'R'
       console.log(`${this.actor.name} rewrapped weights.`);
     }

@@ -444,8 +444,8 @@ export class Chunin extends Mode {
       name: stats.name,
       game: this.game,
       actions: [],
-      attackDamage: stats.attackDamage * 2,
-      durability: stats.durability * 2,
+      attackDamage: stats.attackDamage,
+      durability: stats.durability,
       // durability: 100,
       speed: stats.speed,
       charge: 20,
@@ -479,6 +479,8 @@ export class Chunin extends Mode {
       // getProjectile: ({ pos, targetPos, direction, range }) => Item.kunai(game.engine, { ...pos }, { ...targetPos })
     })
     if (this.game.placeActorOnMap(entity)) {
+      console.log(entity);
+      
       this.game.engine.addActor(entity);
       // this.game.draw();
     };

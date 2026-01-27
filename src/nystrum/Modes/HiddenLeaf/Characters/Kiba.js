@@ -12,6 +12,11 @@ import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import { FangOverFang } from '../../../Actions/FangOverFang';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/kiba.png`;
+
+const speedRating = 2
+const durabilityRating = 2
+const chakraRating = 2
+
 const basicInfo = {
   name: 'Kiba',
   description: 'Wolf Pack!',
@@ -37,12 +42,14 @@ const basicInfo = {
       description: 'Summoning his trusty companion.',
     },
   ],
-  speedRating: 2,
-  durabilityRating: 2,
-  chakraRating: 2,
-  speed: 400,
-  durability: 5,
-  charge: 6,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
 

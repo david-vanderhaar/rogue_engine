@@ -13,6 +13,11 @@ import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '..
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/naruto.png`;
+
+const speedRating = 1
+const durabilityRating = 2
+const chakraRating = 3
+
 const basicInfo = {
   name: 'Naruto',
   description: 'Believe it!',
@@ -38,12 +43,14 @@ const basicInfo = {
       description: 'The nine tailed fox can\'t be stopped.',
     },
   ],
-  speedRating: 1,
-  durabilityRating: 2,
-  chakraRating: 3,
-  speed: 300,
-  durability: 5,
-  charge: 9,
+  speedRating,
+  durabilityRating,
+  chakraRating,
+  speed: speedRating * 200,
+  durability: durabilityRating * 3,
+  charge: chakraRating * 3,
+  chargeMax: chakraRating * 3,
+  attackDamage: 1,
   portrait,
 }
 
