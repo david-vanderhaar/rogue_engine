@@ -8,6 +8,7 @@ import MoveTowardsEntityInRangeByAttr from './MoveTowards';
 import MoveTowardsCover from './MoveTowardsCover';
 import MoveTowardsEnemy from './MoveTowardsEnemy';
 import MoveOrAttackTowardsEnemy from './MoveOrAttackTowardsEnemy';
+import MoveOrShoveTowardsEnemy from './MoveOrShoveTowardsEnemy';
 import MoveTowardsPlayer from './MoveTowardsPlayer';
 import MoveAwayFromEnemy from './MoveAwayFromEnemy';
 import Telegraph from './Telegraph';
@@ -26,6 +27,7 @@ export {
   MoveTowardsCover,
   MoveTowardsEnemy,
   MoveOrAttackTowardsEnemy,
+  MoveOrShoveTowardsEnemy,
   MoveTowardsPlayer,
   MoveAwayFromEnemy,
   Telegraph,

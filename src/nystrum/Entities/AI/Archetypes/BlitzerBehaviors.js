@@ -1,3 +1,4 @@
+import { chain, repeat } from 'lodash';
 import * as Constant from '../../../constants';
 import * as Behaviors from '../Behaviors';
 
@@ -21,10 +22,12 @@ function FollowAndAttack(basicInfo) {
 // Phase 2: Special Move
 function SpecialMove(basicInfo) {
   return [
-    new Behaviors.MoveAwayFromEnemy({
-      repeat: 10,
-      maintainDistanceOf: 10,
-    }),
+    // TODO: Implement Flying Lotus (Tackle) behavior
+    // create MoveOrShoveTowardsEnemy behavior, repeat x times
+    // add in onSuccess particles via :extraParams
+    new Behaviors.MoveOrShoveTowardsEnemy({repeat: 8, maintainDistanceOf: 0, chainOnSuccess: true}),
+    new Behaviors.MoveOrAttackTowardsEnemy({repeat: 2, maintainDistanceOf: 0}),
+    new Behaviors.MoveAwayFromEnemy({ repeat: 3, maintainDistanceOf: 3 }),
   ]
 }
 

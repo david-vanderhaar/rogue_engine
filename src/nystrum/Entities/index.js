@@ -186,6 +186,7 @@ export const Player = pipe(
   Destructable,
   Cloning,
   Playing,
+  Pushable,
   Burnable,
   Upgradable,
   HasFaction,
