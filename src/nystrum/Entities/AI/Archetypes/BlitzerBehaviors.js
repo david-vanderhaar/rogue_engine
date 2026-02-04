@@ -24,8 +24,11 @@ function FollowAndAttack(basicInfo) {
 function SpecialMove(basicInfo) {
   return [
     // TODO: Implement Flying Lotus (Tackle) behavior
-    // create MoveOrShoveTowardsEnemy behavior, repeat x times
-    // add in onSuccess particles via :extraParams
+    // add warning visuals one turn before
+    // this should be done by adding behavior that prepares the tackle
+      // TelegraphPath behavior that shows the path of the tackle aimed in line with player (or enemy) position
+      // ExecuteMoveAlongPath behavior that performs the Move action along the prepared path, and removes or resets proper animations after
+      // make variations as well, ExecuteMoveOrAttackAlongPath, ExecuteMoveOrShoveAlongPath, etc. 
     new Behaviors.MoveOrShoveTowardsEnemy({
       repeat: 8,
       maintainDistanceOf: 0,
