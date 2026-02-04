@@ -1,6 +1,7 @@
-import { chain, repeat } from 'lodash';
 import * as Constant from '../../../constants';
 import * as Behaviors from '../Behaviors';
+import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
+import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 
 // Phase 1: Close distance and attack
 function FollowAndAttack(basicInfo) {
@@ -25,7 +26,25 @@ function SpecialMove(basicInfo) {
     // TODO: Implement Flying Lotus (Tackle) behavior
     // create MoveOrShoveTowardsEnemy behavior, repeat x times
     // add in onSuccess particles via :extraParams
-    new Behaviors.MoveOrShoveTowardsEnemy({repeat: 8, maintainDistanceOf: 0, chainOnSuccess: true}),
+    new Behaviors.MoveOrShoveTowardsEnemy({
+      repeat: 8,
+      maintainDistanceOf: 0,
+      chainOnSuccess: true,
+      extraActionParams: {
+        onSuccess: ({actor}) => {
+          HIDDEN_LEAF_SOUNDS.wind_slice.play()
+          SpatterEmitter({
+            game: actor.game,
+            fromPosition: actor.getPosition(),
+            spatterAmount: 0.1,
+            spatterRadius: 3,
+            animationTimeStep: 0.6,
+            transfersBackground: false,
+            spatterColors: ['#36635b', '#F0D8C0', '#495877']
+          }).start()
+        }
+      },
+    }),
     new Behaviors.MoveOrAttackTowardsEnemy({repeat: 2, maintainDistanceOf: 0}),
     new Behaviors.MoveAwayFromEnemy({ repeat: 3, maintainDistanceOf: 3 }),
   ]
@@ -46,7 +65,7 @@ function FullPowerUp(basicInfo) {
 function BlitzerBehaviors(basicInfo) {
   return [
     // Phase 1: Close distance and attack
-    ...Array(2).fill(FollowAndAttack(basicInfo)).flat(),
+    // ...Array(2).fill(FollowAndAttack(basicInfo)).flat(),
     // Phase 2: Special Move
     ...Array(1).fill(SpecialMove(basicInfo)).flat(),
     // Phase 3: Apply Light Power Up

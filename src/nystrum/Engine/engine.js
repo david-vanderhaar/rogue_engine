@@ -71,7 +71,7 @@ export class Engine {
             result = await action.perform();
             actor.lastActionResult = result
             if (result.success) {
-              await action.onSuccess();
+              await action.onSuccess({actor});
               action.payRequiredResources();
               timePassed += action.getEnergyCost();
             } else {

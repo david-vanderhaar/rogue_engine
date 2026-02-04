@@ -14,7 +14,6 @@ export class MoveOrShove extends Base {
 
     let direction = [this.targetPos.x - this.actor.pos.x, this.targetPos.y - this.actor.pos.y];
     let shoveSuccess = this.actor.shove(this.targetPos, direction, true);
-    console.log('shoveSuccess: ', shoveSuccess);
     
     if (shoveSuccess) return { success: true, alternative: null };
     

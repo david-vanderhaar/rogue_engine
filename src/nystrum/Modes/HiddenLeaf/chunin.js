@@ -479,8 +479,6 @@ export class Chunin extends Mode {
       // getProjectile: ({ pos, targetPos, direction, range }) => Item.kunai(game.engine, { ...pos }, { ...targetPos })
     })
     if (this.game.placeActorOnMap(entity)) {
-      console.log(entity);
-      
       this.game.engine.addActor(entity);
       // this.game.draw();
     };
