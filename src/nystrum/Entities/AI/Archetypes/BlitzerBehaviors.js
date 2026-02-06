@@ -29,25 +29,32 @@ function SpecialMove(basicInfo) {
       // TelegraphPath behavior that shows the path of the tackle aimed in line with player (or enemy) position
       // ExecuteMoveAlongPath behavior that performs the Move action along the prepared path, and removes or resets proper animations after
       // make variations as well, ExecuteMoveOrAttackAlongPath, ExecuteMoveOrShoveAlongPath, etc. 
-    new Behaviors.MoveOrShoveTowardsEnemy({
-      repeat: 8,
-      maintainDistanceOf: 0,
-      chainOnSuccess: true,
-      extraActionParams: {
-        onSuccess: ({actor}) => {
-          HIDDEN_LEAF_SOUNDS.wind_slice.play()
-          SpatterEmitter({
-            game: actor.game,
-            fromPosition: actor.getPosition(),
-            spatterAmount: 0.1,
-            spatterRadius: 3,
-            animationTimeStep: 0.6,
-            transfersBackground: false,
-            spatterColors: ['#36635b', '#F0D8C0', '#495877']
-          }).start()
-        }
-      },
+    new Behaviors.TelegraphPathTowards({
+      attribute: 'name',
+      attributeValue: 'leaf',
+      range: 5,
+      repeat: 1,
     }),
+    new Behaviors.ExecuteMoveAlongPath({repeat: 5}),
+    // new Behaviors.MoveOrShoveTowardsEnemy({
+    //   repeat: 8,
+    //   maintainDistanceOf: 0,
+    //   // chainOnSuccess: true,
+    //   extraActionParams: {
+    //     onSuccess: ({actor}) => {
+    //       HIDDEN_LEAF_SOUNDS.wind_slice.play()
+    //       SpatterEmitter({
+    //         game: actor.game,
+    //         fromPosition: actor.getPosition(),
+    //         spatterAmount: 0.1,
+    //         spatterRadius: 3,
+    //         animationTimeStep: 0.6,
+    //         transfersBackground: false,
+    //         spatterColors: ['#36635b', '#F0D8C0', '#495877']
+    //       }).start()
+    //     }
+    //   },
+    // }),
     new Behaviors.MoveOrAttackTowardsEnemy({repeat: 2, maintainDistanceOf: 0}),
     new Behaviors.MoveAwayFromEnemy({ repeat: 3, maintainDistanceOf: 3 }),
   ]

@@ -1,5 +1,6 @@
 import Behavior from './Behavior';
 import ExecuteAttack from './ExecuteAttack';
+import ExecuteMoveAlongPath from './ExecuteMoveAlongPath';
 import ExecuteRangedAttack from './ExecuteRangedAttack';
 import ExecuteStatusEffects from './ExecuteStatusEffects';
 import ExecuteStatusEffectOnAllies from './ExecuteStatusEffectOnAllies';
@@ -12,6 +13,7 @@ import MoveOrShoveTowardsEnemy from './MoveOrShoveTowardsEnemy';
 import MoveTowardsPlayer from './MoveTowardsPlayer';
 import MoveAwayFromEnemy from './MoveAwayFromEnemy';
 import Telegraph from './Telegraph';
+import TelegraphPathTowards from './TelegraphPathTowards';
 import TelegraphRangedAttack from './TelegraphRangedAttack';
 import TelegraphRangedAttackThroughCover from './TelegraphRangedAttackThroughCover';
 import Wait from './Wait';
@@ -19,6 +21,7 @@ import Wait from './Wait';
 export {
   Behavior,
   ExecuteAttack,
+  ExecuteMoveAlongPath,
   ExecuteRangedAttack,
   ExecuteStatusEffects,
   ExecuteStatusEffectOnAllies,
@@ -31,6 +34,7 @@ export {
   MoveTowardsPlayer,
   MoveAwayFromEnemy,
   Telegraph,
+  TelegraphPathTowards,
   TelegraphRangedAttack,
   TelegraphRangedAttackThroughCover,
   Wait,
