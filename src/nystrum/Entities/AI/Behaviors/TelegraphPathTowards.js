@@ -4,11 +4,12 @@ import {COLORS} from '../../../Modes/Jacinto/theme';
 import Behavior from './Behavior';
 
 export default class TelegraphPathTowards extends Behavior {
-  constructor({ attribute = 'name', attributeValue = null, range = 10, color = COLORS.red, ...args }) {
+  constructor({ attribute = 'name', attributeValue = null, targetRange = 10, detectionRange = 10, color = COLORS.red, ...args }) {
     super({ ...args });
     this.attribute = attribute;
     this.attributeValue = attributeValue;
-    this.range = range;
+    this.targetRange = targetRange;
+    this.detectionRange = detectionRange;
     this.color = color;
   }
 
@@ -17,7 +18,7 @@ export default class TelegraphPathTowards extends Behavior {
   }
 
   getEntitiesInRange() {
-    const positions = Helper.getPointsWithinRadius(this.actor.getPosition(), this.range)
+    const positions = Helper.getPointsWithinRadius(this.actor.getPosition(), this.detectionRange)
     const entities = positions.reduce((acc, position) => {
       return [
         ...acc,
@@ -44,7 +45,7 @@ export default class TelegraphPathTowards extends Behavior {
       targetPosition,
       this.actor.getPosition()
     );
-    return path;
+    return path.slice(0, this.targetRange);
   }
 
   constructActionClassAndParams () {

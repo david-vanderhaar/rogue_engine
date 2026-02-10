@@ -1,6 +1,7 @@
 import Behavior from './Behavior';
 import ExecuteAttack from './ExecuteAttack';
-import ExecuteMoveAlongPath from './ExecuteMoveAlongPath';
+import ExecuteMoveorShoveAlongPath from './ExecuteMoveorShoveAlongPath';
+import ExecuteMoveorAttackAlongPath from './ExecuteMoveorAttackAlongPath';
 import ExecuteRangedAttack from './ExecuteRangedAttack';
 import ExecuteStatusEffects from './ExecuteStatusEffects';
 import ExecuteStatusEffectOnAllies from './ExecuteStatusEffectOnAllies';
@@ -21,7 +22,8 @@ import Wait from './Wait';
 export {
   Behavior,
   ExecuteAttack,
-  ExecuteMoveAlongPath,
+  ExecuteMoveorShoveAlongPath,
+  ExecuteMoveorAttackAlongPath,
   ExecuteRangedAttack,
   ExecuteStatusEffects,
   ExecuteStatusEffectOnAllies,

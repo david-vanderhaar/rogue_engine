@@ -1,9 +1,8 @@
-import { Say } from '../../../Actions/Say';
-import { MultiTargetAttack } from '../../../Actions/MultiTargetAttack';
 import Behavior from './Behavior';
 import { MoveOrShove } from '../../../Actions/MoveOrShove';
+import { MoveOrAttack } from '../../../Actions/MoveOrAttack';
 
-export default class ExecuteMoveAlongPath extends Behavior {
+export default class ExecuteMoveorAttackAlongPath extends Behavior {
   constructor({ ...args }) {
     super({ ...args });
   }
@@ -14,7 +13,7 @@ export default class ExecuteMoveAlongPath extends Behavior {
 
   constructActionClassAndParams () {
     return [
-      MoveOrShove,
+      MoveOrAttack,
       {
         targetPos: this.actor.getCursorPositions()[0],
         onAfter: () => {

@@ -2,6 +2,7 @@ import * as Constant from '../../../constants';
 import * as Behaviors from '../Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
+import { chain } from 'lodash';
 
 // Phase 1: Close distance and attack
 function FollowAndAttack(basicInfo) {
@@ -23,40 +24,40 @@ function FollowAndAttack(basicInfo) {
 // Phase 2: Special Move
 function SpecialMove(basicInfo) {
   return [
-    // TODO: Implement Flying Lotus (Tackle) behavior
-    // add warning visuals one turn before
-    // this should be done by adding behavior that prepares the tackle
-      // TelegraphPath behavior that shows the path of the tackle aimed in line with player (or enemy) position
-      // ExecuteMoveAlongPath behavior that performs the Move action along the prepared path, and removes or resets proper animations after
-      // make variations as well, ExecuteMoveOrAttackAlongPath, ExecuteMoveOrShoveAlongPath, etc. 
     new Behaviors.TelegraphPathTowards({
-      attribute: 'name',
-      attributeValue: 'leaf',
-      range: 5,
+      attribute: 'faction',
+      attributeValue: 'PLAYER',
+      targetRange: 6,
+      detectionRange: 20,
       repeat: 1,
     }),
-    new Behaviors.ExecuteMoveAlongPath({repeat: 5}),
-    // new Behaviors.MoveOrShoveTowardsEnemy({
-    //   repeat: 8,
-    //   maintainDistanceOf: 0,
-    //   // chainOnSuccess: true,
-    //   extraActionParams: {
-    //     onSuccess: ({actor}) => {
-    //       HIDDEN_LEAF_SOUNDS.wind_slice.play()
-    //       SpatterEmitter({
-    //         game: actor.game,
-    //         fromPosition: actor.getPosition(),
-    //         spatterAmount: 0.1,
-    //         spatterRadius: 3,
-    //         animationTimeStep: 0.6,
-    //         transfersBackground: false,
-    //         spatterColors: ['#36635b', '#F0D8C0', '#495877']
-    //       }).start()
-    //     }
-    //   },
-    // }),
-    new Behaviors.MoveOrAttackTowardsEnemy({repeat: 2, maintainDistanceOf: 0}),
-    new Behaviors.MoveAwayFromEnemy({ repeat: 3, maintainDistanceOf: 3 }),
+    new Behaviors.ExecuteMoveorAttackAlongPath({
+    // new Behaviors.ExecuteMoveorShoveAlongPath({
+      repeat: 6,
+      extraActionParams: {
+        onSuccess: ({actor}) => {
+          // HIDDEN_LEAF_SOUNDS.wind_slice.play()
+          SpatterEmitter({
+            game: actor.game,
+            fromPosition: actor.getPosition(),
+            spatterAmount: 0.1,
+            spatterRadius: 3,
+            animationTimeStep: 0.6,
+            transfersBackground: false,
+            spatterColors: ['#36635b', '#F0D8C0', '#495877']
+          }).start()
+        }
+      },
+      // chainOnSuccess: true,
+    }),
+    new Behaviors.MoveTowardsEnemy({ repeat: 2, maintainDistanceOf: 0 , chainOnSuccess: true}),
+    new Behaviors.Telegraph({
+      repeat: 1,
+      attackPattern: Constant.CLONE_PATTERNS.clover,
+      chainOnSuccess: true
+    }),
+    new Behaviors.ExecuteAttack({repeat: 1}),
+    // new Behaviors.MoveAwayFromEnemy({ repeat: 3, maintainDistanceOf: 3 }),
   ]
 }
 
