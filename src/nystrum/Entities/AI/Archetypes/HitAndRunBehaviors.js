@@ -5,7 +5,7 @@ import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 import { OpenGates } from '../../../StatusEffects/OpenGates';
 
 // Phase 1: Close distance and attack
-function FollowAndAttack(basicInfo) {
+function FollowAndRangedAttack(basicInfo) {
   return [
     new Behaviors.MoveTowardsEnemy({
       repeat: 4,
@@ -62,7 +62,7 @@ function SpecialMove(basicInfo) {
 }
 
 // Phase 3: Apply Light Power Up
-function LightPowerUp(basicInfo) {
+function UltimateMove(basicInfo) {
   return [
     new Behaviors.ExecuteStatusEffectOnSelf({
       repeat: 1,
@@ -71,15 +71,15 @@ function LightPowerUp(basicInfo) {
   ]
 }
 
-function BlitzerBehaviors(basicInfo) {
+function HitAndRunBehaviors(basicInfo) {
   return [
-    // Phase 1: Close distance and attack
-    ...Array(6).fill(FollowAndAttack(basicInfo)).flat(),
-    // Phase 2: Special Move
+    // Phase 1: Close distance and maintain distance, then range attack
+    ...Array(6).fill(FollowAndRangedAttack(basicInfo)).flat(),
+    // Phase 2: Special Move: move towards player and then do a special ranged attack (pushing enemy or wide splash)
     ...Array(4).fill(SpecialMove(basicInfo)).flat(),
-    // Phase 3: Apply Light Power Up
-    ...Array(1).fill(LightPowerUp(basicInfo)).flat(),
+    // Phase 3: Near unavoidable attack from range
+    ...Array(1).fill(UltimateMove(basicInfo)).flat(),
   ];
 }
 
-export default BlitzerBehaviors;
+export default HitAndRunBehaviors;

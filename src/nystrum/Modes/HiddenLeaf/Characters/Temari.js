@@ -12,6 +12,8 @@ import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { WindBursts } from '../../../Modes/HiddenLeaf/StatusEffects/WindBursts';
 import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '../../../Modes/HiddenLeaf/Characters/Utilities/characterHelper';
 import { SOUNDS } from '../sounds';
+import BlitzerBehaviors from '../../../Entities/AI/Archetypes/BlitzerBehaviors';
+import HitAndRunBehaviors from '../../../Entities/AI/Archetypes/HitAndRunBehaviors';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 
@@ -133,9 +135,12 @@ function initialize (engine) {
   return actor;
 }
 
+// a mock for AI behaviors
+const behaviors = HitAndRunBehaviors(basicInfo);
+
 export default function () {
   return {
-    basicInfo,
     initialize,
+    basicInfo: {behaviors, ...basicInfo},
   }
 }
