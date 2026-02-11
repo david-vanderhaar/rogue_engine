@@ -142,6 +142,7 @@ export const JacintoAI = pipe(
   Containing,
   RangedAttacking,
   HasFaction,
+  HasInnerGates,
   UsesCover,
   HasTargetingCursor,
   CyclesBehaviors,

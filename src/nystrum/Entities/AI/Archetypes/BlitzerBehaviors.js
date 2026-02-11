@@ -3,12 +3,13 @@ import * as Behaviors from '../Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 import { chain } from 'lodash';
+import { OpenGates } from '../../../StatusEffects/OpenGates';
 
 // Phase 1: Close distance and attack
 function FollowAndAttack(basicInfo) {
   return [
     new Behaviors.MoveTowardsEnemy({
-      repeat: basicInfo.speed/Constant.ENERGY_THRESHOLD,
+      repeat: 4,
       maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
       chainOnFail: true
     }),
@@ -27,7 +28,7 @@ function SpecialMove(basicInfo) {
     new Behaviors.TelegraphPathTowards({
       attribute: 'faction',
       attributeValue: 'PLAYER',
-      targetRange: 6,
+      targetRange: 8,
       detectionRange: 20,
       repeat: 1,
     }),
@@ -64,25 +65,21 @@ function SpecialMove(basicInfo) {
 // Phase 3: Apply Light Power Up
 function LightPowerUp(basicInfo) {
   return [
-  ]
-}
-
-// Phase 4: Apply Full Power Up (Inner Gates)
-function FullPowerUp(basicInfo) {
-  return [
+    new Behaviors.ExecuteStatusEffectOnSelf({
+      repeat: 1,
+      effectClass: OpenGates,
+    })
   ]
 }
 
 function BlitzerBehaviors(basicInfo) {
   return [
     // Phase 1: Close distance and attack
-    // ...Array(2).fill(FollowAndAttack(basicInfo)).flat(),
+    ...Array(6).fill(FollowAndAttack(basicInfo)).flat(),
     // Phase 2: Special Move
-    ...Array(1).fill(SpecialMove(basicInfo)).flat(),
+    ...Array(4).fill(SpecialMove(basicInfo)).flat(),
     // Phase 3: Apply Light Power Up
-    // ...Array(1).fill(LightPowerUp(basicInfo)).flat(),
-    // Phase 4: Apply Full Power Up (Inner Gates)
-    // ...Array(1).fill(FullPowerUp(basicInfo)).flat(),
+    ...Array(1).fill(LightPowerUp(basicInfo)).flat(),
   ];
 }
 

@@ -18,10 +18,13 @@ export default class ExecuteStatusEffects extends Behavior {
     return Helper.getDestructableEntities(tile.entities);
   }
 
+  getTargetPositions () {
+    return this.actor.getCursorPositions();
+  }
+
   createEffects() {
     let effects = [];
-    const targetPositions = this.actor.getCursorPositions();
-
+    const targetPositions = this.getTargetPositions();
     targetPositions.forEach((pos) => {
       let tile = this.actor.game.map[Helper.coordsToString(pos)];
       if (!!tile) {
