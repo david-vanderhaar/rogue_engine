@@ -4,10 +4,10 @@ import {COLORS} from '../../../Modes/Jacinto/theme';
 import MoveTowardsEnemy from './MoveTowardsEnemy';
 
 export default class TelegraphRangedAttack extends MoveTowardsEnemy {
-  constructor({ accuracyToAttackThreshold = 0, ...args }) {
+  constructor({ accuracyToAttackThreshold = 0, chainOnSuccess = true, ...args }) {
     super({ ...args });
     this.accuracyToAttackThreshold = accuracyToAttackThreshold;
-    this.chainOnSuccess = true;
+    this.chainOnSuccess = chainOnSuccess;
   }
 
   isValid () {

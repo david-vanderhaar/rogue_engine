@@ -3,21 +3,31 @@ import * as Behaviors from '../Behaviors';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 import { OpenGates } from '../../../StatusEffects/OpenGates';
+import { Katon } from '../../../Modes/HiddenLeaf/Items/Weapons/Katon';
+
+
 
 // Phase 1: Close distance and attack
 function FollowAndRangedAttack(basicInfo) {
   return [
     new Behaviors.MoveTowardsEnemy({
       repeat: 4,
-      maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+      maintainDistanceOf: 6,
       chainOnFail: true
     }),
-    new Behaviors.Telegraph({
+    new Behaviors.ExecuteEquipItem({
       repeat: 1,
-      attackPattern: Constant.CLONE_PATTERNS.clover,
-      chainOnSuccess: true
+      getItem: Katon,
+      itemName: 'Katon Jutsu',
+      chainOnFail: true,
     }),
-    new Behaviors.ExecuteAttack({repeat: 1}),
+    new Behaviors.TelegraphRangedAttack({repeat: 1, chainOnSuccess: false}),
+    new Behaviors.ExecuteRangedAttack({repeat: 1}),
+    new Behaviors.MoveAwayFromEnemy({
+      repeat: 4,
+      maintainDistanceOf: 6,
+      chainOnFail: true
+    }),
   ]
 }
 
@@ -74,11 +84,11 @@ function UltimateMove(basicInfo) {
 function HitAndRunBehaviors(basicInfo) {
   return [
     // Phase 1: Close distance and maintain distance, then range attack
-    ...Array(6).fill(FollowAndRangedAttack(basicInfo)).flat(),
-    // Phase 2: Special Move: move towards player and then do a special ranged attack (pushing enemy or wide splash)
-    ...Array(4).fill(SpecialMove(basicInfo)).flat(),
-    // Phase 3: Near unavoidable attack from range
-    ...Array(1).fill(UltimateMove(basicInfo)).flat(),
+    ...Array(1).fill(FollowAndRangedAttack(basicInfo)).flat(),
+    // // Phase 2: Special Move: move towards player and then do a special ranged attack (pushing enemy or wide splash)
+    // ...Array(1).fill(SpecialMove(basicInfo)).flat(),
+    // // Phase 3: Near unavoidable attack from range
+    // ...Array(1).fill(UltimateMove(basicInfo)).flat(),
   ];
 }
 

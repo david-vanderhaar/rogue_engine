@@ -14,6 +14,7 @@ import { generateDefaultKeymapActions, generatePlayerCharacterOptions } from '..
 import { SOUNDS } from '../sounds';
 import BlitzerBehaviors from '../../../Entities/AI/Archetypes/BlitzerBehaviors';
 import HitAndRunBehaviors from '../../../Entities/AI/Archetypes/HitAndRunBehaviors';
+import { Katon } from '../Items/Weapons/Katon';
 
 const portrait =  `${window.PUBLIC_URL}/hidden_leaf/temari.png`;
 
@@ -133,6 +134,24 @@ function initialize (engine) {
   ]
 
   return actor;
+}
+
+function createEquipment_v1(actor) {
+  const engine = actor.game.engine;
+  const windPushes = Array(100).fill('').map(() => WindPush(engine, { ...actor.pos }));
+  const windSlices = Array(100).fill('').map(() => WindSlice(engine, { ...actor.pos }, null, 10));
+  actor.container = [
+    new ContainerSlot({
+      itemType: windPushes[0].name,
+      items: windPushes,
+      hidden: true,
+    }),
+    new ContainerSlot({
+      itemType: windSlices[0].name,
+      items: windSlices,
+      hidden: true,
+    }),
+  ]
 }
 
 // a mock for AI behaviors

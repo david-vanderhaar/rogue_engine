@@ -5,8 +5,9 @@ import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../sounds';
 import gradientPathEmitter from '../../../../Engine/Particle/Emitters/gradientPathEmitter';
 import SpatterEmitter from '../../../../Engine/Particle/Emitters/spatterEmitter';
 import { getNumberOfItemsInArray, getRandomInArray, EASING } from '../../../../../helper';
+import { GAME } from '../../../../game';
 
-export function Katon(engine, pos) {
+export function Katon(engine = GAME.engine, pos = {x: 0, y: 0}) {
   async function afterFireSuccess({fromPosition, targetPositions, hits, misses}) {
     // called after multi target ranged attack
     // used to control fire animations

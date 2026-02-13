@@ -83,7 +83,12 @@ export const Equiping = superclass => class extends superclass {
     const slot = {type, name: name || type, item};
     this.equipment.push(slot);
   }
+
   removeEquipmentSlot(slotName) {
     this.equipment = this.equipment.filter((slot) => slot.type !== slotName);
+  }
+
+  hasEquipmentSlot(slotName) {
+    return this.equipment.some((slot) => slot.type === slotName);
   }
 };
