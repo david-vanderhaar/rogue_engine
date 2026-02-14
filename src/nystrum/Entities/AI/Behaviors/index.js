@@ -1,6 +1,7 @@
 import Behavior from './Behavior';
 import ExecuteAttack from './ExecuteAttack';
 import ExecuteEquipItem from './ExecuteEquipItem';
+import ExecutePlaceActor from './ExecutePlaceActor';
 import ExecuteMoveorShoveAlongPath from './ExecuteMoveorShoveAlongPath';
 import ExecuteMoveorAttackAlongPath from './ExecuteMoveorAttackAlongPath';
 import ExecuteRangedAttack from './ExecuteRangedAttack';
@@ -25,6 +26,7 @@ export {
   Behavior,
   ExecuteAttack,
   ExecuteEquipItem,
+  ExecutePlaceActor,
   ExecuteMoveorShoveAlongPath,
   ExecuteMoveorAttackAlongPath,
   ExecuteRangedAttack,

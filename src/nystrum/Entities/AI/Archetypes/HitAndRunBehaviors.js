@@ -4,6 +4,8 @@ import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../../Modes/HiddenLeaf/sounds';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 import { OpenGates } from '../../../StatusEffects/OpenGates';
 import { Katon } from '../../../Modes/HiddenLeaf/Items/Weapons/Katon';
+import { WindSlice } from '../../../Modes/HiddenLeaf/Items/Weapons/WindSlice';
+import { COLORS as HIDDEN_LEAF_COLORS } from '../../../Modes/HiddenLeaf/theme';
 
 
 
@@ -23,6 +25,55 @@ function FollowAndRangedAttack(basicInfo) {
     }),
     new Behaviors.TelegraphRangedAttack({repeat: 1, chainOnSuccess: false}),
     new Behaviors.ExecuteRangedAttack({repeat: 1}),
+    new Behaviors.MoveAwayFromEnemy({
+      repeat: 4,
+      maintainDistanceOf: 6,
+      chainOnFail: true
+    }),
+  ]
+}
+
+function FollowAndThrowProjectile(basicInfo) {
+  return [
+    new Behaviors.MoveTowardsEnemy({
+      repeat: 4,
+      maintainDistanceOf: 6,
+      chainOnFail: true
+    }),
+    // TODO: add normal clover shape telegraph for throwing projectile
+    new Behaviors.TelegraphPathTowards({
+      repeat: 1,
+      attribute: 'faction',
+      attributeValue: 'PLAYER',
+      targetRange: 8,
+      detectionRange: 20,
+      // attackPattern: Constant.CLONE_PATTERNS.clover,
+      // chainOnSuccess: true
+    }),
+    new Behaviors.ExecutePlaceActor({
+      repeat: 1,
+      getItem: (engine, position) => WindSlice(engine, position, null, 6),
+      extraActionParams: {
+        onSuccess: ({actor}) => {
+            const spatterEmitter = SpatterEmitter({
+            game: actor.game,
+            fromPosition: actor.getPosition(),
+            spatterRadius: 5,
+            spatterAmount: 0.8,
+            spatterDirection: { x: 0, y: 0 },
+            spatterColors: [
+              HIDDEN_LEAF_COLORS.wraps,
+              HIDDEN_LEAF_COLORS.temari,
+            ],
+            animationTimeStep: 0.1,
+            transfersBackground: false,
+            transfersBackgroundOnDestroy: false,
+          })
+          spatterEmitter.start()
+        }
+      }
+    }),
+    // execute place item
     new Behaviors.MoveAwayFromEnemy({
       repeat: 4,
       maintainDistanceOf: 6,
@@ -84,7 +135,8 @@ function UltimateMove(basicInfo) {
 function HitAndRunBehaviors(basicInfo) {
   return [
     // Phase 1: Close distance and maintain distance, then range attack
-    ...Array(1).fill(FollowAndRangedAttack(basicInfo)).flat(),
+    // ...Array(1).fill(FollowAndRangedAttack(basicInfo)).flat(),
+    ...Array(1).fill(FollowAndThrowProjectile(basicInfo)).flat(),
     // // Phase 2: Special Move: move towards player and then do a special ranged attack (pushing enemy or wide splash)
     // ...Array(1).fill(SpecialMove(basicInfo)).flat(),
     // // Phase 3: Near unavoidable attack from range
