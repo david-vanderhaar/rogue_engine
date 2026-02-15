@@ -58,7 +58,7 @@ const GRUB_STATS = {
       baseDescriptors: ['gutteral chirps and bloodthirst keep you at bay.'],
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {
@@ -105,7 +105,7 @@ const GRUB_STATS = {
       },
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {
@@ -152,7 +152,7 @@ const GRUB_STATS = {
       },
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 2}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {
@@ -182,7 +182,7 @@ const GRUB_STATS = {
       baseDescription: 'you\'ve never seen it, but you\'ll feel it.',
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 1}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {
@@ -236,7 +236,7 @@ const GRUB_STATS = {
       attackDamage: 1,
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {

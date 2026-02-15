@@ -295,6 +295,34 @@ export const CLONE_PATTERNS = {
       { x: 0, y: 0, taken: false, },
     ]
   },
+  point_north: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: -1, taken: false, },
+    ]
+  },
+  point_south: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 1, taken: false, },
+    ]
+  },
+  point_east: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 1, y: 0, taken: false, },
+    ]
+  },
+  point_west: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: -1, y: 0, taken: false, },
+    ]
+  },
   triple_point: {
     x_offset: 0,
     y_offset: 0,

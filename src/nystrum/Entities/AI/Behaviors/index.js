@@ -16,7 +16,8 @@ import MoveOrAttackTowardsEnemy from './MoveOrAttackTowardsEnemy';
 import MoveOrShoveTowardsEnemy from './MoveOrShoveTowardsEnemy';
 import MoveTowardsPlayer from './MoveTowardsPlayer';
 import MoveAwayFromEnemy from './MoveAwayFromEnemy';
-import Telegraph from './Telegraph';
+import TelegraphOnEnemy from './TelegraphOnEnemy';
+import TelegraphPattern from './TelegraphPattern';
 import TelegraphPathTowards from './TelegraphPathTowards';
 import TelegraphRangedAttack from './TelegraphRangedAttack';
 import TelegraphRangedAttackThroughCover from './TelegraphRangedAttackThroughCover';
@@ -41,7 +42,8 @@ export {
   MoveOrShoveTowardsEnemy,
   MoveTowardsPlayer,
   MoveAwayFromEnemy,
-  Telegraph,
+  TelegraphOnEnemy,
+  TelegraphPattern,
   TelegraphPathTowards,
   TelegraphRangedAttack,
   TelegraphRangedAttackThroughCover,

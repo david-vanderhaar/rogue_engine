@@ -51,7 +51,7 @@ const GRUB_STATS = {
       baseDescriptors: ['gutteral chirps and a bloodthirst keep you at bay.'],
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {
@@ -149,7 +149,7 @@ const GRUB_STATS = {
       attackDamage: 4,
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({
+        new Behaviors.TelegraphOnEnemy({
           repeat: 1,
           attackPattern: Constant.CLONE_PATTERNS.big_circle,
           color: COLORS.blue,
@@ -174,7 +174,7 @@ const GRUB_STATS = {
           }
         }),
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.big_circle}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.big_circle}),
         new Behaviors.ExecuteAttack({
           repeat: 1,
           extraActionParams: {
@@ -203,7 +203,7 @@ const GRUB_STATS = {
       attackDamage: 5,
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 5}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: Constant.CLONE_PATTERNS.clover}),
         new Behaviors.ExecuteAttack({repeat: 1}),
       ],
     }

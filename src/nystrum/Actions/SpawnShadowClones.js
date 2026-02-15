@@ -62,7 +62,7 @@ export class SpawnShadowClones extends Base {
       attackDamage: 1,
       behaviors: [
         new Behaviors.MoveTowardsEnemy({repeat: 2, maintainDistanceOf: 1, chainOnFail: true}),
-        new Behaviors.Telegraph({repeat: 1, attackPattern: CLONE_PATTERNS.clover, chainOnSuccess: true}),
+        new Behaviors.TelegraphOnEnemy({repeat: 1, attackPattern: CLONE_PATTERNS.clover, chainOnSuccess: true}),
         new Behaviors.ExecuteAttack({repeat: 1}),
       ],
       faction: this.actor.faction,

@@ -15,7 +15,7 @@ export default class FollowAndAttack extends BehaviorChain {
         maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
         chainOnFail: true
       }),
-      new Behaviors.Telegraph({
+      new Behaviors.TelegraphOnEnemy({
         repeat: 1,
         attackPattern: Constant.CLONE_PATTERNS.clover,
         chainOnSuccess: true

@@ -38,7 +38,7 @@ export default class SpecialMove extends BehaviorChain {
         // chainOnSuccess: true,
       }),
       new Behaviors.MoveTowardsEnemy({ repeat: 2, maintainDistanceOf: 0 , chainOnSuccess: true}),
-      new Behaviors.Telegraph({
+      new Behaviors.TelegraphOnEnemy({
         repeat: 1,
         attackPattern: Constant.CLONE_PATTERNS.clover,
         chainOnSuccess: true

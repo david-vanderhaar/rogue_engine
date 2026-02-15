@@ -4,30 +4,11 @@ import {CLONE_PATTERNS} from '../../../constants';
 import {COLORS} from '../../../Modes/Jacinto/theme';
 import Behavior from './Behavior';
 
-export default class Telegraph extends Behavior {
+export default class TelegraphPattern extends Behavior {
   constructor({ attackPattern = CLONE_PATTERNS.point, color = COLORS.red, ...args }) {
     super({ ...args });
     this.attackPattern = attackPattern;
     this.color = color;
-    this.chainOnSuccess = true;
-  }
-
-  isValid () {
-    let valid = false
-    // check if actor is next to enemy
-    const positions = Helper.getPositionsFromStructure(this.attackPattern, this.getTargetPosition());
-    positions.forEach((pos) => {
-      let tile = this.actor.game.map[Helper.coordsToString(pos)];
-      if (tile) {
-        let targets = Helper.getDestructableEntities(tile.entities);
-        targets.forEach((target) => {
-          if (this.actor.isEnemy(target)) {
-            valid = true
-          }
-        })
-      }
-      })
-    return valid
   }
 
   getTargetPosition () {
