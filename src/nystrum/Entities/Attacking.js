@@ -1,6 +1,7 @@
 import { MESSAGE_TYPE } from '../message';
 import * as Helper from '../../helper';
 import SOUNDS from '../sounds'
+import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export const Attacking = superclass => class extends superclass {
   constructor({ attackDamage = 2, meleeSounds = null, ...args }) {
@@ -39,7 +40,16 @@ export const Attacking = superclass => class extends superclass {
 
   attack(targetPos, additional = 0) {
     // return this.attack_v1(targetPos, additional);
-    return this.attack_v2(targetPos, additional);
+    const result = this.attack_v2(targetPos, additional);
+    return result;
+  }
+
+  sendAttackGameEvents(target) {
+    GLOBAL_EVENT_BUS.emit(`${this.id}:attack:${target.id}`, { message: `${this.name} attacked ${target.name}!` });
+    GLOBAL_EVENT_BUS.emit(`${this.id}:attack`, { message: `${this.name} attacked ${target.name}!` });
+    GLOBAL_EVENT_BUS.emit(`${this.id}:attack:${target.name}`, { message: `${this.name} attacked ${target.name}!` });
+    GLOBAL_EVENT_BUS.emit(`${this.name}:attack:${target.name}`, { message: `${this.name} attacked ${target.name}!` });
+    GLOBAL_EVENT_BUS.emit(`${this.name}:attack`, { message: `${this.name} attacked ${target.name}!` });
   }
 
   attack_v1(targetPos, additional = 0) {
@@ -103,6 +113,7 @@ export const Attacking = superclass => class extends superclass {
         
         success = true;
         this.playMeleeSound()
+        this.sendAttackGameEvents(target);
       }
     }
     return success;

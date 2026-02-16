@@ -3,6 +3,7 @@ import * as Helper from '../../helper';
 import { ANIMATION_TYPES } from '../Display/konvaCustom';
 import spatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
 import { MESSAGE_TYPE } from '../message';
+import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export const Destructable = superclass => class extends superclass {
   constructor({
@@ -164,7 +165,15 @@ export const Destructable = superclass => class extends superclass {
     );
   }
 
+  sendDestroyGameEvents() {
+    // a hack to ensrue destroy event is emitted after all other events (like attack events) have been processed
+    setTimeout(() => {
+      GLOBAL_EVENT_BUS.emit(`${this.id}:destroy`, { message: `${this.name} was destroyed!` });
+    }, 100)
+  }
+
   destroy() {
+    this.sendDestroyGameEvents();
     this.onDestroy(this);
     destroyActor(this);
   }

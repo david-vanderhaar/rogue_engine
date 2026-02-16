@@ -109,7 +109,6 @@ export class Game {
     this.mode.update();
   }
   
-
   randomlyPlaceActorOnMap(actor) {
     let kill = 0;
     let placed = false;

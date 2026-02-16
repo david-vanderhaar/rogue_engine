@@ -14,6 +14,9 @@ import * as _ from 'lodash';
 import { TILE_KEY } from './theme';
 import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
 import { buffAICharacterStats, onDecreaseDurabilitySound } from './Characters/Utilities/characterHelper';
+import { GLOBAL_EVENT_BUS } from '../../Events/EventBus';
+import MissionManager from '../../Mission/MissionManager';
+import Mission from '../../Mission/Mission';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
@@ -133,6 +136,45 @@ export class Chunin extends Mode {
       let posXY = Helper.getRandomInArray(edgeTiles);
       CoverGenerator.generateTree(posXY, this.game);
     }
+
+    const player = this.game.getFirstPlayer();
+    const opp = this.getOpponentActor();
+    this.initializeMissionManager({
+      missions: [
+        new Mission({
+          name: 'First Blood',
+          description: 'Attack your first opponent.',
+          timesToComplete: 1,
+          eventToComplete: `${player?.id}:attack:${opp?.id}`,
+        }),
+        new Mission({
+          name: 'Second Blood',
+          description: 'Attack your first opponent.',
+          timesToComplete: 3,
+          eventToComplete: `${player?.id}:attack:${opp?.id}`,
+        }),
+        new Mission({
+          name: 'Final Blow',
+          description: 'Defeat your opponent.',
+          timesToComplete: 1,
+          eventToComplete: `${opp?.id}:destroy`,
+        }),
+      ]
+    })
+
+    // // to see all events
+    // GLOBAL_EVENT_BUS.on('*', (type, event) => {
+    //   console.log(`Event emitted: ${type}`, event);
+    // });
+
+    GLOBAL_EVENT_BUS.on('missionTriggered', (payload) => {
+      console.log('mission triggered!', payload);
+      this.game.addMessage(payload.message, MESSAGE_TYPE.DANGER);
+    })
+    GLOBAL_EVENT_BUS.on('missionCompleted', (payload) => {
+      console.log('mission completed!', payload);
+      this.game.addMessage(payload.message, MESSAGE_TYPE.SUCCESS);
+    })
   }
 
 
@@ -169,6 +211,7 @@ export class Chunin extends Mode {
 
   update () {
     super.update();
+    this.getMissionManager().process();
     // this.updateUI();
     if (this.hasLost()) {
       this.onLose()

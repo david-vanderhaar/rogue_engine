@@ -4,6 +4,7 @@ import { Say } from './Say';
 import * as Helper from '../../helper';
 import * as Constant from '../constants';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
+import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export class Attack extends Base {
   constructor({ targetPos, additionalDamage = 0, processDelay = 100, ...args }) {
