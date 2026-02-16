@@ -14,6 +14,9 @@ import * as _ from 'lodash';
 import { TILE_KEY } from './theme';
 import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
 import { buffAICharacterStats, onDecreaseDurabilitySound } from './Characters/Utilities/characterHelper';
+import { GLOBAL_EVENT_BUS } from '../../Events/EventBus';
+import MissionManager from '../../Mission/MissionManager';
+import Mission from '../../Mission/Mission';
 
 export class Chunin extends Mode {
   constructor({ ...args }) {
@@ -133,6 +136,30 @@ export class Chunin extends Mode {
       let posXY = Helper.getRandomInArray(edgeTiles);
       CoverGenerator.generateTree(posXY, this.game);
     }
+
+    GLOBAL_EVENT_BUS.all.clear();
+    GLOBAL_EVENT_BUS.on('missionTriggered', (payload) => {
+      console.log('mission triggered!', payload);
+      this.game.addMessage(payload.message, MESSAGE_TYPE.DANGER);
+    })
+    GLOBAL_EVENT_BUS.on('missionCompleted', (payload) => {
+      console.log('mission completed!', payload);
+      this.game.addMessage(payload.message, MESSAGE_TYPE.SUCCESS);
+    })
+    this['missionManager'] = new MissionManager({
+      missions: [
+        new Mission({
+          name: 'First Blood',
+          description: 'Defeat your first opponent.',
+          timesToComplete: 1,
+        }),
+        new Mission({
+          name: 'Second Blood',
+          description: 'Defeat your second opponent.',
+          timesToComplete: 3,
+        }),
+      ]
+    })
   }
 
 
@@ -169,6 +196,7 @@ export class Chunin extends Mode {
 
   update () {
     super.update();
+    this['missionManager'].process();
     // this.updateUI();
     if (this.hasLost()) {
       this.onLose()

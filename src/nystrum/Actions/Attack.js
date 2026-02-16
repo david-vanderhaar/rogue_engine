@@ -4,6 +4,7 @@ import { Say } from './Say';
 import * as Helper from '../../helper';
 import * as Constant from '../constants';
 import SpatterEmitter from '../Engine/Particle/Emitters/spatterEmitter';
+import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export class Attack extends Base {
   constructor({ targetPos, additionalDamage = 0, processDelay = 100, ...args }) {
@@ -29,6 +30,10 @@ export class Attack extends Base {
     }
     success = this.actor.attack(this.targetPos, this.additionalDamage);
     if (success) {
+      
+      if (this.actor.entityTypes.includes('PLAYING')) {GLOBAL_EVENT_BUS.emit('mission');}
+      
+      
       // this.playAttackSound()
       this.addParticle(1, { ...this.targetPos }, { x: 0, y: 0 });
       SpatterEmitter({
