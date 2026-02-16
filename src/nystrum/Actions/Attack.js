@@ -30,6 +30,10 @@ export class Attack extends Base {
     }
     success = this.actor.attack(this.targetPos, this.additionalDamage);
     if (success) {
+      
+      if (this.actor.entityTypes.includes('PLAYING')) {GLOBAL_EVENT_BUS.emit('mission');}
+      
+      
       // this.playAttackSound()
       this.addParticle(1, { ...this.targetPos }, { x: 0, y: 0 });
       SpatterEmitter({

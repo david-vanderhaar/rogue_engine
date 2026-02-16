@@ -34,6 +34,8 @@ export default class Mission {
     });
     // Listen for the event that will complete this mission
     GLOBAL_EVENT_BUS.on(this.eventToComplete, this.incrementTimesCompleted.bind(this));
+
+    console.log('Mission triggered: ', this.name);
   }
 
   triggered() {
@@ -49,7 +51,6 @@ export default class Mission {
     });
 
     console.log('Mission complete: ', this.name);
-    
   }
 
   isCompleted() {
