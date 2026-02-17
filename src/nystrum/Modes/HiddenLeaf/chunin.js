@@ -137,46 +137,43 @@ export class Chunin extends Mode {
       CoverGenerator.generateTree(posXY, this.game);
     }
 
+    this.startMissionManager();
+  }
+
+  startMissionManager() {
     const player = this.game.getFirstPlayer();
     const opp = this.getOpponentActor();
+
+
+    const firstMission = new Mission({
+      name: 'First Blood',
+      description: 'Attack your first opponent.',
+      timesToComplete: 1,
+      eventToComplete: `${player?.id}:attack:${opp?.id}`,
+    })
+
+    const secondMission = new Mission({
+      name: 'Second Blood',
+      description: 'Attack your first opponent.',
+      timesToComplete: 3,
+      eventToComplete: `${player?.id}:attack:${opp?.id}`,
+    })
+
     this.initializeMissionManager({
       missions: [
-        new Mission({
-          name: 'First Blood',
-          description: 'Attack your first opponent.',
-          timesToComplete: 1,
-          eventToComplete: `${player?.id}:attack:${opp?.id}`,
-        }),
-        new Mission({
-          name: 'Second Blood',
-          description: 'Attack your first opponent.',
-          timesToComplete: 3,
-          eventToComplete: `${player?.id}:attack:${opp?.id}`,
-        }),
+        firstMission,
+        secondMission,
         new Mission({
           name: 'Final Blow',
           description: 'Defeat your opponent.',
           timesToComplete: 1,
           eventToComplete: `${opp?.id}:destroy`,
+          active: true,
+          dependantMissions: [firstMission, secondMission],
         }),
-      ]
-    })
-
-    // // to see all events
-    // GLOBAL_EVENT_BUS.on('*', (type, event) => {
-    //   console.log(`Event emitted: ${type}`, event);
-    // });
-
-    GLOBAL_EVENT_BUS.on('missionTriggered', (payload) => {
-      console.log('mission triggered!', payload);
-      this.game.addMessage(payload.message, MESSAGE_TYPE.DANGER);
-    })
-    GLOBAL_EVENT_BUS.on('missionCompleted', (payload) => {
-      console.log('mission completed!', payload);
-      this.game.addMessage(payload.message, MESSAGE_TYPE.SUCCESS);
+      ],
     })
   }
-
 
   createEmptyLevel () {
     for (let i = 0; i < this.game.mapHeight; i ++) {
@@ -307,7 +304,8 @@ export class Chunin extends Mode {
   }
 
   levelComplete () {
-    return this.game.engine.actors.length === 1; 
+    return this.getMissionManager().allMissionsComplete();
+    // return this.game.engine.actors.length === 1; 
   }
 
   hasWon () {

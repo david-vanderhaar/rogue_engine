@@ -26,13 +26,20 @@ export class Mode {
     merge(this.infoBlocks, {[id]: value})
   }
 
-  initializeMissionManager({missions = [], onComplete = () => {}, onLost = () => {}}) {
+  initializeMissionManager({missions = [], onComplete = () => {}, onLost = () => {}, debug = false}) {
     GLOBAL_EVENT_BUS.all.clear();
     const missionManager = new MissionManager({
       missions,
       onComplete,
       onLost,
     })
+
+    if (debug) {
+      // to see all events
+      GLOBAL_EVENT_BUS.on('*', (type, event) => {
+        console.log(`Event emitted: ${type}`, event);
+      });
+    }
 
     this.setMissionManager(missionManager);
   }

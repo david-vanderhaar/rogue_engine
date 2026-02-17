@@ -16,20 +16,14 @@
 // - method run on type of actor
 
 export default class MissionManager {
-  constructor({ missions = [], onComplete = () => null, onLost = () => null }) {
+  constructor({ missions = [], onComplete = () => null }) {
     this.missions = missions;
     this.completed = [];
     this.onComplete = onComplete;
-    this.onLost = onLost;
   }
 
   allMissionsComplete() {
     return this.missions.length === 0;
-  }
-
-  hasLost() {
-    // if player dead
-    return false;
   }
 
   process() {
@@ -40,14 +34,13 @@ export default class MissionManager {
       console.log('all missions complete');
       this.onComplete();
       return;
-    } else if (this.hasLost()) {
-      // lose overlay
-      // check for input to restart the game
-      console.log('has lost');
-      this.onLost();
-      return;
     }
 
+    // this.processCurrentMission_v1();
+    this.processCurrentMission_v2();
+  }
+
+  processCurrentMission_v1() {
     const currentMission = this.missions[0];
     if (!currentMission.triggered()) {
       currentMission.trigger();
@@ -55,6 +48,52 @@ export default class MissionManager {
       currentMission.complete();
       this.completed.push(this.missions.shift());
       console.log('missions remaining: ', this.missions.length);
+    }
+  }
+
+  processCurrentMission_v2() {
+    const activeMissions = this.currentMissions();
+    activeMissions.forEach(mission => {
+      if (!mission.triggered()) {
+        this.triggerMission(mission);
+      } else if (mission.isCompleted()) {
+        this.completeMission(mission);
+        console.log('missions remaining: ', this.missions.length);
+      }
+    })
+  }
+
+  currentMissions() {
+    // get all active missions, plus the first mission in the list
+    // then filter out any duplicates
+    if (this.missions.length > 0) {
+      const activeMissions = this.missions.filter(mission => mission.getActive());
+      if (activeMissions.find(m => m.id === this.missions[0].id)) {
+        return activeMissions;
+      } else {
+        return [this.missions[0], ...activeMissions];
+      }
+    } else {
+      return [];
+    }
+  }
+
+  triggerMission(mission) {
+    mission.trigger();
+  }
+
+  completeMission(mission) {
+    mission.complete();
+    this.completed.push(mission);
+    this.missions = this.missions.filter(m => m !== mission);
+    
+    if (mission.dependantMissions.length > 0) {
+      mission.dependantMissions.forEach(dependant => {
+        const depMission = this.missions.find(m => m.id === dependant.id);
+        if (depMission) {
+          this.completeMission(depMission);
+        }
+      });
     }
   }
 }
