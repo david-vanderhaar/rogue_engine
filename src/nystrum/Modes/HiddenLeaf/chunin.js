@@ -194,6 +194,33 @@ export class Chunin extends Mode {
   }
 
   updateUI() {
+    // this.updatePlayerAP();
+    this.updateMissionUI();
+  }
+
+  updateMissionUI() {
+    const missionManager = this.getMissionManager();
+    const activeMissions = missionManager.getActiveMissions();
+    const completedMissions = missionManager.getCompletedMissions();
+    this.createOrUpdateInfoBlock(
+      'missions',
+      {
+        text: `${activeMissions.map(this.createMissionText).join("\n")}`,
+      }
+    )
+
+    if (activeMissions.length === 0) {
+      this.deleteInfoBlock('missions');
+    }
+  }
+
+  createMissionText(mission) {
+    const timesCompleted = mission.timesCompleted;
+    const timesToComplete = mission.timesToComplete;
+    return `${mission.name} - ${mission.description} | Progress: ${timesCompleted}/${timesToComplete}`;
+  }
+
+  updatePlayerAP() {
     _.each(this.getPlayers(), (player, index) => {
       const currentBlips = Math.floor(player.energy / 100);
       const maxBlips = Math.floor(player.speed / 100);
@@ -209,7 +236,7 @@ export class Chunin extends Mode {
   update () {
     super.update();
     this.getMissionManager().process();
-    // this.updateUI();
+    this.updateUI();
     if (this.hasLost()) {
       this.onLose()
     } else if (this.hasWon()) {

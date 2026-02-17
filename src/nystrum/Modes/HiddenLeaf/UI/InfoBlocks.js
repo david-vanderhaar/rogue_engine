@@ -14,10 +14,18 @@ function InfoBlocks(props) {
                 color: CARTRIDGE.theme.accent,
                 backgroundColor: CARTRIDGE.theme.main,
                 padding: 8,
-                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
-              {value.text}
+              <span
+                style={{
+                  textAlign: 'left',
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {value.text}
+              </span>
             </div>
           )
         })

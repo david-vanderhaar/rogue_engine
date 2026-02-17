@@ -62,7 +62,12 @@ export default class Mission {
       GLOBAL_EVENT_BUS.emit(event.name, event.payload);
     });
 
+    this.forceComplete();
     console.log('Mission complete: ', this.name);
+  }
+
+  forceComplete() {
+    this.timesCompleted = this.timesToComplete;
   }
 
   isCompleted() {

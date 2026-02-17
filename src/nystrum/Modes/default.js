@@ -26,6 +26,10 @@ export class Mode {
     merge(this.infoBlocks, {[id]: value})
   }
 
+  deleteInfoBlock(id) {
+    delete this.infoBlocks[id];
+  }
+
   initializeMissionManager({missions = [], onComplete = () => {}, onLost = () => {}, debug = false}) {
     GLOBAL_EVENT_BUS.all.clear();
     const missionManager = new MissionManager({

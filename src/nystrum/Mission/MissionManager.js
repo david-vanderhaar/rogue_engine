@@ -22,6 +22,22 @@ export default class MissionManager {
     this.onComplete = onComplete;
   }
 
+  getAllMissions() {
+    return [...this.missions, ...this.completed];
+  }
+
+  getNotStartedMissions() {
+    return this.missions.filter(mission => !mission.getActive());
+  }
+  
+  getActiveMissions() {
+    return this.missions.filter(mission => mission.getActive());
+  }
+
+  getCompletedMissions() {
+    return this.completed;
+  }
+
   allMissionsComplete() {
     return this.missions.length === 0;
   }
