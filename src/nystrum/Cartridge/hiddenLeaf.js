@@ -49,6 +49,9 @@ export const hiddenLeafCart = () => {
         [SCREENS.LEVEL]: {
           component: Level,
         },
+        // [SCREENS.OVERWORLD]: {
+        //   component: Level,
+        // },
         [SCREENS.CHARACTER_SELECT]: {
           component: CharacterSelect,
         },
