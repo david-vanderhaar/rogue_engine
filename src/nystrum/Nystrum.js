@@ -9,7 +9,8 @@ import SplashScreen from './Screen/Splash';
 // export const CARTRIDGE = Cartridges.jacintoCart()
 // export const CARTRIDGE = Cartridges.toTheWallsCart()
 // export const CARTRIDGE = Cartridges.flumeCart()
-export const CARTRIDGE = Cartridges.hiddenLeafCart()
+// export const CARTRIDGE = Cartridges.hiddenLeafCart()
+export const CARTRIDGE = Cartridges.telekineticCart()
 
 // insert common splash screen for all carts
 CARTRIDGE.screens['Splash'] = {component: SplashScreen}

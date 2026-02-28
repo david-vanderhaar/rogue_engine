@@ -7,6 +7,7 @@ import { jacintoCart } from './jacinto'
 import { hiddenLeafCart } from './hiddenLeaf'
 import { developmentCart } from './development'
 import { somethingInTheTallGrassCart } from './somethingInTheTallGrass';
+import { telekineticCart } from './telekinetic'
 
 const defaultCart = () => {
   // includes all modes with all characters
@@ -52,4 +53,5 @@ export default {
   toTheWallsCart,
   flumeCart,
   hiddenLeafCart,
+  telekineticCart,
 }
