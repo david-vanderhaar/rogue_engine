@@ -18,6 +18,7 @@ import Shino from '../Modes/HiddenLeaf/Characters/Shino';
 import Kiba from '../Modes/HiddenLeaf/Characters/Kiba';
 import Neji from '../Modes/HiddenLeaf/Characters/Neji';
 import Shikamaru from '../Modes/HiddenLeaf/Characters/Shikamaru';
+import Overworld from '../Modes/HiddenLeaf/Screen/Overworld';
 
 export const hiddenLeafCart = () => {
   return (
@@ -49,9 +50,9 @@ export const hiddenLeafCart = () => {
         [SCREENS.LEVEL]: {
           component: Level,
         },
-        // [SCREENS.OVERWORLD]: {
-        //   component: Level,
-        // },
+        [SCREENS.OVERWORLD]: {
+          component: Overworld,
+        },
         [SCREENS.CHARACTER_SELECT]: {
           component: CharacterSelect,
         },

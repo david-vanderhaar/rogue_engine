@@ -18,9 +18,9 @@ import { GLOBAL_EVENT_BUS } from '../../Events/EventBus';
 import MissionManager from '../../Mission/MissionManager';
 import Mission from '../../Mission/Mission';
 import { Castle } from '../castle';
-import { ChuninOverworld } from './chuninOverworld';
+import { Chunin } from './chunin';
 
-export class Chunin extends Mode {
+export class ChuninOverworld extends Mode {
   constructor({ ...args }) {
     super({ ...args });
     this.tileKey = TILE_KEY
@@ -70,8 +70,8 @@ export class Chunin extends Mode {
 
     // add a random number of blobs of random size of WATER
     // using addTileZone
-    for (let i = 0; i < 3; i++) {
-      let size = Helper.getRandomInt(2, 6);
+    for (let i = 0; i < 10; i++) {
+      let size = Helper.getRandomInt(2, 16);
       let x = Helper.getRandomInt(0, this.game.mapWidth);
       let y = Helper.getRandomInt(0, this.game.mapHeight);
       MapHelper.addTileZoneFilledCircle(
@@ -172,11 +172,10 @@ export class Chunin extends Mode {
       ],
     })
 
-    GLOBAL_EVENT_BUS.on('missionCompleted', (payload) => {
-      console.log(payload);
-      // this.game.changeMode(ChuninOverworld);
-      this.game.setActiveScreen('Overworld');
-    })
+    // GLOBAL_EVENT_BUS.on('missionCompleted', (payload) => {
+    //   console.log(payload);
+    //   this.game.changeMode(Chunin);
+    // })
   }
 
   createEmptyLevel () {
@@ -321,7 +320,7 @@ export class Chunin extends Mode {
     metaData.tournament = updatedTournament;
 
     this.meta(metaData)
-    this.game.game.setActiveScreen('Tournament');
+    this.game.setActiveScreen('Tournament');
   }
 
   getMetaTournamentLevel() {

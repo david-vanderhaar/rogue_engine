@@ -10,6 +10,9 @@ import { PickupRandomItem } from '../../../../Actions/PickupRandomItem';
 import { MoveTowards } from '../../../../Actions/MoveTowards';
 import { GoToPreviousKeymap } from '../../../../Actions/GoToPreviousKeymap';
 import { StatChangeOnSelf } from '../../../../Actions/StatChangeOnSelf';
+import { Say } from '../../../../Actions/Say';
+import { SCREENS } from '../../Screen/constants';
+import { ChuninOverworld } from '../../chuninOverworld';
 
 
 export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
@@ -171,6 +174,19 @@ export function generateDefaultKeymapActions(engine, actor) {
       label: 'Pickup',
       game: engine.game,
       actor,
+    }),
+    m: () => new Say({
+      label: 'Toggle Overworld Map',
+      message: 'Openening map...',
+      game: engine.game,
+      actor,
+      onSuccess: () => {
+        if (engine.game.mode instanceof ChuninOverworld) {
+          engine.game.setActiveScreen(SCREENS.LEVEL)
+        } else {
+          engine.game.setActiveScreen(SCREENS.OVERWORLD)
+        }
+      },
     }),
     // mouseOver: (mousePosition) => {
     //   return new MoveTargetingCursor({

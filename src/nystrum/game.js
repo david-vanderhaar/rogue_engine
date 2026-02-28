@@ -108,6 +108,60 @@ export class Game {
   updateMode () { // this is run every game turn
     this.mode.update();
   }
+
+  changeMode (newMode) {
+    this.saveModeState();
+    // this.resetEngine();
+    // this.engine.stop();
+    const preservedState = this.getModeState(newMode);
+    if (preservedState) {
+      this.parseGameState(preservedState);
+      this.mode = new newMode({game: this, preservedState});
+    } else {
+      this.mode = new newMode({game: this});
+      this.tileKey = this.mode.tileKey || this.tileKey;
+    }
+
+    this.initializeMode();
+    // this.engine.start();
+    // this.draw();
+  }
+
+  saveModeState () {
+    const currentMeta = this.meta();
+    const modeStates = currentMeta?.modeStates || {};
+    modeStates[this.mode.constructor.name] = this.serializeGameState();
+    this.meta({...currentMeta, modeStates})
+  }
+
+  getModeState (mode) {
+    const saved = this.meta().modeStates[mode.constructor.name]
+    if (saved) return saved;
+    return null;
+  }
+
+  serializeGameState () {
+    return {
+      map: this.map,
+      tileKey: this.tileKey,
+      engine: {
+        actors: this.engine.actors,
+        statusEffects: this.engine.statusEffects,
+      }
+    }
+  }
+
+  parseGameState (state) {
+    this.map = state.map;
+    this.tileKey = state.tileKey;
+    this.engine.actors = state.engine.actors;
+    this.engine.statusEffects = state.engine.statusEffects;
+  }
+
+  resetEngine () {
+    this.engine.actors = [];
+    this.engine.statusEffects = [];
+  }
   
   randomlyPlaceActorOnMap(actor) {
     let kill = 0;
