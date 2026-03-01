@@ -59,19 +59,22 @@ export class Telekinetic extends Mode {
     );
     
     // inner walls
-    MapHelper.addTileZoneRectUnfilled(
-      this.game.tileKey,
-      { x: 1, y: 1 },
-      this.game.mapHeight - 2,
-      this.game.mapWidth - 2,
-      'WALL',
-      this.game.map,
-    );
+    const tiers = 4
+    for (let index = 1; index <= tiers; index++) {
+      MapHelper.addTileZoneRectUnfilled(
+        this.game.tileKey,
+        { x: index, y: index },
+        this.game.mapHeight - (index*2),
+        this.game.mapWidth - (index*2),
+        'WALL',
+        this.game.map,
+      );
+    }
 
     // place player start zone
     MapHelper.addTileZone(
       this.game.tileKey,
-      { x: 31, y: 9 },
+      { x: 28, y: 9 },
       4,
       4,
       'SAFE',

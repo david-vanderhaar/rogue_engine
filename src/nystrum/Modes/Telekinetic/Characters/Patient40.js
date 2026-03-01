@@ -77,25 +77,24 @@ function initialize (engine) {
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
         keymapTriggerString: 'f',
+        // cursorShape: Constant.CLONE_PATTERNS.point,
         cursorShape: Constant.CLONE_PATTERNS.smallSquare,
-        // actionClass: AddStatusEffectAtPosition,
         actionClass: AddStatusEffectAtPositions,
         actionParams: {
-          // effect: new Thrown({ game: engine.game, direction: Constant.DIRECTIONS.E, range: 3 }),
           createEffect: () => new Thrown({ game: engine.game, direction: Constant.DIRECTIONS.E, range: 3 }),
           label: 'Throw [1]',
-          onSuccess: () => {
-            // gradientPathEmitter({
-            //   game: engine.game,
-            //   fromPosition: actor.getPosition(),
-            //   targetPositions: actor.getCursorPositions(),
-            //   animationTimeStep: 0.8,
-            //   // animationTimeStep: 0.1,
-            //   // transfersBackground: true,
-            //   backgroundColorGradient: [COLORS.black, COLORS.black],
-            //   character: '',
-            // }).start()
-          }
+          // onSuccess: () => {
+          //   gradientPathEmitter({
+          //     game: engine.game,
+          //     fromPosition: actor.getPosition(),
+          //     targetPositions: actor.getCursorPositions(),
+          //     animationTimeStep: 0.8,
+          //     // animationTimeStep: 0.1,
+          //     // transfersBackground: true,
+          //     backgroundColorGradient: [COLORS.black, COLORS.black],
+          //     character: '',
+          //   }).start()
+          // }
         }
       }),
       c: () => new PrepareRangedAction({

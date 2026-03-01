@@ -41,6 +41,10 @@ class Level extends React.Component {
       getSelectedCharacter: () => this.props.selectedCharacter.initialize(ENGINE),
       mode: this.props.selectedMode.class,
       meta: this.props.meta,
+      // mapWidth: 17,
+      // mapHeight: 13
+      // const MAP_WIDTH = 35;
+      // const MAP_HEIGHT = 26;
     })
     this.state = {
       game: game,
