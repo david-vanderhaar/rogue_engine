@@ -48,37 +48,6 @@ export class Telekinetic extends Mode {
     this.game.initializeMapTiles();
     this.setWaveData();
 
-    // add a random number of blobs of random size of GROUND
-    // using addTileZone
-    for (let i = 0; i < 20; i++) {
-      let size = Helper.getRandomInt(4, 12);
-      let x = Helper.getRandomInt(0, this.game.mapWidth);
-      let y = Helper.getRandomInt(0, this.game.mapHeight);
-      MapHelper.addTileZone(
-        this.game.tileKey,
-        { x, y },
-        size,
-        size,
-        'GROUND',
-        this.game.map,
-        this.game.mapHeight,
-        this.game.mapWidth,
-      );
-    }
-
-    // add a random number of blobs of random size of WATER
-    // using addTileZone
-    for (let i = 0; i < 3; i++) {
-      let size = Helper.getRandomInt(2, 6);
-      let x = Helper.getRandomInt(0, this.game.mapWidth);
-      let y = Helper.getRandomInt(0, this.game.mapHeight);
-      MapHelper.addTileZoneFilledCircle(
-        { x, y },
-        size,
-        'WATER',
-      );
-    }
-
     // outer walls
     MapHelper.addTileZoneRectUnfilled(
       this.game.tileKey,
@@ -111,27 +80,8 @@ export class Telekinetic extends Mode {
       this.game.mapWidth,
     );
     this.placePlayersInSafeZone();
-
-    // place enemies
-    let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
-    this.data.enemies.forEach((enemyName) => {
-      let pos = Helper.getRandomInArray(groundTiles);
-      let posXY = pos.split(',').map((coord) => parseInt(coord));
-      this[enemyName]({ x: posXY[0], y: posXY[1] });
-    })
-
-    const edgeTiles = MapHelper.getPositionsInTileZone(
-      this.game.mapHeight,
-      this.game.mapWidth,
-      { x: 3, y: 3 },
-      this.game.mapHeight - 6,
-      this.game.mapWidth - 6,
-    )
-
-    for (let i = 0; i < 10; i++) {
-      let posXY = Helper.getRandomInArray(edgeTiles);
-      CoverGenerator.generateTree(posXY, this.game);
-    }
+    this.placeEnemies()
+    this.placeThrowables()
 
     this.startMissionManager();
   }
@@ -175,7 +125,7 @@ export class Telekinetic extends Mode {
     for (let i = 0; i < this.game.mapHeight; i ++) {
       for (let j = 0; j < this.game.mapWidth; j ++) {
         const key = `${j},${i}`
-        let type = 'GROUND_ALT';
+        let type = 'GROUND';
         MapHelper.addTileToMap({map: this.game.map, key, tileKey: this.tileKey, tileType: type})
       }
     }
@@ -427,6 +377,25 @@ export class Telekinetic extends Mode {
         player.move(position)
       }
     })
+  }
+
+  placeEnemies () {
+    let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
+    this.data.enemies.forEach((enemyName) => {
+      let pos = Helper.getRandomInArray(groundTiles);
+      let posXY = pos.split(',').map((coord) => parseInt(coord));
+      this[enemyName]({ x: posXY[0], y: posXY[1] });
+    })
+  }
+
+  placeThrowables (number = 10) {
+    let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
+    for (let i = 0; i < number; i++) {
+      let pos = Helper.getRandomInArray(groundTiles);
+      let posXY = pos.split(',').map((coord) => parseInt(coord));
+      let throwable = Item.directionalBottle(this.game.engine, {x: posXY[0], y: posXY[1]} , null, 10)
+      this.game.placeActorOnMap(throwable)
+    }
   }
 
 }

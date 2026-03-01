@@ -14,6 +14,9 @@ export const COLORS = {
   dark: '#0f0705',
   dark_accent: '#2e2a39',
 
+  wall: '#2e2a39',
+  wall_alt: '#2e2a39',
+
   white: '#eeeeee',
   gaara: '#603030',
   rock_lee: '#155859',
@@ -33,8 +36,7 @@ export const COLORS = {
   shikamaru_alt: '#353641',
   leaf: '#36635b',
   wraps: '#F0D8C0',
-  wall: '#a3625f',
-  wall_alt: '#714545',
+
   chakra: '#3e7dc9',
   dirt00: '#2a251f', 
   dirt0: '#dbcdab',
@@ -81,51 +83,36 @@ export const COLORS = {
   gray: '#6D7886',
 }
 
-COLORS.bg_override = COLORS.dirt00
+COLORS.bg_override = COLORS.dark
+COLORS.fg_override = COLORS.mid_yellow
 
 export const TILE_KEY = {
   'GROUND': {
-    background: COLORS.bg_override || COLORS.grass0,
-    foreground: COLORS.grass00,
+    background: COLORS.bg_override || COLORS.dark,
+    foreground: COLORS.fg_override || COLORS.dark_accent,
     character: '.',
     sprite: '',
     passable: true,
     tags: ['PROVIDING_COVER', 'BURNABLE'],
-    animation: [
-      { background: COLORS.bg_override || COLORS.grass0, foreground: COLORS.grass0, character: ',', sprite: '"', passable: true, },
-      { background: COLORS.bg_override || COLORS.grass0, foreground: COLORS.grass00, character: '.', sprite: '', passable: true, },
-    ]
-  },
-  'GROUND_ALT': {
-    background: COLORS.bg_override || COLORS.dirt0,
-    foreground: COLORS.dirt00,
-    character: '.',
-    sprite: '.',
-    passable: true,
-    tags: ['PROVIDING_COVER', 'BURNABLE'],
-    animation: [
-      { background: COLORS.bg_override || COLORS.dirt0, foreground: COLORS.dirt0, character: '.', sprite: '.', passable: true, },
-      { background: COLORS.bg_override || COLORS.dirt0, foreground: COLORS.dirt00, character: '.', sprite: '.', passable: true, },
-    ]
   },
   'FLOOR': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.locust1,
+    foreground: COLORS.fg_override || COLORS.locust1,
     character: '',
     passable: true,
     tags: ['BURNABLE'],
   },
   'WALL': {
     background: COLORS.bg_override || COLORS.wall_alt,
-    foreground: COLORS.wall,
-    character: '#',
-    sprite: '#',
+    foreground: COLORS.fg_override || COLORS.wall,
+    character: '█',
+    sprite: '█',
     passable: false,
     tags: ['BURNABLE', 'WALL'],
   },
   'WALL_VERTICAL': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.locust2,
+    foreground: COLORS.fg_override || COLORS.locust2,
     character: '||',
     sprite: '',
     passable: false,
@@ -133,7 +120,7 @@ export const TILE_KEY = {
   },
   'WALL_HORIZONTAL': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.locust2,
+    foreground: COLORS.fg_override || COLORS.locust2,
     character: '=',
     sprite: '',
     passable: false,
@@ -141,7 +128,7 @@ export const TILE_KEY = {
   },
   'WALL_CORNER_NW': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.locust2,
+    foreground: COLORS.fg_override || COLORS.locust2,
     character: '#',
     sprite: '',
     passable: false,
@@ -149,7 +136,7 @@ export const TILE_KEY = {
   },
   'WALL_CORNER_NE': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.locust2,
+    foreground: COLORS.fg_override || COLORS.locust2,
     character: '#',
     sprite: '',
     passable: false,
@@ -157,7 +144,7 @@ export const TILE_KEY = {
   },
   'WALL_CORNER_SW': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.locust2,
+    foreground: COLORS.fg_override || COLORS.locust2,
     character: '#',
     sprite: '',
     passable: false,
@@ -165,31 +152,15 @@ export const TILE_KEY = {
   },
   'WALL_CORNER_SE': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.locust2,
+    foreground: COLORS.fg_override || COLORS.locust2,
     character: '#',
     sprite: '',
     passable: false,
     tags: ['BURNABLE', 'WALL'],
   },
-  'ROAD_EDGE': {
-    background: COLORS.bg_override || COLORS.base03,
-    foreground: COLORS.base02,
-    character: '',
-    sprite: '',
-    passable: true,
-    tags: ['ROAD', 'PROVIDING_COVER'],
-  },
-  'ROAD': {
-    background: COLORS.bg_override || COLORS.base03,
-    foreground: COLORS.base02,
-    character: '=',
-    sprite: '',
-    passable: true,
-    tags: ['ROAD', 'PROVIDING_COVER'],
-  },
   'DOOR': {
     background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.base1,
+    foreground: COLORS.fg_override || COLORS.base1,
     character: '+',
     sprite: '',
     passable: true,
@@ -197,21 +168,21 @@ export const TILE_KEY = {
   },
   'SAFE': {
     background: COLORS.bg_override || COLORS.base04,
-    foreground: COLORS.base02,
+    foreground: COLORS.fg_override || COLORS.base02,
     character: '.',
     sprite: '',
     passable: true,
   },
   'LOCKED_EXIT': {
     background: COLORS.bg_override || COLORS.base04,
-    foreground: COLORS.base02,
+    foreground: COLORS.fg_override || COLORS.base02,
     character: '.',
     sprite: '',
     passable: true,
   },
   'EXIT': {
     background: COLORS.bg_override || COLORS.base04,
-    foreground: COLORS.green,
+    foreground: COLORS.fg_override || COLORS.green,
     character: '>',
     sprite: '',
     passable: true,

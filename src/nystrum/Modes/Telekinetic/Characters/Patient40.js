@@ -8,7 +8,7 @@ import * as Helper from '../../../../helper';
 import { SandPulse } from '../../../Actions/SandPulse';
 import { ChakraResource } from '../../../Actions/ActionResources/ChakraResource';
 
-const portrait = `${window.PUBLIC_URL}/hidden_leaf/rock_full_01.png`
+const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
 const speedRating = 3;
 const durabilityRating = 2;
@@ -21,8 +21,8 @@ const basicInfo = {
     character: '@',
     color: COLORS.dark_accent,
     background: COLORS.white,
-    portrait,
-    basePortrait: portrait,
+    // portrait,
+    // basePortrait: portrait,
     damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,
   },
   abilities: [
@@ -47,7 +47,7 @@ const basicInfo = {
   charge: chakraRating * 3,
   chargeMax: chakraRating * 3,
   attackDamage: 1,
-  portrait,
+  // portrait,
 }
   
 

@@ -236,6 +236,23 @@ export const directionalKunai = (engine, pos, direction, range) => new Direction
   range,
 })
 
+export const directionalBottle = (engine, pos, direction, range) => new DirectionalProjectile({
+  game: engine.game,
+  direction,
+  passable: true,
+  pos: { x: pos.x, y: pos.y },
+  renderer: {
+    character: '!',
+    color: 'white',
+    background: '',
+  },
+  traversableTiles: ['WATER'],
+  name: TYPE.DIRECTIONAL_KUNAI,
+  speed: 600,
+  energy: 0,
+  range,
+})
+
 export const movingSandWall = (engine, pos, targetPos, range) => new MovingWall({
   game: engine.game,
   passable: false,
