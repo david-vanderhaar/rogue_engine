@@ -34,7 +34,10 @@ export default class Thrown  extends Base {
     this.startDirectionIndicator()
     this.actor.renderer.background = COLORS.blue;
 
-    if (!this.actorIsInEngine() && this.isProjectileType()) this.addActor()
+    if (!this.actorIsInEngine() && this.isProjectileType()) {
+      this.setProjectileStats();
+      this.addActor();
+    }
   }
 
   step () {
@@ -134,8 +137,8 @@ export default class Thrown  extends Base {
     SpatterEmitter({
       game: this.game,
       fromPosition: this.actor.getPosition(),
-      spatterAmount: .1,
-      spatterRadius: 2,
+      spatterAmount: .3,
+      spatterRadius: 3,
       animationTimeStep: 0.9,
       transfersBackground: false,
       spatterColors: [COLORS.blue, COLORS.dark_accent],
@@ -143,9 +146,6 @@ export default class Thrown  extends Base {
   }
 
   addActor () {
-    this.actor.direction = this.direction
-    this.actor.range = this.range
-    this.actor.speed = ENERGY_THRESHOLD
     new PlaceActor({
       entity: this.actor,
       targetPos: this.actor.getPosition(),
@@ -154,6 +154,13 @@ export default class Thrown  extends Base {
       energyCost: 0,
       interrupt: false,
     }).perform()
+  }
+
+  setProjectileStats() {
+    this.actor.direction = this.direction;
+    this.actor.range = this.range;
+    // this.actor.durability = this.range;
+    this.actor.speed = ENERGY_THRESHOLD;
   }
 
   actorIsInEngine () {

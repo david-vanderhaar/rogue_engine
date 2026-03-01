@@ -14,12 +14,16 @@ import gradientPathEmitter from '../../../Engine/Particle/Emitters/gradientPathE
 import Thrown from '../StatusEffects/Thrown';
 import FollowAndAttack from '../../../Entities/AI/BehaviorChains/FollowAndAttack';
 import { AddStatusEffectAtPositions } from '../../../Actions/AddStatusEffectAtPositions';
+import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
+import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
+import { PrepareTelekinesisThrow } from '../../../Actions/PrepareTelekinesisThrow';
+import { PrepareRangedTelekinesisAction } from '../../../Actions/PrepareRangedTelekinesisAction';
 
 const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
 const speedRating = 1;
 const durabilityRating = 2;
-const chakraRating = 1;
+const chakraRating = 3;
 
 const basicInfo = {
   name: 'Patient #40',
@@ -69,34 +73,34 @@ function initialize (engine) {
         actor,
         requiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
       }),
-      f: () => new PrepareRangedAction({
-        label: 'Telekinesis [1]',
+      f: () => new PrepareRangedTelekinesisAction({
+        label: 'Telekinesis',
         game: engine.game,
         actor,
-        range: 10,
+        triggerRange: 20,
+        throwRange: 5,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+        passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 2 })],
         keymapTriggerString: 'f',
         // cursorShape: Constant.CLONE_PATTERNS.point,
         cursorShape: Constant.CLONE_PATTERNS.smallSquare,
-        actionClass: AddStatusEffectAtPositions,
-        actionParams: {
-          createEffect: () => new Thrown({ game: engine.game, direction: Constant.DIRECTIONS.E, range: 3 }),
-          label: 'Throw [1]',
-          // onSuccess: () => {
-          //   gradientPathEmitter({
-          //     game: engine.game,
-          //     fromPosition: actor.getPosition(),
-          //     targetPositions: actor.getCursorPositions(),
-          //     animationTimeStep: 0.8,
-          //     // animationTimeStep: 0.1,
-          //     // transfersBackground: true,
-          //     backgroundColorGradient: [COLORS.black, COLORS.black],
-          //     character: '',
-          //   }).start()
-          // }
-        }
       }),
+      // f: () => new PrepareRangedAction({
+      //   label: 'Telekinesis E',
+      //   game: engine.game,
+      //   actor,
+      //   range: 10,
+      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      //   passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+      //   keymapTriggerString: 'f',
+      //   cursorShape: Constant.CLONE_PATTERNS.point,
+      //   // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+      //   actionClass: AddStatusEffectAtPositions,
+      //   actionParams: {
+      //     createEffect: () => new Thrown({ game: engine.game, direction: Constant.DIRECTIONS.E, range: 3 }),
+      //     label: 'Throw E',
+      //   }
+      // }),
       c: () => new PrepareRangedAction({
         label: 'Menacing Stare [1]',
         game: engine.game,

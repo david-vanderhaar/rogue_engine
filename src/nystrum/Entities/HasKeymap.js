@@ -41,6 +41,14 @@ export const HasKeymap = superclass => class extends superclass {
     return this.getKeymap();
   }
 
+  popToTopKeymap () {
+    this.keymapStack.forEach((layer, index) => {
+      if (this.keymapStack.length > 1) this.removeKeymap()
+    })
+
+    return this.getKeymap()
+  }
+
   playSetKeymapSound() {
     HIDDEN_LEAF_SOUNDS.basic_jutsu_cast.play();
   }
