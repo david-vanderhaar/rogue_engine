@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { SOUNDS } from '../sounds'
 import { CARTRIDGE } from '../../../Nystrum';
-import { SCREENS } from '../../../Screen/constants';
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
+import { SCREENS } from './constants';
 
 function Title(props) {
   const playButtonSound = () => {
@@ -10,7 +10,7 @@ function Title(props) {
   }
 
   function nextScreen () {
-    props.setActiveScreen(SCREENS.CHARACTER_SELECT)
+    props.setActiveScreen(SCREENS.INTRO_MOVIE)
     playButtonSound()
   }
 

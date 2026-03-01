@@ -3,8 +3,7 @@ export const SCREENS = {
   LEVEL: 'Level',
   LOSE: 'Lose',
   WIN: 'Win',
-  CHARACTER_SELECT: 'CharacterSelect',
-  MODE_SELECT: 'ModeSelect',
-  TOURNAMENT: 'Tournament',
-  OVERWORLD: 'Overworld',
+  ABILITY_SELECT: 'AbilitySelect',
+  LEVEL_PROGRESS: 'LevelProgress',
+  INTRO_MOVIE: 'IntroMovie',
 }

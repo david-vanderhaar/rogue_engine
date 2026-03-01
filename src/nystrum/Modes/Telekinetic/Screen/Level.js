@@ -100,16 +100,8 @@ class Level extends React.Component {
     return player
   }
 
-  getOpponent(meta) {
-    let opponent = this.state.game.mode.getOpponentActor()
-    if (!opponent) opponent = meta.tournament.opponents[0].basicInfo
-
-    return opponent
-  }
-
   render() {
     const meta = this.props.meta()
-    const opponent = this.getOpponent(meta)
     const player = this.getPlayer(meta)
     return (
       <div className="Level" style={{fontSize: 12}}>
@@ -129,11 +121,6 @@ class Level extends React.Component {
                 <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
                 <ImagePortrait actor={player} width={200} height={74} />
                 <NamePlate actor={player} />
-              </div>
-              <div style={{marginLeft: 12, marginTop: 42}}>
-                <div style={{fontSize: 12, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>vs</div>
-                <ImagePortrait actor={opponent} width={100} height={37} />
-                <NamePlate actor={opponent} />
               </div>
             </div>
             <PlayerInformation game={this.state.game} />

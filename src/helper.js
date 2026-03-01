@@ -158,6 +158,8 @@ export const getRandomPos = (map) => {
   return {coordinates: pos, text: key}
 }
 
+export const stringCoordsToObject = (string) => ({x: parseInt(string.split(',')[0]), y: parseInt(string.split(',')[1])})
+
 export const getDestructableEntities = (entites) => {
   return entites.filter((entity) => entity.hasOwnProperty('durability'));
 }

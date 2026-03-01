@@ -5,10 +5,11 @@ import Title from '../Modes/Telekinetic/Screen/Title';
 import Win from '../Modes/Telekinetic/Screen/Win';
 import Lose from '../Modes/Telekinetic/Screen/Lose';
 import Level from '../Modes/Telekinetic/Screen/Level';
-import CharacterSelect from '../Modes/Telekinetic/Screen/CharacterSelect';
+import AbilitySelect from '../Modes/Telekinetic/Screen/AbilitySelect';
 import Tournament from '../Modes/Telekinetic/Screen/Tournament';
 import { SCREENS } from '../Modes/Telekinetic/Screen/constants';
 import Patient40 from '../Modes/Telekinetic/Characters/Patient40';
+import Intro from '../Modes/Telekinetic/Screen/Intro';
 
 export const telekineticCart = () => {
   return (
@@ -22,6 +23,9 @@ export const telekineticCart = () => {
         [SCREENS.TITLE]: {
           component: Title,
         },
+        [SCREENS.INTRO_MOVIE]: {
+          component: Intro,
+        },
         [SCREENS.WIN]: {
           component: Win,
         },
@@ -31,10 +35,10 @@ export const telekineticCart = () => {
         [SCREENS.LEVEL]: {
           component: Level,
         },
-        [SCREENS.CHARACTER_SELECT]: {
-          component: CharacterSelect,
+        [SCREENS.ABILITY_SELECT]: {
+          component: AbilitySelect,
         },
-        [SCREENS.TOURNAMENT]: {
+        [SCREENS.LEVEL_PROGRESS]: {
           component: Tournament,
         },
       }
