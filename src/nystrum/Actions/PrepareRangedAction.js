@@ -137,7 +137,7 @@ export class PrepareRangedAction extends Base {
           actor: this.actor,
           game: this.game,
           targetPosition: { ...this.actor.getCursorPositions().at(0) },
-          targetPositions: { ...this.actor.getCursorPositions() },
+          targetPositions: [...this.actor.getCursorPositions()],
           energyCost: this.passThroughEnergyCost,
           requiredResources: this.passThroughRequiredResources,
           onSuccess: () => {

@@ -388,7 +388,7 @@ export class Telekinetic extends Mode {
     })
   }
 
-  placeThrowables (number = 10) {
+  placeThrowables (number = 50) {
     let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
     for (let i = 0; i < number; i++) {
       let pos = Helper.getRandomInArray(groundTiles);

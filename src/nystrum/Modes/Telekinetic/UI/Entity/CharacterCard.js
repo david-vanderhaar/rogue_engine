@@ -27,7 +27,7 @@ export default function CharacterCard ({actor, game}) {
         {
           actor.chargeMax > 0 && (
             <SimpleProgressBar 
-              label='CH'
+              label='MP'
               attributePath='charge'
               attributePathMax='chargeMax'
               colorFilled='#3e7dc9'

@@ -7,10 +7,17 @@ import { COLORS } from '../theme';
 import * as Helper from '../../../../helper';
 import { SandPulse } from '../../../Actions/SandPulse';
 import { ChakraResource } from '../../../Actions/ActionResources/ChakraResource';
+import { PrepareRangedAction } from '../../../Actions/PrepareRangedAction';
+import { AddStatusEffectAtPosition } from '../../../Actions/AddStatusEffectAtPosition';
+import ShadowHold from '../../../StatusEffects/ShadowHold';
+import gradientPathEmitter from '../../../Engine/Particle/Emitters/gradientPathEmitter';
+import Thrown from '../StatusEffects/Thrown';
+import FollowAndAttack from '../../../Entities/AI/BehaviorChains/FollowAndAttack';
+import { AddStatusEffectAtPositions } from '../../../Actions/AddStatusEffectAtPositions';
 
 const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
-const speedRating = 3;
+const speedRating = 1;
 const durabilityRating = 2;
 const chakraRating = 1;
 
@@ -42,10 +49,10 @@ const basicInfo = {
   speedRating,
   durabilityRating,
   chakraRating,
-  speed: speedRating * 200,
-  durability: durabilityRating * 3,
-  charge: chakraRating * 3,
-  chargeMax: chakraRating * 3,
+  speed: speedRating * 100,
+  durability: durabilityRating,
+  charge: chakraRating,
+  chargeMax: chakraRating,
   attackDamage: 1,
   // portrait,
 }
@@ -62,7 +69,63 @@ function initialize (engine) {
         actor,
         requiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
       }),
-    };
+      f: () => new PrepareRangedAction({
+        label: 'Telekinesis [1]',
+        game: engine.game,
+        actor,
+        range: 10,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+        keymapTriggerString: 'f',
+        cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+        // actionClass: AddStatusEffectAtPosition,
+        actionClass: AddStatusEffectAtPositions,
+        actionParams: {
+          // effect: new Thrown({ game: engine.game, direction: Constant.DIRECTIONS.E, range: 3 }),
+          createEffect: () => new Thrown({ game: engine.game, direction: Constant.DIRECTIONS.E, range: 3 }),
+          label: 'Throw [1]',
+          onSuccess: () => {
+            // gradientPathEmitter({
+            //   game: engine.game,
+            //   fromPosition: actor.getPosition(),
+            //   targetPositions: actor.getCursorPositions(),
+            //   animationTimeStep: 0.8,
+            //   // animationTimeStep: 0.1,
+            //   // transfersBackground: true,
+            //   backgroundColorGradient: [COLORS.black, COLORS.black],
+            //   character: '',
+            // }).start()
+          }
+        }
+      }),
+      c: () => new PrepareRangedAction({
+        label: 'Menacing Stare [1]',
+        game: engine.game,
+        actor,
+        range: 10,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+        keymapTriggerString: 'f',
+        // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+        actionClass: AddStatusEffectAtPosition,
+        actionParams: {
+          effect: new ShadowHold({ game: engine.game, turnsStunned: 1 }),
+          label: 'Stare [1]',
+          onSuccess: () => {
+            gradientPathEmitter({
+              game: engine.game,
+              fromPosition: actor.getPosition(),
+              targetPositions: actor.getCursorPositions(),
+              animationTimeStep: 0.8,
+              // animationTimeStep: 0.1,
+              // transfersBackground: true,
+              backgroundColorGradient: [COLORS.black, COLORS.black],
+              character: '',
+            }).start()
+          }
+        }
+      }),
+    }
   }
 
   // instantiate class
@@ -76,7 +139,7 @@ function initialize (engine) {
 }
 
 // a mock for AI behaviors
-const behaviors = BlitzerBehaviors(basicInfo);
+const behaviors = [...new FollowAndAttack({repeat: 1}).create()]
 
 export default function () {
   return {
