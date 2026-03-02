@@ -45,11 +45,21 @@ export class Telekinetic extends Mode {
 
     this.addWalls();
     this.placePlayerAndSafeZone();
+    this.applyUpgrades()
     // TODO: get from wave data
     this.addEnemies(1, 'addRandom')
     this.placeThrowables()
 
     this.startMissionManager();
+  }
+
+  applyUpgrades () {
+    const upgrades = this.meta()?.upgrades || []
+    console.log(upgrades);
+    
+    upgrades.forEach((upgrade) => {
+      upgrade.activate(this.getPlayer())
+    })
   }
 
   placePlayerAndSafeZone() {
@@ -236,10 +246,9 @@ export class Telekinetic extends Mode {
   nextLevel () {
     const metaData = this.meta()
     const tournament = metaData.tournament;
-    // const updatedTournament = tournament.advanceOneRound()
     tournament.currentRound += 1
     metaData.tournament = tournament;
-
+    
     this.meta(metaData)
     this.game.setActiveScreen(SCREENS.ABILITY_SELECT);
   }
@@ -260,7 +269,7 @@ export class Telekinetic extends Mode {
 
   hasWon () {
     const level = this.getMetaTournamentLevel()
-    const maxLevel = this.meta().tournament.maxRounds - 1;
+    const maxLevel = this.meta().tournament.maxRounds;
     return this.levelComplete() && (level >= maxLevel);
   }
 

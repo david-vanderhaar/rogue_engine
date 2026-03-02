@@ -30,6 +30,24 @@ export const HasKeymap = superclass => class extends superclass {
     this.addKeymap(keymap);
   }
 
+  addKeymapActionToBaseKeymap (key, keymapAction) {
+    // get last in stack which is base keymap
+    const baseKeymap = this.keymapStack.at(-1)
+    console.log('adding');
+    
+    const newInitialize = (engine, actor) => {
+      // const base = baseKeymap(engine, actor)
+      return {
+        // ...base,
+        ...baseKeymap,
+        [key]: keymapAction
+      }
+    }
+
+    this.initializeKeymap = newInitialize
+    this.reinitializeKeymap()
+  }
+
   setKeymap (newKeymap) {
     this.addKeymap(newKeymap);
     this.playSetKeymapSound();

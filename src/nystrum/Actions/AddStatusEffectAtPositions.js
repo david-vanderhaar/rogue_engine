@@ -9,7 +9,7 @@ export class AddStatusEffectAtPositions extends Base {
     this.processDelay = processDelay;
   }
   perform() {
-    let success = false;
+    let successes = []
     
     this.targetPositions.forEach((position) => {
       // get entity at target position
@@ -17,12 +17,12 @@ export class AddStatusEffectAtPositions extends Base {
       if (targets.length) {
         const effect = this.createEffect()
         effect.actor = targets.at(0);
-        success = this.game.engine.addStatusEffect(effect);
+        successes.push(this.game.engine.addStatusEffect(effect));
       }
     });
 
     return {
-      success,
+      success: successes.some((i) => i === true),
       alternative: null,
     };
   }

@@ -2,8 +2,19 @@ import React, {useEffect} from 'react';
 import { SOUNDS } from '../sounds'
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { CARTRIDGE } from '../../../Nystrum';
-import CharacterSelect from '../../../UI/CharacterCardSelect';
+import CharacterSelect from '../UI/CharacterCardSelect'
 import { SCREENS } from './constants';
+import { ENERGY_THRESHOLD } from '../../../constants';
+import { COLORS } from '../theme';
+import { Say } from '../../../Actions/Say';
+
+
+// display available upgrades
+// on click:
+  // add upgrade to meta data
+  // move back to level screen
+// on level screen, in mode init
+  // run through all upgrades in meta data and activate them before first render
 
 function AbilitySelectScreen(props) {
   // useEffect(fadeMusicInOut(SOUNDS.character_select_theme), [])
@@ -12,49 +23,88 @@ function AbilitySelectScreen(props) {
   }
 
   function nextScreen () {
-    const character = props.characters.at(0)
-    
-    props.setSelectedCharacter(character);
-    props.meta({tournament: {player: character, maxRounds: 3}});
-    
     playButtonSound()
     props.setActiveScreen(SCREENS.LEVEL)
   }
 
-  // useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === 'Enter') {
-        nextScreen()
-      }
-    };
-    // Add event listener when the component mounts
-    window.addEventListener('keydown', handleKeyPress);
+  function setSelectedAbility (upgrade) {
+    const meta = props.meta()
+    if (!meta?.upgrades) meta['upgrades'] = []
+    meta['upgrades'].push(upgrade)
+  }
 
-    // Clean up by removing the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, []);
+  const upgrades = {
+    buffs: [
+      {
+        cost: 1,
+        name: '+1 Health',
+        description: 'Pain is only in the mind. Toughen Up.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active extra helth');
+          actor.durabilityMax += 1
+          actor.increaseDurability(1)
+        },
+      },
+      {
+        cost: 3,
+        name: '+1 Actions',
+        description: 'My mind is racing! Everything around me is slowing down.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active extra action');
+          actor.speed += ENERGY_THRESHOLD;
+          actor.energy += ENERGY_THRESHOLD;
+        },
+      },
+      {
+        cost: 3,
+        name: 'Gain Menacing Stare',
+        description: 'I can peirce their mind with a look. Hold still!',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active menacing stare');
+          
+          const keymapAction = () => new Say({
+            label: 'Menacing Stare [1]',
+            game: actor.game,
+            actor,
+            message: 'we out here'
+          })
+
+          actor.addKeymapActionToBaseKeymap('c', keymapAction)
+        },
+      },
+    ],
+    debuffs: [],
+  }
   
   return (
     <div className="Title">
       <div className="Title__content">
-        {/* <h1>Your Mind Expands</h1>
-        <CharacterSelect 
-          characters={props.characters} 
-          selectedCharacter={props.selectedCharacter} 
-          setSelectedCharacter={props.setSelectedCharacter}
-          setActiveScreen={props.setActiveScreen}
-        /> */}
         <h2 className="Title__heading" style={{color: CARTRIDGE.theme.accent, zIndex: 100}}>Your Mind Expands</h2>
-        <button
+        <CharacterSelect 
+          upgrades={upgrades.buffs} 
+          setSelectedAbility={setSelectedAbility}
+          setActiveScreen={props.setActiveScreen}
+        />
+        
+        {/* <button
           className="btn btn-main btn-themed Title__button"
           onClick={nextScreen}
         >
           Descend
         </button>
-        <span className="Title__hint">press enter to continue</span>
+        <span className="Title__hint">press enter to continue</span> */}
       </div>
     </div>
   )

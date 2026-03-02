@@ -101,33 +101,33 @@ function initialize (engine) {
       //     label: 'Throw E',
       //   }
       // }),
-      c: () => new PrepareRangedAction({
-        label: 'Menacing Stare [1]',
-        game: engine.game,
-        actor,
-        range: 10,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
-        keymapTriggerString: 'f',
-        // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
-        actionClass: AddStatusEffectAtPosition,
-        actionParams: {
-          effect: new ShadowHold({ game: engine.game, turnsStunned: 1 }),
-          label: 'Stare [1]',
-          onSuccess: () => {
-            gradientPathEmitter({
-              game: engine.game,
-              fromPosition: actor.getPosition(),
-              targetPositions: actor.getCursorPositions(),
-              animationTimeStep: 0.8,
-              // animationTimeStep: 0.1,
-              // transfersBackground: true,
-              backgroundColorGradient: [COLORS.black, COLORS.black],
-              character: '',
-            }).start()
-          }
-        }
-      }),
+      // c: () => new PrepareRangedAction({
+      //   label: 'Menacing Stare [1]',
+      //   game: engine.game,
+      //   actor,
+      //   range: 10,
+      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+      //   passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+      //   keymapTriggerString: 'f',
+      //   // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+      //   actionClass: AddStatusEffectAtPosition,
+      //   actionParams: {
+      //     effect: new ShadowHold({ game: engine.game, turnsStunned: 1 }),
+      //     label: 'Stare [1]',
+      //     onSuccess: () => {
+      //       gradientPathEmitter({
+      //         game: engine.game,
+      //         fromPosition: actor.getPosition(),
+      //         targetPositions: actor.getCursorPositions(),
+      //         animationTimeStep: 0.8,
+      //         // animationTimeStep: 0.1,
+      //         // transfersBackground: true,
+      //         backgroundColorGradient: [COLORS.black, COLORS.black],
+      //         character: '',
+      //       }).start()
+      //     }
+      //   }
+      // }),
     }
   }
 
@@ -141,12 +141,9 @@ function initialize (engine) {
   return actor
 }
 
-// a mock for AI behaviors
-const behaviors = [...new FollowAndAttack({repeat: 1}).create()]
-
 export default function () {
   return {
     initialize: initialize,
-    basicInfo: {behaviors, ...basicInfo},
+    basicInfo: {...basicInfo},
   }
 }

@@ -38,13 +38,13 @@ class Level extends React.Component {
     let ENGINE = new Engine.Engine({});
     let game = new Game.Game({ 
       engine: ENGINE, 
-      getSelectedCharacter: () => this.props.selectedCharacter.initialize(ENGINE),
+      getSelectedCharacter: () => {
+        return this.props.selectedCharacter.initialize(ENGINE);
+      },
       mode: this.props.selectedMode.class,
       meta: this.props.meta,
       // mapWidth: 17,
       // mapHeight: 13
-      // const MAP_WIDTH = 35;
-      // const MAP_HEIGHT = 26;
     })
     this.state = {
       game: game,
