@@ -78,14 +78,28 @@ export function ImagePortrait ({actor, width = null, height = null}) {
       borderColor,
       width: width || '100%',
       height: height || '100%',
+      fontSize: 'xxx-large',
     }}>
-      <img
+      {/* <img
         src={actor.renderer.portrait}
         style={{
           width: '100%',
           height: '100%',
         }}
-      />
+      /> */}
+       {actor.renderer.sprite || actor.renderer.character}
+    </div>
+  )
+}
+
+export function Portrait ({actor}) {
+  return (
+    <div className="Portrait" style={{
+      backgroundColor: actor.renderer.background, 
+      color: actor.renderer.color,
+      borderColor: actor.renderer.color,
+    }}>
+      {actor.renderer.sprite || actor.renderer.character}
     </div>
   )
 }

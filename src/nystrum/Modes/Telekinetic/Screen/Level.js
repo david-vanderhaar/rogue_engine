@@ -7,7 +7,7 @@ import PlayerInformation from '../UI/Entity/PlayerInformation';
 import Messages from '../../../UI/Messages';
 import InfoBlocks from '../UI/InfoBlocks';
 import Equipment from '../../../UI/HiddenLeaf/Equipment';
-import { ImagePortrait } from '../UI/Entity/CharacterCard';
+import { ImagePortrait, Portrait } from '../UI/Entity/CharacterCard';
 import { NamePlate } from '../../../UI/Entity/CharacterCard';
 import { LookedAtEntites, LookedAtEntitesInline } from '../../../UI/VisibleEntities';
 import { COLORS } from '../theme';
@@ -120,6 +120,7 @@ class Level extends React.Component {
               <div>
                 <div style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 8}}>Player</div>
                 <ImagePortrait actor={player} width={200} height={74} />
+                {/* <Portrait actor={player} width={200} height={74} /> */}
                 <NamePlate actor={player} />
               </div>
             </div>
