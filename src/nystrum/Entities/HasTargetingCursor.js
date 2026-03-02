@@ -71,6 +71,24 @@ export const HasTargetingCursor = superclass => class extends superclass {
     }
   }
 
+  addTextAnimationAtPositions (items) {
+    if (items.length) {
+      items.forEach(({position, text, color = THEMES.SOLARIZED.base3, textAttributes = {}}) => {
+        const anim = this.game.display.addAnimation(
+          ANIMATION_TYPES.TEXT_OVERLAY, 
+          {
+            x: position.x, 
+            y: position.y, 
+            color,
+            text,
+            textAttributes,
+          }
+        );
+        this.animations.push(anim);
+      })
+    }
+  }
+
   removeAnimations () {
     if (this.animations.length) {
       this.animations.forEach((animation) => this.game.display.removeAnimation(animation.id))

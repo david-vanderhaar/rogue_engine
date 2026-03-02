@@ -6,17 +6,8 @@ import { getPositionInDirection } from '../../helper';
 import { Say } from './Say';
 import { AddStatusEffectAtPositions } from './AddStatusEffectAtPositions';
 import Thrown from '../Modes/Telekinetic/StatusEffects/Thrown';
+import { COLORS } from '../Modes/Telekinetic/theme';
 
-function defaultPositionsByDirection(actor, direction) {
-  const pos = actor.getPosition();
-  return Array(2).fill('').map((none, distance) => {
-    if (distance > 0) {
-      return getPositionInDirection(pos, direction.map((dir) => dir * (distance)))
-    } else {
-      return null;
-    }
-  }).filter((pos) => pos !== null);
-}
 export class PrepareTelekinesisThrow extends Base {
   constructor({ 
     targetPositions,
@@ -39,7 +30,15 @@ export class PrepareTelekinesisThrow extends Base {
     const goToPreviousKeymap = new GoToPreviousKeymap({
       actor: this.actor,
       game: this.game,
-      onAfter: () => this.actor.deactivateCursor(),
+      onAfter: () => {
+        // this.actor.deactivateCursor(),
+        this.actor.updateAllCursorNodes([
+          {key: 'fill', value: 'transparent'}, 
+          {key: 'stroke', value: COLORS.white}, 
+        ]);
+
+        this.actor.resetAnimations()
+      }
     })
 
     const actionParams = (direction, label) => ({

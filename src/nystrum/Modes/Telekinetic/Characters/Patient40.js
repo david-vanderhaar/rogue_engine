@@ -82,8 +82,8 @@ function initialize (engine) {
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 2 })],
         keymapTriggerString: 'f',
-        // cursorShape: Constant.CLONE_PATTERNS.point,
-        cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+        cursorShape: Constant.CLONE_PATTERNS.point,
+        // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
       }),
       // f: () => new PrepareRangedAction({
       //   label: 'Telekinesis E',

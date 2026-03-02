@@ -4,6 +4,7 @@ import * as Helper from '../../helper';
 import * as Constant from '../constants'
 import { MoveTargetingCursor } from './MoveTargetingCursor';
 import { PrepareTelekinesisThrow } from './PrepareTelekinesisThrow';
+import { COLORS } from '../Modes/Telekinetic/theme';
 
 export class PrepareRangedTelekinesisAction extends Base {
   constructor({ 
@@ -141,8 +142,43 @@ export class PrepareRangedTelekinesisAction extends Base {
           passThroughEnergyCost: this.passThroughEnergyCost,
           passThroughRequiredResources: this.passThroughRequiredResources,
           onSuccess: () => {
-            this.actor.deactivateCursor();
+            // this.actor.deactivateCursor();
             // this.actor.setNextAction(goToPreviousKeymap);
+
+            // modify cursor color or size
+            this.actor.updateAllCursorNodes([
+              {key: 'fill', value: COLORS.blue}, 
+              {key: 'stroke', value: 'transparent'}, 
+            ]);
+
+            // then add direction arrows
+            const cursorPosition = this.actor.getCursorPositions().at(0)
+            this.actor.addTextAnimationAtPositions([
+              {
+                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.N),
+                text: '↑',
+                color: COLORS.blue,
+                textAttributes: {fontSize: 24}
+              },
+              {
+                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.E),
+                text: '→',
+                color: COLORS.blue,
+                textAttributes: {fontSize: 24}
+              },
+              {
+                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.S),
+                text: '↓',
+                color: COLORS.blue,
+                textAttributes: {fontSize: 24}
+              },
+              {
+                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.W),
+                text: '←',
+                color: COLORS.blue,
+                textAttributes: {fontSize: 24}
+              },
+            ])
           }
         })
       }
