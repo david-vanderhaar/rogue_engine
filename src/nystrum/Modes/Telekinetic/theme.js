@@ -5,8 +5,8 @@ export const COLORS = {
   text: '#e5d097',
 
   blue_light: '#8eac86',
-  blue_mid: '#254550',
-  blue_dark: '#1d574f',
+  blue_dark: '#254550',
+  blue_mid: '#1d574f',
 
   mid_yellow: '#c59332',
 
@@ -84,7 +84,7 @@ export const COLORS = {
 }
 
 COLORS.bg_override = COLORS.dark
-COLORS.fg_override = COLORS.mid_yellow
+COLORS.fg_override = COLORS.dark_accent
 
 export function refreshColors ({bg = COLORS.dark, fg = COLORS.mid_yellow}) {
   COLORS.bg_override = bg
