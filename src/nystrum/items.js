@@ -247,7 +247,7 @@ export const directionalBottle = (engine, pos, direction, range) => new Directio
     background: '',
   },
   traversableTiles: ['WATER'],
-  name: TYPE.DIRECTIONAL_KUNAI,
+  name: 'glass bottle',
   speed: 600,
   energy: 0,
   range,

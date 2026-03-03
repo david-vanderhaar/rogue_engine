@@ -15,10 +15,11 @@ export const generateCoverBlock = (
     background = COLORS.base02,
     color = COLORS.base01,
     sprite = null,
+    coverClass = CoverWall,
   ) => {
     let randomSprite = Helper.getRandomInArray(['', '', '']);
 
-    let box = new CoverWall({
+    let box = new coverClass({
       pos,
       renderer: {
         character,
@@ -57,7 +58,7 @@ const generateLeafBlock = (...args) => {
   )
 }
 
-const SHAPES = {
+export const SHAPES = {
   point: {
     x_offset: 0,
     y_offset: 0,

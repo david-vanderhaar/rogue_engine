@@ -1,15 +1,20 @@
 import * as Constant from '../constants';
 import { ProjectileMove } from '../Actions/ProjectileMove';
 import { DestroySelf } from '../Actions/DestroySelf';
+import { Wait } from '../Actions/Wait';
+import { removeEntityFromEngine } from './helper';
+import { Say } from '../Actions/Say';
 
 export const DirectionalProjecting = superclass => class extends superclass {
-  constructor({ path = false, direction = { x: 0, y: 0 }, attackDamage = 1, range = 3, ...args }) {
+  constructor({ path = false, direction = { x: 0, y: 0 }, attackDamage = 1, range = 3, damageToSelf = 1, remainAfterUse = false, ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('DIRECTIONAL_PROJECTING');
     this.path = path;
     this.direction = direction;
     this.attackDamage = attackDamage;
     this.range = range;
+    this.damageToSelf = damageToSelf;
+    this.remainAfterUse = remainAfterUse;
   }
   createPath(game) {
     let path = [];
@@ -33,7 +38,7 @@ export const DirectionalProjecting = superclass => class extends superclass {
         game: game,
         actor: this,
         energyCost: Constant.ENERGY_THRESHOLD,
-        damageToSelf: 1,
+        damageToSelf: this.damageToSelf,
         onSuccess: () => this.range -= 1,
         onAfter: () => {
           if (this.energy <= 100) {
@@ -42,11 +47,22 @@ export const DirectionalProjecting = superclass => class extends superclass {
         }
       });
     } else {
-      result = new DestroySelf({
-        game: game,
-        actor: this,
-        energyCost: 0
-      });
+      if (this.remainAfterUse) {
+        result = new Wait({
+          game: game,
+          actor: this,
+          energyCost: 100,
+          onSuccess: () => {
+            removeEntityFromEngine(this)
+          }
+        });
+      } else {
+        result = new DestroySelf({
+          game: game,
+          actor: this,
+          energyCost: 0
+        });
+      }
     }
     return result;
   }

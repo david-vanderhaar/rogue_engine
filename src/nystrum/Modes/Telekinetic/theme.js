@@ -86,6 +86,15 @@ export const COLORS = {
 COLORS.bg_override = COLORS.dark
 COLORS.fg_override = COLORS.mid_yellow
 
+export function refreshColors ({bg = COLORS.dark, fg = COLORS.mid_yellow}) {
+  COLORS.bg_override = bg
+  COLORS.fg_override = fg
+  for (let tileKey in TILE_KEY) {
+    TILE_KEY[tileKey].background = bg
+    TILE_KEY[tileKey].foreground = fg
+  }
+}
+
 export const TILE_KEY = {
   'GROUND': {
     background: COLORS.bg_override || COLORS.dark,

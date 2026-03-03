@@ -33,7 +33,7 @@ export default class Thrown  extends Base {
     this['actor_background'] = this.actor.renderer.background;
     this.startDirectionIndicator()
     this.actor.renderer.background = COLORS.blue;
-
+    debugger
     if (!this.actorIsInEngine() && this.isProjectileType()) {
       this.setProjectileStats();
       this.addActor();
@@ -75,49 +75,6 @@ export default class Thrown  extends Base {
     this.actor.renderer.character = this['actor_character'];
     this.actor.renderer.sprite = this['actor_sprite'];
   }
-  // startDirectionIndicator () {
-  //   const position = this.actor.getPosition()
-  //   const newAnimation = this.game.display.addAnimation(
-  //     ANIMATION_TYPES.TEXT_OVERLAY,
-  //     {
-  //       x: position.x,
-  //       y: position.y,
-  //       color: COLORS.white,
-  //       text: this.directionalSprite(),
-  //       isBlinking: true,
-  //       // textAttributes: {
-  //       //   fontFamily: 'scroll-o-script',
-  //       //   fontSize: this.game.display.tileWidth / 2
-  //       // }
-  //     }
-  //   );
-
-  //   this['animation'] = newAnimation
-  // }
-
-  // stopDirectionIndicator () {
-  //   this.game.display.removeAnimation(this['animation'].id);
-  // }
-  // startDirectionIndicator () {
-  //   const timer = setInterval(() => {
-  //     if (this.actor.renderer.character === this['actor_character']) {
-  //       console.log('swithc to arrow');
-        
-  //       this.actor.renderer.character = this.directionalSprite();
-  //       this.actor.renderer.sprite = this.directionalSprite();
-  //     } else {
-  //       console.log('swithc to char');
-  //       this.actor.renderer.character = this['actor_character'];
-  //       this.actor.renderer.sprite = this['actor_sprite'];
-  //     }
-  //   }, 500)
-
-  //   this['directionIndicatorTimer'] = timer
-  // }
-
-  // stopDirectionIndicator () {
-  //   clearInterval(this['directionIndicatorTimer'])
-  // }
 
   directionalSprite () {
     const directionKey = getDirectionKey(this.direction)
@@ -153,6 +110,7 @@ export default class Thrown  extends Base {
       game: this.game,
       energyCost: 0,
       interrupt: false,
+      forcePlacement: true,
     }).perform()
   }
 
@@ -168,6 +126,6 @@ export default class Thrown  extends Base {
   }
 
   isProjectileType () {
-    return this.actor.entityTypes.includes('DIRECTIONAL_PROJECTING')
+    return this.actor.entityTypes.includes('DIRECTIONAL_PROJECTING') || this.actor.entityTypes.includes('DIRECTIONAL_PUSHING')
   }
 }

@@ -19,37 +19,23 @@ import { GLOBAL_EVENT_BUS } from '../../Events/EventBus';
 import MissionManager from '../../Mission/MissionManager';
 import Mission from '../../Mission/Mission';
 import { SCREENS } from './Screen/constants';
+import GenerateDefaultMap from './Maps/DefaultMap';
+import GenerateLabMap from './Maps/LabMap';
 
 export class Telekinetic extends Mode {
   constructor({ ...args }) {
     super({ ...args });
     this.tileKey = TILE_KEY
-    this.data = {
-      level: 0,
-      highestLevel: null,
-      turnCount: 0,
-    };
-    this.dataByLevel = [
-      {
-        enemies: Array(1).fill('addOpponent'),
-      },
-    ]
   }
 
   initialize (meta) {
     this['meta'] = meta;
     super.initialize();
-    this.createEmptyLevel();
-    this.game.initializeMapTiles();
-    this.setWaveData();
 
-    this.addWalls();
-    this.placePlayerAndSafeZone();
+    // GenerateDefaultMap(this);
+    GenerateLabMap(this);
+
     this.applyUpgrades()
-    // TODO: get from wave data
-    this.addEnemies(1, 'addRandom')
-    this.placeThrowables()
-
     this.startMissionManager();
   }
 
@@ -204,7 +190,6 @@ export class Telekinetic extends Mode {
       this.onWin()
     } else if (this.levelComplete()) {
       this.nextLevel();
-      this.setWaveData();
       this.game.initializeGameData();
     }
   }
@@ -257,11 +242,6 @@ export class Telekinetic extends Mode {
     return this.meta().tournament.currentRound;
   }
 
-  setWaveData () {
-    const nextLevelData = this.dataByLevel[0];
-    this.data = {...this.data, ...nextLevelData}
-  }
-
   levelComplete () {
     return this.getMissionManager().allMissionsComplete();
     // return this.game.engine.actors.length === 1; 
@@ -311,7 +291,7 @@ export class Telekinetic extends Mode {
       
   }
 
-  placeThrowables (number = 50) {
+  placeThrowables (number = 3) {
     let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
     for (let i = 0; i < number; i++) {
       let pos = Helper.getRandomInArray(groundTiles);

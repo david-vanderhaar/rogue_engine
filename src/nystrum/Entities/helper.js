@@ -7,15 +7,18 @@ export const destroyEntity = (entity) => {
       tile.entities = tile.entities.filter((e) => e.id !== entity.id);
     }
   }
-  entity.game.engine.removeStatusEffectByActorId(entity.id);
-  entity.game.draw()
-  
-  entity.game.engine.actors = entity.game.engine.actors.filter((e) => e.id !== entity.id);
+  removeEntityFromEngine(entity)
   entity.game.entityLog.remove(entity)
+  entity.game.draw()
 }
 
 export function destroyActor(entity) {
   entity.energy = 0;
   entity.active = false;
   destroyEntity(entity)
+}
+
+export function removeEntityFromEngine (entity) {
+  entity.game.engine.actors = entity.game.engine.actors.filter((e) => e.id !== entity.id);
+  entity.game.engine.removeStatusEffectByActorId(entity.id);
 }

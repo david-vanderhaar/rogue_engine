@@ -2,14 +2,18 @@ import * as Constant from '../constants';
 import { Shove } from '../Actions/Shove';
 import { DestroySelf } from '../Actions/DestroySelf';
 import { ShoveOrDestroySelf } from '../Actions/ShoveOrDestroySelf';
+import { Say } from '../Actions/Say';
+import { Wait } from '../Actions/Wait';
+import { removeEntityFromEngine } from './helper';
 
 export const DirectionalPushing = superclass => class extends superclass {
-  constructor({ path = false, direction = { x: 0, y: 0 }, range = 3, ...args }) {
+  constructor({ path = false, direction = { x: 0, y: 0 }, range = 3, remainAfterUse = false, ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('DIRECTIONAL_PUSHING');
     this.path = path;
     this.direction = direction;
     this.range = range;
+    this.remainAfterUse = remainAfterUse;
   }
   getAction(game) {
     let result = null;
@@ -32,11 +36,22 @@ export const DirectionalPushing = superclass => class extends superclass {
         },
       });
     } else {
-      result = new DestroySelf({
-        game: game,
-        actor: this,
-        energyCost: 0
-      });
+      if (this.remainAfterUse) {
+        result = new Wait({
+          game: game,
+          actor: this,
+          energyCost: 100,
+          onSuccess: () => {
+            removeEntityFromEngine(this)
+          }
+        });
+      } else {
+        result = new DestroySelf({
+          game: game,
+          actor: this,
+          energyCost: 0,
+        });
+      }
     }
     return result;
   }
