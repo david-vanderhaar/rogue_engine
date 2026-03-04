@@ -25,7 +25,7 @@ export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
   traversableTiles: [],
   speed: basicInfo.speed,
   durability: basicInfo.durability,
-  attackDamage: 0,
+  attackDamage: basicInfo.attackDamage,
   onDecreaseDurability: () => onDecreaseDurabilitySound(basicInfo?.soundOptions?.onDecreaseDurability || {}),
   meleeSounds: [
     HIDDEN_LEAF_SOUNDS.punch_01,

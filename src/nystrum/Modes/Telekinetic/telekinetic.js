@@ -41,7 +41,7 @@ export class Telekinetic extends Mode {
   levelGenerators() {
     return [
       GenerateLabMap,
-      GenerateDefaultMap
+      GenerateDefaultMap,
     ]
   }
 

@@ -37,6 +37,34 @@ function AbilitySelectScreen(props) {
     buffs: [
       {
         cost: 1,
+        name: '+1 Telekinesis Range',
+        description: 'Your can reach out 1 tile further into the world.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active extra t range');
+          if (!actor['telekenticTriggerRange']) actor['telekenticTriggerRange'] = 2;
+          actor.telekenticTriggerRange += 1
+        },
+      },
+      {
+        cost: 1,
+        name: '+1 Telekinesis Throw Range',
+        description: 'Your can throw objects 1 tile further.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active extra t throw range');
+          if (!actor['telekineticThrowRange']) actor['telekineticThrowRange'] = 2;
+          actor.telekineticThrowRange += 1
+        },
+      },
+      {
+        cost: 1,
         name: '+1 Health',
         description: 'Pain is only in the mind. Toughen Up.',
         renderer: {

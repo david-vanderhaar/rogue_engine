@@ -57,7 +57,7 @@ const basicInfo = {
   durability: durabilityRating,
   charge: chakraRating,
   chargeMax: chakraRating,
-  attackDamage: 0,
+  attackDamage: 1,
   // portrait,
 }
   
@@ -77,8 +77,8 @@ function initialize (engine) {
         label: 'Telekinesis',
         game: engine.game,
         actor,
-        triggerRange: 3,
-        throwRange: 5,
+        triggerRange: actor?.telekenticTriggerRange || 2,
+        throwRange: actor?.telekineticThrowRange || 2,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
         keymapTriggerString: 'f',
