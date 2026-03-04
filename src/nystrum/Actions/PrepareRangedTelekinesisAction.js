@@ -174,32 +174,61 @@ export class PrepareRangedTelekinesisAction extends Base {
 
             // then add direction arrows
             const cursorPosition = this.actor.getCursorPositions().at(0)
-            this.actor.addTextAnimationAtPositions([
-              {
-                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.N),
-                text: '↑',
-                color: COLORS.blue,
-                textAttributes: {fontSize: 24}
-              },
-              {
-                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.E),
-                text: '→',
-                color: COLORS.blue,
-                textAttributes: {fontSize: 24}
-              },
-              {
-                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.S),
+            // const anims = [
+            //   {
+            //     position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.N),
+            //     text: '↑',
+            //     color: COLORS.blue,
+            //     textAttributes: {fontSize: 24}
+            //   },
+            //   {
+            //     position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.E),
+            //     text: '→',
+            //     color: COLORS.blue,
+            //     textAttributes: {fontSize: 24}
+            //   },
+            //   {
+            //     position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.S),
+            //     text: '↓',
+            //     color: COLORS.blue,
+            //     textAttributes: {fontSize: 24}
+            //   },
+            //   {
+            //     position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.W),
+            //     text: '←',
+            //     color: COLORS.blue,
+            //     textAttributes: {fontSize: 24}
+            //   },
+            // ]
+            const anims = []
+            for (let index = 0; index < (this.actor?.telekineticThrowRange || 2); index++) {
+              anims.push({
+                position: Helper.getPositionInDirection(cursorPosition, [0, 1 + index]),
                 text: '↓',
                 color: COLORS.blue,
-                textAttributes: {fontSize: 24}
-              },
-              {
-                position: Helper.getPositionInDirection(cursorPosition, Constant.DIRECTIONS.W),
+                textAttributes: {fontSize: 24, opacity: 0.7}
+              })
+              anims.push({
+                position: Helper.getPositionInDirection(cursorPosition, [1 + index, 0]),
+                text: '→',
+                color: COLORS.blue,
+                textAttributes: {fontSize: 24, opacity: 0.7}
+              })
+              anims.push({
+                position: Helper.getPositionInDirection(cursorPosition, [0, -(1 + index)]),
+                text: '↑',
+                color: COLORS.blue,
+                textAttributes: {fontSize: 24, opacity: 0.7}
+              })
+              anims.push({
+                position: Helper.getPositionInDirection(cursorPosition, [-(1 + index), 0]),
                 text: '←',
                 color: COLORS.blue,
-                textAttributes: {fontSize: 24}
-              },
-            ])
+                textAttributes: {fontSize: 24, opacity: 0.7}
+              })
+            }
+            
+            this.actor.addTextAnimationAtPositions(anims)
           }
         })
       }
