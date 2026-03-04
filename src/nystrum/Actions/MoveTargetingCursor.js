@@ -25,6 +25,8 @@ export class MoveTargetingCursor extends Base {
     const initiatedFrom = this.actor.getPosition();
     const path = Helper.calculateStraightPath(initiatedFrom, targetPos);
     return path.length <= this.range;
+
+    // return !!Helper.getPointsWithinSquare(this.actor.getPosition(), this.range).find((pos) => pos.x === targetPos.x && pos.y === targetPos.y)
   }
 
   updateLookedAt(positions) {

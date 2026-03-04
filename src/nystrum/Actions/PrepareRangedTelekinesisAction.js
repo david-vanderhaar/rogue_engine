@@ -31,7 +31,15 @@ export class PrepareRangedTelekinesisAction extends Base {
 
   perform() {
     const pos = this.actor.getPosition();
-    const positionsInRange = Helper.getPointsWithinRadius(pos, this.triggerRange);
+    // const positionsInRange = Helper.getPointsWithinRadius(pos, this.triggerRange);
+    // const positionsInRange = Helper.getPointsOnSquarePerimeter({x: pos.x + 1, y: pos.y + 1}, this.triggerRange);
+    // const positionsInRange = Helper.getPointsWithinSquare(pos, this.triggerRange);
+    const positionsInRange = Helper.getAllPositionsInStraightPathRange(pos, this.triggerRange);
+
+    const rangeAnims = []
+    const deactivateAnimations = (anims) => anims.forEach((anim) => {
+      this.game.display.removeAnimation(anim.id);
+    })
 
     let targets = [];
     let targetIndex = 0;
@@ -43,6 +51,17 @@ export class PrepareRangedTelekinesisAction extends Base {
           ...tile.entities.filter(this.validTargetFilter)
         ]
       }
+
+      rangeAnims.push(this.game.display.addAnimation(
+        this.game.display.animationTypes.BLINK_BOX, 
+        {
+          x: position.x,
+          y: position.y,
+          color: Constant.THEMES.SOLARIZED.base00,
+          isBlinking: false,
+          strokeWidth: 3,
+        }
+      ))
     })
 
     let initalPosition = null;
@@ -61,6 +80,7 @@ export class PrepareRangedTelekinesisAction extends Base {
       game: this.game,
       onAfter: () => {
         this.actor.deactivateCursor()
+        deactivateAnimations(rangeAnims)
       },
     })
 
@@ -144,6 +164,7 @@ export class PrepareRangedTelekinesisAction extends Base {
           onSuccess: () => {
             // this.actor.deactivateCursor();
             // this.actor.setNextAction(goToPreviousKeymap);
+            deactivateAnimations(rangeAnims)
 
             // modify cursor color or size
             this.actor.updateAllCursorNodes([

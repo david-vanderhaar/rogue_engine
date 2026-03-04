@@ -2,7 +2,7 @@ import { Base } from './Base';
 import { Tackle } from './Tackle';
 import { GoToPreviousKeymap } from './GoToPreviousKeymap';
 import { DIRECTIONS, ENERGY_THRESHOLD, PARTICLE_TEMPLATES } from '../constants';
-import { getPositionInDirection } from '../../helper';
+import { getEntitiesByPosition, getPositionInDirection } from '../../helper';
 import { Say } from './Say';
 import { AddStatusEffectAtPositions } from './AddStatusEffectAtPositions';
 import Thrown from '../Modes/Telekinetic/StatusEffects/Thrown';
@@ -28,17 +28,35 @@ export class PrepareTelekinesisThrow extends Base {
     this.throwRange = throwRange
   }
   perform() {
+    // if not entity at target position, fail and exit keymap
+    const targets = []
+    this.targetPositions.forEach((position) => {
+       const entities = getEntitiesByPosition({game: this.game, position: position});
+       if (entities.length) targets.push(entities[0]);
+    })
+
+    if (!targets.length) {
+      return {
+        success: false,
+        alternative: null,
+      }
+    }
+    
+
     const goToPreviousKeymap = new GoToPreviousKeymap({
       actor: this.actor,
       game: this.game,
       onAfter: () => {
-        // this.actor.deactivateCursor(),
-        this.actor.updateAllCursorNodes([
-          {key: 'fill', value: 'transparent'}, 
-          {key: 'stroke', value: COLORS.white}, 
-        ]);
+        this.actor.deactivateCursor()
+        this.actor.popToTopKeymap();
 
-        this.actor.resetAnimations()
+        // OR, back out one keymap at a time.
+        // this.actor.updateAllCursorNodes([
+        //   {key: 'fill', value: 'transparent'}, 
+        //   {key: 'stroke', value: COLORS.white}, 
+        // ]);
+
+        // this.actor.resetAnimations()
       }
     })
 

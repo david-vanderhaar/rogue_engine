@@ -115,6 +115,24 @@ export const calculateStraightPath = (p0, p1) => {
   return points;
 }
 
+export const pointIsInStraightPathRange = (origin, target, range) => {
+  const path = calculateStraightPath(origin, target);
+  return path.length <= range;
+}
+
+export const getAllPositionsInStraightPathRange = (origin, range) => {
+  let positions = [];
+  for (let x = origin.x - range; x <= origin.x + range; x++) {
+    for (let y = origin.y - range; y <= origin.y + range; y++) {
+      const target = {x, y}
+      if (pointIsInStraightPathRange(origin, target, range)) {
+        positions.push(target)
+      }
+    }
+  }
+  return positions;
+}
+
 export const diagonal_distance = (p0, p1) => {
   let dx = p1.x - p0.x, dy = p1.y - p0.y;
   return Math.max(Math.abs(dx), Math.abs(dy));
@@ -238,6 +256,29 @@ export const getPointsWithinRadius = (position, radius) => {
     for (let y = position.y - yspan + 1; y < position.y + yspan; y++) {
       positions.push({x, y})
     }
+  }
+  return positions;
+}
+
+export const getPointsWithinSquare = (position, size) => {
+  let positions = [];
+  for (let x = position.x - size; x < position.x + size; x++) {
+    for (let y = position.y - size; y < position.y + size; y++) {
+      positions.push({x, y})
+    }
+  }
+  return positions;
+}
+
+export const getPointsOnSquarePerimeter = (position, size) => {
+  let positions = [];
+  for (let x = position.x - size; x < position.x + size; x++) {
+    positions.push({x, y: position.y - size})
+    positions.push({x, y: position.y + size - 1})
+  }
+  for (let y = position.y - size; y < position.y + size; y++) {
+    positions.push({x: position.x - size, y})
+    positions.push({x: position.x + size - 1, y})
   }
   return positions;
 }
