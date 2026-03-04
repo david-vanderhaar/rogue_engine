@@ -11,9 +11,11 @@ export default class Mission {
       onTriggerEvents = [
         new GameEvent({name: 'missionTriggered', payload: { message: 'Here we go!' }})
       ],
+      onTrigger = () => null,
       onCompleteEvents = [
         new GameEvent({name: 'missionCompleted', payload: { message: 'we\'re all done here!' }})
       ],
+      onComplete = () => null,
       eventToComplete = 'mission',
       timesToComplete = 1,
       timesCompleted = 0,
@@ -25,7 +27,9 @@ export default class Mission {
     this.wasTriggered = wasTriggered;
     this.active = active;
     this.onTriggerEvents = onTriggerEvents;
+    this.onTrigger = onTrigger;
     this.onCompleteEvents = onCompleteEvents;
+    this.onComplete = onComplete;
     this.eventToComplete = eventToComplete;
     this.timesToComplete = timesToComplete;
     this.timesCompleted = timesCompleted;
@@ -45,7 +49,7 @@ export default class Mission {
     });
     // Listen for the event that will complete this mission
     GLOBAL_EVENT_BUS.on(this.eventToComplete, this.incrementTimesCompleted.bind(this));
-
+    this.onTrigger();
     console.log('Mission triggered: ', this.name);
   }
 
@@ -61,8 +65,8 @@ export default class Mission {
     this.onCompleteEvents.forEach(event => {
       GLOBAL_EVENT_BUS.emit(event.name, event.payload);
     });
-
     this.forceComplete();
+    this.onComplete();
     console.log('Mission complete: ', this.name);
   }
 

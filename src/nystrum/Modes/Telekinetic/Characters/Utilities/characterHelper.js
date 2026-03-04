@@ -22,10 +22,10 @@ export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
   enemyFactions: ['OPPONENT'],
   faction: 'PLAYER',
   actions: [],
-  traversableTiles: ['WATER'],
+  traversableTiles: [],
   speed: basicInfo.speed,
   durability: basicInfo.durability,
-  attackDamage: 1,
+  attackDamage: 0,
   onDecreaseDurability: () => onDecreaseDurabilitySound(basicInfo?.soundOptions?.onDecreaseDurability || {}),
   meleeSounds: [
     HIDDEN_LEAF_SOUNDS.punch_01,

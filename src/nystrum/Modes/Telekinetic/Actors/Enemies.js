@@ -16,28 +16,8 @@ import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../sounds'
 import { SpitterSac } from '../../TallGrass/Items/Weapons/Spitter';
 import FollowAndAttack from '../../../Entities/AI/BehaviorChains/FollowAndAttack';
 
-export function addAbomination (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.abomination())
-}
-
-export function addAdult (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.adult())
-}
-
-export function addCamoCritter (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.camoCritter())
-}
-
-export function addSpitter (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.spitter())
-}
-
-export function addHider (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.hider())
-}
-
-export function addJuvenile (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.juvenile())
+export function addsecurityGuard (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.securityGuard())
 }
 
 export function addRandom (mode, pos) {
@@ -45,7 +25,7 @@ export function addRandom (mode, pos) {
 }
 
 const GRUB_STATS = {
-  adolescent: () => {
+  securityGuard: () => {
     return {
       name: 'security guard',
       renderer: {

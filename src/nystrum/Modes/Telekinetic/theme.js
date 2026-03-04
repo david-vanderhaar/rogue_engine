@@ -112,6 +112,14 @@ export const TILE_KEY = {
     passable: true,
     tags: ['BURNABLE'],
   },
+  'ELEVATOR': {
+    background: COLORS.light || COLORS.wall_alt,
+    foreground: COLORS.bg_override || COLORS.wall,
+    character: '█',
+    sprite: '█',
+    passable: true,
+    tags: ['EXIT'],
+  },
   'WALL': {
     background: COLORS.bg_override || COLORS.wall_alt,
     foreground: COLORS.fg_override || COLORS.wall,

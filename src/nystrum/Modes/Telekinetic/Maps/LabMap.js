@@ -4,7 +4,9 @@ import * as MapHelper from '../../../Maps/helper';
 import { COLORS, refreshColors } from "../theme";
 import * as Helper from '../../../../helper';
 import Mission from "../../../Mission/Mission";
-
+import * as EnemyActors from '../Actors/Enemies';
+import gradientRadialEmitter from "../../../Engine/Particle/Emitters/gradientRadialEmitter";
+import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 
 export default function GenerateLabMap (mode) {
   // COLORS.fg_override = COLORS.light
@@ -23,25 +25,24 @@ export default function GenerateLabMap (mode) {
   generate(mode, { x: CENTER_POSITION.x + 3, y: CENTER_POSITION.y }, SHAPES.southWestVerticalL, ACTOR_PARAMS.table)
   generate(mode, { x: CENTER_POSITION.x - 2, y: CENTER_POSITION.y }, SHAPES.southEastVerticalL, ACTOR_PARAMS.table)
   // place medical equipment around room
-  Helper.getNumberOfItemsInArray(6, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
+  Helper.getNumberOfItemsInArray(10, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
     const pos = Helper.stringToCoords(key)
     const params = Helper.getRandomInArray([ACTOR_PARAMS.bottle, ACTOR_PARAMS.scalpel, ACTOR_PARAMS.scissors, ACTOR_PARAMS.pliers])
     // const params = Helper.getRandomInArray([ACTOR_PARAMS.scalpel, ACTOR_PARAMS.scissors, ACTOR_PARAMS.pliers])
     generate(mode, pos, SHAPES.point, params, createThrowable)
   })
-  mode.placeThrowables()
   // place 3 dead scientists around room (with blood stains)  
-  const keys = Helper.getNumberOfItemsInArray(3, MapHelper.getEmptyGroundTileKeys(mode.game))
+  const keys = Helper.getNumberOfItemsInArray(2, MapHelper.getEmptyGroundTileKeys(mode.game))
   keys.forEach((key) => {
     const pos = Helper.stringToCoords(key)
     generate(mode, pos, SHAPES.point, ACTOR_PARAMS.dead_body)
   })
 
-  // place elevator doors on right side
+  // place elevator doors
+  MapHelper.addTileToMap({map: mode.game.map, key: `17,6`, tileKey: mode.tileKey, tileType: 'ELEVATOR'})
+  MapHelper.addTileToMap({map: mode.game.map, key: `18,6`, tileKey: mode.tileKey, tileType: 'ELEVATOR'})
 
   // add enemie after certain number of missions or time has passed
-  // mode.addEnemies(1, 'addRandom')
-
   startMissionManager(mode);
 }
 
@@ -64,18 +65,39 @@ function startMissionManager(mode) {
     eventToComplete: `${player?.id}:apply_status_effect_thrown:table`,
   })
 
+  const thirdMission = new Mission({
+    name: 'First Blood',
+    description: 'A guard must have heard you. Use your telekinesis to attack them. Throw a scalpel or pair of scissors at them to cause damage from range.',
+    timesToComplete: 2,
+    eventToComplete: `attack:security guard`,
+    onTrigger: () => {
+      // mode.addEnemies(1, 'addsecurityGuard')
+      EnemyActors.addsecurityGuard(mode, { x: 17, y: 6 })
+      SpatterEmitter({
+        game: mode.game,
+        fromPosition: { x: 17, y: 6 },
+        spatterAmount: 0.8,
+        spatterRadius: 3,
+        animationTimeStep: 0.6,
+        transfersBackground: false,
+        spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+      }).start()
+    }
+  })
+
+  const fourthMission = new Mission({
+    name: 'Escape the Lab',
+    description: 'Proceed to the elevator and escape this place.',
+    timesToComplete: 1,
+    eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
+  })
+
   mode.initializeMissionManager({
     missions: [
       firstMission,
       secondMission,
-      // new Mission({
-      //   name: 'Final Blow',
-      //   description: 'Defeat your opponent.',
-      //   timesToComplete: 1,
-      //   eventToComplete: `${opp?.id}:destroy`,
-      //   active: true,
-      //   dependantMissions: [firstMission, secondMission],
-      // }),
+      thirdMission,
+      fourthMission,
     ],
   })
 }
@@ -136,7 +158,7 @@ const ACTOR_PARAMS = {
   table: { range: 2, character: 'T', name: 'table', color: COLORS.light, background: COLORS.dark, defense: 1, remainAfterUse: true },
   dead_body: { range: 0, character: 's', name: 'dead scientist', color: COLORS.light, background: "#833139", durability: 3, bloodSpatterOnHit: true, remainAfterUse: true },
   bottle: { range: 3, character: '!', name: 'glass vial', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
-  scalpel: { range: 3, character: '|', name: 'scalpel', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 2 },
-  scissors: { range: 3, character: '^', name: 'scissors', color: COLORS.white, background: COLORS.dark, passable: true, durability: 2, attackDamage: 2 },
-  pliers: { range: 3, character: ']', name: 'pliers', color: COLORS.white, background: COLORS.dark, passable: true, durability: 3 },
+  scalpel: { range: 3, character: '|', name: 'scalpel', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 1 },
+  scissors: { range: 3, character: '^', name: 'scissors', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 1 },
+  pliers: { range: 3, character: ']', name: 'pliers', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
 }

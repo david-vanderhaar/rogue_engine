@@ -7,4 +7,5 @@ export default function GenerateDefaultMap (mode) {
     // TODO: get from wave data
     mode.addEnemies(1, 'addRandom')
     mode.placeThrowables()
+    mode.startMissionManager()
 }

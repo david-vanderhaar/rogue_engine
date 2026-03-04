@@ -32,10 +32,17 @@ export class Telekinetic extends Mode {
     this['meta'] = meta;
     super.initialize();
 
-    // GenerateDefaultMap(this);
-    GenerateLabMap(this);
+    const level = this.getMetaTournamentLevel();
+    this.levelGenerators()[level - 1](this);
 
     this.applyUpgrades()
+  }
+
+  levelGenerators() {
+    return [
+      GenerateLabMap,
+      GenerateDefaultMap
+    ]
   }
 
   applyUpgrades () {
@@ -247,7 +254,8 @@ export class Telekinetic extends Mode {
 
   hasWon () {
     const level = this.getMetaTournamentLevel()
-    const maxLevel = this.meta().tournament.maxRounds;
+    const maxLevel = this.levelGenerators().length
+    // const maxLevel = this.meta().tournament.maxRounds;
     return this.levelComplete() && (level >= maxLevel);
   }
 

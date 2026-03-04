@@ -44,12 +44,14 @@ export const Attacking = superclass => class extends superclass {
     return result;
   }
 
-  sendAttackGameEvents(target) {
-    GLOBAL_EVENT_BUS.emit(`${this.id}:attack:${target.id}`, { message: `${this.name} attacked ${target.name}!` });
-    GLOBAL_EVENT_BUS.emit(`${this.id}:attack`, { message: `${this.name} attacked ${target.name}!` });
-    GLOBAL_EVENT_BUS.emit(`${this.id}:attack:${target.name}`, { message: `${this.name} attacked ${target.name}!` });
-    GLOBAL_EVENT_BUS.emit(`${this.name}:attack:${target.name}`, { message: `${this.name} attacked ${target.name}!` });
-    GLOBAL_EVENT_BUS.emit(`${this.name}:attack`, { message: `${this.name} attacked ${target.name}!` });
+  sendGameEvents(target) {
+    GLOBAL_EVENT_BUS.emit(`${this.id}:attack:${target.id}`);
+    GLOBAL_EVENT_BUS.emit(`${this.id}:attack`);
+    GLOBAL_EVENT_BUS.emit(`${this.id}:attack:${target.name}`);
+    GLOBAL_EVENT_BUS.emit(`${this.name}:attack:${target.name}`);
+    GLOBAL_EVENT_BUS.emit(`${this.name}:attack`);
+    GLOBAL_EVENT_BUS.emit(`attack:${target.id}`);
+    GLOBAL_EVENT_BUS.emit(`attack:${target.name}`);
   }
 
   attack_v1(targetPos, additional = 0) {
@@ -113,7 +115,7 @@ export const Attacking = superclass => class extends superclass {
         
         success = true;
         this.playMeleeSound()
-        this.sendAttackGameEvents(target);
+        this.sendGameEvents(target);
       }
     }
     return success;

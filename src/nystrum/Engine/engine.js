@@ -147,6 +147,7 @@ export class Engine {
     this.isRunning = true;
     while (this.isRunning) {
       this.isRunning = await this.processV2();
+      this.game.updateMode();
     }
     let actor = this.actors[this.currentActor]
     

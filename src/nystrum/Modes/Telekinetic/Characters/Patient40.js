@@ -57,7 +57,7 @@ const basicInfo = {
   durability: durabilityRating,
   charge: chakraRating,
   chargeMax: chakraRating,
-  attackDamage: 1,
+  attackDamage: 0,
   // portrait,
 }
   

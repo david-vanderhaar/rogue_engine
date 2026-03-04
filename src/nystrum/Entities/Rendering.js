@@ -1,4 +1,5 @@
 import * as Helper from '../../helper';
+import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export const Rendering = superclass => class extends superclass {
   constructor({ pos = { x: 0, y: 0 }, renderer, traversableTiles = [], ...args }) {
@@ -30,6 +31,9 @@ export const Rendering = superclass => class extends superclass {
       this.pos = targetPos;
       this.game.map[Helper.coordsToString(targetPos)].entities.push(this);
       success = true;
+      // console.log(`x:${targetPos.x}, y:${targetPos.y}`);
+      // GLOBAL_EVENT_BUS.emit(`${this.id}:move`);
+      GLOBAL_EVENT_BUS.emit(`${this.id}:move:tileType:${tile.type}`);
     }
     return success;
   }
