@@ -63,7 +63,7 @@ export class Telekinetic extends Mode {
     this.placePlayersInSafeZone();
   }
 
-  addWalls() {
+  addWalls(innerWalls = 4) {
     // outer walls
     MapHelper.addTileZoneRectUnfilled(
       this.game.tileKey,
@@ -75,8 +75,7 @@ export class Telekinetic extends Mode {
     );
 
     // inner walls
-    const tiers = 4;
-    for (let index = 1; index <= tiers; index++) {
+    for (let index = 1; index <= innerWalls; index++) {
       MapHelper.addTileZoneRectUnfilled(
         this.game.tileKey,
         { x: index, y: index },

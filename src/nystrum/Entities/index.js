@@ -123,6 +123,7 @@ export const MovingWall = pipe(
   // Pushing,
   DirectionalPushing,
   Destructable,
+  Pushable,
 )(Entity);
 
 export const Chaser = pipe(

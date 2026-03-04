@@ -50,15 +50,16 @@ const GRUB_STATS = {
       name: 'security guard',
       renderer: {
         character: 'g',
-        color: COLORS.flesh1,
-        background: COLORS.flesh3,
+        color: COLORS.light,
+        background: COLORS.blue_mid,
         sprite: 'g',
       },
       durability: 2,
       attackDamage: 1,
+      bloodSpatterOnHit: true,
       baseDescription: 'a gruntled, square-faced corpo gaurd.',
       baseDescriptors: ['with baton and bad health insurance'],
-      behaviors: [...new FollowAndAttack({repeat: 1}).create()]
+      behaviors: [...new FollowAndAttack({repeat: 1}).create()],
     }
   },
 };

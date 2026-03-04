@@ -11,6 +11,7 @@ export const Destructable = superclass => class extends superclass {
     defense = 0,
     onDestroy = () => null,
     onDecreaseDurability = () => null,
+    bloodSpatterOnHit = false,
     ...args
   }) {
     super({ ...args });
@@ -20,6 +21,7 @@ export const Destructable = superclass => class extends superclass {
     this.defense = defense;
     this.onDestroy = onDestroy;
     this.onDecreaseDurability = onDecreaseDurability;
+    this.bloodSpatterOnHit = bloodSpatterOnHit;
     this.actorSprite = this.renderer.sprite
     this.actorCharacter = this.renderer.character
   }
@@ -57,7 +59,7 @@ export const Destructable = superclass => class extends superclass {
     this.updateActorRenderer();
     this.portraitFlash()
     // this.shakePlayer()
-    if (this.entityTypes.includes('PLAYING')) this.bloodSpatter(value)
+    if (this.entityTypes.includes('PLAYING') || this.bloodSpatterOnHit) this.bloodSpatter(value)
     if (this.durability <= 0) {
       this.destroy();
     } else {

@@ -33,7 +33,6 @@ export default class Thrown  extends Base {
     this['actor_background'] = this.actor.renderer.background;
     this.startDirectionIndicator()
     this.actor.renderer.background = COLORS.blue;
-    debugger
     if (!this.actorIsInEngine() && this.isProjectileType()) {
       this.setProjectileStats();
       this.addActor();
