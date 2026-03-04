@@ -36,7 +36,6 @@ export class Telekinetic extends Mode {
     GenerateLabMap(this);
 
     this.applyUpgrades()
-    this.startMissionManager();
   }
 
   applyUpgrades () {

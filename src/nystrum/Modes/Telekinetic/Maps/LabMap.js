@@ -3,6 +3,7 @@ import { abstractGenerate, generateCoverBlock, SHAPES } from "../../../Maps/cove
 import * as MapHelper from '../../../Maps/helper';
 import { COLORS, refreshColors } from "../theme";
 import * as Helper from '../../../../helper';
+import Mission from "../../../Mission/Mission";
 
 
 export default function GenerateLabMap (mode) {
@@ -39,7 +40,44 @@ export default function GenerateLabMap (mode) {
   // place elevator doors on right side
 
   // add enemie after certain number of missions or time has passed
-  mode.addEnemies(1, 'addRandom')
+  // mode.addEnemies(1, 'addRandom')
+
+  startMissionManager(mode);
+}
+
+function startMissionManager(mode) {
+  const player = mode.game.getFirstPlayer();
+  // const opp = mode.getFirstEnemyActor();
+
+
+  const firstMission = new Mission({
+    name: 'Throwing Practice',
+    description: 'Your body is too weak to fight, but your mind is sharp. \nUse your telekinetic powers to throw an object. \nPress "f" to activate telekinesis, select an object within range, then select a target direction.',
+    timesToComplete: 2,
+    eventToComplete: `${player?.id}:apply_status_effect_thrown`,
+  })
+
+  const secondMission = new Mission({
+    name: 'More Throwing Practice',
+    description: 'Some objects break when thrown, heavier objects like furniture can be thrown multiple times. Try throwning a table.',
+    timesToComplete: 2,
+    eventToComplete: `${player?.id}:apply_status_effect_thrown:table`,
+  })
+
+  mode.initializeMissionManager({
+    missions: [
+      firstMission,
+      secondMission,
+      // new Mission({
+      //   name: 'Final Blow',
+      //   description: 'Defeat your opponent.',
+      //   timesToComplete: 1,
+      //   eventToComplete: `${opp?.id}:destroy`,
+      //   active: true,
+      //   dependantMissions: [firstMission, secondMission],
+      // }),
+    ],
+  })
 }
 
 function placePlayerInCenter(mode) {

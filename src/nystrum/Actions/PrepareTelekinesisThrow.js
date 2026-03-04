@@ -7,6 +7,7 @@ import { Say } from './Say';
 import { AddStatusEffectAtPositions } from './AddStatusEffectAtPositions';
 import Thrown from '../Modes/Telekinetic/StatusEffects/Thrown';
 import { COLORS } from '../Modes/Telekinetic/theme';
+import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export class PrepareTelekinesisThrow extends Base {
   constructor({ 
@@ -56,7 +57,7 @@ export class PrepareTelekinesisThrow extends Base {
       onSuccess: () => {
         this.actor.deactivateCursor();
         // this.actor.setNextAction(goToPreviousKeymap);
-        this.actor.popToTopKeymap()
+        this.actor.popToTopKeymap();
       },
       ...this.actionParams,
     });
