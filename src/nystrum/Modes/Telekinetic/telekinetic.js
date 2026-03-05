@@ -21,6 +21,7 @@ import Mission from '../../Mission/Mission';
 import { SCREENS } from './Screen/constants';
 import GenerateDefaultMap from './Maps/DefaultMap';
 import GenerateLabMap from './Maps/LabMap';
+import GenerateOfficeMap from './Maps/OfficeMap';
 
 export class Telekinetic extends Mode {
   constructor({ ...args }) {
@@ -40,7 +41,8 @@ export class Telekinetic extends Mode {
 
   levelGenerators() {
     return [
-      GenerateDefaultMap,
+      // GenerateDefaultMap,
+      GenerateOfficeMap,
       GenerateLabMap,
     ]
   }

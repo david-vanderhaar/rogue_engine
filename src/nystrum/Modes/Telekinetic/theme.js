@@ -12,6 +12,7 @@ export const COLORS = {
   mid_yellow: '#c59332',
 
   light: '#e5d097',
+  light_mid: '#b49f83',
   dark: '#0f0705',
   dark_accent: '#2e2a39',
 
@@ -91,6 +92,7 @@ export function refreshColors ({bg = COLORS.dark, fg = COLORS.mid_yellow}) {
   COLORS.bg_override = bg
   COLORS.fg_override = fg
   for (let tileKey in TILE_KEY) {
+    if (TILE_KEY[tileKey]?.ignoreColorOverride) continue;
     TILE_KEY[tileKey].background = bg
     TILE_KEY[tileKey].foreground = fg
   }
@@ -112,9 +114,17 @@ export const TILE_KEY = {
     passable: true,
     tags: ['BURNABLE'],
   },
+  'FREE_FALL': {
+    background: COLORS.bg_override || COLORS.dark,
+    foreground: COLORS.bg_override || COLORS.dark,
+    character: '',
+    passable: true,
+    tags: ['FALLING'],
+  },
   'ELEVATOR': {
+    ignoreColorOverride: true,
     background: COLORS.light || COLORS.wall_alt,
-    foreground: COLORS.bg_override || COLORS.wall,
+    foreground: COLORS.dark || COLORS.wall,
     character: '█',
     sprite: '█',
     passable: true,

@@ -30,6 +30,10 @@ export function getNumberOfItemsInArray(number, originalArray) {
   return result
 }
 
+export function getXChance (chance) {
+  return Math.random() < chance;
+}
+
 export const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);

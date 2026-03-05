@@ -74,12 +74,58 @@ export const SHAPES = {
       { x: 0, y: 1, taken: false, },
     ]
   },
+  verticalLine3: {
+    x_offset: 1,
+    y_offset: 1,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 0, y: 2, taken: false, },
+    ]
+  },
+  verticalLine4: {
+    x_offset: 1,
+    y_offset: 1,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 0, y: 2, taken: false, },
+      { x: 0, y: 3, taken: false, },
+    ]
+  },
+  verticalLine: {
+    x_offset: 1,
+    y_offset: 1,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+    ]
+  },
   horizontalLine: {
     x_offset: 1,
     y_offset: 1,
     positions: [
       { x: 0, y: 0, taken: false, },
       { x: 1, y: 0, taken: false, },
+    ]
+  },
+  horizontalLine3: {
+    x_offset: 1,
+    y_offset: 1,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 2, y: 0, taken: false, },
+    ]
+  },
+  horizontalLine4: {
+    x_offset: 1,
+    y_offset: 1,
+    positions: [
+      { x: 0, y: 0, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 2, y: 0, taken: false, },
+      { x: 3, y: 0, taken: false, },
     ]
   },
   smallSquare: {
@@ -172,6 +218,61 @@ export const SHAPES = {
       { x: -2, y: -1, taken: false, },
     ]
   },
+  smallHash: { // 7x7 hash shape, good for cubicles
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      // { x: 0, y: 0, taken: true, },
+      // { x: 0, y: 1, taken: true, },
+      { x: 0, y: 2, taken: false, },
+      // { x: 0, y: 3, taken: false, },
+      { x: 0, y: 4, taken: false, },
+      // { x: 0, y: 5, taken: false, },
+      // { x: 0, y: 6, taken: false, },
+      // { x: 1, y: 0, taken: true, },
+      // { x: 1, y: 1, taken: true, },
+      { x: 1, y: 2, taken: false, },
+      // { x: 1, y: 3, taken: false, },
+      { x: 1, y: 4, taken: false, },
+      // { x: 1, y: 5, taken: false, },
+      // { x: 1, y: 6, taken: false, },
+      { x: 2, y: 0, taken: false, },
+      { x: 2, y: 1, taken: false, },
+      { x: 2, y: 2, taken: false, },
+      { x: 2, y: 3, taken: false, },
+      { x: 2, y: 4, taken: false, },
+      { x: 2, y: 5, taken: false, },
+      { x: 2, y: 6, taken: false, },
+      // { x: 3, y: 0, taken: true, },
+      // { x: 3, y: 1, taken: true, },
+      { x: 3, y: 2, taken: false, },
+      { x: 3, y: 3, taken: false, },
+      { x: 3, y: 4, taken: false, },
+      // { x: 3, y: 5, taken: false, },
+      // { x: 3, y: 6, taken: false, },
+      { x: 4, y: 0, taken: false, },
+      { x: 4, y: 1, taken: false, },
+      { x: 4, y: 2, taken: false, },
+      { x: 4, y: 3, taken: false, },
+      { x: 4, y: 4, taken: false, },
+      { x: 4, y: 5, taken: false, },
+      { x: 4, y: 6, taken: false, },
+      // { x: 5, y: 0, taken: false, },
+      // { x: 5, y: 1, taken: false, },
+      { x: 5, y: 2, taken: false, },
+      // { x: 5, y: 3, taken: false, },
+      { x: 5, y: 4, taken: false, },
+      // { x: 5, y: 5, taken: false, },
+      // { x: 5, y: 6, taken: false, },
+      // { x: 6, y: 0, taken: false, },
+      // { x: 6, y: 1, taken: false, },
+      { x: 6, y: 2, taken: false, },
+      // { x: 6, y: 3, taken: false, },
+      { x: 6, y: 4, taken: false, },
+      // { x: 6, y: 5, taken: false, },
+      // { x: 6, y: 6, taken: false, },
+    ]
+  }
 }
 
 const shapeChanceTable = [

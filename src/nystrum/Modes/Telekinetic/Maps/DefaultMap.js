@@ -1,11 +1,11 @@
 export default function GenerateDefaultMap (mode) {
-    mode.createEmptyLevel();
-    mode.game.initializeMapTiles();
+  mode.createEmptyLevel();
+  mode.game.initializeMapTiles();
 
-    mode.addWalls();
-    mode.placePlayerAndSafeZone();
-    // TODO: get from wave data
-    mode.addEnemies(1, 'addRandom')
-    mode.placeThrowables()
-    mode.startMissionManager()
+  mode.addWalls();
+  mode.placePlayerAndSafeZone();
+  // TODO: get from wave data
+  mode.addEnemies(1, 'addRandom')
+  mode.placeThrowables()
+  mode.startMissionManager()
 }
