@@ -18,9 +18,11 @@ export default class FollowAndAttack extends BehaviorChain {
       new Behaviors.TelegraphOnEnemy({
         repeat: 1,
         attackPattern: Constant.CLONE_PATTERNS.clover,
-        chainOnSuccess: true
+        chainOnSuccess: true,
       }),
-      new Behaviors.ExecuteAttack({repeat: 1}),
+      new Behaviors.ExecuteAttack({
+        repeat: 1
+      }),
     ]
   }
 }

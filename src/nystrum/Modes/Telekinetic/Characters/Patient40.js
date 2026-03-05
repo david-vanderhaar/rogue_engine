@@ -6,7 +6,7 @@ import { generateDefaultKeymapActions, generatePlayerCharacterOptions, playRando
 import { COLORS } from '../theme';
 import * as Helper from '../../../../helper';
 import { SandPulse } from '../../../Actions/SandPulse';
-import { ChakraResource } from '../../../Actions/ActionResources/ChakraResource';
+import { MindResource } from '../../../Actions/ActionResources/MindResource';
 import { PrepareRangedAction } from '../../../Actions/PrepareRangedAction';
 import { AddStatusEffectAtPosition } from '../../../Actions/AddStatusEffectAtPosition';
 import ShadowHold from '../../../StatusEffects/ShadowHold';
@@ -71,7 +71,7 @@ function initialize (engine) {
         label: 'Pulse [1]',
         game: engine.game,
         actor,
-        requiredResources: [new ChakraResource({ getResourceCost: () => 1 })]
+        requiredResources: [new MindResource({ getResourceCost: () => 1 })]
       }),
       f: () => new PrepareRangedTelekinesisAction({
         label: 'Telekinesis',
@@ -80,7 +80,7 @@ function initialize (engine) {
         triggerRange: actor?.telekenticTriggerRange || 2,
         throwRange: actor?.telekineticThrowRange || 2,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+        passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 4 })],
         keymapTriggerString: 'f',
         cursorShape: Constant.CLONE_PATTERNS.point,
         // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
@@ -91,7 +91,7 @@ function initialize (engine) {
       //   actor,
       //   range: 10,
       //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      //   passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+      //   passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
       //   keymapTriggerString: 'f',
       //   cursorShape: Constant.CLONE_PATTERNS.point,
       //   // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
@@ -107,7 +107,7 @@ function initialize (engine) {
       //   actor,
       //   range: 10,
       //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      //   passThroughRequiredResources:  [new ChakraResource({ getResourceCost: () => 1 })],
+      //   passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
       //   keymapTriggerString: 'f',
       //   // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
       //   actionClass: AddStatusEffectAtPosition,

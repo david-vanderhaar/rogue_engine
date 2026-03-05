@@ -3,6 +3,7 @@ import React from 'react';
 import ActionMenu from '../ActionMenu';
 import * as _ from 'lodash'
 import Tooltip from '../../../../UI/Tooltip';
+import { COLORS } from '../../theme';
 
 export default function CharacterCard ({actor, game}) {
   return (
@@ -27,10 +28,10 @@ export default function CharacterCard ({actor, game}) {
         {
           actor.chargeMax > 0 && (
             <SimpleProgressBar 
-              label='MP'
+              label='Mind'
               attributePath='charge'
               attributePathMax='chargeMax'
-              colorFilled='#3e7dc9'
+              colorFilled={COLORS.blue_light}
               unit={1}
               actor={actor} 
             />

@@ -120,7 +120,11 @@ export class Base {
     })
   }
 
-  canPayRequiredResources() {
+  canPayRequiredResources(payResources = this.listPayableResources()) {
+    return !_.find(payResources, {'canPay': false});
+  }
+
+  canPayRequiredResources_v1() {
     return !_.find(this.listPayableResources(), {'canPay': false});
   }
 

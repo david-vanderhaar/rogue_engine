@@ -2,6 +2,7 @@ import * as Helper from '../../helper';
 import { Particle } from '../Entities/index';
 import { PARTICLE_TEMPLATES } from '../constants';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
+import { ANIMATION_TYPES } from '../Display/konvaCustom';
 
 export class Engine {
   constructor({
@@ -64,9 +65,11 @@ export class Engine {
             success: false,
             alternative: null,
           };
+          const payableResources = action.listPayableResources();
+          const canPayResults = action.canPayRequiredResources(payableResources);
           // if (actor.energy >= action.energyCost) { // replace with checking for all required resources
-          if (action.canPayRequiredResources()) { // replace with checking for all required resources
-            
+          // if (action.canPayRequiredResources()) { // replace with checking for all required resources
+          if (canPayResults) { // replace with checking for all required resources
             await action.onBefore();
             result = await action.perform();
             actor.lastActionResult = result
@@ -78,6 +81,16 @@ export class Engine {
               await action.onFailure();
             }
             await action.onAfter();
+          } else {
+            // float text of resource requirements not met
+            payableResources.forEach((resource) => {
+              if (!resource.canPay) {
+                this.animateText(
+                  actor.getPosition(),
+                  `Not enough ${resource.name}`,
+                  resource.renderer?.color || '#dc322f'
+                )}
+            });
           }
           if (!await this.processActionFX(action, result.success)) {
             if (this.shouldAutoRun()) {
@@ -264,6 +277,18 @@ export class Engine {
     if (!actor) return false
 
     return actor.entityTypes.includes('PLAYING')
+  }
+
+  animateText(position, text, color = 'white') {
+    this.game.display.addAnimation(
+      ANIMATION_TYPES.TEXT_FLOAT,
+      {
+        ...position,
+        color,
+        text,
+        timeToLive: 750,
+      }
+    );
   }
 
   async processActionFX (action, actionSuccess) {
