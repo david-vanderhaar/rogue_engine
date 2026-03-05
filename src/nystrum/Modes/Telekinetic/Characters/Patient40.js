@@ -80,7 +80,7 @@ function initialize (engine) {
         triggerRange: actor?.telekenticTriggerRange || 2,
         throwRange: actor?.telekineticThrowRange || 2,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 4 })],
+        passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 2 })],
         keymapTriggerString: 'f',
         cursorShape: Constant.CLONE_PATTERNS.point,
         // cursorShape: Constant.CLONE_PATTERNS.smallSquare,

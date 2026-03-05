@@ -16,21 +16,21 @@ export default function GenerateOfficeMap (mode) {
 
   const CENTER_POSITION = centerPosition(mode);
   // chance of center cubicles (hash shape)
-  if (Helper.getXChance(1)) generate(mode, { x: CENTER_POSITION.x - 3, y: CENTER_POSITION.y - 4 }, SHAPES.smallHash, ACTOR_PARAMS.cubicle_wall)
+  if (Helper.getXChance(0.75)) generate(mode, { x: CENTER_POSITION.x - 3, y: CENTER_POSITION.y - 4 }, SHAPES.smallHash, ACTOR_PARAMS.cubicle_wall)
   // chance of West walls cubicles
-  if (Helper.getXChance(1)) {
+  if (Helper.getXChance(0.75)) {
     for (let y = 7; y < 18; y += 3) {
       generate(mode, { x: 5, y }, SHAPES.horizontalLine3, ACTOR_PARAMS.cubicle_wall)
     }
   }
   // // chance of East walls cubicles
-  if (Helper.getXChance(1)) {
+  if (Helper.getXChance(0.75)) {
     for (let y = 7; y < 18; y += 3) {
       generate(mode, { x: 25, y }, SHAPES.horizontalLine3, ACTOR_PARAMS.cubicle_wall)
     }
   }
   // // chance of south walls cubicles
-  if (Helper.getXChance(1)) {
+  if (Helper.getXChance(0.75)) {
     generate(mode, { x: 9, y: 16 }, SHAPES.verticalLine3, ACTOR_PARAMS.cubicle_wall)
     generate(mode, { x: 12, y: 16 }, SHAPES.verticalLine3, ACTOR_PARAMS.cubicle_wall)
     generate(mode, { x: 20, y: 16 }, SHAPES.verticalLine3, ACTOR_PARAMS.cubicle_wall)
@@ -38,7 +38,7 @@ export default function GenerateOfficeMap (mode) {
   }
 
   // // chance of north walls cubicles
-  if (Helper.getXChance(1)) {
+  if (Helper.getXChance(0.75)) {
     generate(mode, { x: 9, y: 5 }, SHAPES.verticalLine3, ACTOR_PARAMS.cubicle_wall)
     generate(mode, { x: 12, y: 5 }, SHAPES.verticalLine3, ACTOR_PARAMS.cubicle_wall)
     generate(mode, { x: 20, y: 5 }, SHAPES.verticalLine3, ACTOR_PARAMS.cubicle_wall)
