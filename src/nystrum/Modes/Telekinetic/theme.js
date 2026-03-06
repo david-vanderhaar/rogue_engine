@@ -115,8 +115,9 @@ export const TILE_KEY = {
     tags: ['BURNABLE'],
   },
   'FREE_FALL': {
-    background: COLORS.bg_override || COLORS.dark,
-    foreground: COLORS.bg_override || COLORS.dark,
+    ignoreColorOverride: true,
+    background: COLORS.black || COLORS.dark,
+    foreground: COLORS.black || COLORS.dark,
     character: '',
     passable: false,
     tags: ['FALLING'],

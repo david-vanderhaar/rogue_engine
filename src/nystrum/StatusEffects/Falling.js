@@ -29,25 +29,24 @@ export default class Falling  extends Base {
     // change actor renderer
     this['actor_background'] = this.actor.renderer.background;
     this['actor_color'] = this.actor.renderer.color;
-    this.actor.renderer.background = COLORS.dark_accent;
+    this.actor.renderer.background = COLORS.black;
     this.actor.renderer.color = COLORS.white;
-
+    console.log(this.actor);
+    
     // make FREE-FALL not traversable
     this['original_traversable_tiles'] = [...this.actor.traversableTiles];
     this.actor.traversableTiles = this.actor.traversableTiles.filter((tile) => tile !== 'FREE_FALL')
+    this.actor.game.draw()
   }
 
   step(timePassed) {
     super.step(timePassed)
-    console.log('falling: ', timePassed);
-    
-
+    this.actor.renderer.background = COLORS.black;
     if (this.timeUntilDestroy <= 0) {
       // kill actor
       this.actor.destroy()
       return;
     }
-
     // this.animateText('falling', this.renderer.color)
     this.animateText(`turns until death: ${this.timeUntilDestroy - 1}`, COLORS.red)
     // this.actor.skipTurn = false
