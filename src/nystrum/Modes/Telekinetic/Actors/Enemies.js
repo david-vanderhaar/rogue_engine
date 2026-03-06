@@ -147,5 +147,6 @@ function addEntityToMapWithStatsUsingCreator (mode, entityCreator) {
   const entity = entityCreator();
   if (mode.game.placeActorOnMap(entity)) {
     mode.game.engine.addActor(entity);
+    mode.game.draw()
   };
 }

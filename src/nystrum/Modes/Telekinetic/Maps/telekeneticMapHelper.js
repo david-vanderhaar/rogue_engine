@@ -149,5 +149,5 @@ export const ACTOR_PARAMS = {
   mug: { range: 3, character: 'u', name: 'mug', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   pencil: { range: 3, character: 'i', name: 'pencil', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 0 },
   phone: { range: 3, character: '[', name: 'phone', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
-  fire_extinguisher: { range: 3, character: '%', name: 'fire extinguisher', color: COLORS.red, background: COLORS.dark, passable: true, durability: 1, flammability: 0, explosivity: 3, attackDamage: 3 },
+  fire_extinguisher: { range: 3, character: '%', name: 'fire extinguisher', color: COLORS.red, background: COLORS.dark, passable: true, durability: 1, flammability: 0, explosivity: 2, attackDamage: 3 },
 }

@@ -170,7 +170,8 @@ export const Destructable = superclass => class extends superclass {
   sendDestroyGameEvents() {
     // a hack to ensrue destroy event is emitted after all other events (like attack events) have been processed
     setTimeout(() => {
-      GLOBAL_EVENT_BUS.emit(`${this.id}:destroy`, { message: `${this.name} was destroyed!` });
+      GLOBAL_EVENT_BUS.emit(`${this.id}:destroy`);
+      GLOBAL_EVENT_BUS.emit(`${this.name}:destroy`);
     }, 100)
   }
 

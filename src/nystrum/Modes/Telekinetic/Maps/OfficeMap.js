@@ -4,6 +4,8 @@ import { SHAPES } from "../../../Maps/coverGenerator";
 import * as MapHelper from '../../../Maps/helper';
 import * as Helper from '../../../../helper';
 import * as EnemyActors from '../Actors/Enemies';
+import Mission from "../../../Mission/Mission";
+import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 
 export default function GenerateOfficeMap (mode) {
   // refreshColors({fg: COLORS.light})
@@ -96,7 +98,6 @@ export default function GenerateOfficeMap (mode) {
     generate(mode, pos, SHAPES.point, ACTOR_PARAMS.fire_extinguisher, createExplosiveThrowable)
   })
 
-  mode.addEnemies(1, 'addRandom')
   mode.placeThrowables()
 
   // place elevator doors
@@ -111,5 +112,85 @@ export default function GenerateOfficeMap (mode) {
   // placePlayer In elevator
   mode.getPlayer().move({x: 17, y: 5})
 
-  mode.startMissionManager()
+  startMissionManager(mode)
+}
+
+function startMissionManager(mode) {
+  const firstWaveCount = Helper.getRandomIntInclusive(1, 2)
+  const secondWaveCount = Helper.getRandomIntInclusive(2, 3)
+  const thirdWaveCount = Helper.getRandomIntInclusive(3, 4)
+
+  mode.initializeMissionManager({
+    missions: [
+      new Mission({
+        name: 'First Wave',
+        description: 'These office spacers are just as determined to keep you here as the scientists. Eliminate them.',
+        timesToComplete: firstWaveCount,
+        eventToComplete: `security guard:destroy`,
+        onTrigger: () => {
+          Helper.range(firstWaveCount).forEach((index) => {
+            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+            const pos = Helper.stringToCoords(randomPosition)
+            
+            EnemyActors.addsecurityGuard(mode, pos)
+            SpatterEmitter({
+              game: mode.game,
+              fromPosition: pos,
+              spatterAmount: 0.8,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+            }).start()
+          })
+        }
+      }),
+      new Mission({
+        name: 'Second Wave',
+        description: 'More office spacers, back from lunch break. Eliminate them.',
+        timesToComplete: secondWaveCount,
+        eventToComplete: `security guard:destroy`,
+        onTrigger: () => {
+          Helper.range(secondWaveCount).forEach((index) => {
+            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+            const pos = Helper.stringToCoords(randomPosition)
+            
+            EnemyActors.addsecurityGuard(mode, pos)
+            SpatterEmitter({
+              game: mode.game,
+              fromPosition: pos,
+              spatterAmount: 0.8,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+            }).start()
+          })
+        }
+      }),
+      new Mission({
+        name: 'Final Wave',
+        description: 'More office spacers, back from ... Ahh, eliminate them.',
+        timesToComplete: thirdWaveCount,
+        eventToComplete: `security guard:destroy`,
+        onTrigger: () => {
+          Helper.range(thirdWaveCount).forEach((index) => {
+            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+            const pos = Helper.stringToCoords(randomPosition)
+            
+            EnemyActors.addsecurityGuard(mode, pos)
+            SpatterEmitter({
+              game: mode.game,
+              fromPosition: pos,
+              spatterAmount: 0.8,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+            }).start()
+          })
+        }
+      }),
+    ],
+  })
 }
