@@ -21,6 +21,7 @@ export const Exploding = superclass => class extends superclass {
     this.spreadCount = spreadCount;
   }
   enflame() {
+    if (this.flammability <= 0) return;
     // create num of fireSpreads
     const fires = Array(this.flammability).fill('').map((item) => {
       return new FireSpread({
@@ -61,8 +62,11 @@ export const Exploding = superclass => class extends superclass {
       };
       const tile = this.game.map[Helper.coordsToString(position)];
       if (tile) {
-        tile.type = 'BURNT';
-        tile.currentFrame = Helper.getRandomInt(0, tileAnimationLength)
+        if (this.flammability > 0) {
+          tile.type = 'BURNT';
+          tile.currentFrame = Helper.getRandomInt(0, tileAnimationLength)
+        }
+
         let targets = Helper.getDestructableEntities(tile.entities.filter(
           (entity) => entity.id !== this.id
         ));

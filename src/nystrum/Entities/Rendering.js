@@ -2,13 +2,14 @@ import * as Helper from '../../helper';
 import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export const Rendering = superclass => class extends superclass {
-  constructor({ pos = { x: 0, y: 0 }, renderer, traversableTiles = [], ...args }) {
+  constructor({ pos = { x: 0, y: 0 }, renderer, traversableTiles = [], onMove = () => null, ...args }) {
     super({ ...args });
     this.entityTypes = this.entityTypes.concat('RENDERING');
     this.pos = pos;
     this.renderer = { ...renderer };
     this.currentFrame = 0;
     this.traversableTiles = traversableTiles;
+    this.onMove = onMove;
   }
 
   getRenderer() {
@@ -34,6 +35,8 @@ export const Rendering = superclass => class extends superclass {
       // console.log(`x:${targetPos.x}, y:${targetPos.y}`);
       // GLOBAL_EVENT_BUS.emit(`${this.id}:move`);
       GLOBAL_EVENT_BUS.emit(`${this.id}:move:tileType:${tile.type}`);
+      GLOBAL_EVENT_BUS.emit(`move:tileType:${tile.type}`, { actor: this, tile, targetPos });
+      this.onMove({actor: this, tile, targetPos});
     }
     return success;
   }

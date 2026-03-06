@@ -136,8 +136,6 @@ function initialize (engine) {
     ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
   })
 
-  actor.traversableTiles = [];
-
   return actor
 }
 

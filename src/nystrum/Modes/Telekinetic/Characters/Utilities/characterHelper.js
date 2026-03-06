@@ -1,7 +1,7 @@
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../../sounds';
 import { getRandomInArray } from '../../../../../helper';
 import * as Constant from '../../../../constants';
-import { checkIsWalkingOnFire, checkIsWalkingOnWater, } from '../../../../Modes/HiddenLeaf/StatusEffects/helper';
+import { checkIsWalkingOnFire, checkIsWalkingOnFreeFall, checkIsWalkingOnWater, } from '../../../../Modes/HiddenLeaf/StatusEffects/helper';
 import { MoveOrAttackWithTileSound } from '../../../../Actions/MoveOrAttackWithTileSound';
 import { StandStill } from '../../../../Actions/StandStill';
 import { OpenInventory } from '../../../../Actions/OpenInventory';
@@ -22,7 +22,10 @@ export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
   enemyFactions: ['OPPONENT'],
   faction: 'PLAYER',
   actions: [],
-  traversableTiles: [],
+  traversableTiles: ['FREE_FALL'],
+  onMove: ({actor}) => {
+    onAfterMoveOrAttack(engine, actor)
+  },
   speed: basicInfo.speed,
   durability: basicInfo.durability,
   attackDamage: basicInfo.attackDamage,
@@ -71,9 +74,10 @@ export function playRandomSoundFromArray(soundArray, soundOptions = {}) {
   sound.play();
 }
 
-function onAfterMoveOrAttack(engine, actor) {
+export function onAfterMoveOrAttack(engine, actor) {
   checkIsWalkingOnWater(engine, actor)
   checkIsWalkingOnFire(engine, actor)
+  checkIsWalkingOnFreeFall(engine, actor)
 }
 
 export function generateDefaultKeymapActions(engine, actor) {
@@ -88,7 +92,7 @@ export function generateDefaultKeymapActions(engine, actor) {
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
-        onAfter: () => onAfterMoveOrAttack(engine, actor),
+        // onAfter: () => onAfterMoveOrAttack(engine, actor),
       });
     },
     's,ArrowDown': () => {
@@ -101,7 +105,7 @@ export function generateDefaultKeymapActions(engine, actor) {
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
-        onAfter: () => onAfterMoveOrAttack(engine, actor),
+        // onAfter: () => onAfterMoveOrAttack(engine, actor),
       });
     },
     'a,ArrowLeft': () => {
@@ -114,7 +118,7 @@ export function generateDefaultKeymapActions(engine, actor) {
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
-        onAfter: () => onAfterMoveOrAttack(engine, actor),
+        // onAfter: () => onAfterMoveOrAttack(engine, actor),
       });
     },
     'd,ArrowRight': () => {
@@ -127,7 +131,7 @@ export function generateDefaultKeymapActions(engine, actor) {
         game: engine.game,
         actor,
         energyCost: Constant.ENERGY_THRESHOLD,
-        onAfter: () => onAfterMoveOrAttack(engine, actor),
+        // onAfter: () => onAfterMoveOrAttack(engine, actor),
       });
     },
     p: () => new StandStill({

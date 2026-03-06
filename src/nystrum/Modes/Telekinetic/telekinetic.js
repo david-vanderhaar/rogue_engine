@@ -22,6 +22,7 @@ import { SCREENS } from './Screen/constants';
 import GenerateDefaultMap from './Maps/DefaultMap';
 import GenerateLabMap from './Maps/LabMap';
 import GenerateOfficeMap from './Maps/OfficeMap';
+import { checkIsWalkingOnFreeFall } from '../HiddenLeaf/StatusEffects/helper';
 
 export class Telekinetic extends Mode {
   constructor({ ...args }) {
@@ -35,7 +36,6 @@ export class Telekinetic extends Mode {
 
     const level = this.getMetaTournamentLevel();
     this.levelGenerators()[level - 1](this);
-
     this.applyUpgrades()
   }
 

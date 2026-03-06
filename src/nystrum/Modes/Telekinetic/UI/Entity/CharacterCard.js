@@ -52,7 +52,7 @@ export default function CharacterCard ({actor, game}) {
           unit={1}
           actor={actor} 
         />
-        {/* <StatusEffects actor={actor} /> */}
+        <StatusEffects actor={actor} />
       </div>
       <div>
         {/* <ActionBar keymap={actor.getKeymap()} game={game} /> */}

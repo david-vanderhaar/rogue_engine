@@ -2,7 +2,7 @@ import { add } from 'lodash';
 import * as MapHelper from '../../../Maps/helper';
 import { COLORS } from '../theme';
 import * as Helper from '../../../../helper';
-import { DirectionalProjectile, MovingWall } from '../../../Entities';
+import { DirectionalProjectile, Grenade, MovingWall } from '../../../Entities';
 
 export function addWalls(mode,innerWalls = 4) {
   // outer walls
@@ -119,6 +119,10 @@ export function createThrowable (mode, pos, params) {
   createActor(mode, pos, DirectionalProjectile, params)
 }
 
+export function createExplosiveThrowable (mode, pos, params) {
+  createActor(mode, pos, Grenade, params)
+}
+
 export function generate (mode, pos, shape, params, createFunction = createFurniture) {
   const positions = Helper.getPositionsFromStructure(shape, pos);
   positions.forEach((position) => {
@@ -131,9 +135,19 @@ export const ACTOR_PARAMS = {
   operating_table: { range: 5, character: '#', name: 'operating table', color: COLORS.light, background: COLORS.dark_accent, passable: true, defense: 1, remainAfterUse: true },
   table: { range: 2, character: 'T', name: 'table', color: COLORS.light, background: COLORS.dark, defense: 1, remainAfterUse: true },
   cubicle_wall: { range: 2, character: '▒', name: 'cubicle wall', color: COLORS.light_mid, background: COLORS.dark, defense: 1, remainAfterUse: true },
+  window_wall: { range: 4, character: '░', name: 'window wall', color: COLORS.white, background: COLORS.dark, defense: 0, remainAfterUse: false },
+  chair: { range: 4, character: 'h', name: 'chair', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
+  desk: { range: 1, character: 'T', name: 'desk', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
+  // LAB ITEMS
   dead_body: { range: 0, character: 's', name: 'dead scientist', color: COLORS.light, background: "#833139", durability: 3, bloodSpatterOnHit: true, remainAfterUse: true },
   bottle: { range: 3, character: '!', name: 'glass vial', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   scalpel: { range: 3, character: '|', name: 'scalpel', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 1 },
   scissors: { range: 3, character: '^', name: 'scissors', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 1 },
   pliers: { range: 3, character: ']', name: 'pliers', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
+  // OFFICE ITEMS 
+  stapler: { range: 3, character: ']', name: 'stapler', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
+  mug: { range: 3, character: 'u', name: 'mug', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
+  pencil: { range: 3, character: 'i', name: 'pencil', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 0 },
+  phone: { range: 3, character: '[', name: 'phone', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
+  fire_extinguisher: { range: 3, character: '%', name: 'fire extinguisher', color: COLORS.red, background: COLORS.dark, passable: true, durability: 1, flammability: 0, explosivity: 3, attackDamage: 3 },
 }

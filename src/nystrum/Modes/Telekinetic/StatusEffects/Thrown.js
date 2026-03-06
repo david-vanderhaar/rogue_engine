@@ -19,7 +19,7 @@ export default class Thrown  extends Base {
     this.name = 'thrown';
     this.description = "hurtling through the air"
     this.allowDuplicates = false
-    this.processOnlyOnActorTurn = true
+    // this.processOnlyOnActorTurn = true
     this.lifespan = ENERGY_THRESHOLD * this.range
     // this.stepInterval = ENERGY_THRESHOLD
     this.stepInterval = 0
@@ -39,8 +39,10 @@ export default class Thrown  extends Base {
     }
   }
 
-  step () {
-    super.step()
+  step (timePassed) {
+    super.step(timePassed)
+    console.log(timePassed);
+    
     // move in direction
     if (!this.isProjectileType()) {
       for (let index = 0; index < this.range; index++) {

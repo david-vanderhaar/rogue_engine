@@ -118,7 +118,7 @@ export const TILE_KEY = {
     background: COLORS.bg_override || COLORS.dark,
     foreground: COLORS.bg_override || COLORS.dark,
     character: '',
-    passable: true,
+    passable: false,
     tags: ['FALLING'],
   },
   'ELEVATOR': {

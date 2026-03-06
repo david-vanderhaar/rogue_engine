@@ -15,9 +15,6 @@ export const CARTRIDGE = Cartridges.telekineticCart()
 // insert common splash screen for all carts
 CARTRIDGE.screens['Splash'] = {component: SplashScreen}
 
-console.log(CARTRIDGE);
-
-
 class Nystrum extends React.Component {
   constructor() {
     super();

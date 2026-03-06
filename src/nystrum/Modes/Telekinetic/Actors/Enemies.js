@@ -15,6 +15,7 @@ import { JACINTO_SOUNDS } from '../../Jacinto/sounds';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../sounds'
 import { SpitterSac } from '../../TallGrass/Items/Weapons/Spitter';
 import FollowAndAttack from '../../../Entities/AI/BehaviorChains/FollowAndAttack';
+import { onAfterMoveOrAttack } from '../Characters/Utilities/characterHelper';
 
 export function addsecurityGuard (mode, pos) {
   addGrubToMapWithStats(mode, pos, GRUB_STATS.securityGuard())
@@ -39,7 +40,23 @@ const GRUB_STATS = {
       bloodSpatterOnHit: true,
       baseDescription: 'a gruntled, square-faced corpo gaurd.',
       baseDescriptors: ['with baton and bad health insurance'],
-      behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      // behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
     }
   },
 };
@@ -51,6 +68,10 @@ const createBaseGrubStats = (mode, pos) => {
     faction: 'OPPONENT',
     enemyFactions: ['PLAYER'],
     equipment: Constant.EQUIPMENT_LAYOUTS.gear(),
+    traversableTiles: ['FREE_FALL'],
+    onMove: ({actor}) => {
+      onAfterMoveOrAttack(actor.game.engine, actor)
+    },
     meleeSounds: [
       HIDDEN_LEAF_SOUNDS.punch_01,
       HIDDEN_LEAF_SOUNDS.punch_02,
