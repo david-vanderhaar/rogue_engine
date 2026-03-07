@@ -44,6 +44,7 @@ export class Telekinetic extends Mode {
     return [
       GenerateDefaultMap,
       GenerateDefaultMap,
+      GenerateDefaultMap,
       // GenerateLabMap,
       // GenerateOfficeMap,
       // GenerateConstructionMap,

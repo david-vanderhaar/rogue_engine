@@ -91,7 +91,7 @@ export default class Thrown  extends Base {
       spatterRadius: 3,
       animationTimeStep: 0.9,
       transfersBackground: false,
-      spatterColors: [COLORS.blue, COLORS.dark_accent],
+      spatterColors: [COLORS.blue_light, COLORS.dark_accent],
     }).start()
   }
 

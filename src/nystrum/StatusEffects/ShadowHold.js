@@ -3,8 +3,9 @@ import {ANIMATION_TYPES} from '../Display/konvaCustom.js'
 import { COLORS } from '../Modes/HiddenLeaf/theme.js';
 
 export default class ShadowHold  extends Stunned {
-  constructor({...args}) {
+  constructor({backgroundColor = COLORS.black, ...args}) {
     super({ ...args });
+    this.backgroundColor = backgroundColor
   }
 
   start() {
@@ -12,7 +13,7 @@ export default class ShadowHold  extends Stunned {
     // change actor renderer
     this['actor_background'] = this.actor.renderer.background;
     // this['actor_color'] = this.actor.renderer.color;
-    this.actor.renderer.background = COLORS.black;
+    this.actor.renderer.background = this.backgroundColor;
   }
 
   stop() {

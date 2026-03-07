@@ -66,7 +66,7 @@ export default class Mission {
     });
     this.forceComplete();
     this.onComplete();
-    console.log('Mission complete: ', this.name);
+    // console.log('Mission complete: ', this.name);
   }
 
   forceComplete() {

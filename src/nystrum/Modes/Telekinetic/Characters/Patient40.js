@@ -85,49 +85,6 @@ function initialize (engine) {
         cursorShape: Constant.CLONE_PATTERNS.point,
         // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
       }),
-      // f: () => new PrepareRangedAction({
-      //   label: 'Telekinesis E',
-      //   game: engine.game,
-      //   actor,
-      //   range: 10,
-      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      //   passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
-      //   keymapTriggerString: 'f',
-      //   cursorShape: Constant.CLONE_PATTERNS.point,
-      //   // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
-      //   actionClass: AddStatusEffectAtPositions,
-      //   actionParams: {
-      //     createEffect: () => new Thrown({ game: engine.game, direction: Constant.DIRECTIONS.E, range: 3 }),
-      //     label: 'Throw E',
-      //   }
-      // }),
-      // c: () => new PrepareRangedAction({
-      //   label: 'Menacing Stare [1]',
-      //   game: engine.game,
-      //   actor,
-      //   range: 10,
-      //   passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-      //   passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
-      //   keymapTriggerString: 'f',
-      //   // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
-      //   actionClass: AddStatusEffectAtPosition,
-      //   actionParams: {
-      //     effect: new ShadowHold({ game: engine.game, turnsStunned: 1 }),
-      //     label: 'Stare [1]',
-      //     onSuccess: () => {
-      //       gradientPathEmitter({
-      //         game: engine.game,
-      //         fromPosition: actor.getPosition(),
-      //         targetPositions: actor.getCursorPositions(),
-      //         animationTimeStep: 0.8,
-      //         // animationTimeStep: 0.1,
-      //         // transfersBackground: true,
-      //         backgroundColorGradient: [COLORS.black, COLORS.black],
-      //         character: '',
-      //       }).start()
-      //     }
-      //   }
-      // }),
     }
   }
 

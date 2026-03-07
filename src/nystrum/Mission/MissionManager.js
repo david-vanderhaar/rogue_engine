@@ -47,7 +47,6 @@ export default class MissionManager {
       // stop crank engine
       // show win overlay
       // check for input to restart the game
-      console.log('all missions complete');
       this.onComplete();
       return;
     }
@@ -63,7 +62,7 @@ export default class MissionManager {
     } else if (currentMission.isCompleted()) {
       currentMission.complete();
       this.completed.push(this.missions.shift());
-      console.log('missions remaining: ', this.missions.length);
+      // console.log('missions remaining: ', this.missions.length);
     }
   }
 
@@ -74,7 +73,7 @@ export default class MissionManager {
         this.triggerMission(mission);
       } else if (mission.isCompleted()) {
         this.completeMission(mission);
-        console.log('missions remaining: ', this.missions.length);
+        // console.log('missions remaining: ', this.missions.length);
       }
     })
   }
