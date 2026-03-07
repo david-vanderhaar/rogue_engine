@@ -32,6 +32,11 @@ export class SpeedDefenseDamageBuff extends Base {
     }
 
     this.onStart = () => {
+      this['actor_background'] = this.actor.renderer.background;
+      this['actor_color'] = this.actor.renderer.color;
+      this.actor.renderer.background = background
+      this.actor.renderer.color = COLORS.white
+
       this.actor.speed += speedBuff * ENERGY_THRESHOLD;
       this.actor.defense += defenseBuff;
       this.actor.attackDamage += damageBuff;
@@ -45,6 +50,8 @@ export class SpeedDefenseDamageBuff extends Base {
     }
 
     this.onStop = () => {
+      this.actor.renderer.background = this['actor_background'];
+      this.actor.renderer.color = this['actor_color'];
       this.actor.speed -= speedBuff * ENERGY_THRESHOLD;
       this.actor.defense -= defenseBuff;
       this.actor.attackDamage -= damageBuff;
