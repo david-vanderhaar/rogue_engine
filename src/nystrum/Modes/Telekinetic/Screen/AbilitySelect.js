@@ -78,7 +78,6 @@ function AbilitySelectScreen(props) {
         },
         activate: (actor) => {
           console.log('active extra t range');
-          if (!actor['telekenticTriggerRange']) actor['telekenticTriggerRange'] = 2;
           actor.telekenticTriggerRange += 1
         },
       },
@@ -94,7 +93,6 @@ function AbilitySelectScreen(props) {
         },
         activate: (actor) => {
           console.log('active extra t throw range');
-          if (!actor['telekineticThrowRange']) actor['telekineticThrowRange'] = 2;
           actor.telekineticThrowRange += 1
         },
       },
@@ -743,7 +741,7 @@ function AbilitySelectScreen(props) {
 
     const alwaysAvailable = upgrades.buffs.filter((upgrade) => upgrade?.alwaysAvailable)
 
-    // return available
+    return available
     return [
       ...Helper.getNumberOfItemsInArray(2, available),
       ...Helper.getNumberOfItemsInArray(1, alwaysAvailable),

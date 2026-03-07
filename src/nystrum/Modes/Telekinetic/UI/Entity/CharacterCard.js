@@ -52,6 +52,21 @@ export default function CharacterCard ({actor, game}) {
           unit={1}
           actor={actor} 
         />
+        <br/>
+        <SimpleProgressBar 
+          label='Tele Rng'
+          attributeValue={actor.getTelekenticTriggerRange()}
+          colorFilled='#268bd2'
+          unit={1}
+          actor={actor} 
+        />
+        <SimpleProgressBar 
+          label='Tele →'
+          attributeValue={actor.getTelekineticThrowRange()}
+          colorFilled='#268bd2'
+          unit={1}
+          actor={actor} 
+        />
         <StatusEffects actor={actor} />
       </div>
       <div>

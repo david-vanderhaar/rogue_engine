@@ -42,6 +42,8 @@ export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
     HIDDEN_LEAF_SOUNDS.punch_08,
   ],
   charge: basicInfo.charge,
+  telekenticTriggerRange: 2,
+  telekineticThrowRange: 2,
   game: engine.game,
   presentingUI: true,
   initializeKeymap: keymap,

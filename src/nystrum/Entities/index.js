@@ -3,6 +3,7 @@ import { Entity } from './Entity';
 import { Parent } from './Parent';
 import { PresentingUI } from './PresentingUI';
 import { HasInnerGates } from './HasInnerGates';
+import { HasTelekinesis } from './HasTelekinesis';
 import { UI } from './UI';
 import {HasTargetingCursor} from './HasTargetingCursor';
 import {HasShapePattern} from './HasShapePattern';
@@ -195,6 +196,7 @@ export const Player = pipe(
   CanActivateStatusEffects,
   UsesCover,
   HasInnerGates,
+  HasTelekinesis,
   // Fearful,
 )(Entity);
 

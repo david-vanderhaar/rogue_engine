@@ -78,46 +78,14 @@ function initialize (engine) {
         label: 'Telekinesis',
         game: engine.game,
         actor,
-        triggerRange: actor?.telekenticTriggerRange || 2,
-        throwRange: actor?.telekineticThrowRange || 2,
+        triggerRange: actor.telekenticTriggerRange,
+        throwRange: actor.telekineticThrowRange,
         passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
         passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 2 })],
         keymapTriggerString: 'f',
         cursorShape: Constant.CLONE_PATTERNS.point,
         // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
       }),
-      // r: () => new PrepareSubstitution({
-      //         label: 'Substitution',
-              // game: engine.game,
-              // actor,
-              // passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-              // passThroughRequiredResources: [new MindResource({ getResourceCost: () => 3 })]
-      //       }),
-      7: () => new PrepareRangedAction({
-        label: 'Temporal Gap [1]',
-        game: actor.game,
-        actor,
-        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-        passThroughRequiredResources: [new MindResource({ getResourceCost: () => 3 })],
-        keymapTriggerString: '7',
-        range: 3,
-        actionClass: MoveOrShove,
-        cursorShape: Constant.CLONE_PATTERNS.point,
-        actionParams: {
-          onSuccess: () => {
-            SpatterEmitter({
-              game: actor.game,
-              fromPosition: actor.getPosition(),
-              spatterAmount: .4,
-              spatterRadius: 3,
-              animationTimeStep: 0.9,
-              spatterDirection: { x: 0, y: 0 },
-              transfersBackground: false,
-              spatterColors: [actor.renderer.background, COLORS.blue_light]
-            }).start()
-          },
-        },
-      })
     }
   }
 
