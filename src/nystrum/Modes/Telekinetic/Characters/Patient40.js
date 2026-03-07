@@ -23,6 +23,8 @@ import gradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRad
 import { HealthDrain } from '../StatusEffects/HealthDrain';
 import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { SpeedDefenseDamageBuff } from '../StatusEffects/SpeedDefenseDamageBuff';
+import { PrepareSubstitution } from '../../../Actions/PrepareSubstitution';
+import { MoveOrShove } from '../../../Actions/MoveOrShove';
 
 const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
@@ -84,51 +86,38 @@ function initialize (engine) {
         cursorShape: Constant.CLONE_PATTERNS.point,
         // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
       }),
-      2: () => new AddStatusEffect({
-              label: 'Adrenal Control',
+      // r: () => new PrepareSubstitution({
+      //         label: 'Substitution',
+              // game: engine.game,
+              // actor,
+              // passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+              // passThroughRequiredResources: [new MindResource({ getResourceCost: () => 3 })]
+      //       }),
+      7: () => new PrepareRangedAction({
+        label: 'Temporal Gap [1]',
+        game: actor.game,
+        actor,
+        passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+        passThroughRequiredResources: [new MindResource({ getResourceCost: () => 3 })],
+        keymapTriggerString: '7',
+        range: 3,
+        actionClass: MoveOrShove,
+        cursorShape: Constant.CLONE_PATTERNS.point,
+        actionParams: {
+          onSuccess: () => {
+            SpatterEmitter({
               game: actor.game,
-              actor,
-              energyCost: 0,
-              requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
-              effect: new SpeedDefenseDamageBuff({
-                game: actor.game,
-                actor,
-                speedBuff: 1,
-                lifespan: Constant.ENERGY_THRESHOLD * 3,
-                name: 'Adrenal Control',
-                description: 'at the cost of mind, you are faster'
-              }),
-            }),
-      3: () => new AddStatusEffect({
-              label: 'Melee Capable',
-              game: actor.game,
-              actor,
-              energyCost: 0,
-              requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
-              effect: new SpeedDefenseDamageBuff({
-                game: actor.game,
-                actor,
-                damageBuff: 1,
-                lifespan: Constant.ENERGY_THRESHOLD * 3,
-                name: 'Melee Capable',
-                description: 'at the cost of mind, you are stronger'
-              }),
-            }),
-      5: () => new AddStatusEffect({
-              label: 'Harden Body',
-              game: actor.game,
-              actor,
-              energyCost: 0,
-              requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
-              effect: new SpeedDefenseDamageBuff({
-                game: actor.game,
-                actor,
-                defenseBuff: 1,
-                lifespan: Constant.ENERGY_THRESHOLD * 3,
-                name: 'Harden Body',
-                description: 'at the cost of mind, you are harder'
-              }),
-            }),
+              fromPosition: actor.getPosition(),
+              spatterAmount: .4,
+              spatterRadius: 3,
+              animationTimeStep: 0.9,
+              spatterDirection: { x: 0, y: 0 },
+              transfersBackground: false,
+              spatterColors: [actor.renderer.background, COLORS.blue_light]
+            }).start()
+          },
+        },
+      })
     }
   }
 

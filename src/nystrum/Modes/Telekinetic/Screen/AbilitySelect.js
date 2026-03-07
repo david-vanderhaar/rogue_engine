@@ -19,6 +19,10 @@ import { MultiTargetAttackAndShove } from '../../../Actions/MultiTargetAttackAnd
 import gradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
 import { AddStatusEffectAtPositions } from '../../../Actions/AddStatusEffectAtPositions';
 import { HealthDrain } from '../StatusEffects/HealthDrain';
+import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
+import { SpeedDefenseDamageBuff } from '../StatusEffects/SpeedDefenseDamageBuff';
+import { MoveOrShove } from '../../../Actions/MoveOrShove';
+import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 
 
 // display available upgrades
@@ -62,6 +66,7 @@ function AbilitySelectScreen(props) {
   const upgrades = {
     buffs: [
       // Stacking Buffs
+      // // Tele Range
       {
         cost: 1,
         stacksUpTo: 2,
@@ -77,6 +82,7 @@ function AbilitySelectScreen(props) {
           actor.telekenticTriggerRange += 1
         },
       },
+      // // Tele Throw Distance
       {
         cost: 1,
         name: '+1 Throw Distance',
@@ -92,9 +98,11 @@ function AbilitySelectScreen(props) {
           actor.telekineticThrowRange += 1
         },
       },
+      // // +1 Health
       {
         cost: 1,
         name: '+1 Health',
+        alwaysAvailable: true,
         stacksUpTo: 10,
         description: 'Pain is only in the mind. Toughen Up.',
         renderer: {
@@ -107,7 +115,23 @@ function AbilitySelectScreen(props) {
           actor.increaseDurability(1)
         },
       },
-      // Mind Blast
+      // // +1 Mind
+      {
+        cost: 1,
+        name: '+1 Mind',
+        stacksUpTo: 10,
+        alwaysAvailable: true,
+        description: 'You mind expands, allowing more powerful manouvers.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          actor.chargeMax += 1
+          actor.increaseCharge(1)
+        },
+      },
+      // Mind Blast 1
       {
         cost: 1,
         name: 'Gain Mind Blast [1]',
@@ -209,7 +233,7 @@ function AbilitySelectScreen(props) {
           actor.addKeymapActionToBaseKeymap('1', keymapAction)
         },
       },
-      // Menacing Stare
+      // Menacing Stare 2
       {
         cost: 1,
         name: 'Gain Menacing Stare [1]',
@@ -337,7 +361,7 @@ function AbilitySelectScreen(props) {
           actor.addKeymapActionToBaseKeymap('2', keymapAction)
         },
       },
-      // Cerebral Pressure
+      // Cerebral Pressure 3
       {
         cost: 1,
         name: 'Gain Cerebral Pressure [1]',
@@ -466,13 +490,219 @@ function AbilitySelectScreen(props) {
           actor.addKeymapActionToBaseKeymap('3', keymapAction)
         },
       },
-      // Adrenal Control
-      // Harden Body
-      // Melee Capable
-      // Temporal Gap
-      // Illusory Copy
-      // Alter Swap
-      // Memory Seed
+      // Adrenal Control 4
+      {
+        cost: 1,
+        name: 'Gain Adrenal Control',
+        stacksUpTo: 1,
+        description: 'Increase your actions per turn by 1 for 3 turns',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Adrenal Control',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              speedBuff: 1,
+              lifespan: Constant.ENERGY_THRESHOLD * 3,
+              name: 'Adrenal Control',
+              description: 'at the cost of mind, you are faster'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('4', keymapAction)
+        },
+      },
+      // Melee Capable 5
+      {
+        cost: 1,
+        name: 'Gain Melee Capable',
+        stacksUpTo: 1,
+        description: 'Increase your attack damage by 1 for 3 turns',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Melee Capable',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              damageBuff: 1,
+              lifespan: Constant.ENERGY_THRESHOLD * 3,
+              name: 'Melee Capable',
+              description: 'at the cost of mind, you are stronger'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('5', keymapAction)
+        },
+      },
+      // Harden Body 6
+      {
+        cost: 1,
+        name: 'Gain Ignore Pain',
+        stacksUpTo: 1,
+        description: 'Increase your defense by 1 for 3 turns. Defense blocks incoming damage.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Ignore Pain',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              speedBuff: 1,
+              lifespan: Constant.ENERGY_THRESHOLD * 3,
+              name: 'Ignore Pain',
+              description: 'at the cost of mind, you are harder'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('6', keymapAction)
+        },
+      },
+      // Temporal Gap 7
+      {
+        cost: 1,
+        name: 'Gain Temporal Gap [1]',
+        stacksUpTo: 1,
+        description: 'Bend time for a quick getaway. Move up to 3 spaces away instantly.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Temporal Gap [1]',
+            game: actor.game,
+            actor,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources: [new MindResource({ getResourceCost: () => 3 })],
+            keymapTriggerString: '7',
+            range: 3,
+            actionClass: MoveOrShove,
+            cursorShape: Constant.CLONE_PATTERNS.point,
+            actionParams: {
+              onSuccess: () => {
+                SpatterEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  spatterAmount: .4,
+                  spatterRadius: 3,
+                  animationTimeStep: 0.9,
+                  spatterDirection: { x: 0, y: 0 },
+                  transfersBackground: false,
+                  spatterColors: [actor.renderer.background, COLORS.blue_light]
+                }).start()
+              },
+            },
+          })
+
+          actor.addKeymapActionToBaseKeymap('7', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Temporal Gap [2]',
+        preRequirements: ['Gain Temporal Gap [1]'],
+        stacksUpTo: 1,
+        description: 'Bend time for a quick getaway. Move up to 6 spaces away instantly.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Temporal Gap [2]',
+            game: actor.game,
+            actor,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources: [new MindResource({ getResourceCost: () => 4 })],
+            keymapTriggerString: '7',
+            range: 6,
+            actionClass: MoveOrShove,
+            cursorShape: Constant.CLONE_PATTERNS.point,
+            actionParams: {
+              onSuccess: () => {
+                SpatterEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  spatterAmount: .4,
+                  spatterRadius: 3,
+                  animationTimeStep: 0.9,
+                  spatterDirection: { x: 0, y: 0 },
+                  transfersBackground: false,
+                  spatterColors: [actor.renderer.background, COLORS.blue_light]
+                }).start()
+              },
+            },
+          })
+
+          actor.addKeymapActionToBaseKeymap('7', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Temporal Gap [3]',
+        preRequirements: ['Gain Temporal Gap [2]'],
+        stacksUpTo: 1,
+        description: 'Bend time for a quick getaway. Move up to 12 spaces away instantly.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Temporal Gap [3]',
+            game: actor.game,
+            actor,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources: [new MindResource({ getResourceCost: () => 5 })],
+            keymapTriggerString: '7',
+            range: 12,
+            actionClass: MoveOrShove,
+            cursorShape: Constant.CLONE_PATTERNS.point,
+            actionParams: {
+              onSuccess: () => {
+                SpatterEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  spatterAmount: .4,
+                  spatterRadius: 3,
+                  animationTimeStep: 0.9,
+                  spatterDirection: { x: 0, y: 0 },
+                  transfersBackground: false,
+                  spatterColors: [actor.renderer.background, COLORS.blue_light]
+                }).start()
+              },
+            },
+          })
+
+          actor.addKeymapActionToBaseKeymap('7', keymapAction)
+        },
+      },
+      // Illusory Copy 8
+      // Alter Swap 9
+      // Memory Seed 0
     ],
     potential_buffs: [
       {
@@ -496,6 +726,8 @@ function AbilitySelectScreen(props) {
 
   function availableUpgrades () {
     const available = upgrades.buffs.filter((upgrade) => {
+      // check if always available, ignore on this pass, add back in at the end
+      if (upgrade?.alwaysAvailable) return false
       // check for stacking
       const activeCount = getActiveUpgradesCountByName(upgrade.name)
       if (activeCount >= upgrade.stacksUpTo) return false
@@ -509,8 +741,13 @@ function AbilitySelectScreen(props) {
       return true
     })
 
-    return available
-    // return Helper.getNumberOfItemsInArray(3, available)
+    const alwaysAvailable = upgrades.buffs.filter((upgrade) => upgrade?.alwaysAvailable)
+
+    // return available
+    return [
+      ...Helper.getNumberOfItemsInArray(2, available),
+      ...Helper.getNumberOfItemsInArray(1, alwaysAvailable),
+    ]
   }
   
   return (

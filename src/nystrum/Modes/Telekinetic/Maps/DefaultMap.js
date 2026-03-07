@@ -11,6 +11,14 @@ export default function GenerateDefaultMap (mode) {
   mode.placeThrowables()
   // mode.startMissionManager()
   startMissionManager(mode)
+
+  window.addEventListener('keydown', (event) => {
+    // on =, go to next
+    if (event.key === 'Equals' || event.key === '=') {
+      mode.nextLevel();
+      // mode.game.initializeGameData();  
+    }
+  })
 }
 
 function startMissionManager(mode) {
