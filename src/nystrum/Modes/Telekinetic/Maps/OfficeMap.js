@@ -55,12 +55,12 @@ export default function GenerateOfficeMap (mode) {
     if (Helper.getXChance(0.5)) {
       if ([16, 17, 18, 19].includes(x)) continue; // skip elevator doors
       MapHelper.addTileToMap({map: mode.game.map, key: `${x},5`, tileKey: mode.tileKey, tileType: 'GROUND'})
-      generate(mode, { x, y: 5 }, SHAPES.point, ACTOR_PARAMS.window_wall)
+      generate(mode, { x, y: 5 }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
     }
     // south wall windows
     if (Helper.getXChance(0.5)) {
       MapHelper.addTileToMap({map: mode.game.map, key: `${x},20`, tileKey: mode.tileKey, tileType: 'GROUND'})
-      generate(mode, { x, y: 20 }, SHAPES.point, ACTOR_PARAMS.window_wall)
+      generate(mode, { x, y: 20 }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
     }
   }
 
@@ -68,12 +68,12 @@ export default function GenerateOfficeMap (mode) {
     // west wall windows
     if (Helper.getXChance(0.5)) {
       MapHelper.addTileToMap({map: mode.game.map, key: `5,${y}`, tileKey: mode.tileKey, tileType: 'GROUND'})
-      generate(mode, { x: 5, y }, SHAPES.point, ACTOR_PARAMS.window_wall)
+      generate(mode, { x: 5, y }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
     }
     // east wall windows
     if (Helper.getXChance(0.5)) {
       MapHelper.addTileToMap({map: mode.game.map, key: `29,${y}`, tileKey: mode.tileKey, tileType: 'GROUND'})
-      generate(mode, { x: 29, y }, SHAPES.point, ACTOR_PARAMS.window_wall)
+      generate(mode, { x: 29, y }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
     }
   }
 

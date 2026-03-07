@@ -9,6 +9,11 @@ import Mission from "../../../Mission/Mission";
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { DIRECTIONS } from "../../../constants";
 
+const CHANCE_OF_WALL_CONSTRUCTION = 0.5
+const CHANCE_OF_WINDOW_REPLACMENT = 0.25
+const CHANCE_OF_DRY_WALL = 0.3
+const INNER_MAP_DIMENSIONS = {x: 6, mx: 29, y: 5, my: 20}
+
 export default function GenerateConstructionMap (mode) {
   refreshColors({fg: COLORS.blue_dark})
   addInnerMostTileTypeFilled(mode, 'FREE_FALL', 0)
@@ -16,14 +21,81 @@ export default function GenerateConstructionMap (mode) {
   addInnerMostTileTypeFilled(mode, 'GROUND', 6)
   mode.game.initializeMapTiles();
 
-  generateHoles(mode, {x: 6, y: 6}, 23, 14)
-
+  
   const CENTER_POSITION = centerPosition(mode);
+  generateHoles(mode, {x: 6, y: 6}, 23, 14)
   // ranomd pars of outer wall missing
   // random windows on outer wall
+  const nUnderConstruction = Helper.getXChance(CHANCE_OF_WALL_CONSTRUCTION)
+  const sUnderConstruction = Helper.getXChance(CHANCE_OF_WALL_CONSTRUCTION)
+  const eUnderConstruction = Helper.getXChance(CHANCE_OF_WALL_CONSTRUCTION)
+  const wUnderConstruction = Helper.getXChance(CHANCE_OF_WALL_CONSTRUCTION)
+  for (let x = 5; x < 25; x++) {
+    // north wall windows
+    if (nUnderConstruction) {
+      if ([16, 17, 18, 19].includes(x)) continue; // skip elevator doors
+      MapHelper.addTileToMap({map: mode.game.map, key: `${x},5`, tileKey: mode.tileKey, tileType: 'GROUND'})
+      if (Helper.getXChance(CHANCE_OF_WINDOW_REPLACMENT)) {
+        generate(mode, { x, y: 5 }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
+      }
+    }
+    // south wall windows
+    if (sUnderConstruction) {
+      MapHelper.addTileToMap({map: mode.game.map, key: `${x},20`, tileKey: mode.tileKey, tileType: 'GROUND'})
+      if (Helper.getXChance(CHANCE_OF_WINDOW_REPLACMENT)) {
+        generate(mode, { x, y: 20 }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
+      }
+    }
+  }
+
+  for (let y = 7; y < 18; y++) {
+    // west wall windows
+    if (wUnderConstruction) {
+      MapHelper.addTileToMap({map: mode.game.map, key: `5,${y}`, tileKey: mode.tileKey, tileType: 'GROUND'})
+      if (Helper.getXChance(CHANCE_OF_WINDOW_REPLACMENT)) {
+        generate(mode, { x: 5, y }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
+      }
+    }
+    // east wall windows
+    if (eUnderConstruction) {
+      MapHelper.addTileToMap({map: mode.game.map, key: `29,${y}`, tileKey: mode.tileKey, tileType: 'GROUND'})
+      if (Helper.getXChance(CHANCE_OF_WINDOW_REPLACMENT)) {
+        generate(mode, { x: 29, y }, SHAPES.point, ACTOR_PARAMS.window_wall, createThrowable)
+      }
+    }
+  }
+
   // drywall walls in random Ls and lines
-  // drones can spawn in and move in from FREE_FALL areas
+  // find all GROUND
+    // for each, find neighbors
+      // if any neighbor is FREE_FALL AND no entity in GROUND TILE
+        // add dry wall 
+  MapHelper.getEmptyGroundTileKeys(mode.game).forEach((key) => {
+    const pos = Helper.stringToCoords(key)
+    if (pos.x < 6 || pos.x >= 29 || pos.y < 5 || pos.y >= 20) return;
+
+    const neighbs = Helper.getNeighboringTiles(mode.game.map, pos)
+    const hasFreeFallNeighbs = neighbs.find((tile) => tile.type == 'FREE_FALL')
+    if (hasFreeFallNeighbs && Helper.getXChance(CHANCE_OF_DRY_WALL)) {
+      generate(mode, pos, SHAPES.point, ACTOR_PARAMS.dry_wall)
+    }
+  })
+  
   // random water puddles, player can walk on at cost of mind, enemies cannot
+  // add a random number of blobs of random size of WATER
+  // using addTileZone
+  for (let i = 0; i < 3; i++) {
+    let size = Helper.getRandomInt(2, 4);
+    let x = Helper.getRandomInt(INNER_MAP_DIMENSIONS.x, INNER_MAP_DIMENSIONS.mx);
+    let y = Helper.getRandomInt(INNER_MAP_DIMENSIONS.y, INNER_MAP_DIMENSIONS.my);
+    console.log(x, y);
+    
+    MapHelper.addTileZoneFilledCircle(
+      { x, y },
+      size,
+      'WATER',
+    );
+  }
 
   // place construnction items (more damage)
   // const numberOfItems = Helper.getRandomIntInclusive(10, 40)
@@ -53,8 +125,14 @@ export default function GenerateConstructionMap (mode) {
   MapHelper.addTileToMap({map: mode.game.map, key: `18,4`, tileKey: mode.tileKey, tileType: 'WALL'})
   MapHelper.addTileToMap({map: mode.game.map, key: `16,4`, tileKey: mode.tileKey, tileType: 'WALL'})
   MapHelper.addTileToMap({map: mode.game.map, key: `19,4`, tileKey: mode.tileKey, tileType: 'WALL'})
-
   
+  // whole top row should be GROUND
+  for (let x = 6; x < 25; x++) {
+    MapHelper.addTileToMap({map: mode.game.map, key: `${x},6`, tileKey: mode.tileKey, tileType: 'GROUND'})
+  }
+
+  // drones can spawn in and move in from FREE_FALL areas
+
   // placePlayer In elevator
   mode.getPlayer().move({x: 17, y: 5})
 
@@ -64,14 +142,12 @@ export default function GenerateConstructionMap (mode) {
 function generateHoles (mode, offset, width = 24, height = 16) {
   const digger = new ROT.Map.Cellular(width, height);
   digger.randomize(0.4) // the higher this percentage, the hight the difficulty due to more tall grass
-  let freeCells = [];
   let digCallback = function (x, y, value) {      
     let key = `${x + offset.x},${y + offset.y}`
     // let type = Helper.getRandomInArray(['BURNT', 'BURNT'])
     let type = 'GROUND'
     if (value) type = 'FREE_FALL';
     MapHelper.addTileToMap({map: mode.game.map, key, tileKey: mode.game.tileKey, tileType: type})
-    freeCells.push(key);
   }
   digger.create(digCallback.bind(this));
   digger.connect(digCallback.bind(this))

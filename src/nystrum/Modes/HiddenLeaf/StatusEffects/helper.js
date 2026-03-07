@@ -4,8 +4,10 @@ import { WalkingOnWater } from "./WalkingOnWater";
 import { Burning } from "./Burning";
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from "../../HiddenLeaf/sounds";
 import Falling from "../../../StatusEffects/Falling";
+import { ChakraBleed } from "./ChakraBleed";
 
-export function checkIsWalkingOnWater (engine, actor) {
+
+export function checkIsWalkingOnWater (engine, actor, bleedStatusEffectClass = ChakraBleed) {
   if (engine.actorHasStatusEffect(actor.id, 'walking on water')) return;
 
   const tile = getTileAtPosition(engine.game, actor.getPosition())
@@ -16,6 +18,7 @@ export function checkIsWalkingOnWater (engine, actor) {
       game: engine.game,
       actor,
       stepInterval: ENERGY_THRESHOLD,
+      bleedStatusEffectClass,
     })
     engine.addStatusEffect(effect);
   }

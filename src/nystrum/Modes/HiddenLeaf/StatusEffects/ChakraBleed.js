@@ -2,10 +2,10 @@ import ConstantStatChange from '../../../StatusEffects/ConstantStatChange';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../HiddenLeaf/theme';
 
 export class ChakraBleed extends ConstantStatChange {
-  constructor({...args}) {
+  constructor({chargeBleedName = null, chargeBleedDescription = null, ...args}) {
     super({ ...args });
-    this.name = 'chakra bleed';
-    this.description = "chakra is being drained"
+    this.name = chargeBleedName || 'chakra bleed';
+    this.description = chargeBleedDescription || "chakra is being drained"
     this.lifespan = -1
     this.renderer = {
       color: HIDDEN_LEAF_COLORS.chakra,

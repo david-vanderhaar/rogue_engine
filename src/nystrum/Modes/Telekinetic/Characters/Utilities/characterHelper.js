@@ -12,6 +12,7 @@ import { GoToPreviousKeymap } from '../../../../Actions/GoToPreviousKeymap';
 import { StatChangeOnSelf } from '../../../../Actions/StatChangeOnSelf';
 import { Say } from '../../../../Actions/Say';
 import { SCREENS } from '../../Screen/constants';
+import { MindDrain } from '../../StatusEffects/MindDrain';
 
 export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
  return {
@@ -22,7 +23,7 @@ export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
   enemyFactions: ['OPPONENT'],
   faction: 'PLAYER',
   actions: [],
-  traversableTiles: ['FREE_FALL'],
+  traversableTiles: ['FREE_FALL', 'WATER'],
   onMove: ({actor}) => {
     onAfterMoveOrAttack(engine, actor)
   },
@@ -75,7 +76,7 @@ export function playRandomSoundFromArray(soundArray, soundOptions = {}) {
 }
 
 export function onAfterMoveOrAttack(engine, actor) {
-  checkIsWalkingOnWater(engine, actor)
+  checkIsWalkingOnWater(engine, actor, MindDrain)
   checkIsWalkingOnFire(engine, actor)
   checkIsWalkingOnFreeFall(engine, actor)
 }

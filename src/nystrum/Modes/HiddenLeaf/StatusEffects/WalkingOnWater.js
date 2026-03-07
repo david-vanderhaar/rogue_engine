@@ -6,7 +6,7 @@ import { ChakraBleed } from './ChakraBleed';
 import { COLORS as HIDDEN_LEAF_COLORS } from '../../HiddenLeaf/theme';
 
 export class WalkingOnWater extends Base {
-  constructor({...args}) {
+  constructor({bleedStatusEffectClass = ChakraBleed, ...args}) {
     super({ ...args });
     this.name = 'walking on water';
     this.description = "you are walking on water."
@@ -20,10 +20,10 @@ export class WalkingOnWater extends Base {
 
     this.onStart = () => {
       // add chakra bleed effect
-      const effect = new ChakraBleed({
+      const effect = new bleedStatusEffectClass({
         game: this.game,
         actor: this.actor,
-        stepInterval: ENERGY_THRESHOLD
+        stepInterval: ENERGY_THRESHOLD,
       })
       this['chakraBleedEffect'] = effect
       this.game.engine.addStatusEffect(effect);
