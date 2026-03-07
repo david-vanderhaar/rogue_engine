@@ -20,6 +20,9 @@ import { PrepareTelekinesisThrow } from '../../../Actions/PrepareTelekinesisThro
 import { PrepareRangedTelekinesisAction } from '../../../Actions/PrepareRangedTelekinesisAction';
 import { MultiTargetAttackAndShove } from '../../../Actions/MultiTargetAttackAndShove';
 import gradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
+import { HealthDrain } from '../StatusEffects/HealthDrain';
+import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
+import { SpeedDefenseDamageBuff } from '../StatusEffects/SpeedDefenseDamageBuff';
 
 const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
@@ -81,6 +84,51 @@ function initialize (engine) {
         cursorShape: Constant.CLONE_PATTERNS.point,
         // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
       }),
+      2: () => new AddStatusEffect({
+              label: 'Adrenal Control',
+              game: actor.game,
+              actor,
+              energyCost: 0,
+              requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+              effect: new SpeedDefenseDamageBuff({
+                game: actor.game,
+                actor,
+                speedBuff: 1,
+                lifespan: Constant.ENERGY_THRESHOLD * 3,
+                name: 'Adrenal Control',
+                description: 'at the cost of mind, you are faster'
+              }),
+            }),
+      3: () => new AddStatusEffect({
+              label: 'Melee Capable',
+              game: actor.game,
+              actor,
+              energyCost: 0,
+              requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+              effect: new SpeedDefenseDamageBuff({
+                game: actor.game,
+                actor,
+                damageBuff: 1,
+                lifespan: Constant.ENERGY_THRESHOLD * 3,
+                name: 'Melee Capable',
+                description: 'at the cost of mind, you are stronger'
+              }),
+            }),
+      5: () => new AddStatusEffect({
+              label: 'Harden Body',
+              game: actor.game,
+              actor,
+              energyCost: 0,
+              requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+              effect: new SpeedDefenseDamageBuff({
+                game: actor.game,
+                actor,
+                defenseBuff: 1,
+                lifespan: Constant.ENERGY_THRESHOLD * 3,
+                name: 'Harden Body',
+                description: 'at the cost of mind, you are harder'
+              }),
+            }),
     }
   }
 

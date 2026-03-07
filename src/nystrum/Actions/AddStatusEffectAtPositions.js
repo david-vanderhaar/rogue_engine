@@ -3,11 +3,12 @@ import * as Helper from '../../helper'
 import { GLOBAL_EVENT_BUS } from '../Events/EventBus';
 
 export class AddStatusEffectAtPositions extends Base {
-  constructor({ createEffect, targetPositions, processDelay = 25, ...args }) {
+  constructor({ createEffect, targetPositions, doNotApplyToSelf = false, processDelay = 25, ...args }) {
     super({ ...args });
     this.createEffect = createEffect;
     this.targetPositions = targetPositions;
     this.processDelay = processDelay;
+    this.doNotApplyToSelf = doNotApplyToSelf
   }
   perform() {
     let successes = []
@@ -16,9 +17,14 @@ export class AddStatusEffectAtPositions extends Base {
       // get entity at target position
       const targets = Helper.getEntitiesByPosition({game: this.game, position: position});
       if (targets.length) {
+        let success = false
+        const target = targets.at(0);
+
+        if (this.doNotApplyToSelf && target.id === this.actor.id) return;
+
         const effect = this.createEffect()
-        effect.actor = targets.at(0);
-        const success = this.game.engine.addStatusEffect(effect)
+        effect.actor = target
+        success = this.game.engine.addStatusEffect(effect)
         successes.push(success);
 
         if (success) {

@@ -17,6 +17,8 @@ import gradientPathEmitter from '../../../Engine/Particle/Emitters/gradientPathE
 import Stunned from '../../../StatusEffects/Stunned';
 import { MultiTargetAttackAndShove } from '../../../Actions/MultiTargetAttackAndShove';
 import gradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
+import { AddStatusEffectAtPositions } from '../../../Actions/AddStatusEffectAtPositions';
+import { HealthDrain } from '../StatusEffects/HealthDrain';
 
 
 // display available upgrades
@@ -59,6 +61,7 @@ function AbilitySelectScreen(props) {
 
   const upgrades = {
     buffs: [
+      // Stacking Buffs
       {
         cost: 1,
         stacksUpTo: 2,
@@ -104,6 +107,7 @@ function AbilitySelectScreen(props) {
           actor.increaseDurability(1)
         },
       },
+      // Mind Blast
       {
         cost: 1,
         name: 'Gain Mind Blast [1]',
@@ -205,11 +209,12 @@ function AbilitySelectScreen(props) {
           actor.addKeymapActionToBaseKeymap('1', keymapAction)
         },
       },
+      // Menacing Stare
       {
         cost: 1,
-        name: 'Gain Menacing Stare',
+        name: 'Gain Menacing Stare [1]',
         stacksUpTo: 1,
-        description: 'I can peirce their mind with a look. Hold still!',
+        description: 'Freezes an enemy with fear for 1 turn.',
         renderer: {
           background: COLORS.dark_accent,
           color: COLORS.light,
@@ -223,7 +228,49 @@ function AbilitySelectScreen(props) {
             range: 10,
             passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
             passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
-            keymapTriggerString: 'c',
+            keymapTriggerString: '1',
+            // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+            actionClass: AddStatusEffectAtPosition,
+            actionParams: {
+              effect: new ShadowHold({ game: actor.game, turnsStunned: 2, backgroundColor: COLORS.blue_light }),
+              label: 'Paralyzed [1]',
+              onSuccess: () => {
+                gradientPathEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  targetPositions: actor.getCursorPositions(),
+                  animationTimeStep: 0.8,
+                  // animationTimeStep: 0.1,
+                  // transfersBackground: true,
+                  backgroundColorGradient: [COLORS.blue_light, COLORS.black],
+                  character: '',
+                }).start()
+              }
+            }
+          })
+
+          actor.addKeymapActionToBaseKeymap('2', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Menacing Stare [2]',
+        stacksUpTo: 1,
+        preRequirements: ['Gain Menacing Stare [1]'],
+        description: 'Freezes an enemy with fear for 2 turns.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Menacing Stare [2]',
+            game: actor.game,
+            actor,
+            range: 10,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
+            keymapTriggerString: '2',
             // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
             actionClass: AddStatusEffectAtPosition,
             actionParams: {
@@ -247,6 +294,185 @@ function AbilitySelectScreen(props) {
           actor.addKeymapActionToBaseKeymap('2', keymapAction)
         },
       },
+      {
+        cost: 1,
+        name: 'Gain Menacing Stare [3]',
+        stacksUpTo: 1,
+        preRequirements: ['Gain Menacing Stare [2]'],
+        description: 'Freezes multiple enemies with fear for 3 turns.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Menacing Stare [3]',
+            game: actor.game,
+            actor,
+            range: 10,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
+            keymapTriggerString: '2',
+            actionClass: AddStatusEffectAtPositions,
+            cursorShape: Constant.CLONE_PATTERNS.circle_2_filled,
+            actionParams: {
+              doNotApplyToSelf: true,
+              createEffect: () => new ShadowHold({ game: actor.game, turnsStunned: 3, backgroundColor: COLORS.blue_light }),
+              label: 'Paralyzed [3]',
+              onSuccess: () => {
+                gradientPathEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  targetPositions: actor.getCursorPositions(),
+                  animationTimeStep: 0.8,
+                  // animationTimeStep: 0.1,
+                  // transfersBackground: true,
+                  backgroundColorGradient: [COLORS.blue_light, COLORS.black],
+                  character: '',
+                }).start()
+              }
+            }
+          })
+
+          actor.addKeymapActionToBaseKeymap('2', keymapAction)
+        },
+      },
+      // Cerebral Pressure
+      {
+        cost: 1,
+        name: 'Gain Cerebral Pressure [1]',
+        stacksUpTo: 1,
+        description: 'Does 1 damage per turn until death, but with limited activation range.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Cerebral Pressure [1]',
+            game: actor.game,
+            actor,
+            range: 3,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            keymapTriggerString: '3',
+            actionClass: AddStatusEffectAtPositions,
+            cursorShape: Constant.CLONE_PATTERNS.point,
+            actionParams: {
+              doNotApplyToSelf: true,
+              createEffect: () => new HealthDrain({ game: actor.game, changeByValue: 1 }),
+              label: 'Bleed [1]',
+              onSuccess: () => {
+                gradientPathEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  targetPositions: actor.getCursorPositions(),
+                  animationTimeStep: 0.8,
+                  // animationTimeStep: 0.1,
+                  // transfersBackground: true,
+                  backgroundColorGradient: [COLORS.black, COLORS.red],
+                  character: '',
+                }).start()
+              }
+            }
+          })
+
+          actor.addKeymapActionToBaseKeymap('3', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Cerebral Pressure [2]',
+        preRequirements: ['Gain Cerebral Pressure [1]'],
+        stacksUpTo: 1,
+        description: 'Does 1 damage per turn until death, with extended activation range.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Cerebral Pressure [2]',
+            game: actor.game,
+            actor,
+            range: 6,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            keymapTriggerString: '3',
+            actionClass: AddStatusEffectAtPositions,
+            cursorShape: Constant.CLONE_PATTERNS.point,
+            actionParams: {
+              doNotApplyToSelf: true,
+              createEffect: () => new HealthDrain({ game: actor.game, changeByValue: 1 }),
+              label: 'Bleed [1]',
+              onSuccess: () => {
+                gradientPathEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  targetPositions: actor.getCursorPositions(),
+                  animationTimeStep: 0.8,
+                  // animationTimeStep: 0.1,
+                  // transfersBackground: true,
+                  backgroundColorGradient: [COLORS.black, COLORS.red],
+                  character: '',
+                }).start()
+              }
+            }
+          })
+
+          actor.addKeymapActionToBaseKeymap('3', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Cerebral Pressure [3]',
+        preRequirements: ['Gain Cerebral Pressure [2]'],
+        stacksUpTo: 1,
+        description: 'Does 2 damage per turn until death, with extended activation range and area of effect.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new PrepareRangedAction({
+            label: 'Cerebral Pressure [3]',
+            game: actor.game,
+            actor,
+            range: 6,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
+            passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            keymapTriggerString: '3',
+            actionClass: AddStatusEffectAtPositions,
+            cursorShape: Constant.CLONE_PATTERNS.square,
+            actionParams: {
+              doNotApplyToSelf: true,
+              createEffect: () => new HealthDrain({ game: actor.game, changeByValue: 2 }),
+              label: 'Bleed [2]',
+              onSuccess: () => {
+                gradientPathEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  targetPositions: actor.getCursorPositions(),
+                  animationTimeStep: 0.8,
+                  // animationTimeStep: 0.1,
+                  // transfersBackground: true,
+                  backgroundColorGradient: [COLORS.black, COLORS.red],
+                  character: '',
+                }).start()
+              }
+            }
+          })
+
+          actor.addKeymapActionToBaseKeymap('3', keymapAction)
+        },
+      },
+      // Adrenal Control
+      // Harden Body
+      // Melee Capable
+      // Temporal Gap
+      // Illusory Copy
+      // Alter Swap
+      // Memory Seed
     ],
     potential_buffs: [
       {
