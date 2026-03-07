@@ -42,9 +42,11 @@ export class Telekinetic extends Mode {
 
   levelGenerators() {
     return [
+      GenerateDefaultMap,
+      GenerateDefaultMap,
       // GenerateLabMap,
       // GenerateOfficeMap,
-      GenerateConstructionMap,
+      // GenerateConstructionMap,
     ]
   }
 

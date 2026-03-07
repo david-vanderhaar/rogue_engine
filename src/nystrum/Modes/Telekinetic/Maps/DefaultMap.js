@@ -1,3 +1,5 @@
+import Mission from "../../../Mission/Mission";
+
 export default function GenerateDefaultMap (mode) {
   mode.createEmptyLevel();
   mode.game.initializeMapTiles();
@@ -7,5 +9,21 @@ export default function GenerateDefaultMap (mode) {
   // TODO: get from wave data
   mode.addEnemies(1, 'addRandom')
   mode.placeThrowables()
-  mode.startMissionManager()
+  // mode.startMissionManager()
+  startMissionManager(mode)
+}
+
+function startMissionManager(mode) {
+  const player = mode.game.getFirstPlayer();
+
+  mode.initializeMissionManager({
+    missions: [
+      new Mission({
+        name: 'Don\'t Fall',
+        description: 'Proceed to dark spaced tile, where the floor fell away. See what happens.',
+        timesToComplete: 1,
+        eventToComplete: `${player?.id}:move:tileType:GROUND`,
+      }),
+    ]
+  })
 }

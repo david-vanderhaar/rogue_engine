@@ -37,6 +37,48 @@ function AbilitySelectScreen(props) {
     buffs: [
       {
         cost: 1,
+        name: '+4 Telekinesis Range',
+        description: 'Your can reach out 2 tiles further into the world.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active extra 3 t range');
+          if (!actor['telekenticTriggerRange']) actor['telekenticTriggerRange'] = 3;
+          actor.telekenticTriggerRange += 2
+        },
+      },
+      {
+        cost: 1,
+        name: '+3 Telekinesis Range',
+        description: 'Your can reach out 2 tiles further into the world.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active extra 3 t range');
+          if (!actor['telekenticTriggerRange']) actor['telekenticTriggerRange'] = 3;
+          actor.telekenticTriggerRange += 2
+        },
+      },
+      {
+        cost: 1,
+        name: '+2 Telekinesis Range',
+        description: 'Your can reach out 2 tiles further into the world.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          console.log('active extra t range');
+          if (!actor['telekenticTriggerRange']) actor['telekenticTriggerRange'] = 3;
+          actor.telekenticTriggerRange += 2
+        },
+      },
+      {
+        cost: 1,
         name: '+1 Telekinesis Range',
         description: 'Your can reach out 1 tile further into the world.',
         renderer: {
@@ -51,7 +93,7 @@ function AbilitySelectScreen(props) {
       },
       {
         cost: 1,
-        name: '+1 Telekinesis Throw Range',
+        name: '+1 Throw Range',
         description: 'Your can throw objects 1 tile further.',
         renderer: {
           background: COLORS.dark_accent,

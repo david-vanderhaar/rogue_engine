@@ -136,8 +136,6 @@ export default function GenerateConstructionMap (mode) {
     MapHelper.addTileToMap({map: mode.game.map, key: `${x},6`, tileKey: mode.tileKey, tileType: 'GROUND'})
   }
 
-  // drones can spawn in and move in from FREE_FALL areas
-
   // placePlayer In elevator
   mode.getPlayer().move({x: 17, y: 5})
 

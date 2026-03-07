@@ -17,48 +17,48 @@ const CharacterCardSelect = ({upgrades: characters, setActiveScreen, setSelected
   const [selected, setSelected] = useState(0);
   const cardRefs = useRef([]);
 
-  // Reorder the array so selected character is in the middle
+  const selectedRef = useRef(selected);
+  useEffect(() => {
+    selectedRef.current = selected;
+  }, [selected]);
+
   const getReorderedCharacters = (selectedIndex) => {
     const reordered = [...characters];
     const length = characters.length;
     const middle = Math.floor(length / 2);
 
-    // shift the array so the selected character is in the middle
-    // based on the selected index
-    for (let i = 0; i < (selectedIndex + middle); i++) {
+    const shift = (selectedIndex - middle + length) % length;
+
+    for (let i = 0; i < shift; i++) {
       reordered.push(reordered.shift());
     }
+
     return reordered;
   };
 
   // allow number key events and arrow keys to select character
   useEffect(() => {
     const handleKeyPress = (event) => {
-      // left arrow or "a" key
       if (event.key === 'ArrowLeft' || event.key === 'a') {
-        playButtonSound()
-        setSelected((prev) => {
-          const newIndex = prev > 0 ? prev - 1 : characters.length - 1;
-          return newIndex;
-        });
-      } else if (event.key === 'ArrowRight'|| event.key === 'd') {
-        playButtonSound()
-        setSelected((prev) => {
-          const newIndex = prev < characters.length - 1 ? prev + 1 : 0;
-          return newIndex;
-        });
-      } else if (event.key === 'Enter') {
-        setSelectedCharacter(characters[selected]);
+        playButtonSound();
+        setSelected(prev => prev > 0 ? prev - 1 : characters.length - 1);
+      }
+
+      else if (event.key === 'ArrowRight' || event.key === 'd') {
+        playButtonSound();
+        setSelected(prev => prev < characters.length - 1 ? prev + 1 : 0);
+      }
+
+      else if (event.key === 'Enter') {
+        const current = selectedRef.current;
+        setSelectedCharacter(characters[current]);
         setActiveScreenWithSound(SCREENS.LEVEL);
       }
     };
-    // Add event listener when the component mounts
+
     window.addEventListener('keydown', handleKeyPress);
-    // Clean up by removing the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [selected, characters, setActiveScreen, setSelectedCharacter]);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [characters]);
 
   return (
     <div style={{
@@ -78,8 +78,8 @@ const CharacterCardSelect = ({upgrades: characters, setActiveScreen, setSelected
         {
           getReorderedCharacters(selected).map((character, index) => {
             // Calculate the visual index relative to the center
-            // const visualIndex = index - Math.floor(characters.length / 2);
-            const visualIndex = index
+            const visualIndex = index - Math.floor(characters.length / 2);
+            // const visualIndex = index
             const distanceFromCenter = Math.abs(visualIndex);
             const opacity = 1 - (distanceFromCenter * 0.3);
 
@@ -98,7 +98,7 @@ const CharacterCardSelect = ({upgrades: characters, setActiveScreen, setSelected
                   character={character}
                   setSelectedCharacter={setSelectedCharacter}
                   setActiveScreen={setActiveScreenWithSound}
-                  index={characters.indexOf(character)} // Use original index for reference
+                  // index={characters.indexOf(character)} // Use original index for reference
                   ref={(el) => cardRefs.current[characters.indexOf(character)] = el}
                   selectedStyle={visualIndex === 0}
                 />
@@ -162,12 +162,12 @@ const CharacterCard = React.forwardRef(({character, setActiveScreen, setSelected
       </div> */}
       {/* the character's name */}
       <div>
-        {actor.name}
+        <b>{actor.name}</b>
       </div>
       {/* the character's description */}
-      <div>
+      <p>
         {actor.description}
-      </div>
+      </p>
     </button>
   )
 });
