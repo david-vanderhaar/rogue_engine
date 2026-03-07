@@ -13,6 +13,8 @@ const CHANCE_OF_WALL_CONSTRUCTION = 0.5
 const CHANCE_OF_WINDOW_REPLACMENT = 0.25
 const CHANCE_OF_DRY_WALL = 0.3
 const INNER_MAP_DIMENSIONS = {x: 6, mx: 29, y: 5, my: 20}
+const NUMBER_OF_ITEMS = {min: 10, max: 40}
+const NUMBER_OF_EXPLOSIVES = {min: 2, max: 6}
 
 export default function GenerateConstructionMap (mode) {
   refreshColors({fg: COLORS.blue_dark})
@@ -85,10 +87,9 @@ export default function GenerateConstructionMap (mode) {
   // add a random number of blobs of random size of WATER
   // using addTileZone
   for (let i = 0; i < 3; i++) {
-    let size = Helper.getRandomInt(2, 4);
-    let x = Helper.getRandomInt(INNER_MAP_DIMENSIONS.x, INNER_MAP_DIMENSIONS.mx);
-    let y = Helper.getRandomInt(INNER_MAP_DIMENSIONS.y, INNER_MAP_DIMENSIONS.my);
-    console.log(x, y);
+    let size = Helper.getRandomInt(2, 3);
+    let x = Helper.getRandomInt(INNER_MAP_DIMENSIONS.x + 2, INNER_MAP_DIMENSIONS.mx - 2);
+    let y = Helper.getRandomInt(INNER_MAP_DIMENSIONS.y + 2, INNER_MAP_DIMENSIONS.my - 2);
     
     MapHelper.addTileZoneFilledCircle(
       { x, y },
@@ -98,25 +99,26 @@ export default function GenerateConstructionMap (mode) {
   }
 
   // place construnction items (more damage)
-  // const numberOfItems = Helper.getRandomIntInclusive(10, 40)
-  // Helper.getNumberOfItemsInArray(numberOfItems, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
-  //   const pos = Helper.stringToCoords(key)
-  //   const params = Helper.getRandomInArray([
-  //     ACTOR_PARAMS.bottle,
-  //     ACTOR_PARAMS.scissors,
-  //     ACTOR_PARAMS.stapler,
-  //     ACTOR_PARAMS.mug,
-  //     ACTOR_PARAMS.pencil,
-  //     ACTOR_PARAMS.phone,
-  //   ])
-  //   generate(mode, pos, SHAPES.point, params, createThrowable)
-  // })
+  const numberOfItems = Helper.getRandomIntInclusive(NUMBER_OF_ITEMS.min, NUMBER_OF_ITEMS.max)
+  Helper.getNumberOfItemsInArray(numberOfItems, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
+    const pos = Helper.stringToCoords(key)
+    const params = Helper.getRandomInArray([
+      ACTOR_PARAMS.hammer,
+      // ACTOR_PARAMS.nail_pile,
+      // ACTOR_PARAMS.helmet,
+      // ACTOR_PARAMS.two_by_four,
+      // ACTOR_PARAMS.four_by_eight,
+      // ACTOR_PARAMS.metal_sheet,
+      // ACTOR_PARAMS.saw_blade,
+    ])
+    generate(mode, pos, SHAPES.point, params, createThrowable)
+  })
 
-  // const numberOfExplosiveItems = Helper.getRandomIntInclusive(1, 3)
-  // Helper.getNumberOfItemsInArray(numberOfExplosiveItems, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
-  //   const pos = Helper.stringToCoords(key)
-  //   generate(mode, pos, SHAPES.point, ACTOR_PARAMS.fire_extinguisher, createExplosiveThrowable)
-  // })
+  const numberOfExplosiveItems = Helper.getRandomIntInclusive(NUMBER_OF_EXPLOSIVES.min, NUMBER_OF_EXPLOSIVES.max)
+  Helper.getNumberOfItemsInArray(numberOfExplosiveItems, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
+    const pos = Helper.stringToCoords(key)
+    generate(mode, pos, SHAPES.point, ACTOR_PARAMS.fire_extinguisher, createExplosiveThrowable)
+  })
 
   // place elevator doors
   MapHelper.addTileToMap({map: mode.game.map, key: `17,5`, tileKey: mode.tileKey, tileType: 'ELEVATOR'})

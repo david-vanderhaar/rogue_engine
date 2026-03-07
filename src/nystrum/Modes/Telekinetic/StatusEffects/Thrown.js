@@ -41,20 +41,12 @@ export default class Thrown  extends Base {
 
   step (timePassed) {
     super.step(timePassed)
-    console.log(timePassed);
-    
     // move in direction
     if (!this.isProjectileType()) {
       for (let index = 0; index < this.range; index++) {
         const targetPos = this.actor.getPosition()
         this.actor.move(getPositionInDirection(targetPos, this.direction))
       }
-
-      // const targetPos = this.actor.getPosition()
-      // this.actor.move(getPositionInDirection(targetPos, this.direction))
-      // this.actor.move(getPositionInDirection(targetPos, this.direction))
-      // console.log(this.timeToLive);
-      // this.timeToLive -= 100
     }
 
     this.runParticleEffects()
@@ -119,7 +111,8 @@ export default class Thrown  extends Base {
     this.actor.direction = this.direction;
     this.actor.range = this.range;
     // this.actor.durability = this.range;
-    this.actor.speed = ENERGY_THRESHOLD;
+    // this.actor.speed = ENERGY_THRESHOLD;
+    this.actor.energy = ENERGY_THRESHOLD;
   }
 
   actorIsInEngine () {
