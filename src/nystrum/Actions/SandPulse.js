@@ -8,9 +8,17 @@ import { SOUNDS } from '../Modes/HiddenLeaf/sounds';
 
 
 export class SandPulse extends Base {
-  constructor({ ...args }) {
+  constructor({
+    renderer = {
+      character: ']',
+      color: '#A89078',
+      background: '#D8C0A8',
+    },
+    ...args 
+  }) {
     super({ ...args });
     this.interrupt = true
+    this.renderer = renderer
   }
 
   perform () {
@@ -18,11 +26,7 @@ export class SandPulse extends Base {
       game: this.game,
       passable: false,
       pos: this.actor.pos,
-      renderer: {
-        character: ']',
-        color: '#A89078',
-        background: '#D8C0A8',
-      },
+      renderer: this.renderer,
       name: TYPE.KUNAI,
       durability: 3,
       range: 3,

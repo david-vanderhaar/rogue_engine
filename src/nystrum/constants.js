@@ -413,6 +413,20 @@ export const CLONE_PATTERNS = {
       { x: -1, y: 0, taken: false, },
     ]
   },
+  clover_2: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+      { x: 0, y: 2, taken: false, },
+      { x: 2, y: 0, taken: false, },
+      { x: 0, y: -2, taken: false, },
+      { x: -2, y: 0, taken: false, },
+    ]
+  },
   filledClover: {
     x_offset: 0,
     y_offset: 0,
@@ -465,6 +479,57 @@ export const CLONE_PATTERNS = {
     ]
   },
   big_circle: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      // { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 1, y: -1, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+      { x: -1, y: 1, taken: false, },
+      ...Helper.getPointsOnCircumference(0, 0, 2),
+      ...Helper.getPointsOnCircumference(0, 0, 3),
+      ...Helper.getPointsOnCircumference(0, 0, 4)
+    ]
+  },
+  circle_2: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      // { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 1, y: -1, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+      { x: -1, y: 1, taken: false, },
+      ...Helper.getPointsOnCircumference(0, 0, 2),
+    ]
+  },
+  circle_3: {
+    x_offset: 0,
+    y_offset: 0,
+    positions: [
+      // { x: 0, y: 0, taken: false, },
+      { x: 0, y: 1, taken: false, },
+      { x: 1, y: 1, taken: false, },
+      { x: 1, y: 0, taken: false, },
+      { x: 1, y: -1, taken: false, },
+      { x: 0, y: -1, taken: false, },
+      { x: -1, y: -1, taken: false, },
+      { x: -1, y: 0, taken: false, },
+      { x: -1, y: 1, taken: false, },
+      ...Helper.getPointsOnCircumference(0, 0, 2),
+      ...Helper.getPointsOnCircumference(0, 0, 3),
+    ]
+  },
+  circle_4: {
     x_offset: 0,
     y_offset: 0,
     positions: [

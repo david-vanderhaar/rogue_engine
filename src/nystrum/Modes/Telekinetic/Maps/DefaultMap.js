@@ -23,6 +23,7 @@ function startMissionManager(mode) {
         description: 'Proceed to dark spaced tile, where the floor fell away. See what happens.',
         timesToComplete: 1,
         eventToComplete: `${player?.id}:move:tileType:GROUND`,
+        // eventToComplete: `${player?.id}:move:tileType:FREE_FALL`,
       }),
     ]
   })

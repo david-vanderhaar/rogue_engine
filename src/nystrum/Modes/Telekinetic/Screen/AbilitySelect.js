@@ -1,19 +1,22 @@
 import React, {useEffect} from 'react';
+import * as lodash from 'lodash'
 import { SOUNDS } from '../sounds'
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { CARTRIDGE } from '../../../Nystrum';
 import CharacterSelect from '../UI/CharacterCardSelect'
 import { SCREENS } from './constants';
-import { ENERGY_THRESHOLD } from '../../../constants';
+import * as Constant from '../../../constants';
 import { COLORS } from '../theme';
 import { Say } from '../../../Actions/Say';
-import { getNumberOfItemsInArray } from '../../../../helper';
+import * as Helper from '../../../../helper'
 import { PrepareRangedAction } from '../../../Actions/PrepareRangedAction';
 import { MindResource } from '../../../Actions/ActionResources/MindResource';
 import ShadowHold from '../../../StatusEffects/ShadowHold';
 import { AddStatusEffectAtPosition } from '../../../Actions/AddStatusEffectAtPosition';
 import gradientPathEmitter from '../../../Engine/Particle/Emitters/gradientPathEmitter';
 import Stunned from '../../../StatusEffects/Stunned';
+import { MultiTargetAttackAndShove } from '../../../Actions/MultiTargetAttackAndShove';
+import gradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
 
 
 // display available upgrades
@@ -40,10 +43,25 @@ function AbilitySelectScreen(props) {
     meta['upgrades'].push({...upgrade})
   }
 
+  function getActiveUpgrades () {
+    const meta = props.meta()
+    if (!meta?.upgrades) return []
+    return meta.upgrades
+  }
+
+  function getActiveUpgradesNames() {
+    return getActiveUpgrades().map((i) => i.name)
+  }
+
+  function getActiveUpgradesCountByName(name) {
+    return getActiveUpgradesNames().filter((active) => active === name).length
+  }
+
   const upgrades = {
     buffs: [
       {
         cost: 1,
+        stacksUpTo: 2,
         name: '+1 Telekinesis Range',
         description: 'Your can activate a throw 1 tile further.',
         renderer: {
@@ -59,6 +77,7 @@ function AbilitySelectScreen(props) {
       {
         cost: 1,
         name: '+1 Throw Distance',
+        stacksUpTo: 4,
         description: 'Your can throw objects 1 tile further.',
         renderer: {
           background: COLORS.dark_accent,
@@ -73,6 +92,7 @@ function AbilitySelectScreen(props) {
       {
         cost: 1,
         name: '+1 Health',
+        stacksUpTo: 10,
         description: 'Pain is only in the mind. Toughen Up.',
         renderer: {
           background: COLORS.dark_accent,
@@ -85,8 +105,110 @@ function AbilitySelectScreen(props) {
         },
       },
       {
-        cost: 3,
+        cost: 1,
+        name: 'Gain Mind Blast [1]',
+        stacksUpTo: 1,
+        description: 'Foes are pushed back 1 space in all cardinal directions from your position.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => {
+            return new MultiTargetAttackAndShove({
+              label: 'Mind Blast [1]',
+              targetPositions: Helper.getPositionsFromStructure(Constant.CLONE_PATTERNS.clover, actor.getPosition()),
+              game: actor.game,
+              actor,
+              energyCost: (Constant.ENERGY_THRESHOLD * 1),
+              requiredResources: [new MindResource({ getResourceCost: () => 2 })],
+              onSuccess: () => {
+                gradientRadialEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  radius: 1,
+                  colorGradient: [COLORS.light, COLORS.blue_light],
+                  backgroundColorGradient: [COLORS.blue_light, COLORS.blue_light],
+                }).start()
+              }
+            })
+          }
+
+          actor.addKeymapActionToBaseKeymap('1', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Mind Blast [2]',
+        stacksUpTo: 1,
+        preRequirements: ['Gain Mind Blast [1]'],
+        description: 'Foes are pushed back 2 space in all cardinal directions from your position.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => {
+            return new MultiTargetAttackAndShove({
+              label: 'Mind Blast [2]',
+              targetPositions: Helper.getPositionsFromStructure(Constant.CLONE_PATTERNS.clover_2, actor.getPosition()),
+              game: actor.game,
+              actor,
+              energyCost: (Constant.ENERGY_THRESHOLD * 1),
+              requiredResources: [new MindResource({ getResourceCost: () => 3 })],
+              onSuccess: () => {
+                gradientRadialEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  radius: 1,
+                  colorGradient: [COLORS.light, COLORS.blue_light],
+                  backgroundColorGradient: [COLORS.blue_light, COLORS.blue_light],
+                }).start()
+              }
+            })
+          }
+
+          actor.addKeymapActionToBaseKeymap('1', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Mind Blast [3]',
+        stacksUpTo: 1,
+        preRequirements: ['Gain Mind Blast [2]'],
+        description: 'Foes are pushed back 1 space in all directions from your position.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => {
+            return new MultiTargetAttackAndShove({
+              label: 'Mind Blast [3]',
+              targetPositions: Helper.getPositionsFromStructure(Constant.CLONE_PATTERNS.circle_3, actor.getPosition()),
+              game: actor.game,
+              actor,
+              energyCost: (Constant.ENERGY_THRESHOLD * 1),
+              requiredResources: [new MindResource({ getResourceCost: () => 4 })],
+              onSuccess: () => {
+                gradientRadialEmitter({
+                  game: actor.game,
+                  fromPosition: actor.getPosition(),
+                  radius: 1,
+                  colorGradient: [COLORS.light, COLORS.blue_light],
+                  backgroundColorGradient: [COLORS.blue_light, COLORS.blue_light],
+                }).start()
+              }
+            })
+          }
+
+          actor.addKeymapActionToBaseKeymap('1', keymapAction)
+        },
+      },
+      {
+        cost: 1,
         name: 'Gain Menacing Stare',
+        stacksUpTo: 1,
         description: 'I can peirce their mind with a look. Hold still!',
         renderer: {
           background: COLORS.dark_accent,
@@ -99,7 +221,7 @@ function AbilitySelectScreen(props) {
             game: actor.game,
             actor,
             range: 10,
-            passThroughEnergyCost: ENERGY_THRESHOLD,
+            passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
             passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
             keymapTriggerString: 'c',
             // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
@@ -122,28 +244,15 @@ function AbilitySelectScreen(props) {
             }
           })
 
-          actor.addKeymapActionToBaseKeymap('c', keymapAction)
-        },
-      },
-      {
-        cost: 3,
-        name: '+1 Actions',
-        description: 'My mind is racing! Everything around me is slowing down.',
-        renderer: {
-          background: COLORS.dark_accent,
-          color: COLORS.light,
-        },
-        activate: (actor) => {
-          console.log('active extra action');
-          actor.speed += ENERGY_THRESHOLD;
-          actor.energy += ENERGY_THRESHOLD;
+          actor.addKeymapActionToBaseKeymap('2', keymapAction)
         },
       },
     ],
     potential_buffs: [
       {
-        cost: 3,
+        cost: 1,
         name: '+1 Actions',
+        stacksUpTo: 1,
         description: 'My mind is racing! Everything around me is slowing down.',
         renderer: {
           background: COLORS.dark_accent,
@@ -151,12 +260,31 @@ function AbilitySelectScreen(props) {
         },
         activate: (actor) => {
           console.log('active extra action');
-          actor.speed += ENERGY_THRESHOLD;
-          actor.energy += ENERGY_THRESHOLD;
+          actor.speed += Constant.ENERGY_THRESHOLD;
+          actor.energy += Constant.ENERGY_THRESHOLD;
         },
       },
     ],
     debuffs: [],
+  }
+
+  function availableUpgrades () {
+    const available = upgrades.buffs.filter((upgrade) => {
+      // check for stacking
+      const activeCount = getActiveUpgradesCountByName(upgrade.name)
+      if (activeCount >= upgrade.stacksUpTo) return false
+      // check for prereqs
+      if (upgrade?.preRequirements?.length) {
+        const preReqSet = new Set(upgrade.preRequirements)
+        const playerSet = new Set(getActiveUpgradesNames())
+        return preReqSet.isSubsetOf(playerSet)
+      }
+      
+      return true
+    })
+
+    return available
+    // return Helper.getNumberOfItemsInArray(3, available)
   }
   
   return (
@@ -164,8 +292,7 @@ function AbilitySelectScreen(props) {
       <div className="Title__content">
         <h2 className="Title__heading" style={{color: CARTRIDGE.theme.accent, zIndex: 100}}>Your Mind Expands</h2>
         <CharacterSelect 
-          // upgrades={getNumberOfItemsInArray(3, upgrades.buffs)} 
-          upgrades={upgrades.buffs} 
+          upgrades={availableUpgrades()} 
           setSelectedAbility={setSelectedAbility}
           setActiveScreen={props.setActiveScreen}
         />

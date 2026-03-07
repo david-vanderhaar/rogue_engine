@@ -18,6 +18,8 @@ import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 import { PrepareDirectionalAction } from '../../../Actions/PrepareDirectionalAction';
 import { PrepareTelekinesisThrow } from '../../../Actions/PrepareTelekinesisThrow';
 import { PrepareRangedTelekinesisAction } from '../../../Actions/PrepareRangedTelekinesisAction';
+import { MultiTargetAttackAndShove } from '../../../Actions/MultiTargetAttackAndShove';
+import gradientRadialEmitter from '../../../Engine/Particle/Emitters/gradientRadialEmitter';
 
 const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
@@ -67,12 +69,6 @@ function initialize (engine) {
   const keymap = (engine, actor) => {
     return {
       ...generateDefaultKeymapActions(engine, actor),
-      k: () => new SandPulse({
-        label: 'Pulse [1]',
-        game: engine.game,
-        actor,
-        requiredResources: [new MindResource({ getResourceCost: () => 1 })]
-      }),
       f: () => new PrepareRangedTelekinesisAction({
         label: 'Telekinesis',
         game: engine.game,
@@ -102,3 +98,11 @@ export default function () {
     basicInfo: {...basicInfo},
   }
 }
+
+// potential powers
+ // 1: () => new SandPulse({
+//   label: 'Push [1]',
+//   game: engine.game,
+//   actor,
+//   requiredResources: [new MindResource({ getResourceCost: () => 1 })]
+// }),

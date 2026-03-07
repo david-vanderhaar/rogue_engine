@@ -24,8 +24,6 @@ export class MultiTargetAttackAndShove extends Base {
     let particlePath = [];
     let particlePos = { x: this.actor.pos.x, y: this.actor.pos.y };
     let renderer = this.particleTemplate.renderer;
-    console.log('targetPositions', this.targetPositions);
-    console.log('this.actor', this.actor.getPosition());
     this.targetPositions.forEach((targetPos) => {
       let attackSuccess = this.actor.attack(targetPos);
       particlePath.push(targetPos);
