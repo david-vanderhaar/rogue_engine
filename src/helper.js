@@ -82,6 +82,19 @@ const isTileAndEntitiesPassable = (game, sourceEntityPos) => (x, y) => {
   }
 }
 
+const areEntitiesPassable = (game, sourceEntityPos) => (x, y) => {
+  const tile = game.map[x + "," + y];
+  if (tile) {
+    if (tile.entities.length && !coordsAreEqual(sourceEntityPos, {x, y})) {
+      const entitiesArePassable = tile.entities.every((entity) => entity.passable);
+      return entitiesArePassable;
+    }
+    return true
+  } else {
+    return false
+  }
+}
+
 export const calculatePath = (game, targetPos, currentPos, topology = 4, isPassable = isTilePassable) => {
   let map = game.map
   let isPassableCallback = isPassable(game);
@@ -96,6 +109,7 @@ export const calculatePath = (game, targetPos, currentPos, topology = 4, isPassa
 
 export const calculateAstar8Path = (game, currentPos, targetPos) => calculatePath(game, targetPos, currentPos, 8, () => () => true);
 
+// navigate around entites and impassable tiles
 export const calculatePathAroundObstacles = (
   game, 
   targetPos, 
@@ -107,6 +121,20 @@ export const calculatePathAroundObstacles = (
   currentPos,
   topology,
   (gameObject) => isTileAndEntitiesPassable(gameObject, currentPos)
+);
+
+// navigate around just entites, ignore tiles 
+export const calculatePathAroundEntites = (
+  game, 
+  targetPos, 
+  currentPos, 
+  topology = 4
+) => calculatePath(
+  game,
+  targetPos,
+  currentPos,
+  topology,
+  (gameObject) => areEntitiesPassable(gameObject, currentPos)
 );
 
 export const calculateStraightPath = (p0, p1) => {

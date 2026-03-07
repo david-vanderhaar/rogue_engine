@@ -16,9 +16,16 @@ import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../sounds'
 import { SpitterSac } from '../../TallGrass/Items/Weapons/Spitter';
 import FollowAndAttack from '../../../Entities/AI/BehaviorChains/FollowAndAttack';
 import { onAfterMoveOrAttack } from '../Characters/Utilities/characterHelper';
+import { checkIsWalkingOnFire, checkIsWalkingOnFreeFall } from '../../HiddenLeaf/StatusEffects/helper';
 
 export function addsecurityGuard (mode, pos) {
   addGrubToMapWithStats(mode, pos, GRUB_STATS.securityGuard())
+}
+export function addConstructionJunkie (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.constructionJunkie())
+}
+export function addDrone (mode, pos) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.drone())
 }
 
 export function addRandom (mode, pos) {
@@ -59,6 +66,75 @@ const GRUB_STATS = {
       ],
     }
   },
+  constructionJunkie: () => {
+    return {
+      name: 'construction junkie',
+      renderer: {
+        character: 'c',
+        color: COLORS.light,
+        background: COLORS.orange,
+        sprite: 'c',
+      },
+      durability: 3,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      baseDescription: 'imagine a contruction crew, completely zooted.',
+      // baseDescriptors: ['with baton and bad health insurance'],
+      // behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 2,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  drone: () => {
+    return {
+      name: 'drone',
+      renderer: {
+        character: 'd',
+        color: COLORS.light,
+        background: COLORS.drone,
+        sprite: 'd',
+      },
+      durability: 1,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      baseDescription: 'buzz',
+      traversableTiles: ['FREE_FALL', 'WATER'],
+      onMove: () => null,
+      // baseDescriptors: ['with baton and bad health insurance'],
+      // behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+          ignoreObstacles: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
 };
 
 const createBaseGrubStats = (mode, pos) => {
@@ -68,9 +144,11 @@ const createBaseGrubStats = (mode, pos) => {
     faction: 'OPPONENT',
     enemyFactions: ['PLAYER'],
     equipment: Constant.EQUIPMENT_LAYOUTS.gear(),
-    traversableTiles: ['FREE_FALL'],
+    traversableTiles: [],
     onMove: ({actor}) => {
-      onAfterMoveOrAttack(actor.game.engine, actor)
+      // onAfterMoveOrAttack(actor.game.engine, actor)
+      checkIsWalkingOnFire(actor.game.engine, actor)
+      checkIsWalkingOnFreeFall(actor.game.engine, actor)
     },
     meleeSounds: [
       HIDDEN_LEAF_SOUNDS.punch_01,

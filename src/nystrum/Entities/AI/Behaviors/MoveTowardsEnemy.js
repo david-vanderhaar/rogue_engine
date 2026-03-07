@@ -1,13 +1,14 @@
 import { Move } from '../../../Actions/Move';
 import Behavior from './Behavior';
-import { calculatePathAroundObstacles } from '../../../../helper'; 
+import { calculateAstar8Path, calculatePath, calculatePathAroundEntites, calculatePathAroundObstacles, calculateStraightPath } from '../../../../helper'; 
 import { MoveOrAttack } from '../../../Actions/MoveOrAttack';
 
 export default class MoveTowardsEnemy extends Behavior {
-  constructor({maintainDistanceOf = 1, ...args }) {
+  constructor({maintainDistanceOf = 1, ignoreObstacles = false, ...args }) {
     super({ ...args });
     this.chainOnFail = true;
     this.maintainDistanceOf = maintainDistanceOf
+    this.ignoreObstacles = ignoreObstacles
   }
 
   isValid () {
@@ -15,7 +16,12 @@ export default class MoveTowardsEnemy extends Behavior {
   }
 
   getDistanceToTarget (target) {
-    return calculatePathAroundObstacles(this.actor.game, target.getPosition(), this.actor.getPosition(), 8).length;
+    return this.pathCalculator()(this.actor.game, target.getPosition(), this.actor.getPosition(), 8).length;
+  }
+
+  pathCalculator () {
+    if (this.ignoreObstacles) return calculatePathAroundEntites
+    else return calculatePathAroundObstacles
   }
 
   findClosestEnemy() {
@@ -39,7 +45,7 @@ export default class MoveTowardsEnemy extends Behavior {
     const enemy = this.findClosestEnemy();
     if (!enemy) return [null, null]; 
     // get path to enemy
-    let path = calculatePathAroundObstacles(this.actor.game, enemy.getPosition(), this.actor.getPosition());
+    let path = this.pathCalculator()(this.actor.game, enemy.getPosition(), this.actor.getPosition());
     if (this.maintainDistanceOf > 0) path = path.slice(0, -this.maintainDistanceOf)
     let moveToPosition = path.length > 0 ? path[0] : null;
     if (!moveToPosition) return [null, null]

@@ -172,6 +172,7 @@ export const Destructable = superclass => class extends superclass {
     setTimeout(() => {
       GLOBAL_EVENT_BUS.emit(`${this.id}:destroy`);
       GLOBAL_EVENT_BUS.emit(`${this.name}:destroy`);
+      if (this.entityTypes.includes('HAS_FACTION')) GLOBAL_EVENT_BUS.emit(`${this.faction}:destroy`);
     }, 100)
   }
 

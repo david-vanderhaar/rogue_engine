@@ -9,12 +9,15 @@ import Mission from "../../../Mission/Mission";
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { DIRECTIONS } from "../../../constants";
 
-const CHANCE_OF_WALL_CONSTRUCTION = 0.5
+const CHANCE_OF_WALL_CONSTRUCTION = 0.35
 const CHANCE_OF_WINDOW_REPLACMENT = 0.25
 const CHANCE_OF_DRY_WALL = 0.3
 const INNER_MAP_DIMENSIONS = {x: 6, mx: 29, y: 5, my: 20}
 const NUMBER_OF_ITEMS = {min: 10, max: 40}
 const NUMBER_OF_EXPLOSIVES = {min: 2, max: 6}
+const NUMBER_OF_FIRST_WAVE = {min: 2, max: 3}
+const NUMBER_OF_SECOND_WAVE = {min: 3, max: 6}
+const NUMBER_OF_THIRD_WAVE = {min: 3, max: 6}
 
 export default function GenerateConstructionMap (mode) {
   refreshColors({fg: COLORS.blue_dark})
@@ -104,12 +107,12 @@ export default function GenerateConstructionMap (mode) {
     const pos = Helper.stringToCoords(key)
     const params = Helper.getRandomInArray([
       ACTOR_PARAMS.hammer,
-      // ACTOR_PARAMS.nail_pile,
-      // ACTOR_PARAMS.helmet,
-      // ACTOR_PARAMS.two_by_four,
-      // ACTOR_PARAMS.four_by_eight,
-      // ACTOR_PARAMS.metal_sheet,
-      // ACTOR_PARAMS.saw_blade,
+      ACTOR_PARAMS.nail_pile,
+      ACTOR_PARAMS.helmet,
+      ACTOR_PARAMS.two_by_four,
+      ACTOR_PARAMS.four_by_eight,
+      ACTOR_PARAMS.metal_sheet,
+      ACTOR_PARAMS.saw_blade,
     ])
     generate(mode, pos, SHAPES.point, params, createThrowable)
   })
@@ -157,23 +160,35 @@ function generateHoles (mode, offset, width = 24, height = 16) {
 
 function startMissionManager(mode) {
   const player = mode.game.getFirstPlayer();
-  const firstWaveCount = Helper.getRandomIntInclusive(1, 2)
-  const secondWaveCount = Helper.getRandomIntInclusive(2, 3)
-  const thirdWaveCount = Helper.getRandomIntInclusive(3, 4)
+  const firstWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_FIRST_WAVE.min, NUMBER_OF_FIRST_WAVE.max)
+  const secondWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_SECOND_WAVE.min, NUMBER_OF_SECOND_WAVE.max)
+  const thirdWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_THIRD_WAVE.min, NUMBER_OF_THIRD_WAVE.max)
 
   mode.initializeMissionManager({
     missions: [
       new Mission({
+        name: 'Don\'t Fall',
+        description: 'Proceed to dark spaced tile, where the floor fell away. See what happens.',
+        timesToComplete: 1,
+        eventToComplete: `${player?.id}:move:tileType:FREE_FALL`,
+      }),
+      new Mission({
+        name: 'Don\'t Panic',
+        description: 'You have a few turns before you fall to your death. Go ahead and climb back out of there.',
+        timesToComplete: 1,
+        eventToComplete: `${player?.id}:move:tileType:GROUND`,
+      }),
+      new Mission({
         name: 'First Wave',
-        description: 'These office spacers are just as determined to keep you here as the scientists. Eliminate them.',
+        description: 'Even these construction junkies area after me? Eliminate Them.',
         timesToComplete: firstWaveCount,
-        eventToComplete: `security guard:destroy`,
+        eventToComplete: `construction junkie:destroy`,
         onTrigger: () => {
           Helper.range(firstWaveCount).forEach((index) => {
             const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
             const pos = Helper.stringToCoords(randomPosition)
             
-            EnemyActors.addsecurityGuard(mode, pos)
+            EnemyActors.addConstructionJunkie(mode, pos)
             SpatterEmitter({
               game: mode.game,
               fromPosition: pos,
@@ -188,15 +203,15 @@ function startMissionManager(mode) {
       }),
       new Mission({
         name: 'Second Wave',
-        description: 'More office spacers, back from lunch break. Eliminate them.',
+        description: 'What? they have drones? Take them out.',
         timesToComplete: secondWaveCount,
-        eventToComplete: `security guard:destroy`,
+        eventToComplete: `drone:destroy`,
         onTrigger: () => {
           Helper.range(secondWaveCount).forEach((index) => {
             const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
             const pos = Helper.stringToCoords(randomPosition)
             
-            EnemyActors.addsecurityGuard(mode, pos)
+            EnemyActors.addDrone(mode, pos)
             SpatterEmitter({
               game: mode.game,
               fromPosition: pos,
@@ -211,15 +226,15 @@ function startMissionManager(mode) {
       }),
       new Mission({
         name: 'Final Wave',
-        description: 'More office spacers, back from ... Ahh, eliminate them.',
+        description: '*sigh* They don\'t realize my power is growing. Eliminate them.',
         timesToComplete: thirdWaveCount,
-        eventToComplete: `security guard:destroy`,
+        eventToComplete: `OPPONENT:destroy`,
         onTrigger: () => {
           Helper.range(thirdWaveCount).forEach((index) => {
             const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
             const pos = Helper.stringToCoords(randomPosition)
             
-            EnemyActors.addsecurityGuard(mode, pos)
+            EnemyActors.addRandom(mode, pos)
             SpatterEmitter({
               game: mode.game,
               fromPosition: pos,

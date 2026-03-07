@@ -1,7 +1,7 @@
 export const COLORS = {
   main: '#0f0705',
   accent: '#8eac86',
-  // accent: '#79261c',
+  drone: '#79261c',
   accent_light: '#c35f2b',
   text: '#e5d097',
 
