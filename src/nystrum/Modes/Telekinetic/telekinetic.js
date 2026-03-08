@@ -55,7 +55,8 @@ export class Telekinetic extends Mode {
         NUMBER_OF_ITEMS: {min: 10, max: 40},
         NUMBER_OF_EXPLOSIVES: {min: 1, max: 3},
         WAVES: [
-          {min: 1, max: 1, enemyKeys: ['drone']},
+          {min: 1, max: 3, enemyKeys: ['office_0', 'office_1']},
+          {min: 1, max: 3, enemyKeys: ['office_0', 'office_2']},
         ],
       }),
       (mode) => GenerateOfficeMap(mode, {
@@ -68,7 +69,8 @@ export class Telekinetic extends Mode {
         NUMBER_OF_ITEMS: {min: 10, max: 40},
         NUMBER_OF_EXPLOSIVES: {min: 1, max: 3},
         WAVES: [
-          {min: 1, max: 1, enemyKeys: ['drone']},
+          {min: 2, max: 4, enemyKeys: ['office_0', 'office_1']},
+          {min: 2, max: 4, enemyKeys: ['office_0', 'office_2']},
         ],
       }),
       (mode) => GenerateOfficeMap(mode, {
@@ -81,82 +83,84 @@ export class Telekinetic extends Mode {
         NUMBER_OF_ITEMS: {min: 10, max: 40},
         NUMBER_OF_EXPLOSIVES: {min: 1, max: 3},
         WAVES: [
-          {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_boss']},
-          {min: 2, max: 5, enemyKeys: ['drone']},
+          {min: 3, max: 4, enemyKeys: ['office_0', 'office_1', 'office_2']},
+          {min: 1, max: 1, enemyKeys: ['office_boss']},
         ],
       }),
-      // (mode) => GenerateConstructionMap(mode, {
-      //   CHANCE_OF_WALL_CONSTRUCTION: 0.55,
-      //   CHANCE_OF_WINDOW_REPLACMENT: 0.25,
-      //   CHANCE_OF_DRY_WALL: 0.3,
-      //   INNER_MAP_DIMENSIONS: {x: 6, mx: 29, y: 5, my: 20},
-      //   NUMBER_OF_ITEMS: {min: 10, max: 40},
-      //   NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
-      //   WAVES: [
-      //     {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_boss']},
-      //     {min: 2, max: 5, enemyKeys: ['drone']},
-      //   ],
-      // }),
-      // (mode) => GenerateConstructionMap(mode, {
-      //   CHANCE_OF_WALL_CONSTRUCTION: 0.55,
-      //   CHANCE_OF_WINDOW_REPLACMENT: 0.25,
-      //   CHANCE_OF_DRY_WALL: 0.3,
-      //   INNER_MAP_DIMENSIONS: {x: 6, mx: 29, y: 5, my: 20},
-      //   NUMBER_OF_ITEMS: {min: 10, max: 40},
-      //   NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
-      //   WAVES: [
-      //     {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_boss']},
-      //     {min: 2, max: 5, enemyKeys: ['drone']},
-      //   ],
-      // }),
-      // (mode) => GenerateConstructionMap(mode, {
-      //   CHANCE_OF_WALL_CONSTRUCTION: 0.55,
-      //   CHANCE_OF_WINDOW_REPLACMENT: 0.25,
-      //   CHANCE_OF_DRY_WALL: 0.3,
-      //   INNER_MAP_DIMENSIONS: {x: 6, mx: 29, y: 5, my: 20},
-      //   NUMBER_OF_ITEMS: {min: 10, max: 40},
-      //   NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
-      //   WAVES: [
-      //     {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_boss']},
-      //     {min: 2, max: 5, enemyKeys: ['drone']},
-      //   ],
-      // }),
-      // (mode) => GenerateParkingGarageMap(mode, {
-      //   INNER_MAP_DIMENSIONS: {x: 4, mx: 33, y: 5, my: 20},
-      //   CHANCE_OF_CONCRETE_BARRIER: 0.7,
-      //   NUMBER_OF_POOLS: {min: 1, max: 4},
-      //   SIZE_OF_POOLS: {min: 2, max: 6},
-      //   NUMBER_OF_ITEMS: {min: 10, max: 40},
-      //   NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
-      //   WAVES: [
-      //     {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_boss']},
-      //     {min: 2, max: 5, enemyKeys: ['drone']},
-      //   ],
-      // }),
-      // (mode) => GenerateParkingGarageMap(mode, {
-      //   INNER_MAP_DIMENSIONS: {x: 4, mx: 33, y: 5, my: 20},
-      //   CHANCE_OF_CONCRETE_BARRIER: 0.7,
-      //   NUMBER_OF_POOLS: {min: 1, max: 4},
-      //   SIZE_OF_POOLS: {min: 2, max: 6},
-      //   NUMBER_OF_ITEMS: {min: 10, max: 40},
-      //   NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
-      //   WAVES: [
-      //     {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_boss']},
-      //     {min: 2, max: 5, enemyKeys: ['drone']},
-      //   ],
-      // }),
-      // (mode) => GenerateParkingGarageMap(mode, {
-      //   INNER_MAP_DIMENSIONS: {x: 4, mx: 33, y: 5, my: 20},
-      //   CHANCE_OF_CONCRETE_BARRIER: 0.7,
-      //   NUMBER_OF_POOLS: {min: 1, max: 4},
-      //   SIZE_OF_POOLS: {min: 2, max: 6},
-      //   NUMBER_OF_ITEMS: {min: 10, max: 40},
-      //   NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
-      //   WAVES: [
-      //     {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_boss']},
-      //     {min: 2, max: 5, enemyKeys: ['drone']},
-      //   ],
-      // }),
+      (mode) => GenerateConstructionMap(mode, {
+        CHANCE_OF_WALL_CONSTRUCTION: 0.55,
+        CHANCE_OF_WINDOW_REPLACMENT: 0.25,
+        CHANCE_OF_DRY_WALL: 0.3,
+        INNER_MAP_DIMENSIONS: {x: 6, mx: 29, y: 5, my: 20},
+        NUMBER_OF_ITEMS: {min: 10, max: 40},
+        NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
+        WAVES: [
+          {min: 1, max: 3, enemyKeys: ['construction_0', 'construction_1', 'construction_2']},
+          {min: 1, max: 1, enemyKeys: ['construction_3']},
+          {min: 2, max: 2, enemyKeys: ['drone']},
+        ],
+      }),
+      (mode) => GenerateConstructionMap(mode, {
+        CHANCE_OF_WALL_CONSTRUCTION: 0.55,
+        CHANCE_OF_WINDOW_REPLACMENT: 0.25,
+        CHANCE_OF_DRY_WALL: 0.3,
+        INNER_MAP_DIMENSIONS: {x: 6, mx: 29, y: 5, my: 20},
+        NUMBER_OF_ITEMS: {min: 10, max: 40},
+        NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
+        WAVES: [
+          {min: 3, max: 4, enemyKeys: ['construction_0', 'construction_1', 'construction_2', 'construction_3']},
+          {min: 3, max: 6, enemyKeys: ['drone']},
+        ],
+      }),
+      (mode) => GenerateConstructionMap(mode, {
+        CHANCE_OF_WALL_CONSTRUCTION: 0.55,
+        CHANCE_OF_WINDOW_REPLACMENT: 0.25,
+        CHANCE_OF_DRY_WALL: 0.3,
+        INNER_MAP_DIMENSIONS: {x: 6, mx: 29, y: 5, my: 20},
+        NUMBER_OF_ITEMS: {min: 10, max: 40},
+        NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
+        WAVES: [
+          {min: 4, max: 6, enemyKeys: ['construction_0', 'construction_1', 'construction_2', 'construction_3', 'drone']},
+          {min: 1, max: 1, enemyKeys: ['construction_boss']},
+        ],
+      }),
+      (mode) => GenerateParkingGarageMap(mode, {
+        INNER_MAP_DIMENSIONS: {x: 4, mx: 33, y: 5, my: 20},
+        CHANCE_OF_CONCRETE_BARRIER: 0.7,
+        NUMBER_OF_POOLS: {min: 1, max: 4},
+        SIZE_OF_POOLS: {min: 2, max: 6},
+        NUMBER_OF_ITEMS: {min: 10, max: 40},
+        NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
+        WAVES: [
+          {min: 3, max: 5, enemyKeys: ['parking_0', 'parking_1', 'parking_2']},
+          {min: 3, max: 5, enemyKeys: ['parking_3']},
+          {min: 6, max: 8, enemyKeys: ['drone']},
+        ],
+      }),
+      (mode) => GenerateParkingGarageMap(mode, {
+        INNER_MAP_DIMENSIONS: {x: 4, mx: 33, y: 5, my: 20},
+        CHANCE_OF_CONCRETE_BARRIER: 0.7,
+        NUMBER_OF_POOLS: {min: 1, max: 4},
+        SIZE_OF_POOLS: {min: 2, max: 6},
+        NUMBER_OF_ITEMS: {min: 10, max: 40},
+        NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
+        WAVES: [
+          {min: 5, max: 8, enemyKeys: ['parking_0', 'parking_1', 'parking_2', 'parking_3', 'drone']},
+          {min: 5, max: 8, enemyKeys: ['parking_0', 'parking_1', 'parking_2', 'parking_3', 'drone']},
+        ],
+      }),
+      (mode) => GenerateParkingGarageMap(mode, {
+        INNER_MAP_DIMENSIONS: {x: 4, mx: 33, y: 5, my: 20},
+        CHANCE_OF_CONCRETE_BARRIER: 0.7,
+        NUMBER_OF_POOLS: {min: 1, max: 4},
+        SIZE_OF_POOLS: {min: 2, max: 6},
+        NUMBER_OF_ITEMS: {min: 10, max: 40},
+        NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
+        WAVES: [
+          {min: 5, max: 8, enemyKeys: ['parking_0', 'parking_1', 'parking_2', 'parking_3', 'drone']},
+          {min: 1, max: 1, enemyKeys: ['parking_boss']},
+        ],
+      }),
     ]
   }
 
