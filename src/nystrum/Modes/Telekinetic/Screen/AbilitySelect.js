@@ -68,7 +68,7 @@ function AbilitySelectScreen(props) {
   const upgrades = {
     buffs: [
       // Stacking Buffs
-      // // Tele Range
+      // // +1 Tele Range
       {
         cost: 1,
         stacksUpTo: 2,
@@ -83,7 +83,7 @@ function AbilitySelectScreen(props) {
           actor.telekenticTriggerRange += 1
         },
       },
-      // // Tele Throw Distance
+      // // +1 Tele Throw Distance
       {
         cost: 1,
         name: '+1 Throw Distance',
@@ -493,7 +493,7 @@ function AbilitySelectScreen(props) {
       // Adrenal Control 4
       {
         cost: 1,
-        name: 'Gain Adrenal Control',
+        name: 'Gain Adrenal Control [1]',
         stacksUpTo: 1,
         description: 'Increase your actions per turn by 1 for 3 turns',
         renderer: {
@@ -502,7 +502,7 @@ function AbilitySelectScreen(props) {
         },
         activate: (actor) => {
           const keymapAction = () => new AddStatusEffect({
-            label: 'Adrenal Control',
+            label: 'Adrenal Control [1]',
             game: actor.game,
             actor,
             energyCost: 0,
@@ -512,7 +512,67 @@ function AbilitySelectScreen(props) {
               actor,
               speedBuff: 1,
               lifespan: Constant.ENERGY_THRESHOLD * 3,
-              name: 'Adrenal Control',
+              name: 'Adrenal Control [1]',
+              description: 'at the cost of mind, you are faster'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('4', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Adrenal Control [2]',
+        preRequirements: ['Gain Adrenal Control [1]'],
+        stacksUpTo: 1,
+        description: 'Increase your actions per turn by 1 for 6 turns',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Adrenal Control [2]',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              speedBuff: 1,
+              lifespan: Constant.ENERGY_THRESHOLD * 6,
+              name: 'Adrenal Control [2]',
+              description: 'at the cost of mind, you are faster'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('4', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Adrenal Control [3]',
+        preRequirements: ['Gain Adrenal Control [2]'],
+        stacksUpTo: 1,
+        description: 'Increase your actions per turn by 2 for 6 turns',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Adrenal Control [3]',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              speedBuff: 2,
+              lifespan: Constant.ENERGY_THRESHOLD * 6,
+              name: 'Adrenal Control [3]',
               description: 'at the cost of mind, you are faster'
             }),
           })
@@ -523,7 +583,7 @@ function AbilitySelectScreen(props) {
       // Melee Capable 5
       {
         cost: 1,
-        name: 'Gain Melee Capable',
+        name: 'Gain Melee Capable [1]',
         stacksUpTo: 1,
         description: 'Increase your attack damage by 1 for 3 turns',
         renderer: {
@@ -532,7 +592,7 @@ function AbilitySelectScreen(props) {
         },
         activate: (actor) => {
           const keymapAction = () => new AddStatusEffect({
-            label: 'Melee Capable',
+            label: 'Melee Capable [1]',
             game: actor.game,
             actor,
             energyCost: 0,
@@ -542,7 +602,67 @@ function AbilitySelectScreen(props) {
               actor,
               damageBuff: 1,
               lifespan: Constant.ENERGY_THRESHOLD * 3,
-              name: 'Melee Capable',
+              name: 'Melee Capable [1]',
+              description: 'at the cost of mind, you are stronger'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('5', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Melee Capable [2]',
+        preRequirements: ['Gain Melee Capable [1]'],
+        stacksUpTo: 1,
+        description: 'Increase your attack damage by 1 for 6 turns',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Melee Capable [1]',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              damageBuff: 1,
+              lifespan: Constant.ENERGY_THRESHOLD * 6,
+              name: 'Melee Capable [2]',
+              description: 'at the cost of mind, you are stronger'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('5', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Melee Capable [3]',
+        preRequirements: ['Gain Melee Capable [2]'],
+        stacksUpTo: 1,
+        description: 'Increase your attack damage by 2 for 6 turns',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Melee Capable [3]',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              damageBuff: 2,
+              lifespan: Constant.ENERGY_THRESHOLD * 6,
+              name: 'Melee Capable [3]',
               description: 'at the cost of mind, you are stronger'
             }),
           })
@@ -553,7 +673,7 @@ function AbilitySelectScreen(props) {
       // Harden Body 6
       {
         cost: 1,
-        name: 'Gain Ignore Pain',
+        name: 'Gain Ignore Pain [1]',
         stacksUpTo: 1,
         description: 'Increase your defense by 1 for 3 turns. Defense blocks incoming damage.',
         renderer: {
@@ -562,7 +682,7 @@ function AbilitySelectScreen(props) {
         },
         activate: (actor) => {
           const keymapAction = () => new AddStatusEffect({
-            label: 'Ignore Pain',
+            label: 'Ignore Pain [1]',
             game: actor.game,
             actor,
             energyCost: 0,
@@ -570,9 +690,69 @@ function AbilitySelectScreen(props) {
             effect: new SpeedDefenseDamageBuff({
               game: actor.game,
               actor,
-              speedBuff: 1,
+              defenseBuff: 1,
               lifespan: Constant.ENERGY_THRESHOLD * 3,
-              name: 'Ignore Pain',
+              name: 'Ignore Pain [1]',
+              description: 'at the cost of mind, you are harder'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('6', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Ignore Pain [2]',
+        preRequirements: ['Gain Ignore Pain [1]'],
+        stacksUpTo: 1,
+        description: 'Increase your defense by 1 for 6 turns. Defense blocks incoming damage.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Ignore Pain [2]',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              defenseBuff: 1,
+              lifespan: Constant.ENERGY_THRESHOLD * 6,
+              name: 'Ignore Pain [2]',
+              description: 'at the cost of mind, you are harder'
+            }),
+          })
+
+          actor.addKeymapActionToBaseKeymap('6', keymapAction)
+        },
+      },
+      {
+        cost: 1,
+        name: 'Gain Ignore Pain [3]',
+        preRequirements: ['Gain Ignore Pain [2]'],
+        stacksUpTo: 1,
+        description: 'Increase your defense by 2 for 6 turns. Defense blocks incoming damage.',
+        renderer: {
+          background: COLORS.dark_accent,
+          color: COLORS.light,
+        },
+        activate: (actor) => {
+          const keymapAction = () => new AddStatusEffect({
+            label: 'Ignore Pain [3]',
+            game: actor.game,
+            actor,
+            energyCost: 0,
+            requiredResources:  [new MindResource({ getResourceCost: () => 3 })],
+            effect: new SpeedDefenseDamageBuff({
+              game: actor.game,
+              actor,
+              defenseBuff: 2,
+              lifespan: Constant.ENERGY_THRESHOLD * 6,
+              name: 'Ignore Pain [3]',
               description: 'at the cost of mind, you are harder'
             }),
           })
@@ -745,7 +925,7 @@ function AbilitySelectScreen(props) {
 
     // return available
     return [
-      ...Helper.getNumberOfItemsInArray(2, available),
+      ...Helper.getNumberOfItemsInArray(3, available),
       ...Helper.getNumberOfItemsInArray(1, alwaysAvailable),
     ]
   }
