@@ -121,7 +121,7 @@ function AbilitySelectScreen(props) {
         name: '+1 Mind',
         stacksUpTo: 10,
         alwaysAvailable: true,
-        description: 'You mind expands, allowing more powerful manouvers.',
+        description: 'Your mind expands, allowing more powerful manouvers.',
         renderer: {
           background: COLORS.dark_accent,
           color: COLORS.light,

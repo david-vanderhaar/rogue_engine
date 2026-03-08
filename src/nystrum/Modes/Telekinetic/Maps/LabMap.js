@@ -41,6 +41,7 @@ export default function GenerateLabMap (mode) {
   MapHelper.addTileToMap({map: mode.game.map, key: `18,6`, tileKey: mode.tileKey, tileType: 'ELEVATOR'})
 
   // add enemie after certain number of missions or time has passed
+  // EnemyActors.addByKey(mode, {x: 17, y: 6}, 'office_2')
   startMissionManager(mode);
 }
 
@@ -58,7 +59,7 @@ function startMissionManager(mode) {
 
   const secondMission = new Mission({
     name: 'More Throwing Practice',
-    description: 'Some objects break when thrown, heavier objects like furniture can be thrown multiple times. Try throwning a table.',
+    description: 'Some objects break when thrown, heavier objects, like furniture, can be thrown multiple times. Try throwing a table.',
     timesToComplete: 2,
     eventToComplete: `${player?.id}:apply_status_effect_thrown:table`,
   })
@@ -107,7 +108,7 @@ function startMissionManager(mode) {
 
   const fourthMission = new Mission({
     name: 'Escape the Lab',
-    description: 'Proceed to the elevator and escape this place.',
+    description: 'Proceed to the elevator at the top, center spaces and escape this place.',
     timesToComplete: 1,
     eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
   })

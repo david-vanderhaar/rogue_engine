@@ -159,6 +159,7 @@ export class Engine {
   async start() {
     this.isRunning = true;
     while (this.isRunning) {
+      this.game.updateMode();
       this.isRunning = await this.processV2();
       this.game.updateMode();
     }
@@ -176,6 +177,7 @@ export class Engine {
   }
   
   stop() {
+    this.game.updateMode();
     this.isRunning = false;
   }
 

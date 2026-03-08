@@ -44,7 +44,7 @@ export class Telekinetic extends Mode {
   levelGenerators() {
     return [
       // // GenerateDefaultMap,
-      // GenerateLabMap,
+      GenerateLabMap,
       (mode) => GenerateOfficeMap(mode, {
         CHANCE_OF_CENTER_CUBICLES: 0.33,
         CHANCE_OF_NORTH_CUBICLES: 0.5,

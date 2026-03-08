@@ -13,7 +13,7 @@ export default class FollowAndAttack extends BehaviorChain {
     return [
       new Behaviors.MoveTowardsEnemy({
         repeat: this.moveRepeat,
-        maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+        maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
         chainOnFail: true
       }),
       new Behaviors.TelegraphOnEnemy({

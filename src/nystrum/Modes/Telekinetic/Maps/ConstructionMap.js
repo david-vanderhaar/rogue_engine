@@ -193,7 +193,7 @@ function startMissionManager(mode, WAVES) {
       ...waveMissions,
       new Mission({
         name: 'Escape the Building',
-        description: 'Proceed to the elevator and escape this place.',
+        description: 'Proceed to the elevator at the top, center spaces and escape this place.',
         timesToComplete: 1,
         eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
       }),

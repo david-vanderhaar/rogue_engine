@@ -55,7 +55,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -76,7 +76,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'g',
         color: COLORS.light,
-        background: COLORS.blue_mid,
+        background: COLORS.dark,
+        // background: COLORS.blue_mid,
         sprite: 'g',
       },
       durability: 2,
@@ -87,7 +88,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -108,7 +109,8 @@ const GRUB_STATS = {
       renderer: {
         character: '¤',
         color: COLORS.light,
-        background: COLORS.drone,
+        background: COLORS.dark,
+        // background: COLORS.drone,
         sprite: '¤',
       },
       durability: 1,
@@ -122,7 +124,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
           ignoreObstacles: true,
         }),
@@ -145,7 +147,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'c',
         color: COLORS.mid_yellow,
-        background: COLORS.light_mid,
+        background: COLORS.dark,
+        // background: COLORS.light_mid,
         sprite: 'c',
       },
       durability: 1,
@@ -155,7 +158,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -176,7 +179,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'b',
         color: COLORS.red,
-        background: COLORS.light_mid,
+        background: COLORS.dark,
+        // background: COLORS.light_mid,
         sprite: 'b',
       },
       durability: 1,
@@ -186,7 +190,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -207,7 +211,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'y',
         color: COLORS.blue,
-        background: COLORS.light_mid,
+        background: COLORS.dark,
+        // background: COLORS.light_mid,
         sprite: 'y',
       },
       durability: 1,
@@ -217,8 +222,8 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 2,
-          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
-          // chainOnFail: true,
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
         }),
       ],
     }
@@ -228,8 +233,9 @@ const GRUB_STATS = {
       name: 'floor manager',
       renderer: {
         character: 'f',
-        color: COLORS.light_mid,
-        background: COLORS.dark_accent,
+        color: COLORS.green,
+        background: COLORS.dark,
+        // background: COLORS.dark_accent,
         sprite: 'f',
       },
       durability: 5,
@@ -239,8 +245,8 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 3,
-          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
-          // chainOnFail: true,
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
           repeat: 1,
@@ -261,7 +267,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'c',
         color: COLORS.mid_yellow,
-        background: COLORS.dirt00,
+        background: COLORS.dark,
+        // background: COLORS.dirt00,
         sprite: 'c',
       },
       durability: 1,
@@ -270,7 +277,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -291,7 +298,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'c',
         color: COLORS.red,
-        background: COLORS.dirt00,
+        background: COLORS.dark,
+        // background: COLORS.dirt00,
         sprite: 'c',
       },
       durability: 1,
@@ -300,7 +308,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -321,7 +329,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'c',
         color: COLORS.blue,
-        background: COLORS.dirt00,
+        background: COLORS.dark,
+        // background: COLORS.dirt00,
         sprite: 'c',
       },
       durability: 1,
@@ -330,7 +339,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 2,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -351,7 +360,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'c',
         color: COLORS.light,
-        background: COLORS.dirt00,
+        background: COLORS.dark,
+        // background: COLORS.dirt00,
         sprite: 'c',
       },
       durability: 1,
@@ -384,8 +394,9 @@ const GRUB_STATS = {
       name: 'flying tank drone',
       renderer: {
         character: '¤',
-        color: COLORS.dark_accent,
-        background: COLORS.drone,
+        color: COLORS.green,
+        background: COLORS.dark,
+        // background: COLORS.drone,
         sprite: '¤',
       },
       durability: 10,
@@ -399,7 +410,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 2,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
           ignoreObstacles: true,
         }),
@@ -422,7 +433,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'g',
         color: COLORS.mid_yellow,
-        background: COLORS.blue_mid,
+        background: COLORS.dark,
+        // background: COLORS.blue_mid,
         sprite: 'g',
       },
       durability: 1,
@@ -431,7 +443,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -452,7 +464,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'g',
         color: COLORS.red,
-        background: COLORS.blue_mid,
+        background: COLORS.dark,
+        // background: COLORS.blue_mid,
         sprite: 'g',
       },
       durability: 1,
@@ -461,7 +474,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -482,7 +495,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'g',
         color: COLORS.blue,
-        background: COLORS.blue_mid,
+        background: COLORS.dark,
+        // background: COLORS.blue_mid,
         sprite: 'g',
       },
       durability: 1,
@@ -492,7 +506,7 @@ const GRUB_STATS = {
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
-          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
         new Behaviors.TelegraphOnEnemy({
@@ -513,7 +527,8 @@ const GRUB_STATS = {
       renderer: {
         character: 'g',
         color: COLORS.light,
-        background: COLORS.blue_mid,
+        background: COLORS.dark,
+        // background: COLORS.blue_mid,
         sprite: 'g',
       },
       durability: 1,
@@ -546,8 +561,9 @@ const GRUB_STATS = {
       name: 'The CEO',
       renderer: {
         character: '¤',
-        color: COLORS.dark_accent,
-        background: COLORS.blue_light,
+        color: COLORS.green,
+        background: COLORS.dark,
+        // background: COLORS.blue_light,
         sprite: '¤',
       },
       durability: 20,

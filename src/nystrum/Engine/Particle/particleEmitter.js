@@ -102,9 +102,10 @@ export class Particle {
     const tile = Helper.getTileAtPosition(this.game, this.pos)
     if (!!!tile) return
     tile['overriddenBackground'] = this.backgroundColor
-    tile.entities.forEach((entity) => {
-      if (entity?.renderer) entity.renderer.background = this.backgroundColor
-    })
+    // TODO: Make global settings
+    // tile.entities.forEach((entity) => {
+    //   if (entity?.renderer) entity.renderer.background = this.backgroundColor
+    // })
   }
 }
 
