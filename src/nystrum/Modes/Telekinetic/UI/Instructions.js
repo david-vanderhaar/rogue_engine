@@ -39,7 +39,7 @@ function Instructions(props) {
       style={{
         position: 'relative',
         top: 701,
-        right: 198,
+        right: 330,
         height: 'fit-content'
       }}
     >
