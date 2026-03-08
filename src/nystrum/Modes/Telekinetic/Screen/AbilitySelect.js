@@ -252,7 +252,7 @@ function AbilitySelectScreen(props) {
             range: 10,
             passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
             passThroughRequiredResources:  [new MindResource({ getResourceCost: () => 1 })],
-            keymapTriggerString: '1',
+            keymapTriggerString: '2',
             // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
             actionClass: AddStatusEffectAtPosition,
             actionParams: {

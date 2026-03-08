@@ -9,17 +9,28 @@ import Mission from "../../../Mission/Mission";
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { DIRECTIONS } from "../../../constants";
 
-const CHANCE_OF_WALL_CONSTRUCTION = 0.55
-const CHANCE_OF_WINDOW_REPLACMENT = 0.25
-const CHANCE_OF_DRY_WALL = 0.3
-const INNER_MAP_DIMENSIONS = {x: 6, mx: 29, y: 5, my: 20}
-const NUMBER_OF_ITEMS = {min: 10, max: 40}
-const NUMBER_OF_EXPLOSIVES = {min: 2, max: 6}
+// const CHANCE_OF_WALL_CONSTRUCTION = 0.55
+// const CHANCE_OF_WINDOW_REPLACMENT = 0.25
+// const CHANCE_OF_DRY_WALL = 0.3
+// const INNER_MAP_DIMENSIONS = {x: 6, mx: 29, y: 5, my: 20}
+// const NUMBER_OF_ITEMS = {min: 10, max: 40}
+// const NUMBER_OF_EXPLOSIVES = {min: 2, max: 6}
 const NUMBER_OF_FIRST_WAVE = {min: 2, max: 3}
 const NUMBER_OF_SECOND_WAVE = {min: 3, max: 6}
 const NUMBER_OF_THIRD_WAVE = {min: 3, max: 6}
 
-export default function GenerateConstructionMap (mode) {
+export default function GenerateConstructionMap (
+  mode,
+  {
+    CHANCE_OF_WALL_CONSTRUCTION,
+    CHANCE_OF_WINDOW_REPLACMENT,
+    CHANCE_OF_DRY_WALL,
+    INNER_MAP_DIMENSIONS,
+    NUMBER_OF_ITEMS,
+    NUMBER_OF_EXPLOSIVES,
+    WAVES,
+  }
+) {
   refreshColors({fg: COLORS.blue_mid})
   addInnerMostTileTypeFilled(mode, 'FREE_FALL', 0)
   addInnerMostTileTypeFilled(mode, 'WALL', 5)
@@ -138,7 +149,7 @@ export default function GenerateConstructionMap (mode) {
   // placePlayer In elevator
   mode.getPlayer().move({x: 17, y: 5})
 
-  startMissionManager(mode)
+  startMissionManager(mode, WAVES)
 }
 
 function generateHoles (mode, offset, width = 24, height = 16) {
@@ -155,83 +166,41 @@ function generateHoles (mode, offset, width = 24, height = 16) {
   digger.connect(digCallback.bind(this))
 }
 
-function startMissionManager(mode) {
+function startMissionManager(mode, WAVES) {
   const player = mode.game.getFirstPlayer();
-  const firstWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_FIRST_WAVE.min, NUMBER_OF_FIRST_WAVE.max)
-  const secondWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_SECOND_WAVE.min, NUMBER_OF_SECOND_WAVE.max)
-  const thirdWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_THIRD_WAVE.min, NUMBER_OF_THIRD_WAVE.max)
+  const waveMissions = WAVES.map((wave, index) => {
+    const waveCount = Helper.getRandomIntInclusive(wave.min, wave.max)
+    let waveName = wave?.name || `Enemy Wave [${index + 1}]`
+    if ((index + 1) === WAVES.length) waveName = 'Final Wave'
+    const waveDescription = wave?.description || 'Eliminate all enemies.'
+    return new Mission({
+      name: waveName,
+      description: waveDescription,
+      timesToComplete: waveCount,
+      eventToComplete: `OPPONENT:destroy`,
+      onTrigger: () => {
+        Helper.range(waveCount).forEach((index) => {
+          const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+          const pos = Helper.stringToCoords(randomPosition)
+          const enemyKey = Helper.getRandomInArray(wave.enemyKeys)
+          EnemyActors.addByKey(mode, pos, enemyKey)
+          SpatterEmitter({
+            game: mode.game,
+            fromPosition: pos,
+            spatterAmount: 0.8,
+            spatterRadius: 3,
+            animationTimeStep: 0.6,
+            transfersBackground: false,
+            spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+          }).start()
+        })
+      }
+    })
+  })
 
   mode.initializeMissionManager({
     missions: [
-      new Mission({
-        name: 'First Wave',
-        description: 'Even these construction junkies area after me? Eliminate Them.',
-        timesToComplete: firstWaveCount,
-        eventToComplete: `construction junkie:destroy`,
-        onTrigger: () => {
-          Helper.range(firstWaveCount).forEach((index) => {
-            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
-            const pos = Helper.stringToCoords(randomPosition)
-            
-            EnemyActors.addConstructionJunkie(mode, pos)
-            SpatterEmitter({
-              game: mode.game,
-              fromPosition: pos,
-              spatterAmount: 0.8,
-              spatterRadius: 3,
-              animationTimeStep: 0.6,
-              transfersBackground: false,
-              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
-            }).start()
-          })
-        }
-      }),
-      new Mission({
-        name: 'Second Wave',
-        description: 'What? they have drones? Take them out.',
-        timesToComplete: secondWaveCount,
-        eventToComplete: `drone:destroy`,
-        onTrigger: () => {
-          Helper.range(secondWaveCount).forEach((index) => {
-            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
-            const pos = Helper.stringToCoords(randomPosition)
-            
-            EnemyActors.addDrone(mode, pos)
-            SpatterEmitter({
-              game: mode.game,
-              fromPosition: pos,
-              spatterAmount: 0.8,
-              spatterRadius: 3,
-              animationTimeStep: 0.6,
-              transfersBackground: false,
-              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
-            }).start()
-          })
-        }
-      }),
-      new Mission({
-        name: 'Final Wave',
-        description: '*sigh* They don\'t realize my power is growing. Eliminate them.',
-        timesToComplete: thirdWaveCount,
-        eventToComplete: `OPPONENT:destroy`,
-        onTrigger: () => {
-          Helper.range(thirdWaveCount).forEach((index) => {
-            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
-            const pos = Helper.stringToCoords(randomPosition)
-            
-            EnemyActors.addRandom(mode, pos)
-            SpatterEmitter({
-              game: mode.game,
-              fromPosition: pos,
-              spatterAmount: 0.8,
-              spatterRadius: 3,
-              animationTimeStep: 0.6,
-              transfersBackground: false,
-              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
-            }).start()
-          })
-        }
-      }),
+      ...waveMissions,
       new Mission({
         name: 'Escape the Building',
         description: 'Proceed to the elevator and escape this place.',

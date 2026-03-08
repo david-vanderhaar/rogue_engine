@@ -574,7 +574,9 @@ const createBaseGrubStats = (mode, pos) => {
     faction: 'OPPONENT',
     enemyFactions: ['PLAYER'],
     equipment: Constant.EQUIPMENT_LAYOUTS.gear(),
-    traversableTiles: [],
+    // traversableTiles: [],
+    traversableTiles: ['FREE_FALL'],
+    // traversableTiles: ['FREE_FALL', 'WATER'],
     onMove: ({actor}) => {
       // onAfterMoveOrAttack(actor.game.engine, actor)
       checkIsWalkingOnFire(actor.game.engine, actor)

@@ -67,10 +67,11 @@ function startMissionManager(mode) {
     name: 'First Blood',
     description: 'A guard must have heard you. Use your telekinesis to attack them. Throw a scalpel or pair of scissors at them to cause damage from range.',
     timesToComplete: 2,
-    eventToComplete: `attack:security guard`,
+    eventToComplete: `lab rat:destroy`,
+    
     onTrigger: () => {
-      // mode.addEnemies(1, 'addsecurityGuard')
-      EnemyActors.addsecurityGuard(mode, { x: 17, y: 6 })
+      EnemyActors.addByKey(mode, { x: 17, y: 6 }, 'lab_rat')
+      EnemyActors.addByKey(mode, { x: 18, y: 6 }, 'lab_rat')
       SpatterEmitter({
         game: mode.game,
         fromPosition: { x: 17, y: 6 },

@@ -69,7 +69,7 @@ export const COLORS = {
   cyan: '#2aa198',
   green: '#859900',
   black: '#16161d',
-  black_accent: '#2c2c3a',
+  black_accent: '#81708d',
   // // base1: '#07111D',
   // base1: '#0B0B0B',
   // base2: '#5A7178',
