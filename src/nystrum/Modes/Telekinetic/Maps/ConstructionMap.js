@@ -9,7 +9,7 @@ import Mission from "../../../Mission/Mission";
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { DIRECTIONS } from "../../../constants";
 
-const CHANCE_OF_WALL_CONSTRUCTION = 0.35
+const CHANCE_OF_WALL_CONSTRUCTION = 0.55
 const CHANCE_OF_WINDOW_REPLACMENT = 0.25
 const CHANCE_OF_DRY_WALL = 0.3
 const INNER_MAP_DIMENSIONS = {x: 6, mx: 29, y: 5, my: 20}
@@ -20,14 +20,13 @@ const NUMBER_OF_SECOND_WAVE = {min: 3, max: 6}
 const NUMBER_OF_THIRD_WAVE = {min: 3, max: 6}
 
 export default function GenerateConstructionMap (mode) {
-  refreshColors({fg: COLORS.blue_dark})
+  refreshColors({fg: COLORS.blue_mid})
   addInnerMostTileTypeFilled(mode, 'FREE_FALL', 0)
   addInnerMostTileTypeFilled(mode, 'WALL', 5)
   addInnerMostTileTypeFilled(mode, 'GROUND', 6)
   mode.game.initializeMapTiles();
 
   
-  const CENTER_POSITION = centerPosition(mode);
   generateHoles(mode, {x: 6, y: 6}, 23, 14)
   // ranomd pars of outer wall missing
   // random windows on outer wall
@@ -164,18 +163,6 @@ function startMissionManager(mode) {
 
   mode.initializeMissionManager({
     missions: [
-      new Mission({
-        name: 'Don\'t Fall',
-        description: 'Proceed to dark spaced tile, where the floor fell away. See what happens.',
-        timesToComplete: 1,
-        eventToComplete: `${player?.id}:move:tileType:FREE_FALL`,
-      }),
-      new Mission({
-        name: 'Don\'t Panic',
-        description: 'You have a few turns before you fall to your death. Go ahead and climb back out of there.',
-        timesToComplete: 1,
-        eventToComplete: `${player?.id}:move:tileType:GROUND`,
-      }),
       new Mission({
         name: 'First Wave',
         description: 'Even these construction junkies area after me? Eliminate Them.',

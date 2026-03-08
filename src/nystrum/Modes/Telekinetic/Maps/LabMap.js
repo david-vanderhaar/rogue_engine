@@ -83,6 +83,27 @@ function startMissionManager(mode) {
     }
   })
 
+  const fall = new Mission({
+    name: 'Don\'t Fall',
+    description: 'Your fighting created a few holes in the floor. Proceed to a dark spaced tile, where the floor fell away. See what happens.',
+    timesToComplete: 1,
+    eventToComplete: `${player?.id}:move:tileType:FREE_FALL`,
+    onTrigger: () => {
+      // get random pos, away from player
+      // generate a few holes
+      MapHelper.addTileToMap({map: mode.game.map, key: `17,9`, tileKey: mode.tileKey, tileType: 'FREE_FALL'})
+      MapHelper.addTileToMap({map: mode.game.map, key: `18,9`, tileKey: mode.tileKey, tileType: 'FREE_FALL'})
+      MapHelper.addTileToMap({map: mode.game.map, key: `19,9`, tileKey: mode.tileKey, tileType: 'FREE_FALL'})
+    }
+  })
+
+  const panic = new Mission({
+    name: 'Don\'t Panic',
+    description: 'You have a few turns before you fall to your death. Go ahead and climb back out of there.',
+    timesToComplete: 1,
+    eventToComplete: `${player?.id}:move:tileType:GROUND`,
+  })
+
   const fourthMission = new Mission({
     name: 'Escape the Lab',
     description: 'Proceed to the elevator and escape this place.',
@@ -95,6 +116,8 @@ function startMissionManager(mode) {
       firstMission,
       secondMission,
       thirdMission,
+      fall,
+      panic,
       fourthMission,
     ],
   })

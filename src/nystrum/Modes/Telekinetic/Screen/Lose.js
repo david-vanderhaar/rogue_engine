@@ -45,9 +45,9 @@ export default function Lose(props) {
             <hr style={{borderColor: CARTRIDGE.theme.accent, margin: '10px 0'}} />
             <ul>
               <li>Rounds Won: {meta?.tournament?.currentRound - 1 || '0'}</li>
-              <li>Turns Taken: {meta?.turnsTaken || '0'}</li>
               <li>Abilities Gained: {meta?.upgrades?.length || '0'}</li>
-              <li>Enemies Defeated: {meta?.enemiesDefeated || '0'}</li>
+              {/* <li>Turns Taken: {meta?.turnsTaken || '0'}</li> */}
+              {/* <li>Enemies Defeated: {meta?.enemiesDefeated || '0'}</li> */}
             </ul>
           </div>
           <button
@@ -60,7 +60,7 @@ export default function Lose(props) {
           <img
             src={window.PUBLIC_URL + '/telekinetic/title/face.png'}
             alt="hands"
-            style={{margin: 40, borderRadius: 8, animationDelay: '0.2s', height: 600, position: 'relative', bottom: 240, left: -5}}
+            style={{margin: 40, borderRadius: 8, animationDelay: '0.2s', height: 600, position: 'relative', bottom: 232, left: -5}}
             className="fadeIn"
           />
         </div>

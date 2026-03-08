@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as lodash from 'lodash'
 import { SOUNDS } from '../sounds'
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
@@ -34,6 +34,8 @@ import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 
 function AbilitySelectScreen(props) {
   // useEffect(fadeMusicInOut(SOUNDS.character_select_theme), [])
+  const [meta] = useState(props.meta());
+  
   const playButtonSound = () => {
     SOUNDS.wood_button.play();
   }
@@ -741,30 +743,23 @@ function AbilitySelectScreen(props) {
 
     const alwaysAvailable = upgrades.buffs.filter((upgrade) => upgrade?.alwaysAvailable)
 
-    return available
+    // return available
     return [
       ...Helper.getNumberOfItemsInArray(2, available),
       ...Helper.getNumberOfItemsInArray(1, alwaysAvailable),
     ]
   }
-  
   return (
     <div className="Title">
       <div className="Title__content">
-        <h2 className="Title__heading" style={{color: CARTRIDGE.theme.accent, zIndex: 100}}>Your Mind Expands</h2>
+        <p style={{color: CARTRIDGE.theme.light}}>You've Descended {(meta?.tournament?.currentRound || 1) - 1} of 10 floors</p>
+        <hr style={{borderColor: CARTRIDGE.theme.accent, margin: '2px 0', width: '100%'}} />
+        <h4 className="Title__heading" style={{color: CARTRIDGE.theme.light, zIndex: 100}}>Your Mind Expands</h4>
         <CharacterSelect 
           upgrades={availableUpgrades()} 
           setSelectedAbility={setSelectedAbility}
           setActiveScreen={props.setActiveScreen}
         />
-        
-        {/* <button
-          className="btn btn-main btn-themed Title__button"
-          onClick={nextScreen}
-        >
-          Descend
-        </button>
-        <span className="Title__hint">press enter to continue</span> */}
       </div>
     </div>
   )

@@ -24,6 +24,7 @@ import GenerateLabMap from './Maps/LabMap';
 import GenerateOfficeMap from './Maps/OfficeMap';
 import { checkIsWalkingOnFreeFall } from '../HiddenLeaf/StatusEffects/helper';
 import GenerateConstructionMap from './Maps/ConstructionMap';
+import GenerateParkingGarageMap from './Maps/ParkingGarageMap';
 
 export class Telekinetic extends Mode {
   constructor({ ...args }) {
@@ -42,8 +43,6 @@ export class Telekinetic extends Mode {
 
   levelGenerators() {
     return [
-      GenerateDefaultMap,
-      GenerateDefaultMap,
       // GenerateDefaultMap,
       // GenerateLabMap,
       // GenerateOfficeMap,
@@ -52,7 +51,7 @@ export class Telekinetic extends Mode {
       // GenerateConstructionMap,
       // GenerateConstructionMap,
       // GenerateConstructionMap,
-      // GenerateParkingGarageMap,
+      GenerateParkingGarageMap,
       // GenerateParkingGarageMap,
       // GenerateParkingGarageMap,
     ]

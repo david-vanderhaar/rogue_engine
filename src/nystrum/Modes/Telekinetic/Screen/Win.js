@@ -46,9 +46,9 @@ export default function Win(props) {
             <hr style={{borderColor: CARTRIDGE.theme.accent, margin: '10px 0'}} />
             <ul>
               <li>Rounds Won: {meta?.tournament?.currentRound - 1 || '0'}</li>
-              <li>Turns Taken: {meta?.turnsTaken || '0'}</li>
               <li>Abilities Gained: {meta?.upgrades?.length || '0'}</li>
-              <li>Enemies Defeated: {meta?.enemiesDefeated || '0'}</li>
+              {/* <li>Turns Taken: {meta?.turnsTaken || '0'}</li>
+              <li>Enemies Defeated: {meta?.enemiesDefeated || '0'}</li> */}
             </ul>
           </div>
           <button

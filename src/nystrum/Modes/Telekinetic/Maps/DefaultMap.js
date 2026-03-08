@@ -8,7 +8,7 @@ export default function GenerateDefaultMap (mode) {
   mode.placePlayerAndSafeZone();
   // TODO: get from wave data
   mode.addEnemies(1, 'addRandom')
-  mode.placeThrowables()
+  mode.placeThrowables(30)
   // mode.startMissionManager()
   startMissionManager(mode)
 
@@ -31,7 +31,8 @@ function startMissionManager(mode) {
         description: 'Proceed to dark spaced tile, where the floor fell away. See what happens.',
         timesToComplete: 1,
         // eventToComplete: `${player?.id}:move:tileType:GROUND`,
-        eventToComplete: `${player?.id}:move:tileType:FREE_FALL`,
+        eventToComplete: `OPPONENT:destroy`,
+        // eventToComplete: `${player?.id}:move:tileType:FREE_FALL`,
       }),
     ]
   })

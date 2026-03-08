@@ -137,6 +137,7 @@ export const ACTOR_PARAMS = {
   cubicle_wall: { range: 2, character: '▒', name: 'cubicle wall', color: COLORS.light_mid, background: COLORS.dark, defense: 1, remainAfterUse: true },
   window_wall: { range: 4, character: '░', name: 'window wall', color: COLORS.white, background: COLORS.dark, defense: 0, remainAfterUse: false },
   dry_wall: { range: 4, character: '░', name: 'dry wall', color: COLORS.mid_yellow, background: COLORS.dark, defense: 0, remainAfterUse: false, attackDamage: 0 },
+  concrete_barrier: { range: 4, character: '█', name: 'concrete barrier', color: COLORS.kiba, background: COLORS.dark, defense: 2, remainAfterUse: true, attackDamage: 1 },
   chair: { range: 4, character: 'h', name: 'chair', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
   desk: { range: 1, character: 'T', name: 'desk', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
   // LAB ITEMS
@@ -158,6 +159,13 @@ export const ACTOR_PARAMS = {
   four_by_eight: { range: 1, character: ']]', name: 'four by eight', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 4 },
   metal_sheet: { range: 1, character: '#', name: 'metal sheet', color: COLORS.light, background: COLORS.dark, passable: true, durability: 4, remainAfterUse: true },
   saw_blade: { range: 1, character: '*', name: 'saw blade', color: COLORS.light, background: COLORS.dark, passable: true, durability: 3, attackDamage: 3, remainAfterUse: true },
+  // PARKING GARAGE ITEMS
+  car: { range: 1, character: '»»', name: 'car', color: COLORS.white, background: COLORS.dark, passable: false, durability: 10, attackDamage: 1, remainAfterUse: true  },
+  cone: { range: 1, character: '^', name: 'traffic cone', color: COLORS.orange, background: COLORS.dark, passable: true, durability: 1, attackDamage: 0 },
+  pipe: { range: 1, character: ')', name: 'pipe', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 2 },
+  
   // EXPLOSIVES
   fire_extinguisher: { range: 3, character: '%', name: 'fire extinguisher', color: COLORS.red, background: COLORS.dark, passable: true, durability: 1, flammability: 0, explosivity: 2, attackDamage: 3 },
+  gas_can: { range: 3, character: 'õ', name: 'gas can', color: COLORS.white, background: COLORS.red, passable: true, durability: 1, flammability: 0, explosivity: 3, attackDamage: 4 },
+  gas_tank: { range: 3, character: 'Õ', name: 'gas tank', color: COLORS.white, background: COLORS.red, passable: false, durability: 1, flammability: 1, explosivity: 4, attackDamage: 5 },
 }
