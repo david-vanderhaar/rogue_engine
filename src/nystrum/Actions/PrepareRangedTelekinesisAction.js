@@ -85,7 +85,7 @@ export class PrepareRangedTelekinesisAction extends Base {
     })
 
     let keymap = {
-      Escape: () => goToPreviousKeymap,
+      Backspace: () => goToPreviousKeymap,
       
       e: () => { 
         return new MoveTargetingCursor({

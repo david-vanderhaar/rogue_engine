@@ -128,7 +128,7 @@ export function getEmptyTileKeysByTags (tags, keys = Object.keys(GAME.map)) {
 
 export function getEmptyGroundTileKeys (game = GAME) {
   const keys = Object.keys(game.map)
-  const empty = this.getEmptyTileKeys(keys)
+  const empty = getEmptyTileKeys(keys)
   return empty
     .filter((key) => game.map[key].type === 'GROUND' || game.map[key].type === 'GROUND_ALT')
 }

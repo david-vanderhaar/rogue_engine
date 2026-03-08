@@ -138,7 +138,7 @@ export function generateDefaultKeymapActions(engine, actor) {
       });
     },
     // spacebar
-    'Escape': () => new StandStill({
+    'Backspace': () => new StandStill({
       label: 'Stay',
       game: engine.game,
       actor,
