@@ -3,6 +3,7 @@ import { SOUNDS } from '../sounds'
 import { CARTRIDGE } from '../../../Nystrum';
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { SCREENS } from './constants';
+import HelpContent from '../UI/HelpContent';
 
 function Intro(props) {
   const playButtonSound = () => {
@@ -39,6 +40,7 @@ function Intro(props) {
     <div className="Title" style={{height: 720, width: 1280, position: 'relative', overflow: 'visible'}}>
       <div className="Title__content" style={{height: '100%', width: '100%', position: 'relative', overflow: 'visible', maxHeight: 720, maxWidth: 1280}}>
         <h2 className="Title__heading" style={{color: CARTRIDGE.theme.accent, zIndex: 100}}>Intro!</h2>
+        <HelpContent />
         <button
           className="btn btn-main btn-themed Title__button"
           onClick={nextScreen}

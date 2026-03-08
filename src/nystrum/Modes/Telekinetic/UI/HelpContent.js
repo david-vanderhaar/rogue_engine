@@ -1,34 +1,35 @@
 import React from 'react';
+import { COLORS } from '../theme';
 
 function HelpContent() {
   return (
-    <div className="Jacinto_Help" style={{scrollbarWidth: 'none',}}>
-      <div className="modal-content">
+    <div className="Jacinto_Help" style={{width: '100%'}}>
+      <div className="modal-content" style={{backgroundColor: COLORS.dark}}>
         <div className="row">
-          <div className="col s12 m6">
-            <div className="Jacinto_Help__section_header">Goal</div>
+          <div className="col s12">
+            <div className="Jacinto_Help__section_header">Background</div>
             <div className="Jacinto_Help__section_body">
-              Defend Jacinto, the last human bastion on Sera. Move block by block and clear the city of 
-              <span className="red-text">&nbsp;Grubs</span> until you can locate and defeat their leader, 
-              <span className="red-text">&nbsp;Skorge</span>.
-            </div>
-          </div>
-          <div className="col s12 m6">
-            <div className="Jacinto_Help__section_header">Hints</div>
-            <div className="Jacinto_Help__section_body">
-              <div>Destroy <span className="red-text">Emergence Holes</span> ASAP.</div>
-              <div>Spend <span className="blue-text">Upgrade Points</span>.</div>
-              <div>Weapon <span className="blue-text">accuracy</span> decreases over distance.</div>
-              <div><span className="blue-text">Grenades</span> can destroy walls as well as grubs, but be wary.</div>
+              You woke up on an operating table, in a lab, at the top of sleezy corpo tower. You are too frail in body to defend yourself with bump attacks.
+              But your mind expands. It dances, reaches outward, becomes more dense with... Telekinetic Power.
+              Use it to escape all 10 floors of this place.
             </div>
           </div>
         </div>
         <div className="row">
-          <div className="col s12">
+          <div className="col s12 m6">
+            <div className="Jacinto_Help__section_header">Goal</div>
+            <div className="Jacinto_Help__section_body">
+              <span style={{ color: '#268bd2' }}>+</span> Missions are how you move the game forward. Their details are on the top of the screen. Fulfill their requirements to unlock the next mission.<br/><br/>
+              <span style={{ color: '#268bd2' }}>+</span> Deal with the enemies on each floor.<br/><br/>
+              <span style={{ color: '#268bd2' }}>+</span> In between floors you will grow stronger with buffs or new abilities.<br/><br/>
+            </div>
+          </div>
+          <div className="col s12 m6">
             <div className="Jacinto_Help__section_header">Controls</div>
             <div className="Jacinto_Help__section_body">
-              <div>Movement: WASD</div>
-              <div>Actions: click or key press</div>
+              <div><span style={{ color: '#268bd2' }}>Movement:</span> WASD</div>
+              <div><span style={{ color: '#268bd2' }}>Actions:</span> press the corresponding key or click the action in the side bar</div>
+              <div><span style={{ color: '#268bd2' }}>Help:</span> press ?</div>
             </div>
           </div>
         </div>

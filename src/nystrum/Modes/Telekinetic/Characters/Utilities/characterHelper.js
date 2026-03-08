@@ -137,49 +137,34 @@ export function generateDefaultKeymapActions(engine, actor) {
         // onAfter: () => onAfterMoveOrAttack(engine, actor),
       });
     },
-    p: () => new StandStill({
+    // spacebar
+    'Escape': () => new StandStill({
       label: 'Stay',
       game: engine.game,
       actor,
-      energyCost: Constant.ENERGY_THRESHOLD,
-    }),
-    Escape: () => new StandStill({
-      label: 'Pass turn',
       message: '...',
-      game: engine.game,
-      actor,
-      energyCost: actor.energy,
-    }),
-    i: () => new OpenInventory({
-      label: 'Inventory',
-      game: engine.game,
-      actor,
-    }),
-    o: () => new StatChangeOnSelf({
-      label: 'Mind Gain [1]',
-      game: engine.game,
-      actor,
       energyCost: Constant.ENERGY_THRESHOLD,
-      changeByValue: 1,
-      statAttributePath: 'charge',
-      statAttributePathMax: 'chargeMax',
-      statAttributeValueMin: 0,
     }),
+    // i: () => new OpenInventory({
+    //   label: 'Inventory',
+    //   game: engine.game,
+    //   actor,
+    // }),
     // o: () => new OpenEquipment({
     //   label: 'Equipment',
     //   game: engine.game,
     //   actor,
     // }),
-    u: () => new OpenDropInventory({
-      label: 'Drop Items',
-      game: engine.game,
-      actor,
-    }),
-    g: () => new PickupRandomItem({
-      label: 'Pickup',
-      game: engine.game,
-      actor,
-    }),
+    // u: () => new OpenDropInventory({
+    //   label: 'Drop Items',
+    //   game: engine.game,
+    //   actor,
+    // }),
+    // g: () => new PickupRandomItem({
+    //   label: 'Pickup',
+    //   game: engine.game,
+    //   actor,
+    // }),
     // mouseOver: (mousePosition) => {
     //   return new MoveTargetingCursor({
     //     hidden: true,

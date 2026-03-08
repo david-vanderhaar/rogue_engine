@@ -291,7 +291,8 @@ html {
 
 .modal-content, 
 .modal-footer {
-  background-color: #16161d !important;
+  background-color: var(--color-main) !important;
+  /* background-color: #16161d !important; */
   color: var(--color-secondary);
 }
 

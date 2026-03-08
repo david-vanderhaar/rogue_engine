@@ -1,20 +1,24 @@
 export const COLORS = {
   main: '#0f0705',
   accent: '#8eac86',
-  drone: '#79261c',
+  secondary: '#e5d097',
+  // accent: '#8eac86',
+  // secondary: '#79261c',
   accent_light: '#c35f2b',
   text: '#e5d097',
-
+  
   blue_light: '#8eac86',
   blue_dark: '#254550',
   blue_mid: '#1d574f',
-
+  
   mid_yellow: '#c59332',
-
+  
   light: '#e5d097',
   light_mid: '#b49f83',
   dark: '#0f0705',
   dark_accent: '#2e2a39',
+  
+  drone: '#79261c',
 
   wall: '#2e2a39',
   wall_alt: '#2e2a39',

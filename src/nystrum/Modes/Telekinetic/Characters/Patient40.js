@@ -25,6 +25,7 @@ import { AddStatusEffect } from '../../../Actions/AddStatusEffect';
 import { SpeedDefenseDamageBuff } from '../StatusEffects/SpeedDefenseDamageBuff';
 import { PrepareSubstitution } from '../../../Actions/PrepareSubstitution';
 import { MoveOrShove } from '../../../Actions/MoveOrShove';
+import { StatChangeOnSelf } from '../../../Actions/StatChangeOnSelf';
 
 const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
@@ -85,6 +86,16 @@ function initialize (engine) {
         keymapTriggerString: 'f',
         cursorShape: Constant.CLONE_PATTERNS.point,
         // cursorShape: Constant.CLONE_PATTERNS.smallSquare,
+      }),
+      o: () => new StatChangeOnSelf({
+        label: 'Mind Gain [1]',
+        game: engine.game,
+        actor,
+        energyCost: Constant.ENERGY_THRESHOLD,
+        changeByValue: 1,
+        statAttributePath: 'charge',
+        statAttributePathMax: 'chargeMax',
+        statAttributeValueMin: 0,
       }),
     }
   }
