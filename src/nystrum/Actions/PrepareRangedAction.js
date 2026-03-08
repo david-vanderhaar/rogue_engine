@@ -66,7 +66,7 @@ export class PrepareRangedAction extends Base {
     })
 
     let keymap = {
-      Backspace: () => goToPreviousKeymap,
+      'Space,Backspace': () => goToPreviousKeymap,
       
       e: () => { 
         return new MoveTargetingCursor({

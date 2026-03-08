@@ -131,7 +131,8 @@ function startMissionManager(mode) {
             const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
             const pos = Helper.stringToCoords(randomPosition)
             
-            EnemyActors.addsecurityGuard(mode, pos)
+            // EnemyActors.addsecurityGuard(mode, pos)
+            EnemyActors.addByKey(mode, pos, 'parking_boss')
             SpatterEmitter({
               game: mode.game,
               fromPosition: pos,

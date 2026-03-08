@@ -23,7 +23,7 @@ export default function GenerateLabMap (mode) {
   generate(mode, { x: CENTER_POSITION.x + 3, y: CENTER_POSITION.y }, SHAPES.southWestVerticalL, ACTOR_PARAMS.table)
   generate(mode, { x: CENTER_POSITION.x - 2, y: CENTER_POSITION.y }, SHAPES.southEastVerticalL, ACTOR_PARAMS.table)
   // place medical equipment around room
-  Helper.getNumberOfItemsInArray(10, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
+  Helper.getNumberOfItemsInArray(16, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
     const pos = Helper.stringToCoords(key)
     const params = Helper.getRandomInArray([ACTOR_PARAMS.bottle, ACTOR_PARAMS.scalpel, ACTOR_PARAMS.scissors, ACTOR_PARAMS.pliers])
     // const params = Helper.getRandomInArray([ACTOR_PARAMS.scalpel, ACTOR_PARAMS.scissors, ACTOR_PARAMS.pliers])
@@ -51,7 +51,7 @@ function startMissionManager(mode) {
 
   const firstMission = new Mission({
     name: 'Throwing Practice',
-    description: 'Your body is too weak to fight, but your mind is sharp. \nUse your telekinetic powers to throw an object. \nPress "f" to activate telekinesis, select an object within range, then select a target direction.',
+    description: 'Your body is too weak to fight, but your mind is sharp. \nUse your telekinetic powers to throw an object. \nPress "f" to activate telekinesis, select an object within range, then select a direction.',
     timesToComplete: 2,
     eventToComplete: `${player?.id}:apply_status_effect_thrown`,
   })

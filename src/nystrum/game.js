@@ -693,8 +693,10 @@ export const handleKeyPress = (event, engine) => {
 }
 
 const getKeymapHandlerByCode = (code, keymap) => {
+  if (code === ' ') code = 'Space'
   for (let key in keymap) {
-    if (key.split(',').includes(code)) return keymap[key]
+    const keys = key.split(',')
+    if (keys.includes(code)) return keymap[key]
   }
 
   return null

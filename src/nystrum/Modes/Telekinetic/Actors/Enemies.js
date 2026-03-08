@@ -17,37 +17,41 @@ import { SpitterSac } from '../../TallGrass/Items/Weapons/Spitter';
 import FollowAndAttack from '../../../Entities/AI/BehaviorChains/FollowAndAttack';
 import { onAfterMoveOrAttack } from '../Characters/Utilities/characterHelper';
 import { checkIsWalkingOnFire, checkIsWalkingOnFreeFall } from '../../HiddenLeaf/StatusEffects/helper';
+import { NailGun, Pistol } from '../Items/Weapons/RangedWeapons';
+import SpecialMove from '../../../Entities/AI/BehaviorChains/SpecialMove';
 
+
+export function addRandom (mode, pos) {
+  addRandomBasicGrubToMap(mode, pos)
+}
+export function addByKey (mode, pos, key) {
+  addGrubToMapWithStats(mode, pos, GRUB_STATS[key]())
+}
 export function addsecurityGuard (mode, pos) {
   addGrubToMapWithStats(mode, pos, GRUB_STATS.securityGuard())
 }
 export function addConstructionJunkie (mode, pos) {
-  addGrubToMapWithStats(mode, pos, GRUB_STATS.constructionJunkie())
+  addGrubToMapWithStats(mode, pos, GRUB_STATS.construction_0())
 }
 export function addDrone (mode, pos) {
   addGrubToMapWithStats(mode, pos, GRUB_STATS.drone())
 }
 
-export function addRandom (mode, pos) {
-  addRandomBasicGrubToMap(mode, pos)
-}
-
 const GRUB_STATS = {
-  securityGuard: () => {
+  // EVERY LEVEL
+  lab_rat: () => {
     return {
-      name: 'security guard',
+      name: 'lab rat',
       renderer: {
-        character: 'g',
-        color: COLORS.light,
-        background: COLORS.blue_mid,
-        sprite: 'g',
+        character: 'r',
+        color: COLORS.dark_accent,
+        background: COLORS.flesh3,
+        sprite: 'r',
       },
-      durability: 2,
+      durability: 1,
       attackDamage: 1,
       bloodSpatterOnHit: true,
-      baseDescription: 'a gruntled, square-faced corpo gaurd.',
-      baseDescriptors: ['with baton and bad health insurance'],
-      // behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      baseDescription: 'actually a person. but they spend all their time in the lab, experimenting on you.',
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
           repeat: 1,
@@ -66,24 +70,23 @@ const GRUB_STATS = {
       ],
     }
   },
-  constructionJunkie: () => {
+  securityGuard: () => {
     return {
-      name: 'construction junkie',
+      name: 'security guard',
       renderer: {
-        character: 'c',
+        character: 'g',
         color: COLORS.light,
-        background: COLORS.orange,
-        sprite: 'c',
+        background: COLORS.blue_mid,
+        sprite: 'g',
       },
-      durability: 3,
+      durability: 2,
       attackDamage: 1,
       bloodSpatterOnHit: true,
-      baseDescription: 'imagine a contruction crew, completely zooted.',
-      // baseDescriptors: ['with baton and bad health insurance'],
-      // behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      baseDescription: 'a gruntled, square-faced corpo guard.',
+      baseDescriptors: ['with baton and bad health insurance'],
       behaviors: [
         new Behaviors.MoveTowardsEnemy({
-          repeat: 2,
+          repeat: 1,
           maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
           chainOnFail: true,
         }),
@@ -101,17 +104,17 @@ const GRUB_STATS = {
   },
   drone: () => {
     return {
-      name: 'drone',
+      name: 'flying drone',
       renderer: {
-        character: 'd',
+        character: '¤',
         color: COLORS.light,
         background: COLORS.drone,
-        sprite: 'd',
+        sprite: '¤',
       },
       durability: 1,
       attackDamage: 1,
       bloodSpatterOnHit: true,
-      baseDescription: 'buzz',
+      baseDescription: 'can\'t be thrown over the edge',
       traversableTiles: ['FREE_FALL', 'WATER'],
       onMove: () => null,
       // baseDescriptors: ['with baton and bad health insurance'],
@@ -132,6 +135,433 @@ const GRUB_STATS = {
           repeat: 1,
           chainOnFail: true
         }),
+      ],
+    }
+  },
+  // OFFICE
+  office_0: () => {
+    return {
+      name: 'cubicle dweller',
+      renderer: {
+        character: 'c',
+        color: COLORS.mid_yellow,
+        background: COLORS.light_mid,
+        sprite: 'c',
+      },
+      durability: 1,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      baseDescription: 'lives to work, works to live',
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  office_1: () => {
+    return {
+      name: 'break roomer',
+      renderer: {
+        character: 'b',
+        color: COLORS.red,
+        background: COLORS.light_mid,
+        sprite: 'b',
+      },
+      durability: 1,
+      attackDamage: 2,
+      bloodSpatterOnHit: true,
+      baseDescription: 'lives to work, works to live',
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  office_2: () => {
+    return {
+      name: 'a yes man',
+      renderer: {
+        character: 'y',
+        color: COLORS.blue,
+        background: COLORS.light_mid,
+        sprite: 'y',
+      },
+      durability: 1,
+      attackDamage: 2,
+      bloodSpatterOnHit: true,
+      baseDescription: 'whatever you say boss',
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 2,
+          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+          // chainOnFail: true,
+        }),
+      ],
+    }
+  },
+  office_boss: () => {
+    return {
+      name: 'floor manager',
+      renderer: {
+        character: 'f',
+        color: COLORS.light_mid,
+        background: COLORS.dark_accent,
+        sprite: 'f',
+      },
+      durability: 5,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      baseDescription: 'no breaks, we need the numbers',
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 3,
+          maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
+          // chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  // CONTRUCTION
+  construction_0: () => {
+    return {
+      name: 'construction hand',
+      renderer: {
+        character: 'c',
+        color: COLORS.mid_yellow,
+        background: COLORS.dirt00,
+        sprite: 'c',
+      },
+      durability: 1,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  construction_1: () => {
+    return {
+      name: 'jacked construction hand',
+      renderer: {
+        character: 'c',
+        color: COLORS.red,
+        background: COLORS.dirt00,
+        sprite: 'c',
+      },
+      durability: 1,
+      attackDamage: 3,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  construction_2: () => {
+    return {
+      name: 'zooted construction hand',
+      renderer: {
+        character: 'c',
+        color: COLORS.blue,
+        background: COLORS.dirt00,
+        sprite: 'c',
+      },
+      durability: 1,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 2,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  construction_3: () => {
+    return {
+      name: 'nail gun operator',
+      renderer: {
+        character: 'c',
+        color: COLORS.light,
+        background: COLORS.dirt00,
+        sprite: 'c',
+      },
+      durability: 1,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 3,
+          chainOnFail: true
+        }),
+        new Behaviors.ExecuteEquipItem({
+          repeat: 1,
+          getItem: NailGun,
+          itemName: 'nail gun',
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphRangedAttack({repeat: 1, chainOnSuccess: false}),
+        new Behaviors.ExecuteRangedAttack({repeat: 1}),
+        new Behaviors.MoveAwayFromEnemy({
+          repeat: 1,
+          maintainDistanceOf: 4,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  construction_boss: () => {
+    return {
+      name: 'flying tank drone',
+      renderer: {
+        character: '¤',
+        color: COLORS.dark_accent,
+        background: COLORS.drone,
+        sprite: '¤',
+      },
+      durability: 10,
+      attackDamage: 2,
+      bloodSpatterOnHit: true,
+      baseDescription: 'can\'t be thrown over the edge',
+      traversableTiles: ['FREE_FALL', 'WATER'],
+      onMove: () => null,
+      // baseDescriptors: ['with baton and bad health insurance'],
+      // behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 2,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+          ignoreObstacles: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  // PARKING GARAGE
+  parking_0: () => {
+    return {
+      name: 'private security guard',
+      renderer: {
+        character: 'g',
+        color: COLORS.mid_yellow,
+        background: COLORS.blue_mid,
+        sprite: 'g',
+      },
+      durability: 1,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  parking_1: () => {
+    return {
+      name: 'jacked security guard',
+      renderer: {
+        character: 'g',
+        color: COLORS.red,
+        background: COLORS.blue_mid,
+        sprite: 'g',
+      },
+      durability: 1,
+      attackDamage: 3,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  parking_2: () => {
+    return {
+      name: 'armored security guard',
+      renderer: {
+        character: 'g',
+        color: COLORS.blue,
+        background: COLORS.blue_mid,
+        sprite: 'g',
+      },
+      durability: 1,
+      attackDamage: 2,
+      defense: 1,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 0, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  parking_3: () => {
+    return {
+      name: 'private security pistoleer',
+      renderer: {
+        character: 'g',
+        color: COLORS.light,
+        background: COLORS.blue_mid,
+        sprite: 'g',
+      },
+      durability: 1,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 1,
+          maintainDistanceOf: 5,
+          chainOnFail: true
+        }),
+        new Behaviors.ExecuteEquipItem({
+          repeat: 1,
+          getItem: Pistol,
+          itemName: 'pistol',
+          chainOnFail: true,
+        }),
+        new Behaviors.TelegraphRangedAttack({repeat: 1, chainOnSuccess: false}),
+        new Behaviors.ExecuteRangedAttack({repeat: 1}),
+        new Behaviors.MoveAwayFromEnemy({
+          repeat: 1,
+          maintainDistanceOf: 6,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
+  parking_boss: () => {
+    return {
+      name: 'The CEO',
+      renderer: {
+        character: '¤',
+        color: COLORS.dark_accent,
+        background: COLORS.blue_light,
+        sprite: '¤',
+      },
+      durability: 20,
+      attackDamage: 3,
+      bloodSpatterOnHit: true,
+      baseDescription: 'in a military-grade mech suit',
+      traversableTiles: ['FREE_FALL', 'WATER'],
+      onMove: () => null,
+      // baseDescriptors: ['with baton and bad health insurance'],
+      behaviors: [
+        ...new FollowAndAttack({repeat: 6, moveRepeat: 1}).create(),
+        new Behaviors.Wait({repeat: 2}),
+        // Phase 2: Special Move
+        ...new SpecialMove({repeat: 3, moveRepeat: 4}).create(),
       ],
     }
   },
@@ -167,7 +597,7 @@ export function createRandomBasic(mode, pos) {
   const createStats = Helper.getRandomInArray(
     Object
     .keys(GRUB_STATS)
-    .filter((key) => key !== 'skorge')
+    .filter((key) => !key.endsWith('_boss'))
     .map((key) => GRUB_STATS[key])
   )
   return createNewJacintoAIEntity({

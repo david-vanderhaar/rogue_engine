@@ -137,8 +137,7 @@ export function generateDefaultKeymapActions(engine, actor) {
         // onAfter: () => onAfterMoveOrAttack(engine, actor),
       });
     },
-    // spacebar
-    'Backspace': () => new StandStill({
+    'Space,Backspace': () => new StandStill({
       label: 'Stay',
       game: engine.game,
       actor,

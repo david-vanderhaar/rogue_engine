@@ -81,7 +81,7 @@ export class PrepareTelekinesisThrow extends Base {
     });
 
     let keymap = {
-      Backspace: () => goToPreviousKeymap,
+      'Space,Backspace': () => goToPreviousKeymap,
       'w,ArrowUp': () => new AddStatusEffectAtPositions(actionParams(DIRECTIONS.N, 'N')),
       'd,ArrowRight': () => new AddStatusEffectAtPositions(actionParams(DIRECTIONS.E, 'E')),
       's,ArrowDown': () => new AddStatusEffectAtPositions(actionParams(DIRECTIONS.S, 'S')),

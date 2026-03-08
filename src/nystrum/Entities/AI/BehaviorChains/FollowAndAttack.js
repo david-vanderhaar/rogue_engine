@@ -4,14 +4,15 @@ import * as Constant from '../../../constants';
 
 // Close distance and attack
 export default class FollowAndAttack extends BehaviorChain {
-  constructor({ ...args }) {
+  constructor({moveRepeat = 1, ...args }) {
     super(args);
+    this.moveRepeat = moveRepeat
   }
 
   behaviors() {
     return [
       new Behaviors.MoveTowardsEnemy({
-        repeat: 1,
+        repeat: this.moveRepeat,
         maintainDistanceOf: -1, // causes to move and attack in same turn if close enough
         chainOnFail: true
       }),

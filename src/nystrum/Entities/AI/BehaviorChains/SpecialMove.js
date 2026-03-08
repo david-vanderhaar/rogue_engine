@@ -5,8 +5,9 @@ import * as Constant from '../../../constants';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter';
 
 export default class SpecialMove extends BehaviorChain {
-  constructor({ ...args }) {
+  constructor({moveRepeat = 6, ...args }) {
     super(args);
+    this.moveRepeat = moveRepeat
   }
 
   behaviors() {
@@ -20,7 +21,7 @@ export default class SpecialMove extends BehaviorChain {
       }),
       new Behaviors.ExecuteMoveorAttackAlongPath({
         // new Behaviors.ExecuteMoveorShoveAlongPath({
-        repeat: 6,
+        repeat: this.moveRepeat,
         extraActionParams: {
           onSuccess: ({actor}) => {
             // HIDDEN_LEAF_SOUNDS.wind_slice.play()
