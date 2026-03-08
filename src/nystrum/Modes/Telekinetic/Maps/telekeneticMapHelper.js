@@ -166,6 +166,6 @@ export const ACTOR_PARAMS = {
   
   // EXPLOSIVES
   fire_extinguisher: { range: 3, character: '%', name: 'fire extinguisher', color: COLORS.red, background: COLORS.dark, passable: true, durability: 1, flammability: 0, explosivity: 2, attackDamage: 3 },
-  gas_can: { range: 3, character: 'õ', name: 'gas can', color: COLORS.white, background: COLORS.red, passable: true, durability: 1, flammability: 0, explosivity: 3, attackDamage: 4 },
+  gas_can: { range: 3, character: 'õ', name: 'gas can', color: COLORS.white, background: COLORS.red, passable: true, durability: 1, flammability: 1, explosivity: 2, attackDamage: 3 },
   gas_tank: { range: 3, character: 'Õ', name: 'gas tank', color: COLORS.white, background: COLORS.red, passable: false, durability: 1, flammability: 1, explosivity: 4, attackDamage: 5 },
 }

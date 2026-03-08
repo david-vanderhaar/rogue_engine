@@ -61,11 +61,11 @@ export default function GenerateParkingGarageMap (mode) {
   Helper.getNumberOfItemsInArray(numberOfItems, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
     const pos = Helper.stringToCoords(key)
     const params = Helper.getRandomInArray([
-      // ACTOR_PARAMS.hammer,
-      // ACTOR_PARAMS.nail_pile,
-      // ACTOR_PARAMS.two_by_four,
-      // ACTOR_PARAMS.metal_sheet,
-      // ACTOR_PARAMS.saw_blade,
+      ACTOR_PARAMS.hammer,
+      ACTOR_PARAMS.nail_pile,
+      ACTOR_PARAMS.two_by_four,
+      ACTOR_PARAMS.metal_sheet,
+      ACTOR_PARAMS.saw_blade,
       ACTOR_PARAMS.car,
       ACTOR_PARAMS.cone,
       ACTOR_PARAMS.pipe,
@@ -77,8 +77,7 @@ export default function GenerateParkingGarageMap (mode) {
   Helper.getNumberOfItemsInArray(numberOfExplosiveItems, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
     const pos = Helper.stringToCoords(key)
     const params = Helper.getRandomInArray([
-      // ACTOR_PARAMS.fire_extinguisher,
-      // ACTOR_PARAMS.gas_can,
+      ACTOR_PARAMS.gas_can,
       ACTOR_PARAMS.gas_tank,
     ])
     generate(mode, pos, SHAPES.point, params, createExplosiveThrowable)
@@ -99,24 +98,92 @@ export default function GenerateParkingGarageMap (mode) {
 
   // placePlayer In elevator
   mode.getPlayer().move({x: 17, y: 5})
-
-  mode.addEnemies(1, 'addRandom')
   startMissionManager(mode)
 }
 
 function startMissionManager(mode) {
   const player = mode.game.getFirstPlayer();
+  const firstWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_FIRST_WAVE.min, NUMBER_OF_FIRST_WAVE.max)
+  const secondWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_SECOND_WAVE.min, NUMBER_OF_SECOND_WAVE.max)
+  const thirdWaveCount = Helper.getRandomIntInclusive(NUMBER_OF_THIRD_WAVE.min, NUMBER_OF_THIRD_WAVE.max)
 
   mode.initializeMissionManager({
     missions: [
       new Mission({
-        name: 'Don\'t Fall',
-        description: 'Proceed to dark spaced tile, where the floor fell away. See what happens.',
-        timesToComplete: 1,
-        // eventToComplete: `${player?.id}:move:tileType:GROUND`,
-        eventToComplete: `OPPONENT:destroy`,
-        // eventToComplete: `${player?.id}:move:tileType:FREE_FALL`,
+        name: 'First Wave',
+        description: 'Even these construction junkies area after me? Eliminate Them.',
+        timesToComplete: firstWaveCount,
+        eventToComplete: `construction junkie:destroy`,
+        onTrigger: () => {
+          Helper.range(firstWaveCount).forEach((index) => {
+            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+            const pos = Helper.stringToCoords(randomPosition)
+            
+            EnemyActors.addConstructionJunkie(mode, pos)
+            SpatterEmitter({
+              game: mode.game,
+              fromPosition: pos,
+              spatterAmount: 0.8,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+            }).start()
+          })
+        }
       }),
-    ]
+      new Mission({
+        name: 'Second Wave',
+        description: 'What? they have drones? Take them out.',
+        timesToComplete: secondWaveCount,
+        eventToComplete: `drone:destroy`,
+        onTrigger: () => {
+          Helper.range(secondWaveCount).forEach((index) => {
+            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+            const pos = Helper.stringToCoords(randomPosition)
+            
+            EnemyActors.addDrone(mode, pos)
+            SpatterEmitter({
+              game: mode.game,
+              fromPosition: pos,
+              spatterAmount: 0.8,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+            }).start()
+          })
+        }
+      }),
+      new Mission({
+        name: 'Final Wave',
+        description: '*sigh* They don\'t realize my power is growing. Eliminate them.',
+        timesToComplete: thirdWaveCount,
+        eventToComplete: `OPPONENT:destroy`,
+        onTrigger: () => {
+          Helper.range(thirdWaveCount).forEach((index) => {
+            const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+            const pos = Helper.stringToCoords(randomPosition)
+            
+            EnemyActors.addRandom(mode, pos)
+            SpatterEmitter({
+              game: mode.game,
+              fromPosition: pos,
+              spatterAmount: 0.8,
+              spatterRadius: 3,
+              animationTimeStep: 0.6,
+              transfersBackground: false,
+              spatterColors: [COLORS.blue_dark, COLORS.dark_accent, COLORS.blue_light],
+            }).start()
+          })
+        }
+      }),
+      new Mission({
+        name: 'Escape the Building',
+        description: 'Proceed to the elevator and escape this place.',
+        timesToComplete: 1,
+        eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
+      }),
+    ],
   })
 }
