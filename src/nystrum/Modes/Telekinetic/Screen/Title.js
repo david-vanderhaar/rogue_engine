@@ -35,58 +35,28 @@ function Title(props) {
       <div className="Title__content" style={{height: '100%', width: '100%', position: 'relative', overflow: 'visible', maxHeight: 720, maxWidth: 1280}}>
         <h2 className="Title__heading" style={{color: CARTRIDGE.theme.accent, zIndex: 100}}>Telekinetic!</h2>
         <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/rock_lee.png'}
-          alt="Rock Lee"
-          style={{left: -130, top: 30}}
+          src={window.PUBLIC_URL + '/telekinetic/title/hands_front.png'}
+          alt="two hands"
+          style={{left: -350, top: -5}}
           className="Title__character Title__character--left"
         />
         <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/gaara.png'}
-          alt="Gaara"
-          style={{right: -134, bottom: 40}}
+          src={window.PUBLIC_URL + '/telekinetic/title/eye.png'}
+          alt="eye"
+          style={{right: -190, bottom: -360}}
           className="Title__character Title__character--right"
         />
         <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_0.png'}
-          alt="Exclaim 0"
-          style={{left: 446, top: 96}}
-          className="fadeInPartial__image"
+          src={window.PUBLIC_URL + '/telekinetic/title/face.png'}
+          alt="face"
+          style={{left: -136, top: -500}}
+          className="fadeInFull__image"
         />
         <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_1.png'}
-          alt="Exclaim 1"
-          style={{left: 854, top: 100}}
-          className="fadeInPartial__image"
-        />
-        <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_2.png'}
-          alt="Exclaim 2"
-          style={{left: 150, bottom: 250}}
-          className="fadeInPartial__image"
-        />
-        <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_3.png'}
-          alt="Exclaim 3"
-          style={{left: 200, bottom: 200}}
-          className="fadeInPartial__image"
-        />
-        <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_4.png'}
-          alt="Exclaim 4"
-          style={{left: 854, top: 250}}
-          className="fadeInPartial__image"
-        />
-        <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_5.png'}
-          alt="Exclaim 5"
-          style={{right: 266, bottom: 62}}
-          className="fadeInPartial__image"
-        />
-        <img
-          src={window.PUBLIC_URL + '/hidden_leaf/title/exclaim_5.png'}
-          alt="Exclaim 5"
-          style={{left: 400, top: 144}}
-          className="fadeInPartial__image"
+          src={window.PUBLIC_URL + '/telekinetic/title/hands_down.png'}
+          alt="hands"
+          style={{left: 595, top: -478}}
+          className="fadeInFull__image"
         />
         <button
           className="btn btn-main btn-themed Title__button"
