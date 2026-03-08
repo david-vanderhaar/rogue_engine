@@ -9,16 +9,6 @@ import Mission from "../../../Mission/Mission";
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { DIRECTIONS } from "../../../constants";
 
-// const CHANCE_OF_WALL_CONSTRUCTION = 0.55
-// const CHANCE_OF_WINDOW_REPLACMENT = 0.25
-// const CHANCE_OF_DRY_WALL = 0.3
-// const INNER_MAP_DIMENSIONS = {x: 6, mx: 29, y: 5, my: 20}
-// const NUMBER_OF_ITEMS = {min: 10, max: 40}
-// const NUMBER_OF_EXPLOSIVES = {min: 2, max: 6}
-const NUMBER_OF_FIRST_WAVE = {min: 2, max: 3}
-const NUMBER_OF_SECOND_WAVE = {min: 3, max: 6}
-const NUMBER_OF_THIRD_WAVE = {min: 3, max: 6}
-
 export default function GenerateConstructionMap (
   mode,
   {
