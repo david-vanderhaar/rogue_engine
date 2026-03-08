@@ -14,7 +14,11 @@ function Intro(props) {
     const character = props.characters.at(0)
     
     props.setSelectedCharacter(character);
-    props.meta({tournament: {player: character, currentRound: 1, maxRounds: 3}});
+    props.meta({
+      tournament: {player: character, currentRound: 1},
+      turnsTaken: 0,
+      enemiesDefeated: 0,
+    });
     
     playButtonSound()
     props.setActiveScreen(SCREENS.LEVEL)

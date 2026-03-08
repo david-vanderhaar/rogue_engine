@@ -44,12 +44,7 @@ export class Telekinetic extends Mode {
     return [
       GenerateDefaultMap,
       GenerateDefaultMap,
-      GenerateDefaultMap,
-      GenerateDefaultMap,
-      GenerateDefaultMap,
-      GenerateDefaultMap,
-      GenerateDefaultMap,
-      GenerateDefaultMap,
+      // GenerateDefaultMap,
       // GenerateLabMap,
       // GenerateOfficeMap,
       // GenerateOfficeMap,
@@ -273,7 +268,6 @@ export class Telekinetic extends Mode {
   hasWon () {
     const level = this.getMetaTournamentLevel()
     const maxLevel = this.levelGenerators().length
-    // const maxLevel = this.meta().tournament.maxRounds;
     return this.levelComplete() && (level >= maxLevel);
   }
 
