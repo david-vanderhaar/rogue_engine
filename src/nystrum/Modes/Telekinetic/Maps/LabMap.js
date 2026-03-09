@@ -16,16 +16,19 @@ export default function GenerateLabMap (mode) {
   const CENTER_POSITION = centerPosition(mode);
 
   // place operating table in center
-  generate(mode, {x: CENTER_POSITION.x - 1, y: CENTER_POSITION.y - 1}, SHAPES.horizontalLine, ACTOR_PARAMS.operating_table)
+  generate(mode, {x: CENTER_POSITION.x - 1, y: CENTER_POSITION.y - 2}, SHAPES.horizontalLine, ACTOR_PARAMS.operating_table)
   // place player in center
   placePlayerInCenter(mode);
   // place table near center
-  generate(mode, { x: CENTER_POSITION.x + 3, y: CENTER_POSITION.y }, SHAPES.southWestVerticalL, ACTOR_PARAMS.table)
-  generate(mode, { x: CENTER_POSITION.x - 2, y: CENTER_POSITION.y }, SHAPES.southEastVerticalL, ACTOR_PARAMS.table)
+  generate(mode, { x: CENTER_POSITION.x + 5, y: CENTER_POSITION.y + 1 }, SHAPES.southWestVerticalL, ACTOR_PARAMS.table)
+  generate(mode, { x: CENTER_POSITION.x - 4, y: CENTER_POSITION.y + 1 }, SHAPES.southEastVerticalL, ACTOR_PARAMS.table)
+  generate(mode, { x: CENTER_POSITION.x - 4, y: CENTER_POSITION.y - 2 }, SHAPES.northEastVerticalL, ACTOR_PARAMS.table)
+  generate(mode, { x: CENTER_POSITION.x + 5, y: CENTER_POSITION.y - 2}, SHAPES.northWestVerticalL, ACTOR_PARAMS.table)
   // place medical equipment around room
   Helper.getNumberOfItemsInArray(16, MapHelper.getEmptyGroundTileKeys(mode.game)).forEach((key) => {
     const pos = Helper.stringToCoords(key)
-    const params = Helper.getRandomInArray([ACTOR_PARAMS.bottle, ACTOR_PARAMS.scalpel, ACTOR_PARAMS.scissors, ACTOR_PARAMS.pliers])
+    const params = Helper.getRandomInArray([ACTOR_PARAMS.scissors, ACTOR_PARAMS.scalpel])
+    // const params = Helper.getRandomInArray([ACTOR_PARAMS.bottle, ACTOR_PARAMS.scalpel, ACTOR_PARAMS.scissors, ACTOR_PARAMS.pliers])
     // const params = Helper.getRandomInArray([ACTOR_PARAMS.scalpel, ACTOR_PARAMS.scissors, ACTOR_PARAMS.pliers])
     generate(mode, pos, SHAPES.point, params, createThrowable)
   })
@@ -54,7 +57,7 @@ function startMissionManager(mode) {
     name: 'Throwing Practice',
     description: 'Your body is too weak to fight, but your mind is sharp. \nUse your telekinetic powers to throw an object. \nPress "f" to activate telekinesis, select an object within range, then select a direction.',
     timesToComplete: 2,
-    eventToComplete: `${player?.id}:apply_status_effect_thrown`,
+    eventToComplete: `${player?.id}:apply_status_effect_thrown:scalpel`,
   })
 
   const secondMission = new Mission({

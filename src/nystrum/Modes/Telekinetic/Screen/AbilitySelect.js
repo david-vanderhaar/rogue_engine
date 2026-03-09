@@ -925,7 +925,7 @@ function AbilitySelectScreen(props) {
 
     // return available
     return [
-      ...Helper.getNumberOfItemsInArray(3, available),
+      ...Helper.getNumberOfItemsInArray(4, available),
       ...Helper.getNumberOfItemsInArray(1, alwaysAvailable),
     ]
   }
