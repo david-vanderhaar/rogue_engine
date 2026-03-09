@@ -44,7 +44,7 @@ export class Telekinetic extends Mode {
   levelGenerators() {
     return [
       // // GenerateDefaultMap,
-      // GenerateLabMap,
+      GenerateLabMap,
       (mode) => GenerateOfficeMap(mode, {
         CHANCE_OF_CENTER_CUBICLES: 0.33,
         CHANCE_OF_NORTH_CUBICLES: 0.5,
@@ -74,6 +74,7 @@ export class Telekinetic extends Mode {
         NUMBER_OF_EXPLOSIVES: {min: 1, max: 3},
         WAVES: [
           {min: 3, max: 6, enemyKeys: ['office_0', 'office_1', 'office_2']},
+          {min: 4, max: 6, enemyKeys: ['office_0', 'office_1', 'office_2']},
         ],
       }),
       (mode) => GenerateOfficeMap(mode, {
@@ -113,7 +114,7 @@ export class Telekinetic extends Mode {
         NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
         WAVES: [
           {min: 3, max: 4, enemyKeys: ['construction_0', 'construction_1', 'construction_2',]},
-          {min: 3, max: 6, enemyKeys: ['drone']},
+          {min: 3, max: 6, enemyKeys: ['drone_mk2']},
         ],
       }),
       (mode) => GenerateConstructionMap(mode, {
@@ -124,7 +125,7 @@ export class Telekinetic extends Mode {
         NUMBER_OF_ITEMS: {min: 20, max: 40},
         NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
         WAVES: [
-          {min: 4, max: 6, enemyKeys: ['construction_0', 'construction_1', 'construction_2', 'construction_3', 'drone']},
+          {min: 4, max: 6, enemyKeys: ['construction_0', 'construction_1', 'construction_2', 'construction_3', 'drone', 'drone_mk2']},
           {min: 1, max: 1, enemyKeys: ['construction_boss']},
         ],
       }),
@@ -138,7 +139,7 @@ export class Telekinetic extends Mode {
         WAVES: [
           {min: 3, max: 5, enemyKeys: ['parking_0', 'parking_1', 'parking_2']},
           {min: 6, max: 8, enemyKeys: ['drone']},
-          {min: 6, max: 8, enemyKeys: ['drone']},
+          {min: 6, max: 8, enemyKeys: ['drone', 'drone_mk2']},
         ],
       }),
       (mode) => GenerateParkingGarageMap(mode, {
@@ -163,7 +164,7 @@ export class Telekinetic extends Mode {
         NUMBER_OF_EXPLOSIVES: {min: 2, max: 6},
         WAVES: [
           {min: 6, max: 10, enemyKeys: ['parking_0', 'parking_1', 'parking_2', 'drone']},
-          {min: 6, max: 8, enemyKeys: ['drone']},
+          {min: 6, max: 8, enemyKeys: ['drone_mk2']},
           {min: 1, max: 1, enemyKeys: ['parking_boss']},
         ],
       }),

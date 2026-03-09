@@ -153,15 +153,15 @@ export const ACTOR_PARAMS = {
   phone: { range: 3, character: '[', name: 'phone', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   // CONTRUCTION ITEMS 
   hammer: { range: 1, character: 'p', name: 'hammer', color: COLORS.light, background: COLORS.dark, passable: true, durability: 2, attackDamage: 2,  remainAfterUse: true }, 
-  nail_pile: { range: 1, character: '=', name: 'nail pile', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
-  helmet: { range: 1, character: 'n', name: 'helmet', color: COLORS.orange, background: COLORS.dark, passable: true, durability: 2, remainAfterUse: true },
-  two_by_four: { range: 1, character: ']', name: 'two by four', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 2 },
-  four_by_eight: { range: 1, character: ']]', name: 'four by eight', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 4 },
+  helmet: { range: 1, character: 'n', name: 'helmet', color: COLORS.light, background: COLORS.dark, passable: true, durability: 2, remainAfterUse: true },
   metal_sheet: { range: 1, character: '#', name: 'metal sheet', color: COLORS.light, background: COLORS.dark, passable: true, durability: 4, remainAfterUse: true },
   saw_blade: { range: 1, character: '*', name: 'saw blade', color: COLORS.light, background: COLORS.dark, passable: true, durability: 3, attackDamage: 3, remainAfterUse: true },
+  nail_pile: { range: 1, character: '=', name: 'nail pile', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
+  two_by_four: { range: 1, character: ']', name: 'two by four', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 2 },
+  four_by_eight: { range: 1, character: ']]', name: 'four by eight', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 4 },
   // PARKING GARAGE ITEMS
-  car: { range: 1, character: '»»', name: 'car', color: COLORS.white, background: COLORS.dark, passable: false, durability: 10, attackDamage: 1, remainAfterUse: true  },
-  cone: { range: 1, character: '^', name: 'traffic cone', color: COLORS.orange, background: COLORS.dark, passable: true, durability: 1 },
+  car: { range: 1, character: '»»', name: 'car', color: COLORS.light, background: COLORS.dark, passable: false, durability: 10, attackDamage: 1, remainAfterUse: true  },
+  cone: { range: 1, character: '^', name: 'traffic cone', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   pipe: { range: 1, character: ')', name: 'pipe', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 2 },
   
   // EXPLOSIVES

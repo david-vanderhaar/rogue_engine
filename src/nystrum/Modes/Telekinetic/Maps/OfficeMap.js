@@ -23,7 +23,8 @@ export default function GenerateOfficeMap (
   }
 ) {
   refreshColors({fg: COLORS.light_mid})
-  addInnerMostTileTypeFilled(mode, 'FREE_FALL', 0)
+  addInnerMostTileTypeFilled(mode, 'WALL', 0)
+  addInnerMostTileTypeFilled(mode, 'FREE_FALL', 3)
   addInnerMostTileTypeFilled(mode, 'WALL', 5)
   addInnerMostTileTypeFilled(mode, 'GROUND', 6)
   mode.game.initializeMapTiles();

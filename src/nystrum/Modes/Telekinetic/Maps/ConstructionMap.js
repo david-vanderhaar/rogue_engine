@@ -21,8 +21,10 @@ export default function GenerateConstructionMap (
     WAVES,
   }
 ) {
-  refreshColors({fg: COLORS.blue_mid})
-  addInnerMostTileTypeFilled(mode, 'FREE_FALL', 0)
+  refreshColors({fg: COLORS.mid_yellow})
+  // refreshColors({fg: COLORS.blue_mid})
+  addInnerMostTileTypeFilled(mode, 'WALL', 0)
+  addInnerMostTileTypeFilled(mode, 'FREE_FALL', 3)
   addInnerMostTileTypeFilled(mode, 'WALL', 5)
   addInnerMostTileTypeFilled(mode, 'GROUND', 6)
   mode.game.initializeMapTiles();

@@ -1,8 +1,9 @@
 import { Base } from './Base';
 import * as Helper from '../../helper';
 
-export class MoveTargetingCursor extends Base {
-  constructor({ direction, range, targetPos, ignorePassability = true, ...args }) {
+// TODO: restor this as main MoveTargetingCursor class after 2026 7DRL
+export class MoveTargetingCursor_V1 extends Base {
+  constructor({ direction, range, targetPos, ignorePassability = false, ...args }) {
     super({ ...args });
     this.direction = direction;
     this.range = range;

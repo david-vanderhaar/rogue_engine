@@ -140,6 +140,43 @@ const GRUB_STATS = {
       ],
     }
   },
+  drone_mk2: () => {
+    return {
+      name: 'flying drone mk II',
+      renderer: {
+        character: '¤',
+        color: COLORS.mid_yellow,
+        background: COLORS.dark,
+        // background: COLORS.drone,
+        sprite: '¤',
+      },
+      durability: 2,
+      attackDamage: 1,
+      bloodSpatterOnHit: true,
+      baseDescription: 'can\'t be thrown over the edge',
+      traversableTiles: ['FREE_FALL', 'WATER'],
+      onMove: () => null,
+      // baseDescriptors: ['with baton and bad health insurance'],
+      // behaviors: [...new FollowAndAttack({repeat: 1}).create()],
+      behaviors: [
+        new Behaviors.MoveTowardsEnemy({
+          repeat: 2,
+          maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
+          chainOnFail: true,
+          ignoreObstacles: true,
+        }),
+        new Behaviors.TelegraphOnEnemy({
+          repeat: 1,
+          attackPattern: Constant.CLONE_PATTERNS.clover_2,
+          chainOnSuccess: true,
+        }),
+        new Behaviors.ExecuteAttack({
+          repeat: 1,
+          chainOnFail: true
+        }),
+      ],
+    }
+  },
   // OFFICE
   office_0: () => {
     return {
@@ -233,8 +270,8 @@ const GRUB_STATS = {
       name: 'floor manager',
       renderer: {
         character: 'f',
-        color: COLORS.green,
-        background: COLORS.dark,
+        color: COLORS.dark,
+        background: COLORS.green,
         // background: COLORS.dark_accent,
         sprite: 'f',
       },
@@ -251,7 +288,8 @@ const GRUB_STATS = {
         new Behaviors.TelegraphOnEnemy({
           repeat: 1,
           attackPattern: Constant.CLONE_PATTERNS.clover_2,
-          chainOnFail: true,
+          // chainOnFail: true,
+          chainOnSuccess: true,
         }),
         new Behaviors.ExecuteAttack({
           repeat: 1,
@@ -271,7 +309,7 @@ const GRUB_STATS = {
         // background: COLORS.dirt00,
         sprite: 'c',
       },
-      durability: 1,
+      durability: 2,
       attackDamage: 1,
       bloodSpatterOnHit: true,
       behaviors: [
@@ -333,7 +371,7 @@ const GRUB_STATS = {
         // background: COLORS.dirt00,
         sprite: 'c',
       },
-      durability: 1,
+      durability: 2,
       attackDamage: 1,
       bloodSpatterOnHit: true,
       behaviors: [
@@ -394,8 +432,8 @@ const GRUB_STATS = {
       name: 'flying tank drone',
       renderer: {
         character: '¤',
-        color: COLORS.green,
-        background: COLORS.dark,
+        color: COLORS.dark,
+        background: COLORS.green,
         // background: COLORS.drone,
         sprite: '¤',
       },
@@ -440,7 +478,7 @@ const GRUB_STATS = {
         // background: COLORS.blue_mid,
         sprite: 'g',
       },
-      durability: 1,
+      durability: 2,
       attackDamage: 1,
       bloodSpatterOnHit: true,
       behaviors: [
@@ -502,7 +540,7 @@ const GRUB_STATS = {
         // background: COLORS.blue_mid,
         sprite: 'g',
       },
-      durability: 1,
+      durability: 2,
       attackDamage: 2,
       defense: 1,
       bloodSpatterOnHit: true,
@@ -563,11 +601,11 @@ const GRUB_STATS = {
     return {
       name: 'The CEO',
       renderer: {
-        character: '¤',
-        color: COLORS.green,
-        background: COLORS.dark,
+        character: '¶',
+        color: COLORS.dark,
+        background: COLORS.green,
         // background: COLORS.blue_light,
-        sprite: '¤',
+        sprite: '¶',
       },
       durability: 20,
       attackDamage: 3,
