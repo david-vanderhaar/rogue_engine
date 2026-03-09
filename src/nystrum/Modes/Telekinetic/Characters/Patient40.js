@@ -38,8 +38,10 @@ const basicInfo = {
   description: 'Where am I? What is this place? Why do I feel so... light?',
   renderer: {
     character: '@',
-    color: COLORS.dark_accent,
-    background: COLORS.white,
+    color: COLORS.accent,
+    background: COLORS.dark,
+    // background: COLORS.white,
+    // color: '#728871',
     // portrait,
     // basePortrait: portrait,
     damageFlashPortrait: `${window.PUBLIC_URL}/hidden_leaf/white.png`,

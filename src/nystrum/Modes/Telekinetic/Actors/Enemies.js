@@ -246,12 +246,12 @@ const GRUB_STATS = {
         new Behaviors.MoveTowardsEnemy({
           repeat: 3,
           maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
-          chainOnFail: true,
+          // chainOnSuccess: true,
         }),
         new Behaviors.TelegraphOnEnemy({
           repeat: 1,
-          attackPattern: Constant.CLONE_PATTERNS.clover,
-          chainOnSuccess: true,
+          attackPattern: Constant.CLONE_PATTERNS.clover_2,
+          chainOnFail: true,
         }),
         new Behaviors.ExecuteAttack({
           repeat: 1,
@@ -417,7 +417,7 @@ const GRUB_STATS = {
         }),
         new Behaviors.TelegraphOnEnemy({
           repeat: 1,
-          attackPattern: Constant.CLONE_PATTERNS.clover_2,
+          attackPattern: Constant.CLONE_PATTERNS.circle_2,
           // chainOnSuccess: true,
           // chainOnSuccess: false,
           chainOnFail: true,

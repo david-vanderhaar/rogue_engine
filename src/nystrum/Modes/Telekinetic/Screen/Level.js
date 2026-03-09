@@ -111,7 +111,7 @@ class Level extends React.Component {
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
               <InfoBlocks game={this.state.game} />
             </div>
-            <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -52, height: 92, position: 'relative'}}>
+            <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -106, height: 144, position: 'relative'}}>
               <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()} />
             </div>
           </div>

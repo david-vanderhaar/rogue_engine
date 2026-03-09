@@ -55,10 +55,12 @@ export class Telekinetic extends Mode {
         NUMBER_OF_ITEMS: {min: 20, max: 40},
         NUMBER_OF_EXPLOSIVES: {min: 1, max: 3},
         WAVES: [
-          {min: 1, max: 1, enemyKeys: ['construction_boss',]},
+          // {min: 1, max: 1, enemyKeys: ['office_boss',]},
+          // {min: 1, max: 1, enemyKeys: ['construction_boss',]},
+          // {min: 1, max: 1, enemyKeys: ['parking_boss',]},
           {min: 1, max: 2, enemyKeys: ['office_0',]},
           {min: 2, max: 2, enemyKeys: ['office_1',]},
-          {min: 3, max: 4, enemyKeys: ['office_0', 'office_01', 'office_2']},
+          {min: 3, max: 4, enemyKeys: ['office_0', 'office_1', 'office_2']},
         ],
       }),
       (mode) => GenerateOfficeMap(mode, {
@@ -71,7 +73,7 @@ export class Telekinetic extends Mode {
         NUMBER_OF_ITEMS: {min: 20, max: 40},
         NUMBER_OF_EXPLOSIVES: {min: 1, max: 3},
         WAVES: [
-          {min: 3, max: 6, enemyKeys: ['office_0', 'office_01', 'office_2']},
+          {min: 3, max: 6, enemyKeys: ['office_0', 'office_1', 'office_2']},
         ],
       }),
       (mode) => GenerateOfficeMap(mode, {

@@ -2,7 +2,6 @@ export const COLORS = {
   main: '#0f0705',
   accent: '#8eac86',
   secondary: '#e5d097',
-  // accent: '#8eac86',
   // secondary: '#79261c',
   accent_light: '#c35f2b',
   text: '#e5d097',
