@@ -4,7 +4,7 @@ import TelegraphPattern from './TelegraphPattern';
 export default class TelegraphOnEnemy extends TelegraphPattern {
   constructor({ ...args }) {
     super({ ...args });
-    this.chainOnSuccess = true;
+    // this.chainOnSuccess = true;
   }
 
   isValid () {

@@ -16,7 +16,7 @@ export default class ExecuteAttack extends Behavior {
       MultiTargetAttack,
       {
         targetPositions: this.actor.getCursorPositions(),
-        onAfter: () => this.actor.removeAnimations()
+        onAfter: () => this.actor.deactivateCursor()
       }
     ]
   }

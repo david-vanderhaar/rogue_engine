@@ -52,7 +52,7 @@ export default class ExecuteStatusEffects extends Behavior {
       AddStatusEffects,
       {
         effects,
-        onAfter: () => this.actor.removeAnimations()
+        onAfter: () => this.actor.deactivateCursor()
       }
     ]
   }

@@ -21,7 +21,7 @@ export default class ExecutePlaceActor extends Behavior {
         targetPos: {...targetPositions[0]},
         entity: item,
         onAfter: () => {
-          this.actor.removeAnimations()
+          this.actor.deactivateCursor()
         }
       }
     ]

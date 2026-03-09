@@ -136,7 +136,7 @@ export const ACTOR_PARAMS = {
   table: { range: 2, character: 'T', name: 'table', color: COLORS.light, background: COLORS.dark, defense: 1, remainAfterUse: true },
   cubicle_wall: { range: 2, character: '▒', name: 'cubicle wall', color: COLORS.light_mid, background: COLORS.dark, defense: 1, remainAfterUse: true },
   window_wall: { range: 4, character: '░', name: 'window wall', color: COLORS.white, background: COLORS.dark, defense: 0, remainAfterUse: false },
-  dry_wall: { range: 4, character: '░', name: 'dry wall', color: COLORS.mid_yellow, background: COLORS.dark, defense: 0, remainAfterUse: false, attackDamage: 0 },
+  dry_wall: { range: 4, character: '░', name: 'dry wall', color: COLORS.mid_yellow, background: COLORS.dark, defense: 0, remainAfterUse: false },
   concrete_barrier: { range: 4, character: '█', name: 'concrete barrier', color: COLORS.kiba, background: COLORS.dark, defense: 2, remainAfterUse: true, attackDamage: 1 },
   chair: { range: 4, character: 'h', name: 'chair', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
   desk: { range: 1, character: 'T', name: 'desk', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
@@ -149,7 +149,7 @@ export const ACTOR_PARAMS = {
   // OFFICE ITEMS 
   stapler: { range: 3, character: ']', name: 'stapler', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   mug: { range: 3, character: 'u', name: 'mug', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
-  pencil: { range: 3, character: 'i', name: 'pencil', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 0 },
+  pencil: { range: 3, character: 'i', name: 'pencil', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   phone: { range: 3, character: '[', name: 'phone', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   // CONTRUCTION ITEMS 
   hammer: { range: 1, character: 'p', name: 'hammer', color: COLORS.light, background: COLORS.dark, passable: true, durability: 2, attackDamage: 2,  remainAfterUse: true }, 
@@ -161,7 +161,7 @@ export const ACTOR_PARAMS = {
   saw_blade: { range: 1, character: '*', name: 'saw blade', color: COLORS.light, background: COLORS.dark, passable: true, durability: 3, attackDamage: 3, remainAfterUse: true },
   // PARKING GARAGE ITEMS
   car: { range: 1, character: '»»', name: 'car', color: COLORS.white, background: COLORS.dark, passable: false, durability: 10, attackDamage: 1, remainAfterUse: true  },
-  cone: { range: 1, character: '^', name: 'traffic cone', color: COLORS.orange, background: COLORS.dark, passable: true, durability: 1, attackDamage: 0 },
+  cone: { range: 1, character: '^', name: 'traffic cone', color: COLORS.orange, background: COLORS.dark, passable: true, durability: 1 },
   pipe: { range: 1, character: ')', name: 'pipe', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 2 },
   
   // EXPLOSIVES

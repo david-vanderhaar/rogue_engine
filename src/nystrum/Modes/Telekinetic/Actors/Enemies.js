@@ -400,7 +400,7 @@ const GRUB_STATS = {
         sprite: '¤',
       },
       durability: 10,
-      attackDamage: 2,
+      attackDamage: 1,
       bloodSpatterOnHit: true,
       baseDescription: 'can\'t be thrown over the edge',
       traversableTiles: ['FREE_FALL', 'WATER'],
@@ -411,13 +411,16 @@ const GRUB_STATS = {
         new Behaviors.MoveTowardsEnemy({
           repeat: 2,
           maintainDistanceOf: 1, // causes to move and attack in same turn if close enough
-          chainOnFail: true,
+          // chainOnFail: true,
+          // chainOnSuccess: true,
           ignoreObstacles: true,
         }),
         new Behaviors.TelegraphOnEnemy({
           repeat: 1,
-          attackPattern: Constant.CLONE_PATTERNS.clover,
-          chainOnSuccess: true,
+          attackPattern: Constant.CLONE_PATTERNS.clover_2,
+          // chainOnSuccess: true,
+          // chainOnSuccess: false,
+          chainOnFail: true,
         }),
         new Behaviors.ExecuteAttack({
           repeat: 1,

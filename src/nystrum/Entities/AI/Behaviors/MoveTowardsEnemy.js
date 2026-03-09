@@ -6,7 +6,7 @@ import { MoveOrAttack } from '../../../Actions/MoveOrAttack';
 export default class MoveTowardsEnemy extends Behavior {
   constructor({maintainDistanceOf = 1, ignoreObstacles = false, ...args }) {
     super({ ...args });
-    this.chainOnFail = true;
+    // this.chainOnFail = true;
     this.maintainDistanceOf = maintainDistanceOf
     this.ignoreObstacles = ignoreObstacles
   }
