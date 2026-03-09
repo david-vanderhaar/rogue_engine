@@ -57,7 +57,7 @@ function startMissionManager(mode) {
     name: 'Throwing Practice',
     description: 'Your body is too weak to fight, but your mind is sharp. \nUse your telekinetic powers to throw an object. \nPress "f" to activate telekinesis, select an object within range, then select a direction.',
     timesToComplete: 2,
-    eventToComplete: `${player?.id}:apply_status_effect_thrown:scalpel`,
+    eventToComplete: `${player?.id}:apply_status_effect_thrown`,
   })
 
   const secondMission = new Mission({
