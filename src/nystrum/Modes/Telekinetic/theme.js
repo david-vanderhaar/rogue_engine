@@ -11,9 +11,11 @@ export const COLORS = {
   blue_mid: '#1d574f',
   
   mid_yellow: '#c59332',
+  dark_yellow: '#9e5c30',
   
   light: '#e5d097',
   light_mid: '#b49f83',
+  light_dark: '#887066',
   dark: '#0f0705',
   dark_accent: '#2e2a39',
   

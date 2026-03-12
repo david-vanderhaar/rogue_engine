@@ -22,7 +22,7 @@ export default function GenerateOfficeMap (
     WAVES,
   }
 ) {
-  refreshColors({fg: COLORS.light_mid})
+  refreshColors({fg: COLORS.light_dark})
   addInnerMostTileTypeFilled(mode, 'WALL', 0)
   addInnerMostTileTypeFilled(mode, 'FREE_FALL', 3)
   addInnerMostTileTypeFilled(mode, 'WALL', 5)
