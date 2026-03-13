@@ -93,6 +93,12 @@ html {
   height: 200px;
 }
 
+.border--dashed {
+   border: 4px;
+   border-color: var(--color-accent);
+   border-style: dashed;
+}
+
 .Level {
   /* height: 100vh; */
   /* max-height: 100vh; */

@@ -12,7 +12,7 @@ import { Mode } from '../default';
 import SOUNDS from '../../sounds';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from './sounds';
 import * as _ from 'lodash';
-import { TILE_KEY } from './theme';
+import { COLORS, TILE_KEY } from './theme';
 import SpatterEmitter from '../../Engine/Particle/Emitters/spatterEmitter';
 import { buffAICharacterStats, onDecreaseDurabilitySound } from './Characters/Utilities/characterHelper';
 import { GLOBAL_EVENT_BUS } from '../../Events/EventBus';
@@ -33,6 +33,10 @@ export class Telekinetic extends Mode {
   }
 
   initialize (meta) {
+    this.game.fovActive = true
+    this.game.fovUnseenTileForeground = COLORS.dark_accent
+    // this.game.fovUnseenTileBackground = COLORS
+
     this['meta'] = meta;
     super.initialize();
 

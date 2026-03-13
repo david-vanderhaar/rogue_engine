@@ -7,6 +7,7 @@ export const COLORS = {
   text: '#e5d097',
   
   blue_light: '#8eac86',
+  blue_light_dark: '#5c8074',
   blue_dark: '#254550',
   blue_mid: '#1d574f',
   
@@ -18,6 +19,7 @@ export const COLORS = {
   light_dark: '#887066',
   dark: '#0f0705',
   dark_accent: '#2e2a39',
+  dark_dark: '#1d0f12',
   
   drone: '#79261c',
 
@@ -111,6 +113,7 @@ export const TILE_KEY = {
     character: '.',
     sprite: '',
     passable: true,
+    lightPassable: true,
     tags: ['PROVIDING_COVER', 'BURNABLE'],
   },
   'FLOOR': {
@@ -118,6 +121,7 @@ export const TILE_KEY = {
     foreground: COLORS.fg_override || COLORS.locust1,
     character: '',
     passable: true,
+    lightPassable: true,
     tags: ['BURNABLE'],
   },
   'FREE_FALL': {
@@ -127,6 +131,7 @@ export const TILE_KEY = {
     character: '〣',
     sprite: '〣',
     passable: false,
+    lightPassable: true,
     tags: ['FALLING'],
   },
   'ELEVATOR': {
@@ -136,6 +141,7 @@ export const TILE_KEY = {
     character: '█',
     sprite: '█',
     passable: true,
+    // lightPassable: true,
     tags: ['EXIT'],
   },
   'WALL': {
@@ -146,89 +152,13 @@ export const TILE_KEY = {
     passable: false,
     tags: ['BURNABLE', 'WALL'],
   },
-  'WALL_VERTICAL': {
-    background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.fg_override || COLORS.locust2,
-    character: '||',
-    sprite: '',
-    passable: false,
-    tags: ['BURNABLE', 'WALL'],
-  },
-  'WALL_HORIZONTAL': {
-    background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.fg_override || COLORS.locust2,
-    character: '=',
-    sprite: '',
-    passable: false,
-    tags: ['BURNABLE', 'WALL'],
-  },
-  'WALL_CORNER_NW': {
-    background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.fg_override || COLORS.locust2,
-    character: '#',
-    sprite: '',
-    passable: false,
-    tags: ['BURNABLE', 'WALL'],
-  },
-  'WALL_CORNER_NE': {
-    background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.fg_override || COLORS.locust2,
-    character: '#',
-    sprite: '',
-    passable: false,
-    tags: ['BURNABLE', 'WALL'],
-  },
-  'WALL_CORNER_SW': {
-    background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.fg_override || COLORS.locust2,
-    character: '#',
-    sprite: '',
-    passable: false,
-    tags: ['BURNABLE', 'WALL'],
-  },
-  'WALL_CORNER_SE': {
-    background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.fg_override || COLORS.locust2,
-    character: '#',
-    sprite: '',
-    passable: false,
-    tags: ['BURNABLE', 'WALL'],
-  },
-  'DOOR': {
-    background: COLORS.bg_override || COLORS.base02,
-    foreground: COLORS.fg_override || COLORS.base1,
-    character: '+',
-    sprite: '',
-    passable: true,
-    tags: ['BURNABLE'],
-  },
-  'SAFE': {
-    background: COLORS.bg_override || COLORS.base04,
-    foreground: COLORS.fg_override || COLORS.base02,
-    character: '.',
-    sprite: '',
-    passable: true,
-  },
-  'LOCKED_EXIT': {
-    background: COLORS.bg_override || COLORS.base04,
-    foreground: COLORS.fg_override || COLORS.base02,
-    character: '.',
-    sprite: '',
-    passable: true,
-  },
-  'EXIT': {
-    background: COLORS.bg_override || COLORS.base04,
-    foreground: COLORS.fg_override || COLORS.green,
-    character: '>',
-    sprite: '',
-    passable: true,
-  },
   'BURNT': {
     background: COLORS.bg_override || COLORS.base03,
     foreground: COLORS.red,
     character: 'X',
     sprite: '',
     passable: true,
+    lightPassable: true,
     tags: ['BURNABLE'],
     animation: [
       { background: COLORS.bg_override || COLORS.base03, foreground: COLORS.yellow, character: 'X', sprite: '', passable: true, },

@@ -8,7 +8,7 @@ import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { ACTOR_PARAMS, centerPosition, createThrowable, generate, placePlayerInCenter } from "./telekeneticMapHelper";
 
 export default function GenerateLabMap (mode) {
-  refreshColors({fg: COLORS.dark_accent})
+  refreshColors({fg: COLORS.blue_light_dark})
   mode.createEmptyLevel();
   mode.game.initializeMapTiles();
   mode.addWalls(6);

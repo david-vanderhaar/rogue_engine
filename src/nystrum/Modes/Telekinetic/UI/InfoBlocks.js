@@ -13,7 +13,7 @@ function InfoBlocks(props) {
       transitionEnterTimeout={500}
       transitionLeaveTimeout={300}
     >
-      <div style={{bottom: 680, position: 'relative'}}>
+      <div class="border--dashed" style={{bottom: 680, position: 'relative'}}>
         {
           _.map(_.get(props.game, 'mode.infoBlocks', {}), (value, key) => {
             return (

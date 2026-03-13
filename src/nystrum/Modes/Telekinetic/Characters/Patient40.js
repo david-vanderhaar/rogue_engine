@@ -1,6 +1,6 @@
 // import deps
 import * as Constant from '../../../constants';
-import { Player } from '../../../Entities/index';
+import { Light, Player } from '../../../Entities/index';
 import BlitzerBehaviors from '../../../Entities/AI/Archetypes/BlitzerBehaviors';
 import { generateDefaultKeymapActions, generatePlayerCharacterOptions, playRandomSoundFromArray } from '../../Telekinetic/Characters/Utilities/characterHelper';
 import { COLORS } from '../theme';
@@ -26,6 +26,7 @@ import { SpeedDefenseDamageBuff } from '../StatusEffects/SpeedDefenseDamageBuff'
 import { PrepareSubstitution } from '../../../Actions/PrepareSubstitution';
 import { MoveOrShove } from '../../../Actions/MoveOrShove';
 import { StatChangeOnSelf } from '../../../Actions/StatChangeOnSelf';
+import { Lantern } from '../../../Items/Environment/Lantern';
 
 const portrait = `${window.PUBLIC_URL}/telekinetic/portrait_0.png`
 
@@ -105,7 +106,27 @@ function initialize (engine) {
   // instantiate class
   let actor = new Player({
     ...generatePlayerCharacterOptions(basicInfo, engine, keymap),
+    lightPassable: true,
   })
+
+  const lantern = new Light({
+      lightRange: 12,
+      game: engine.game,
+      name: 'lantern',
+      passable: true,
+      lightPassable: true,
+      lightDrain: false,
+      // lightColor: 'transparent',
+      lightColor: null,
+      equipmentType: Constant.EQUIPMENT_TYPES.HAND,
+      renderer: {
+        character: 'o',
+        sprite: '',
+        color: COLORS.white,
+        background: COLORS.sunset,
+      },
+    })
+  actor.equip(lantern.equipmentType, lantern);
 
   return actor
 }

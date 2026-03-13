@@ -60,6 +60,8 @@ export class Game {
     getSelectedCharacter = () => false,
     spriteMode = false,
     fovActive = false,
+    fovUnseenTileForeground = 'transparent',
+    fovUnseenTileBackground = 'transparent',
     tileKey = Constant.TILE_KEY,
     mode = Mode.Flume,
     messages = [],
@@ -90,6 +92,8 @@ export class Game {
     });
     this.spriteMode = spriteMode;
     this.fovActive = fovActive;
+    this.fovUnseenTileForeground = fovUnseenTileForeground
+    this.fovUnseenTileBackground = fovUnseenTileBackground
     this.FOV = new ROT.FOV.PreciseShadowcasting((x, y) => this.fovLightPasses(x, y));
     // this.FOV = new ROT.FOV.RecursiveShadowcasting((x, y) => this.fovLightPasses(x, y));
     this.mode = new mode({game: this});
@@ -399,8 +403,8 @@ export class Game {
       let foreground = nextFrame.foreground;
       let background = tile?.overriddenBackground || nextFrame.background;
       if (this.fovActive) {
-        foreground = 'transparent'
-        background = 'transparent'
+        foreground = this.fovUnseenTileForeground
+        background = this.fovUnseenTileBackground
       }
       
       const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
@@ -448,11 +452,13 @@ export class Game {
         let foreground = nextFrame.foreground;
         let background = tile?.overriddenBackground || nextFrame.background;
 
-        const percentageByVisibility = Math.min(visibility, 0.4)
-        const percentageByRange = (1 - (range / light.lightRange))
-        const percentage = percentageByVisibility * percentageByRange
-
-        background = Helper.interpolateHexColor(background, light.lightColor, percentage)
+        
+        if (light.lightColor !== null) {
+          const percentageByVisibility = Math.min(visibility, 0.4)
+          const percentageByRange = (1 - (range / light.lightRange))
+          const percentage = percentageByVisibility * percentageByRange
+          background = Helper.interpolateHexColor(background, light.lightColor, percentage)
+        }
   
         const renderedEntities = tile.entities.filter((entity) => entity.entityTypes.includes('RENDERING'))
         renderedEntities.forEach((entity) => entity['isInFov'] = true)

@@ -111,7 +111,7 @@ class Level extends React.Component {
               {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
               <InfoBlocks game={this.state.game} />
             </div>
-            <div style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -106, height: 144, position: 'relative'}}>
+            <div class="border--dashed" style={{paddingLeft: 6, paddingTop: 6, backgroundColor: COLORS.bg_override, top: -106, height: 144, position: 'relative'}}>
               <LookedAtEntitesInline game={this.state.game} lookedAt={this.state.game.entityLog.getAllUniqueEntities()} />
             </div>
           </div>
@@ -133,6 +133,7 @@ class Level extends React.Component {
             spriteMode={this.state.game.spriteMode}
             setActiveScreen={this.props.setActiveScreen}
             toggleSpriteMode={this.toggleSpriteMode.bind(this)}
+            refocus={this.refocus.bind(this)}
           />
         </div>
       </div>
