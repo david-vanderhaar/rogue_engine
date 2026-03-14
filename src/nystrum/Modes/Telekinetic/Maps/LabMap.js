@@ -55,7 +55,7 @@ function startMissionManager(mode) {
 
   const firstMission = new Mission({
     name: 'Throwing Practice',
-    description: 'Your body is too weak to fight, but your mind is sharp. \nUse your telekinetic powers to throw an object. \nPress "f" to activate telekinesis, select an object within range, then select a direction.',
+    description: 'Your body is too weak to fight, but your mind is sharp. \nPress "f" to activate telekinesis, select an object within range, then select a direction.',
     timesToComplete: 2,
     eventToComplete: `${player?.id}:apply_status_effect_thrown`,
   })
@@ -115,6 +115,22 @@ function startMissionManager(mode) {
     timesToComplete: 1,
     eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
   })
+  
+  const skipTutorial = new Mission({
+    name: 'Skip the Tutorial',
+    description: 'Proceed to the elevator at the top, center spaces to skip this tutorial.',
+    timesToComplete: 1,
+    eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
+    active: true,
+    dependantMissions: [
+      firstMission,
+      secondMission,
+      thirdMission,
+      fall,
+      panic,
+      fourthMission,
+    ]
+  })
 
   mode.initializeMissionManager({
     missions: [
@@ -124,6 +140,7 @@ function startMissionManager(mode) {
       fall,
       panic,
       fourthMission,
+      skipTutorial,
     ],
   })
 }

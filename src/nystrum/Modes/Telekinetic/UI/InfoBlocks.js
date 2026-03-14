@@ -2,7 +2,7 @@ import React from 'react';
 import * as _ from 'lodash';
 import { CARTRIDGE } from '../../../Nystrum';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-function InfoBlocks(props) {
+export default function InfoBlocks(props) {
   return (
     <ReactCSSTransitionGroup
       transitionName="fade"
@@ -13,7 +13,7 @@ function InfoBlocks(props) {
       transitionEnterTimeout={500}
       transitionLeaveTimeout={300}
     >
-      <div class="border--dashed" style={{bottom: 680, position: 'relative'}}>
+      <div style={{bottom: 680, position: 'relative'}}>
         {
           _.map(_.get(props.game, 'mode.infoBlocks', {}), (value, key) => {
             return (
@@ -33,7 +33,7 @@ function InfoBlocks(props) {
                     whiteSpace: 'pre-wrap',
                   }}
                 >
-                  {value.text}
+                  {parseMarkup(value.text)}
                 </span>
               </div>
             )
@@ -44,4 +44,51 @@ function InfoBlocks(props) {
   )
 }
 
-export default InfoBlocks;
+export function parseMarkup(text) {
+  const tokenRegex = /(<\/?[bc](?::[^>]+)?>)/g;
+
+  const tokens = text.split(tokenRegex);
+
+  const stack = [{ bold: false, color: null }];
+  const output = [];
+
+  tokens.forEach((token, i) => {
+    if (token.startsWith("<")) {
+      // closing tag
+      if (token.startsWith("</")) {
+        stack.pop();
+      } 
+      // opening tag
+      else {
+        const current = { ...stack[stack.length - 1] };
+
+        if (token.startsWith("<b")) {
+          current.bold = true;
+        }
+
+        if (token.startsWith("<c:")) {
+          const color = token.match(/<c:([^>]+)>/)[1];
+          current.color = color;
+        }
+
+        stack.push(current);
+      }
+    } else if (token) {
+      const style = stack[stack.length - 1];
+
+      output.push(
+        <span
+          key={i}
+          style={{
+            fontWeight: style.bold ? "bold" : "normal",
+            color: style.color || "inherit",
+          }}
+        >
+          {token}
+        </span>
+      );
+    }
+  });
+
+  return output;
+};

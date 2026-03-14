@@ -300,7 +300,7 @@ export class Telekinetic extends Mode {
     this.createOrUpdateInfoBlock(
       'missions',
       {
-        text: `${activeMissions.map(this.createMissionText).join("\n")}`,
+        text: `${activeMissions.map(this.createMissionText).join("\n\n")}`,
       }
     )
 
@@ -312,7 +312,7 @@ export class Telekinetic extends Mode {
   createMissionText(mission) {
     const timesCompleted = mission.timesCompleted;
     const timesToComplete = mission.timesToComplete;
-    return `${mission.name} - ${mission.description} | Progress: ${timesCompleted}/${timesToComplete}`;
+    return `<c:${COLORS.text}>${mission.name.toUpperCase()}</c>\n${mission.description} * <b>Progress: ${timesCompleted}/${timesToComplete}</b>`;
   }
 
   update () {
