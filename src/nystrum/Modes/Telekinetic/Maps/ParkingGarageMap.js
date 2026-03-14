@@ -20,7 +20,7 @@ export default function GenerateParkingGarageMap (
     WAVES,
   }
 ) {
-  refreshColors({fg: COLORS.dark_accent})
+  refreshColors({fg: COLORS.dark_accent_mid})
   addInnerMostTileTypeFilled(mode, 'WALL', 0)
   addInnerMostTileTypeFilled(mode, 'GROUND', 4)
   mode.game.initializeMapTiles();

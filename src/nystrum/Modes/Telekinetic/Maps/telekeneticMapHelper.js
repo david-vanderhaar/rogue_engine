@@ -141,7 +141,7 @@ export const ACTOR_PARAMS = {
   chair: { range: 4, character: 'h', name: 'chair', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
   desk: { range: 1, character: 'T', name: 'desk', color: COLORS.blue_mid, background: COLORS.dark, defense: 0, remainAfterUse: false },
   // LAB ITEMS
-  dead_body: { range: 0, character: 's', name: 'dead scientist', color: COLORS.light, background: "#833139", durability: 3, bloodSpatterOnHit: true, remainAfterUse: true },
+  dead_body: { range: 0, character: 's', name: 'dead scientist', color: COLORS.red, background: "#833139", durability: 3, bloodSpatterOnHit: true, remainAfterUse: true },
   bottle: { range: 3, character: '!', name: 'glass vial', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1 },
   scalpel: { range: 3, character: '|', name: 'scalpel', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 1 },
   scissors: { range: 3, character: '^', name: 'scissors', color: COLORS.white, background: COLORS.dark, passable: true, durability: 1, attackDamage: 1 },

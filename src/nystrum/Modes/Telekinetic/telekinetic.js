@@ -33,7 +33,7 @@ export class Telekinetic extends Mode {
   }
 
   initialize (meta) {
-    // this.game.fovActive = false
+    // this.game.fovActive = true
     // this.game.fovUnseenTileForeground = COLORS.dark_accent
     // this.game.fovUnseenTileBackground = COLORS
 
