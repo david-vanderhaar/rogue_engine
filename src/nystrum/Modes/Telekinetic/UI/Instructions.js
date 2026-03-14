@@ -57,7 +57,7 @@ function Instructions(props) {
         <Button triggerModal="help-modal">
           Help (?)
         </Button>
-        <Button onClick={() => {
+        {/* <Button onClick={() => {
           if (props.game.fovActive) {
             props.game.fovActive = false
           } else {
@@ -67,7 +67,7 @@ function Instructions(props) {
           props.game.draw()
         }}>
           Toggle Horror Mode (!)
-        </Button>
+        </Button> */}
       </div>
       <Help id='help-modal' />
     </div>

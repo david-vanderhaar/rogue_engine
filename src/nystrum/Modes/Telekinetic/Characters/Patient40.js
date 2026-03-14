@@ -109,24 +109,24 @@ function initialize (engine) {
     lightPassable: true,
   })
 
-  const lantern = new Light({
-      lightRange: 12,
-      game: engine.game,
-      name: 'lantern',
-      passable: true,
-      lightPassable: true,
-      lightDrain: false,
-      // lightColor: 'transparent',
-      lightColor: null,
-      equipmentType: Constant.EQUIPMENT_TYPES.HAND,
-      renderer: {
-        character: 'o',
-        sprite: '',
-        color: COLORS.white,
-        background: COLORS.sunset,
-      },
-    })
-  actor.equip(lantern.equipmentType, lantern);
+  // const lantern = new Light({
+  //     lightRange: 12,
+  //     game: engine.game,
+  //     name: 'lantern',
+  //     passable: true,
+  //     lightPassable: true,
+  //     lightDrain: false,
+  //     // lightColor: 'transparent',
+  //     lightColor: null,
+  //     equipmentType: Constant.EQUIPMENT_TYPES.HAND,
+  //     renderer: {
+  //       character: 'o',
+  //       sprite: '',
+  //       color: COLORS.white,
+  //       background: COLORS.sunset,
+  //     },
+  //   })
+  // actor.equip(lantern.equipmentType, lantern);
 
   return actor
 }
