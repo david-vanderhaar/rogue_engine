@@ -2,7 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import { Howler } from 'howler';
 
 export default function SoundControl() {
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
 
   const toggleSound = () => {
     const newMutedState = !muted;

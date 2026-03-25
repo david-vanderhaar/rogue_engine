@@ -6,8 +6,12 @@ import Mission from "../../../Mission/Mission";
 import * as EnemyActors from '../Actors/Enemies';
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { ACTOR_PARAMS, centerPosition, createThrowable, generate, placePlayerInCenter } from "./telekeneticMapHelper";
+import { SOUND_MANAGER, SOUNDS } from "../sounds";
 
 export default function GenerateLabMap (mode) {
+  // play level theme
+  SOUND_MANAGER.fadeInSound(SOUNDS.level_lab)
+
   refreshColors({fg: COLORS.blue_light_dark})
   mode.createEmptyLevel();
   mode.game.initializeMapTiles();
@@ -142,5 +146,8 @@ function startMissionManager(mode) {
       fourthMission,
       skipTutorial,
     ],
+    onComplete: () => {
+      SOUND_MANAGER.fadeOutSound(SOUNDS.level_lab)
+    }
   })
 }

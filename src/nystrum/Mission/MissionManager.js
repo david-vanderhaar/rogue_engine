@@ -43,6 +43,8 @@ export default class MissionManager {
   }
 
   process() {
+    this.processCurrentMission_v2();
+
     if (this.allMissionsComplete()) {
       // stop crank engine
       // show win overlay
@@ -50,9 +52,6 @@ export default class MissionManager {
       this.onComplete();
       return;
     }
-
-    // this.processCurrentMission_v1();
-    this.processCurrentMission_v2();
   }
 
   processCurrentMission_v1() {

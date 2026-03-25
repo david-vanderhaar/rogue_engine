@@ -9,17 +9,36 @@ const createSoundFromSource = (relativePath, howlerOptions = {}) => {
   })
 }
 
+const master_track_fade_time = 3000 // in milliseconds
 export const SOUND_MANAGER = {
-  master_track_fade_time: 3000, // in milliseconds
+  master_track_fade_time,
   setMasterVolume: (volume) => Howler.volume(volume),
   setVolume: (volume) => {
     Object.entries(SOUNDS).forEach(([key, sound]) => {
       sound.volume(volume)
     })
   },
+  fadeInSound: (sound) => {
+    sound.play()
+    sound.fade(0, sound.volume(), master_track_fade_time) 
+  },
+  fadeOutSound: (sound) => {
+    sound.fade(sound.volume(), 0, master_track_fade_time / 4)
+    setTimeout(() => sound.stop(), master_track_fade_time / 4)
+  },
 }
 
 export const SOUNDS = {
+  // Telekinetic 
+  level_lab: createSoundFromSource('/sounds/telekinetic/level_lab.mp3', {volume: .4}),
+  // Dark_Emptiness_015.wav by jalastram -- https://freesound.org/s/505697/ -- License: Attribution 4.0
+  level_office: createSoundFromSource('/sounds/telekinetic/level_office.mp3', {loop: true}),
+  // RoomTone EmptyMall indoors 02 160327_00.flac by klankbeeld -- https://freesound.org/s/455467/ -- License: Attribution 4.0
+  level_construction: createSoundFromSource('/sounds/telekinetic/level_construction.mp3', {loop: true}),
+  level_parking: createSoundFromSource('/sounds/telekinetic/level_parking.mp3', {loop: true}),
+  // AMBUndr_underground parking gararge 1_TimKahn_MKH80208030st by tim.kahn -- https://freesound.org/s/789623/ -- License: Attribution 4.0
+  // END Telekinetic 
+
   pass_turn: createSoundFromSource('/sounds/hidden_leaf/pass_turn.mp3'),
   status_effect_applied: createSoundFromSource('/sounds/hidden_leaf/status_effect_applied.mp3'),
   not_allowed: createSoundFromSource('/sounds/hidden_leaf/not_allowed.mp3'),

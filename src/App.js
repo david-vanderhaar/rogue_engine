@@ -4,15 +4,15 @@ import Nystrum from './nystrum/Nystrum';
 import OverflowToggle from './AppComponents/OverflowToggle';
 import SoundControl from './AppComponents/SoundControl';
 
-import { Howler } from 'howler';
-Howler.mute(true);
+// import { Howler } from 'howler';
+// Howler.mute(true);
 
 function App() {
   return (
     <div className="App">
       <Nystrum />
       {/* <OverflowToggle />&nbsp;&nbsp;&nbsp; */}
-      {/* <SoundControl /> */}
+      <SoundControl />
     </div>
   );
 }
