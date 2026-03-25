@@ -782,6 +782,7 @@ function AbilitySelectScreen(props) {
             actionClass: MoveOrShove,
             cursorShape: Constant.CLONE_PATTERNS.point,
             actionParams: {
+              label: 'Temporal Gap [1]',
               onSuccess: () => {
                 SpatterEmitter({
                   game: actor.game,
@@ -822,6 +823,7 @@ function AbilitySelectScreen(props) {
             actionClass: MoveOrShove,
             cursorShape: Constant.CLONE_PATTERNS.point,
             actionParams: {
+              label: 'Temporal Gap [2]',
               onSuccess: () => {
                 SpatterEmitter({
                   game: actor.game,
@@ -862,6 +864,7 @@ function AbilitySelectScreen(props) {
             actionClass: MoveOrShove,
             cursorShape: Constant.CLONE_PATTERNS.point,
             actionParams: {
+              label: 'Temporal Gap [3]',
               onSuccess: () => {
                 SpatterEmitter({
                   game: actor.game,
