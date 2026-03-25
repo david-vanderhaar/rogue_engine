@@ -8,6 +8,7 @@ import * as EnemyActors from '../Actors/Enemies';
 import Mission from "../../../Mission/Mission";
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
 import { DIRECTIONS } from "../../../constants";
+import { SOUND_MANAGER, SOUNDS } from '../sounds';
 
 export default function GenerateConstructionMap (
   mode,
@@ -21,6 +22,7 @@ export default function GenerateConstructionMap (
     WAVES,
   }
 ) {
+  SOUND_MANAGER.fadeInSound(SOUNDS.level_construction)
   refreshColors({fg: COLORS.dark_yellow})
   // refreshColors({fg: COLORS.blue_mid})
   addInnerMostTileTypeFilled(mode, 'WALL', 0)
@@ -200,5 +202,6 @@ function startMissionManager(mode, WAVES) {
         eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
       }),
     ],
+    onComplete: () => SOUND_MANAGER.fadeOutSound(SOUNDS.level_construction)
   })
 }

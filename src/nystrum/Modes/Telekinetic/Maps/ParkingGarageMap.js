@@ -7,6 +7,7 @@ import * as Helper from '../../../../helper';
 import * as EnemyActors from '../Actors/Enemies';
 import Mission from "../../../Mission/Mission";
 import SpatterEmitter from "../../../Engine/Particle/Emitters/spatterEmitter";
+import { SOUND_MANAGER, SOUNDS } from '../sounds';
 
 export default function GenerateParkingGarageMap (
   mode,
@@ -20,6 +21,7 @@ export default function GenerateParkingGarageMap (
     WAVES,
   }
 ) {
+  SOUND_MANAGER.fadeInSound(SOUNDS.level_parking)
   refreshColors({fg: COLORS.dark_accent_mid})
   addInnerMostTileTypeFilled(mode, 'WALL', 0)
   addInnerMostTileTypeFilled(mode, 'GROUND', 4)
@@ -144,5 +146,6 @@ function startMissionManager(mode, WAVES) {
         eventToComplete: `${player?.id}:move:tileType:ELEVATOR`,
       }),
     ],
+    onComplete: () => SOUND_MANAGER.fadeOutSound(SOUNDS.level_parking)
   })
 }
