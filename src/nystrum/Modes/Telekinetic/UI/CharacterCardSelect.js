@@ -10,7 +10,7 @@ const CharacterCardSelect = ({upgrades: characters, setActiveScreen, setSelected
   }
 
   const setActiveScreenWithSound = (screen) => {
-    SOUNDS.lose_theme.play();
+    SOUNDS.wood_button.play();
     setActiveScreen(screen);
   }
 

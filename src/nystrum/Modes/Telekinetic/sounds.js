@@ -26,6 +26,7 @@ export const SOUND_MANAGER = {
     sound.fade(sound.volume(), 0, master_track_fade_time / 4)
     setTimeout(() => sound.stop(), master_track_fade_time / 4)
   },
+  stopAll: () => {Howler.unload()}
 }
 
 export const SOUNDS = {

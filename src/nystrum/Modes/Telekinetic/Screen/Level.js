@@ -28,8 +28,10 @@ function fadeThemeIn() {
 }
 
 function fadeThemeOut() {
-  // fadeSoundOut(SOUNDS.wind_loop_2)
-  // fadeSoundOut(SOUNDS.taiko_drum_loop)
+  fadeSoundOut(SOUNDS.level_lab)
+  fadeSoundOut(SOUNDS.level_office)
+  fadeSoundOut(SOUNDS.level_construction)
+  fadeSoundOut(SOUNDS.level_parking)
 }
 
 class Level extends React.Component {

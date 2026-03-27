@@ -6,7 +6,7 @@ import { delay } from '../../helper';
 
 export default function Splash(props) {
   function playButtonSound () {
-    SOUNDS.lose_theme.play();
+    // SOUNDS.lose_theme.play();
   }
 
   async function nextScreen () {
