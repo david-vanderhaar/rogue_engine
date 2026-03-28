@@ -18,9 +18,9 @@ export const SOUND_MANAGER = {
       sound.volume(volume)
     })
   },
-  fadeInSound: (sound) => {
+  fadeInSound: (sound, level = null) => {
     sound.play()
-    sound.fade(0, sound.volume(), master_track_fade_time) 
+    sound.fade(0, level || sound.volume(), master_track_fade_time) 
   },
   fadeOutSound: (sound) => {
     sound.fade(sound.volume(), 0, master_track_fade_time / 4)
@@ -66,12 +66,12 @@ export const SOUNDS = {
   bottle_open: createSoundFromSource('/sounds/hidden_leaf/bottle_open.mp3', {rate: 0.8, volume: .6}),
 
   wood_button: createSoundFromSource('/sounds/hidden_leaf/wood_block.mp3'),
-  title_theme: createSoundFromSource('/sounds/hidden_leaf/title_theme.mp3', {loop: true}),
+  title_theme: createSoundFromSource('/sounds/telekinetic/title_theme.mp3', {loop: true}),
   character_select_theme: createSoundFromSource('/sounds/hidden_leaf/character_select_theme.mp3', {loop: true}),
   tournament_theme: createSoundFromSource('/sounds/hidden_leaf/tournament_theme.mp3', {loop: true}),
   battle_theme_0: createSoundFromSource('/sounds/hidden_leaf/battle_theme_0.mp3', {loop: true}),
-  win_theme: createSoundFromSource('/sounds/hidden_leaf/win_theme.mp3'),
-  lose_theme: createSoundFromSource('/sounds/hidden_leaf/lose_theme.mp3'),
+  win_theme: createSoundFromSource('/sounds/telekinetic/win_theme.mp3'),
+  lose_theme: createSoundFromSource('/sounds/telekinetic/lose_theme.mp3'),
   ambient_howling: createSoundFromSource('/sounds/tall_grass/ambient_loop_howls.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   wind_loop: createSoundFromSource('/sounds/tall_grass/wind_loop.mp3', {loop: true, rate: 0.75, volume: 0.1}),
   wind_loop_2: createSoundFromSource('/sounds/hidden_leaf/Wind.wav', {loop: true}),

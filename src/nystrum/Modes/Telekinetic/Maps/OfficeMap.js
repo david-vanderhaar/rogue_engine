@@ -23,7 +23,7 @@ export default function GenerateOfficeMap (
     WAVES,
   }
 ) {
-  SOUND_MANAGER.fadeInSound(SOUNDS.level_office)
+  SOUND_MANAGER.fadeInSound(SOUNDS.level_office, 0.4)
   refreshColors({fg: COLORS.light_dark})
   addInnerMostTileTypeFilled(mode, 'WALL', 0)
   addInnerMostTileTypeFilled(mode, 'FREE_FALL', 3)

@@ -3,10 +3,11 @@ import { SOUNDS } from '../sounds'
 import { CARTRIDGE } from '../../../Nystrum';
 import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { SCREENS } from './constants';
+import SoundManager from '../../../Sounds/SoundManager';
 
 function Title(props) {
   const playButtonSound = () => {
-    SOUNDS.wood_button.play();
+    SoundManager.getSound('ui_button').play()
   }
 
   function nextScreen () {
@@ -14,7 +15,7 @@ function Title(props) {
     playButtonSound()
   }
 
-  // useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
+  useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {

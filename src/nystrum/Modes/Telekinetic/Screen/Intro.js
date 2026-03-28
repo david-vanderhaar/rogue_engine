@@ -5,10 +5,11 @@ import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
 import { SCREENS } from './constants';
 import HelpContent from '../UI/HelpContent';
 import { GLOBAL_EVENT_BUS } from '../../../Events/EventBus';
+import SoundManager from '../../../Sounds/SoundManager';
 
 function Intro(props) {
   const playButtonSound = () => {
-    SOUNDS.wood_button.play();
+    SoundManager.getSound('ui_button').play()
   }
 
   // function incrementEnemiesDestroyed () {

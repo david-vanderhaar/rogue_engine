@@ -21,7 +21,7 @@ export default function GenerateParkingGarageMap (
     WAVES,
   }
 ) {
-  SOUND_MANAGER.fadeInSound(SOUNDS.level_parking)
+  SOUND_MANAGER.fadeInSound(SOUNDS.level_parking, 0.4)
   refreshColors({fg: COLORS.dark_accent_mid})
   addInnerMostTileTypeFilled(mode, 'WALL', 0)
   addInnerMostTileTypeFilled(mode, 'GROUND', 4)

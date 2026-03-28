@@ -18,8 +18,9 @@ function fadeSoundIn(sound, volume = 0.2) {
   sound.fade(0, volume, SOUND_MANAGER.master_track_fade_time) 
 }
 
-function fadeSoundOut(sound, volume = 0.2) {
-  sound.fade(volume, 0, SOUND_MANAGER.master_track_fade_time / 4); 
+function fadeSoundOut(sound) {
+  sound.fade(sound.volume(), 0, SOUND_MANAGER.master_track_fade_time / 4); 
+  setTimeout(() => sound.stop(), SOUND_MANAGER.master_track_fade_time / 4)
 }
 
 function fadeThemeIn() {
@@ -73,11 +74,9 @@ class Level extends React.Component {
     };
     this.state.game['onLose'] = () => {
       fadeThemeOut()
-      fadeSoundIn(SOUNDS.lose_theme)
     };
     this.state.game['onWin'] = () => {
       fadeThemeOut()
-      fadeSoundIn(SOUNDS.win_theme)
     };
     this.state.game['refocus'] = () => this.refocus();
     this.state.game.updateReact = (newGameState) => { this.setState({game: newGameState}) }

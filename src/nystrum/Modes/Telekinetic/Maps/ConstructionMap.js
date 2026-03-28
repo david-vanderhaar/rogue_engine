@@ -22,7 +22,7 @@ export default function GenerateConstructionMap (
     WAVES,
   }
 ) {
-  SOUND_MANAGER.fadeInSound(SOUNDS.level_construction)
+  SOUND_MANAGER.fadeInSound(SOUNDS.level_construction, 0.4)
   refreshColors({fg: COLORS.dark_yellow})
   // refreshColors({fg: COLORS.blue_mid})
   addInnerMostTileTypeFilled(mode, 'WALL', 0)

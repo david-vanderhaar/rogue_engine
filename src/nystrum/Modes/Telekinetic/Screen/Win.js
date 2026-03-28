@@ -10,7 +10,7 @@ export default function Win(props) {
   }
   const [meta] = useState(props.meta());
 
-  useEffect(fadeMusicInOut(SOUNDS.lose_theme), []);
+  useEffect(fadeMusicInOut(SOUNDS.win_theme), []);
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Enter') {

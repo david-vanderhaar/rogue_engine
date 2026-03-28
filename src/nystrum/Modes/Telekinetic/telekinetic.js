@@ -333,8 +333,11 @@ export class Telekinetic extends Mode {
     if (!this.data['hasLost']) {
       this.game.onLose();
       this.createOrUpdateInfoBlock('hasLost', {text: `${this.meta().tournament.player.name} is no more.`})
-      this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to see your final score.'})
-      this.addOnEnterListener(this.game.toLose);
+      // this.createOrUpdateInfoBlock('hasLost_enter', {text: 'Press Enter to see your final score.'})
+      // this.addOnEnterListener(this.game.toLose);
+      
+      // fade screen out 
+      setTimeout(this.game.toLose, 1200)
     }
     this.data['hasLost'] = true;
   }
@@ -343,8 +346,11 @@ export class Telekinetic extends Mode {
     if (!this.data['hasWon']) {
       this.game.onWin();
       this.createOrUpdateInfoBlock('hasWon', {text: `${this.game.getFirstPlayer().name} has escaped the Corpo Hell. Live on and prosper.`})
-      this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to see your final score.'})
-      this.addOnEnterListener(this.game.toWin);
+      // this.createOrUpdateInfoBlock('hasWon_enter', {text: 'Press Enter to see your final score.'})
+      // this.addOnEnterListener(this.game.toWin);
+      
+      // fade screen out 
+      setTimeout(this.game.toWin, 1200)
     }
     this.data['hasWon'] = true;
   }

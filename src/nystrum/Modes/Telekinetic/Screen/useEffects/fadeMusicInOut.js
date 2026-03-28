@@ -13,6 +13,7 @@ export function fadeMusicInOut(sound) {
     return () => {
       // sound.stop();
       sound.fade(0.6, 0, SOUND_MANAGER.master_track_fade_time / 4);
+      setTimeout(() => sound.stop(), SOUND_MANAGER.master_track_fade_time / 4)
     };
   }
 }

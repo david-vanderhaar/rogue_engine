@@ -1,21 +1,25 @@
 import React, { useEffect } from 'react';
 import { CARTRIDGE } from '../Nystrum';
 import { SCREENS } from './constants';
-import { SOUNDS } from '../Modes/HiddenLeaf/sounds';
-import { delay } from '../../helper';
+import SoundManager from '../Sounds/SoundManager';
+
 
 export default function Splash(props) {
-  function playButtonSound () {
-    // SOUNDS.lose_theme.play();
+  function playThemeSound () {
+    SoundManager.createSoundFromSource('/sounds/mean_mug_theme.mp3', {volume: 0.4}).play()
   }
 
+  function playButtonSound () {
+    SoundManager.getSound('ui_button').play()
+  }
+  
   async function nextScreen () {
     playButtonSound()
-    // await delay(2500)
     props.setActiveScreen(SCREENS.TITLE)
   }
 
   useEffect(() => {
+    playThemeSound()
     // Add event listener when the component mounts
     window.addEventListener('click', nextScreen);
 
