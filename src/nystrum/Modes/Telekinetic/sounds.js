@@ -104,6 +104,31 @@ export const SOUNDS = {
   punch_08: createSoundFromSource('/sounds/hidden_leaf/punch--08.mp3'),
 
   sword_clang: createSoundFromSource('/sounds/hidden_leaf/sword_clang.wav'),
+
+  glass_object_melee_01: createSoundFromSource('/sounds/melee/glass_object_melee-01.mp3'),
+  glass_object_melee_02: createSoundFromSource('/sounds/melee/glass_object_melee-02.mp3'),
+  glass_object_melee_03: createSoundFromSource('/sounds/melee/glass_object_melee-03.mp3'),
+  glass_object_melee_04: createSoundFromSource('/sounds/melee/glass_object_melee-04.mp3'),
+  glass_object_melee_05: createSoundFromSource('/sounds/melee/glass_object_melee-05.mp3'),
+  glass_object_melee_06: createSoundFromSource('/sounds/melee/glass_object_melee-06.mp3'),
+  
+  small_object_melee_01: createSoundFromSource('/sounds/melee/small_object_melee-01.mp3'),
+  small_object_melee_02: createSoundFromSource('/sounds/melee/small_object_melee-02.mp3'),
+  small_object_melee_03: createSoundFromSource('/sounds/melee/small_object_melee-03.mp3'),
+  small_object_melee_04: createSoundFromSource('/sounds/melee/small_object_melee-04.mp3'),
+  small_object_melee_05: createSoundFromSource('/sounds/melee/small_object_melee-05.mp3'),
+  small_object_melee_06: createSoundFromSource('/sounds/melee/small_object_melee-06.mp3'),
+
+  wooden_object_melee_01: createSoundFromSource('/sounds/melee/wooden_object_melee-01.mp3'),
+  wooden_object_melee_02: createSoundFromSource('/sounds/melee/wooden_object_melee-02.mp3'),
+  wooden_object_melee_03: createSoundFromSource('/sounds/melee/wooden_object_melee-03.mp3'),
+  wooden_object_melee_04: createSoundFromSource('/sounds/melee/wooden_object_melee-04.mp3'),
+  wooden_object_melee_05: createSoundFromSource('/sounds/melee/wooden_object_melee-05.mp3'),
+
+  heavy_object_melee_01: createSoundFromSource('/sounds/melee/heavy_object_melee-01.mp3'),
+  heavy_object_melee_02: createSoundFromSource('/sounds/melee/heavy_object_melee-02.mp3'),
+  heavy_object_melee_03: createSoundFromSource('/sounds/melee/heavy_object_melee-03.mp3'),
+
   // end
   // take damage
   take_damage_01: createSoundFromSource('/sounds/hidden_leaf/take-damage-01.mp3', {volume: 0.2}),

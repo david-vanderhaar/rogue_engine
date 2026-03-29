@@ -127,6 +127,7 @@ export const TILE_KEY = {
     tags: ['BURNABLE'],
   },
   'FREE_FALL': {
+    ignoreTransferBackgroundColor: true,
     ignoreColorOverride: true,
     background: COLORS.black || COLORS.dark,
     foreground: COLORS.black_accent || COLORS.dark,
@@ -161,6 +162,7 @@ export const TILE_KEY = {
     sprite: '',
     passable: true,
     lightPassable: true,
+    ignoreTransferBackgroundColor: true,
     tags: ['BURNABLE'],
     animation: [
       { background: COLORS.bg_override || COLORS.base03, foreground: COLORS.yellow, character: 'X', sprite: '', passable: true, },

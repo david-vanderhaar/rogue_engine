@@ -101,6 +101,9 @@ export class Particle {
   transferBackground() {
     const tile = Helper.getTileAtPosition(this.game, this.pos)
     if (!!!tile) return
+    console.log(tile);
+    if (tile.tileKey[tile.type]?.ignoreTransferBackgroundColor === true) return;
+    
     tile['overriddenBackground'] = this.backgroundColor
     // TODO: Make global settings
     // tile.entities.forEach((entity) => {
