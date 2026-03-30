@@ -88,7 +88,24 @@ export function centerPosition (mode) {
 }
 
 export function createActor (mode, pos, actorClass, params) {
-  const {range, character, name, color, background, passable = false, remainAfterUse = false} = params;
+  const {range,
+    character,
+    name,
+    color,
+    background,
+    passable = false,
+    remainAfterUse = false,
+    meleeSounds = [
+      SOUNDS.small_object_melee_01,
+      SOUNDS.small_object_melee_02,
+      SOUNDS.small_object_melee_03,
+      SOUNDS.small_object_melee_04,
+      SOUNDS.small_object_melee_05,
+      SOUNDS.small_object_melee_06,
+    ],
+    onMove = () => null,
+  } = params;
+
   const piece = new actorClass({
     game: mode.game,
     passable,
@@ -106,14 +123,8 @@ export function createActor (mode, pos, actorClass, params) {
     range,
     damageToSelf: 1,
     remainAfterUse,
-    meleeSounds: [
-      SOUNDS.small_object_melee_01,
-      SOUNDS.small_object_melee_02,
-      SOUNDS.small_object_melee_03,
-      SOUNDS.small_object_melee_04,
-      SOUNDS.small_object_melee_05,
-      SOUNDS.small_object_melee_06,
-    ],
+    meleeSounds,
+    onMove,
     ...params,
   })
 
@@ -121,11 +132,34 @@ export function createActor (mode, pos, actorClass, params) {
 }
 
 export function createFurniture (mode, pos, params) {
-  createActor(mode, pos, MovingWall, params)
+  const sound = Helper.getRandomInArray([
+    SOUNDS.object_slide_01,
+    SOUNDS.object_slide_02,
+    SOUNDS.object_slide_03,
+  ])
+
+  const onMove = () => {
+    console.log('move');
+    
+    if (!sound.playing()) sound.play()
+  }
+
+  createActor(mode, pos, MovingWall, {...params, onMove})
 }
 
 export function createThrowable (mode, pos, params) {
-  createActor(mode, pos, DirectionalProjectile, params)
+  const sound = Helper.getRandomInArray([
+    SOUNDS.whoosh_01,
+    SOUNDS.whoosh_02,
+    SOUNDS.whoosh_03,
+  ])
+
+  const onMove = () => {
+    console.log('move');
+    if (!sound.playing()) sound.play()
+  }
+
+  createActor(mode, pos, DirectionalProjectile, {...params, onMove})
 }
 
 export function createExplosiveThrowable (mode, pos, params) {

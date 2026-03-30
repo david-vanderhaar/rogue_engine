@@ -40,6 +40,14 @@ export const SOUNDS = {
   // AMBUndr_underground parking gararge 1_TimKahn_MKH80208030st by tim.kahn -- https://freesound.org/s/789623/ -- License: Attribution 4.0
   // END Telekinetic 
 
+  // UI
+  menu_01: createSoundFromSource('/sounds/ui/menu-01.mp3', {rate: 2}),
+  menu_02: createSoundFromSource('/sounds/ui/menu-02.mp3'),
+  menu_03: createSoundFromSource('/sounds/ui/menu-03.mp3'),
+  menu_04: createSoundFromSource('/sounds/ui/menu-04.mp3'),
+  // UIGlitch_On Screen Glitch Patch x 6_EM by newlocknew -- https://freesound.org/s/791123/ -- License: Attribution NonCommercial 4.0
+  // END UI
+
   pass_turn: createSoundFromSource('/sounds/hidden_leaf/pass_turn.mp3'),
   status_effect_applied: createSoundFromSource('/sounds/hidden_leaf/status_effect_applied.mp3'),
   not_allowed: createSoundFromSource('/sounds/hidden_leaf/not_allowed.mp3'),
@@ -128,6 +136,14 @@ export const SOUNDS = {
   heavy_object_melee_01: createSoundFromSource('/sounds/melee/heavy_object_melee-01.mp3'),
   heavy_object_melee_02: createSoundFromSource('/sounds/melee/heavy_object_melee-02.mp3'),
   heavy_object_melee_03: createSoundFromSource('/sounds/melee/heavy_object_melee-03.mp3'),
+  
+  object_slide_01: createSoundFromSource('/sounds/move/object_slide-01.mp3'),
+  object_slide_02: createSoundFromSource('/sounds/move/object_slide-02.mp3'),
+  object_slide_03: createSoundFromSource('/sounds/move/object_slide-03.mp3'),
+
+  whoosh_01: createSoundFromSource('/sounds/move/whoosh-01.mp3'),
+  whoosh_02: createSoundFromSource('/sounds/move/whoosh-02.mp3'),
+  whoosh_03: createSoundFromSource('/sounds/move/whoosh-03.mp3'),
 
   // end
   // take damage

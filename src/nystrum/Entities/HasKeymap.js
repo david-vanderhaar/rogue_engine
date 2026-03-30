@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
-import {SOUNDS as HIDDEN_LEAF_SOUNDS} from '../Modes/HiddenLeaf/sounds'
+import {SOUNDS as TELEKINETIC_SOUNDS} from '../Modes/Telekinetic/sounds'
+import { getRandomInArray } from '../../helper';
 
 export const HasKeymap = superclass => class extends superclass {
   constructor({ initializeKeymap, ...args }) {
@@ -68,6 +69,9 @@ export const HasKeymap = superclass => class extends superclass {
   }
 
   playSetKeymapSound() {
-    HIDDEN_LEAF_SOUNDS.basic_jutsu_cast.play();
+    getRandomInArray([
+      TELEKINETIC_SOUNDS.menu_01,
+      TELEKINETIC_SOUNDS.menu_04,
+    ]).play()
   }
 };

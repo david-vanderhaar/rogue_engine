@@ -213,7 +213,7 @@ export class Engine {
     // newEffect.onStart();
     newEffect.start();
     this.statusEffects.push(newEffect)
-    HIDDEN_LEAF_SOUNDS.status_effect_applied.play();
+    // HIDDEN_LEAF_SOUNDS.status_effect_applied.play();
     return true;
   }
 
