@@ -145,7 +145,7 @@ function AbilitySelectScreen(props) {
           const keymapAction = () => {
             return new MultiTargetAttackAndShove({
               label: 'Mind Blast [1]',
-              targetPositions: Helper.getPositionsFromStructure(Constant.CLONE_PATTERNS.clover, actor.getPosition()),
+              targetPositions: Helper.getPositionsFromStructure(Constant.CLONE_PATTERNS.clover_2, actor.getPosition()),
               game: actor.game,
               actor,
               energyCost: (Constant.ENERGY_THRESHOLD * 1),
@@ -179,7 +179,7 @@ function AbilitySelectScreen(props) {
           const keymapAction = () => {
             return new MultiTargetAttackAndShove({
               label: 'Mind Blast [2]',
-              targetPositions: Helper.getPositionsFromStructure(Constant.CLONE_PATTERNS.clover_2, actor.getPosition()),
+              targetPositions: Helper.getPositionsFromStructure(Constant.CLONE_PATTERNS.clover_3, actor.getPosition()),
               game: actor.game,
               actor,
               energyCost: (Constant.ENERGY_THRESHOLD * 1),
@@ -784,6 +784,7 @@ function AbilitySelectScreen(props) {
             actionParams: {
               label: 'Temporal Gap [1]',
               onSuccess: () => {
+                SOUNDS.mind.play()
                 SpatterEmitter({
                   game: actor.game,
                   fromPosition: actor.getPosition(),
@@ -825,6 +826,7 @@ function AbilitySelectScreen(props) {
             actionParams: {
               label: 'Temporal Gap [2]',
               onSuccess: () => {
+                SOUNDS.mind.play()
                 SpatterEmitter({
                   game: actor.game,
                   fromPosition: actor.getPosition(),
@@ -858,7 +860,7 @@ function AbilitySelectScreen(props) {
             game: actor.game,
             actor,
             passThroughEnergyCost: Constant.ENERGY_THRESHOLD,
-            passThroughRequiredResources: [new MindResource({ getResourceCost: () => 5 })],
+            passThroughRequiredResources: [new MindResource({ getResourceCost: () => 4 })],
             keymapTriggerString: '7',
             range: 12,
             actionClass: MoveOrShove,
@@ -866,6 +868,7 @@ function AbilitySelectScreen(props) {
             actionParams: {
               label: 'Temporal Gap [3]',
               onSuccess: () => {
+                SOUNDS.mind.play()
                 SpatterEmitter({
                   game: actor.game,
                   fromPosition: actor.getPosition(),
@@ -926,6 +929,7 @@ function AbilitySelectScreen(props) {
 
     const alwaysAvailable = upgrades.buffs.filter((upgrade) => upgrade?.alwaysAvailable)
 
+    // return upgrades.buffs
     // return available
     return [
       ...Helper.getNumberOfItemsInArray(4, available),

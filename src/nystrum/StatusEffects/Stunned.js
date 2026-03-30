@@ -18,8 +18,6 @@ export default class Stunned extends Base {
   }
 
   step(timePassed) {
-    console.log('stunned step ', this.turnsStunned, timePassed);
-    
     super.step(timePassed)
     if (this.turnsStunned > 0) {
       // this.actor.energy = 0

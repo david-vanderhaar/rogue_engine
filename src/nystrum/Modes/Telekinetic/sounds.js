@@ -38,6 +38,8 @@ export const SOUNDS = {
   level_construction: createSoundFromSource('/sounds/telekinetic/level_construction.mp3', {loop: true}),
   level_parking: createSoundFromSource('/sounds/telekinetic/level_parking.mp3', {loop: true}),
   // AMBUndr_underground parking gararge 1_TimKahn_MKH80208030st by tim.kahn -- https://freesound.org/s/789623/ -- License: Attribution 4.0
+
+  mind: createSoundFromSource('/sounds/telekinetic/mind.mp3'),
   // END Telekinetic 
 
   // UI

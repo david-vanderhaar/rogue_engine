@@ -3,6 +3,7 @@ import { Particle } from '../Entities/index';
 import { PARTICLE_TEMPLATES } from '../constants';
 import { SOUNDS as HIDDEN_LEAF_SOUNDS } from '../Modes/HiddenLeaf/sounds';
 import { ANIMATION_TYPES } from '../Display/konvaCustom';
+import { SOUNDS } from '../Modes/Telekinetic/sounds';
 
 export class Engine {
   constructor({
@@ -214,6 +215,8 @@ export class Engine {
     newEffect.start();
     this.statusEffects.push(newEffect)
     // HIDDEN_LEAF_SOUNDS.status_effect_applied.play();
+    // TEMP solution for Telekinetic
+    if (newEffect.name !== 'thrown') { SOUNDS.mind.play() }
     return true;
   }
 

@@ -139,8 +139,6 @@ export function createFurniture (mode, pos, params) {
   ])
 
   const onMove = () => {
-    console.log('move');
-    
     if (!sound.playing()) sound.play()
   }
 
@@ -155,7 +153,6 @@ export function createThrowable (mode, pos, params) {
   ])
 
   const onMove = () => {
-    console.log('move');
     if (!sound.playing()) sound.play()
   }
 

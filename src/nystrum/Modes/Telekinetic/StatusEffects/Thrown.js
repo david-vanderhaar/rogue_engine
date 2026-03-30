@@ -2,9 +2,10 @@ import { Base } from '../../../StatusEffects/Base.js';
 import { DIRECTIONS, ENERGY_THRESHOLD, getDirectionKey } from '../../../constants.js';
 import { COLORS } from '../theme.js';
 import { PlaceActor } from '../../../Actions/PlaceActor.js';
-import { getPositionInDirection } from '../../../../helper.js';
+import { getPositionInDirection, getRandomInArray } from '../../../../helper.js';
 import SpatterEmitter from '../../../Engine/Particle/Emitters/spatterEmitter.js';
 import { ANIMATION_TYPES } from '../../../Display/konvaCustom.js';
+import { SOUNDS } from '../sounds.js';
 
 export default class Thrown  extends Base {
   constructor({
@@ -36,6 +37,15 @@ export default class Thrown  extends Base {
     if (!this.actorIsInEngine() && this.isProjectileType()) {
       this.setProjectileStats();
       this.addActor();
+    } else {
+      // throwing an actor (likey an enemy)
+      const sound = getRandomInArray([
+        SOUNDS.whoosh_01,  
+        SOUNDS.whoosh_02,  
+        SOUNDS.whoosh_03,  
+      ])
+
+      if (!sound.playing()) sound.play()
     }
   }
 

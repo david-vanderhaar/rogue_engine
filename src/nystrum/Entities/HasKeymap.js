@@ -34,7 +34,6 @@ export const HasKeymap = superclass => class extends superclass {
   addKeymapActionToBaseKeymap (key, keymapAction) {
     // get last in stack which is base keymap
     const baseKeymap = this.keymapStack.at(-1)
-    console.log('adding');
     
     const newInitialize = (engine, actor) => {
       // const base = baseKeymap(engine, actor)
