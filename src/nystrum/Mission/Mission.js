@@ -1,6 +1,7 @@
 import uuid from 'uuid/v1';
 import GameEvent from "../Events/Event";
 import {GLOBAL_EVENT_BUS} from "../Events/EventBus";
+import { SOUNDS } from '../Modes/Telekinetic/sounds';
 
 export default class Mission {
   constructor({
@@ -16,6 +17,8 @@ export default class Mission {
         new GameEvent({name: 'missionCompleted', payload: { message: 'we\'re all done here!' }})
       ],
       onComplete = () => null,
+      onTriggerSound = SOUNDS.level_start,
+      onCompleteSound = SOUNDS.level_end,
       eventToComplete = 'mission',
       timesToComplete = 1,
       timesCompleted = 0,
@@ -30,6 +33,8 @@ export default class Mission {
     this.onTrigger = onTrigger;
     this.onCompleteEvents = onCompleteEvents;
     this.onComplete = onComplete;
+    this.onTriggerSound = onTriggerSound;
+    this.onCompleteSound = onCompleteSound;
     this.eventToComplete = eventToComplete;
     this.timesToComplete = timesToComplete;
     this.timesCompleted = timesCompleted;
@@ -50,6 +55,7 @@ export default class Mission {
     // Listen for the event that will complete this mission
     GLOBAL_EVENT_BUS.on(this.eventToComplete, this.incrementTimesCompleted.bind(this));
     this.onTrigger();
+    this.playTriggeredSound()
   }
 
   triggered() {
@@ -66,6 +72,7 @@ export default class Mission {
     });
     this.forceComplete();
     this.onComplete();
+    this.playCompleteSound();
     // console.log('Mission complete: ', this.name);
   }
 
@@ -79,5 +86,17 @@ export default class Mission {
 
   incrementTimesCompleted() {
     this.timesCompleted += 1;
+  }
+
+  playTriggeredSound() {
+    this.playSound(this.onTriggerSound)
+  }
+
+  playCompleteSound() {
+    this.playSound(this.onCompleteSound)
+  }
+
+  playSound(sound) {
+    if (!sound.playing()) sound.play()
   }
 }

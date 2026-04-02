@@ -10,7 +10,7 @@ import { SOUND_MANAGER, SOUNDS } from "../sounds";
 
 export default function GenerateLabMap (mode) {
   // play level theme
-  SOUND_MANAGER.fadeInSound(SOUNDS.level_lab, 0.4)
+  SOUND_MANAGER.fadeInSound(SOUNDS.level_lab, 0.02)
 
   refreshColors({fg: COLORS.blue_light_dark})
   mode.createEmptyLevel();

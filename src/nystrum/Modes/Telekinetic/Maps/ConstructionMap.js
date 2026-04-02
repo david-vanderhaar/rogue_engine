@@ -167,11 +167,14 @@ function startMissionManager(mode, WAVES) {
     let waveName = wave?.name || `Enemy Wave [${index + 1}]`
     if ((index + 1) === WAVES.length) waveName = 'Final Wave'
     const waveDescription = wave?.description || 'Eliminate all enemies.'
+    let onTriggerSound = SOUNDS.level_start
+    if (wave.enemyKeys.some((string) => string.endsWith('boss'))) onTriggerSound = SOUNDS.level_boss
     return new Mission({
       name: waveName,
       description: waveDescription,
       timesToComplete: waveCount,
       eventToComplete: `OPPONENT:destroy`,
+      onTriggerSound,
       onTrigger: () => {
         Helper.range(waveCount).forEach((index) => {
           const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
