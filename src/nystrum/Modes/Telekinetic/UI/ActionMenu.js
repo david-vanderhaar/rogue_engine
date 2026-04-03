@@ -18,6 +18,18 @@ function ResourceBlock({ resource, superScript, canPay }) {
 }
 
 const ActionMenu = ({keymap, game}) => {
+  // when keymap change, temporairly add crt-flicker class then remove after delay
+  React.useEffect(() => {
+    const actionMenu = document.querySelector('.HiddenLeaf__ActionMenu');
+    if (actionMenu) {
+      actionMenu.classList.add('crt-flicker');
+      setTimeout(() => {
+        actionMenu.classList.remove('crt-flicker');
+      }, 200);
+    }
+  }, [keymap]);
+
+
   return (  
     <div className="HiddenLeaf__ActionMenu">
       <div className="HiddenLeaf__ActionMenu__Actions">

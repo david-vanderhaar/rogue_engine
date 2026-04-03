@@ -31,7 +31,7 @@ export const SOUND_MANAGER = {
 
 export const SOUNDS = {
   // Telekinetic 
-  level_lab: createSoundFromSource('/sounds/telekinetic/level_lab_1.mp3', {volume: .2}),
+  level_lab: createSoundFromSource('/sounds/telekinetic/level_lab_1.mp3', {volume: .2, loop: true}),
   // Dark_Emptiness_015.wav by jalastram -- https://freesound.org/s/505697/ -- License: Attribution 4.0
   level_office: createSoundFromSource('/sounds/telekinetic/level_office.mp3', {loop: true}),
   // RoomTone EmptyMall indoors 02 160327_00.flac by klankbeeld -- https://freesound.org/s/455467/ -- License: Attribution 4.0

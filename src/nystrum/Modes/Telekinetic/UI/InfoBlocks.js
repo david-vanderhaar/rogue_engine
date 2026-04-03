@@ -2,7 +2,25 @@ import React from 'react';
 import * as _ from 'lodash';
 import { CARTRIDGE } from '../../../Nystrum';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 export default function InfoBlocks(props) {
+  const infoBlocks = _.get(props.game, 'mode.infoBlocks', {});
+  const infoBlockStringified = JSON.stringify(infoBlocks);
+  console.log(infoBlocks);
+  
+
+  React.useEffect(() => {
+    const element = document.querySelector('.InfoBlock');
+    console.log(element);
+    
+    if (element) {
+      element.classList.add('crt-flicker');
+      setTimeout(() => {
+        element.classList.remove('crt-flicker');
+      }, 200);
+    }
+  }, [infoBlockStringified]);
+
   return (
     <ReactCSSTransitionGroup
       transitionName="fade"
@@ -15,9 +33,10 @@ export default function InfoBlocks(props) {
     >
       <div style={{bottom: 680, position: 'relative'}}>
         {
-          _.map(_.get(props.game, 'mode.infoBlocks', {}), (value, key) => {
+          _.map(infoBlocks, (value, key) => {
             return (
               <div
+                className="InfoBlock"
                 key={key}
                 style={{
                   color: CARTRIDGE.theme.accent,
