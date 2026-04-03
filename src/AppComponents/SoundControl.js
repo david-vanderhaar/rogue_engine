@@ -3,17 +3,38 @@ import { Howler } from 'howler';
 
 export default function SoundControl() {
   const [muted, setMuted] = useState(false);
+  const [volume, setVolumeState] = useState(Howler.volume());
 
   const toggleSound = () => {
     const newMutedState = !muted;
     setMuted(newMutedState);
     Howler.mute(newMutedState);
   };
+
+  const setVolume = (volume) => {
+    Howler.volume(volume);
+    setVolumeState(volume);
+  }
+
+  const increaseVolume = () => {
+    const newVolume = Math.min(1, Howler.volume() + 0.1);
+    setVolume(newVolume);
+  }
+
+  const decreaseVolume = () => {
+    const newVolume = Math.max(0, Howler.volume() - 0.1);
+    setVolume(newVolume);
+  }
   
   useEffect(() => {
     const handleKeyPress = (event) => {
+      // if (event.code === 'BracketRight') {
+      //   toggleSound();
+      // }
       if (event.code === 'BracketRight') {
-        toggleSound();
+        increaseVolume();
+      } else if (event.code === 'BracketLeft') {
+        decreaseVolume();
       }
     };
     
@@ -24,7 +45,7 @@ export default function SoundControl() {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [muted]);
+  }, [volume]);
 
   // Set initial mute state on component mount
   useEffect(() => {
@@ -32,8 +53,16 @@ export default function SoundControl() {
   }, []);
 
   return (
-    <span onClick={toggleSound}>
-      toggle sound: ] {muted ? '(off)' : '(on)'}
-    </span>
+    // <div onClick={toggleSound} style={{cursor: 'pointer'}}>
+    <div>
+      <span >
+        {/* toggle sound: ] {muted ? '(off)' : '(on)'} */}
+        current volume: {Math.round(volume * 100)}%
+      </span>
+      <br />
+      <span>
+        use [ and ] keys to adjust volume
+      </span>
+    </div>
   );
 }

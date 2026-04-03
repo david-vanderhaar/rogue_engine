@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Howler } from 'howler';
 import { CARTRIDGE } from '../Nystrum';
 import { SCREENS } from './constants';
 import SoundManager from '../Sounds/SoundManager';
@@ -19,6 +20,7 @@ export default function Splash(props) {
   }
 
   useEffect(() => {
+    Howler.volume(0.4);
     playThemeSound()
     // Add event listener when the component mounts
     window.addEventListener('click', nextScreen);

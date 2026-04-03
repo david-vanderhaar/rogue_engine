@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <Nystrum />
       {/* <OverflowToggle />&nbsp;&nbsp;&nbsp; */}
-      <SoundControl />
+      {/* <SoundControl /> */}
     </div>
   );
 }

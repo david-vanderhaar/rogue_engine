@@ -6,8 +6,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 export default function InfoBlocks(props) {
   const infoBlocks = _.get(props.game, 'mode.infoBlocks', {});
   const infoBlockStringified = JSON.stringify(infoBlocks);
-  console.log(infoBlocks);
-  
 
   React.useEffect(() => {
     const element = document.querySelector('.InfoBlock');

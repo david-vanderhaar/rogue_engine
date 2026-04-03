@@ -1,6 +1,7 @@
 import React from 'react';
 import { CARTRIDGE } from '../../../Nystrum';
 import Help from './Help';
+import SettingsModal from './SettingsModal';
 
 function Button({triggerModal = null, onClick, children}) {
   const className = triggerModal ? 'modal-trigger' : '';
@@ -57,6 +58,9 @@ function Instructions(props) {
         <Button triggerModal="help-modal">
           Help (?)
         </Button>
+        <Button triggerModal="settings-modal">
+          Settings
+        </Button>
         {/* <Button onClick={() => {
           if (props.game.fovActive) {
             props.game.fovActive = false
@@ -70,6 +74,7 @@ function Instructions(props) {
         </Button> */}
       </div>
       <Help id='help-modal' />
+      <SettingsModal id='settings-modal' />
     </div>
   );
 }
