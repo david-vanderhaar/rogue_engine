@@ -1,5 +1,6 @@
 import React, { use, useEffect, useState } from 'react';
 import { Howler } from 'howler';
+import { COLORS } from '../nystrum/Modes/Telekinetic/theme';
 
 export default function SoundControl() {
   const [muted, setMuted] = useState(false);
@@ -55,14 +56,13 @@ export default function SoundControl() {
   return (
     // <div onClick={toggleSound} style={{cursor: 'pointer'}}>
     <div>
-      <span >
+      <div>
+        use <span style={{ color: COLORS.white }}>[</span> and <span style={{ color: COLORS.white }}>]</span> keys to adjust volume
+      </div>
+      <div >
         {/* toggle sound: ] {muted ? '(off)' : '(on)'} */}
-        current volume: {Math.round(volume * 100)}%
-      </span>
-      <br />
-      <span>
-        use [ and ] keys to adjust volume
-      </span>
+        current volume: <span style={{ color: COLORS.white }}>{Math.round(volume * 100)}%</span>
+      </div>
     </div>
   );
 }

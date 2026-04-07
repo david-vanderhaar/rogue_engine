@@ -45,8 +45,11 @@ export class Engine {
     if (this.game.getFirstPlayer() === null) return false
     let acting = true;
     let timePassed = 0;
+    let failureCountMax = 10; // safety to prevent infinite loops of a failing actor
 
     while (acting) {
+      console.log('timePassed: ', timePassed);
+      
       if (!actor) return false;
       // if (!actor.active) return false;
       if (!actor.active) break;
@@ -80,6 +83,11 @@ export class Engine {
               timePassed += action.getEnergyCost();
             } else {
               await action.onFailure();
+              failureCountMax -= 1;
+              if (failureCountMax < 0) {
+                console.warn('Breaking out of action loop due to too many failures: ', action);
+                acting = false;
+              }
             }
             await action.onAfter();
           } else {

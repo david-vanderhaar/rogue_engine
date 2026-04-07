@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { SOUNDS } from '../sounds'
 import { CARTRIDGE } from '../../../Nystrum';
-import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
+import { fadeOutMusic } from './useEffects/fadeMusicInOut';
 import { SCREENS } from './constants';
 import HelpContent from '../UI/HelpContent';
 import { GLOBAL_EVENT_BUS } from '../../../Events/EventBus';
@@ -46,7 +46,7 @@ function Intro(props) {
     props.setActiveScreen(SCREENS.LEVEL)
   }
 
-  // useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
+  useEffect(fadeOutMusic(SOUNDS.title_theme), [])
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {

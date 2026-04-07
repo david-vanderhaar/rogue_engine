@@ -22,6 +22,7 @@ import TelegraphPathTowards from './TelegraphPathTowards';
 import TelegraphRangedAttack from './TelegraphRangedAttack';
 import TelegraphRangedAttackThroughCover from './TelegraphRangedAttackThroughCover';
 import Wait from './Wait';
+import NoopNotValid from './NoopNotValid';
 
 export {
   Behavior,
@@ -48,4 +49,5 @@ export {
   TelegraphRangedAttack,
   TelegraphRangedAttackThroughCover,
   Wait,
+  NoopNotValid,
 }

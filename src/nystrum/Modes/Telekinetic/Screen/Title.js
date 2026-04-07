@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { SOUNDS } from '../sounds'
 import { CARTRIDGE } from '../../../Nystrum';
-import { fadeMusicInOut } from './useEffects/fadeMusicInOut';
+import { fadeInMusic } from './useEffects/fadeMusicInOut';
 import { SCREENS } from './constants';
 import SoundManager from '../../../Sounds/SoundManager';
 
@@ -15,7 +15,7 @@ function Title(props) {
     playButtonSound()
   }
 
-  useEffect(fadeMusicInOut(SOUNDS.title_theme), [])
+  useEffect(fadeInMusic(SOUNDS.title_theme), [])
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {

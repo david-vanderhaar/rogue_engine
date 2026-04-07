@@ -250,8 +250,8 @@ export class Game {
     for (let i = 0; i < this.mapHeight; i ++) {
       for (let j = 0; j < this.mapWidth; j ++) {
         const key = `${j},${i}`
-        // let type = 'GROUND';
-        let type = Helper.getRandomInArray(['GROUND', 'GROUND_ALT', 'GROUND_ALT', 'GROUND_ALT']);
+        let type = 'GROUND';
+        // let type = Helper.getRandomInArray(['GROUND', 'GROUND_ALT', 'GROUND_ALT', 'GROUND_ALT']);
         MapHelper.addTileToMap({map: this.map, key, tileKey: this.tileKey, tileType: type})
       }
     }

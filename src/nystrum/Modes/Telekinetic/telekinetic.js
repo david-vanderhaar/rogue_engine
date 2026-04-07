@@ -47,7 +47,7 @@ export class Telekinetic extends Mode {
 
   levelGenerators() {
     return [
-      // // GenerateDefaultMap,
+      // GenerateDefaultMap,
       GenerateLabMap,
       (mode) => GenerateOfficeMap(mode, {
         CHANCE_OF_CENTER_CUBICLES: 0.33,
@@ -191,7 +191,7 @@ export class Telekinetic extends Mode {
       { x: 28, y: 9 },
       4,
       4,
-      'SAFE',
+      'GROUND',
       this.game.map,
       this.game.mapHeight,
       this.game.mapWidth
@@ -407,7 +407,7 @@ export class Telekinetic extends Mode {
 
   placePlayersInSafeZone () {
     let players = this.getPlayers()
-    const keys = Object.keys(this.game.map).filter((key) => this.game.map[key].type == 'SAFE');
+    const keys = Object.keys(this.game.map).filter((key) => this.game.map[key].type == 'GROUND');
     players.forEach((player) => {
       const key = keys.shift();
       if (key) {
@@ -429,7 +429,19 @@ export class Telekinetic extends Mode {
         Helper.stringCoordsToObject(pos)
       )
     })
-      
+  }
+
+  addEnemiesByKey(amount = 1, enemyKey = 'lab_rat') {
+    Helper.range(amount).forEach((index) => {
+      let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'GROUND')
+      // let groundTiles = Object.keys(this.game.map).filter((key) => this.game.map[key].type === 'WATER')
+      let pos = Helper.getRandomInArray(groundTiles)
+      return EnemyActors['addByKey'](
+        this, 
+        Helper.stringCoordsToObject(pos),
+        enemyKey
+      )
+    })
   }
 
   placeThrowables (number = 3) {
