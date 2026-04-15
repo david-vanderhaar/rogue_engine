@@ -4,6 +4,7 @@ import * as Helper from '../../helper';
 import * as Constant from '../constants'
 import { MoveTargetingCursor } from './MoveTargetingCursor';
 import { Say } from './Say';
+import { COLORS } from '../Modes/Telekinetic/theme';
 
 export class PrepareRangedAction extends Base {
   constructor({ 
@@ -32,7 +33,13 @@ export class PrepareRangedAction extends Base {
 
   perform() {
     const pos = this.actor.getPosition();
-    const positionsInRange = Helper.getPointsWithinRadius(pos, this.range);
+    // const positionsInRange = Helper.getPointsWithinRadius(pos, this.range);
+    const positionsInRange = Helper.getAllPositionsInStraightPathRange(pos, this.range);
+
+    const rangeAnims = []
+    const deactivateAnimations = (anims) => anims.forEach((anim) => {
+      this.game.display.removeAnimation(anim.id);
+    })
 
     let targets = [];
     let targetIndex = 0;
@@ -44,6 +51,32 @@ export class PrepareRangedAction extends Base {
           ...tile.entities.filter(this.validTargetFilter)
         ]
       }
+
+      // if position is at max range, show a different animation
+      rangeAnims.push(this.game.display.addAnimation(
+        this.game.display.animationTypes.BLINK_BOX, 
+        {
+          x: position.x,
+          y: position.y,
+          color: COLORS.dark_accent,
+          isBlinking: false,
+          strokeWidth: 3,
+        }
+      ))
+    })
+
+    targets.forEach((target) => {
+      const position = target.getPosition();
+      rangeAnims.push(this.game.display.addAnimation(
+        this.game.display.animationTypes.BLINK_BOX, 
+        {
+          x: position.x,
+          y: position.y,
+          color: COLORS.blue,
+          isBlinking: true,
+          strokeWidth: 4,
+        }
+      ))
     })
 
     let initalPosition = null;
@@ -62,6 +95,7 @@ export class PrepareRangedAction extends Base {
       game: this.game,
       onAfter: () => {
         this.actor.deactivateCursor()
+        deactivateAnimations(rangeAnims)
       },
     })
 
@@ -144,6 +178,7 @@ export class PrepareRangedAction extends Base {
           onSuccess: () => {
             this.actionParams.onSuccess && this.actionParams.onSuccess();
             this.actor.deactivateCursor();
+            deactivateAnimations(rangeAnims)
             this.actor.setNextAction(goToPreviousKeymap);
           }
         })

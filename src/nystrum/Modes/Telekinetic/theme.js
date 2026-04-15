@@ -6,6 +6,7 @@ export const COLORS = {
   accent_light: '#c35f2b',
   text: '#e5d097',
   
+  mind: '#8eac86',
   blue_light: '#8eac86',
   blue_light_dark: '#5c8074',
   blue_dark: '#254550',

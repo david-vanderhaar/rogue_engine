@@ -57,9 +57,23 @@ export class PrepareRangedTelekinesisAction extends Base {
         {
           x: position.x,
           y: position.y,
-          color: Constant.THEMES.SOLARIZED.base00,
+          color: COLORS.dark_accent,
           isBlinking: false,
           strokeWidth: 3,
+        }
+      ))
+    })
+
+    targets.forEach((target) => {
+      const position = target.getPosition();
+      rangeAnims.push(this.game.display.addAnimation(
+        this.game.display.animationTypes.BLINK_BOX, 
+        {
+          x: position.x,
+          y: position.y,
+          color: COLORS.blue,
+          isBlinking: true,
+          strokeWidth: 4,
         }
       ))
     })
