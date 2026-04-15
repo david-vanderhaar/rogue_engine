@@ -59,8 +59,6 @@ export class SpeedDefenseDamageBuff extends Base {
     }
 
     this.onStep = (timePassed) => {
-      console.log('step: ', timePassed);
-      
       // random chance to move in a random direction
       // const direction = CARDINAL_DIRECTIONS[Helper.getRandomInArray(Object.keys(CARDINAL_DIRECTIONS))];
       let chance = Math.random();

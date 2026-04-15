@@ -48,8 +48,6 @@ export class Engine {
     let failureCountMax = 10; // safety to prevent infinite loops of a failing actor
 
     while (acting) {
-      console.log('timePassed: ', timePassed);
-      
       if (!actor) return false;
       // if (!actor.active) return false;
       if (!actor.active) break;
@@ -269,11 +267,16 @@ export class Engine {
 
   processStatusEffects (timePassed) {
     let effects = this.statusEffects.filter((effect) => {
-      if (effect.processOnlyOnActorTurn) return effect.actor.id === this.getCurrentActor().id
+      if (effect.processOnlyOnActorTurn) return effect?.actor?.id === this.getCurrentActor().id
       else return true
     })
 
     effects.forEach((effect) => {
+      // major exception that should be fixed. CycleBehavior should use Energy/Speed system or manage acting directly
+      // instead of relying on interrupting the engine loop, which causes weird edge cases with status effects.
+      if (effect.actor.entityTypes.includes("CYCLES_BEHAVIORS") && effect.processOnlyOnActorTurn) {
+        timePassed = 100;
+      }
       effect.timeSinceLastStep += timePassed;
       effect.timeToLive -= timePassed;
       if (effect.timeSinceLastStep >= effect.stepInterval) {
