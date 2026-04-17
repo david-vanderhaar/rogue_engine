@@ -35,7 +35,7 @@ export const SOUNDS = {
   // Dark_Emptiness_015.wav by jalastram -- https://freesound.org/s/505697/ -- License: Attribution 4.0
   level_office: createSoundFromSource('/sounds/telekinetic/level_office.mp3', {loop: true}),
   // RoomTone EmptyMall indoors 02 160327_00.flac by klankbeeld -- https://freesound.org/s/455467/ -- License: Attribution 4.0
-  level_construction: createSoundFromSource('/sounds/telekinetic/level_construction.mp3', {loop: true}),
+  level_construction: createSoundFromSource('/sounds/telekinetic/level_construction_2.mp3', {loop: true}),
   level_parking: createSoundFromSource('/sounds/telekinetic/level_parking.mp3', {loop: true}),
   // AMBUndr_underground parking gararge 1_TimKahn_MKH80208030st by tim.kahn -- https://freesound.org/s/789623/ -- License: Attribution 4.0
   level_boss: createSoundFromSource('/sounds/telekinetic/level_boss.mp3', {loop: false}),

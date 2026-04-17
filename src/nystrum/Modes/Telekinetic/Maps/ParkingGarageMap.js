@@ -104,6 +104,23 @@ export default function GenerateParkingGarageMap (
   startMissionManager(mode, WAVES)
 }
 
+function getRandomPositionWithPathToPlayer (player, mode) {
+  const playerPos = player.getPosition()
+  const emptyPositionKeys = MapHelper.getEmptyGroundTileKeys(mode.game)
+  let positionFound = null;
+  let killCount = 100;
+  while (!positionFound && killCount > 0) {
+    const randomPosition = Helper.getRandomInArray(emptyPositionKeys)
+    const pos = Helper.stringToCoords(randomPosition)
+    const path = Helper.calculatePathAroundObstacles(mode.game, playerPos, pos)
+    if (path.length > 0) positionFound = pos
+    killCount--;
+  }
+
+  return positionFound || Helper.getRandomInArray(emptyPositionKeys)
+}
+
+
 function startMissionManager(mode, WAVES) {
   const player = mode.game.getFirstPlayer();
   const waveMissions = WAVES.map((wave, index) => {
@@ -121,8 +138,9 @@ function startMissionManager(mode, WAVES) {
       onTriggerSound,
       onTrigger: () => {
         Helper.range(waveCount).forEach((index) => {
-          const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
-          const pos = Helper.stringToCoords(randomPosition)
+          // const randomPosition = Helper.getRandomInArray(MapHelper.getEmptyGroundTileKeys(mode.game))
+          // const pos = Helper.stringToCoords(randomPosition)
+          const pos = getRandomPositionWithPathToPlayer(player, mode)
           const enemyKey = Helper.getRandomInArray(wave.enemyKeys)
           EnemyActors.addByKey(mode, pos, enemyKey)
           SpatterEmitter({

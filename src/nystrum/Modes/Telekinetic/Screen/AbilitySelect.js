@@ -49,6 +49,11 @@ function AbilitySelectScreen(props) {
     const meta = props.meta()
     if (!meta?.upgrades) meta['upgrades'] = []
     meta['upgrades'].push({...upgrade})
+
+    // For debugging
+    // availableUpgrades().forEach((available) => {
+    //   meta['upgrades'].push({...available})
+    // })
   }
 
   function getActiveUpgrades () {

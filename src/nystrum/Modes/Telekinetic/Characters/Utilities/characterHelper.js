@@ -13,6 +13,7 @@ import { StatChangeOnSelf } from '../../../../Actions/StatChangeOnSelf';
 import { Say } from '../../../../Actions/Say';
 import { SCREENS } from '../../Screen/constants';
 import { MindDrain } from '../../StatusEffects/MindDrain';
+import { MoveTargetingCursor } from '../../../../Actions/MoveTargetingCursor';
 
 export function generatePlayerCharacterOptions(basicInfo, engine, keymap) {
  return {
@@ -172,21 +173,21 @@ export function generateDefaultKeymapActions(engine, actor) {
     //     targetPos: mousePosition,
     //   })
     // },
-    mouseLeftButton: (mousePosition) => {
-      return new MoveTowards({
-        hidden: true,
-        actor,
-        game: engine.game,
-        targetPos: mousePosition,
-      })
-    },
-    mouseRightButton: (mousePosition) => {
-      return new GoToPreviousKeymap({
-        hidden: true,
-        actor,
-        game: engine.game,
-      })
-    },
+    // mouseLeftButton: (mousePosition) => {
+    //   return new MoveTowards({
+    //     hidden: true,
+    //     actor,
+    //     game: engine.game,
+    //     targetPos: mousePosition,
+    //   })
+    // },
+    // mouseRightButton: (mousePosition) => {
+    //   return new GoToPreviousKeymap({
+    //     hidden: true,
+    //     actor,
+    //     game: engine.game,
+    //   })
+    // },
   };
 }
 
